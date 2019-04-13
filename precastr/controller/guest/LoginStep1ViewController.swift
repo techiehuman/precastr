@@ -15,6 +15,12 @@ import TwitterCore
 class LoginStep1ViewController: UIViewController {
     @IBOutlet weak var facebookButton:UIButton!
     @IBOutlet weak var twitterButton:UIButton!
+    
+    
+    @IBOutlet weak var emailTextField: UITextField!
+    
+    
+    @IBOutlet weak var passwordTextField: UITextField!
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -33,11 +39,24 @@ class LoginStep1ViewController: UIViewController {
         
         TWTRTwitter.sharedInstance().logIn { (session, error) in
             if (session != nil) {
+                let user = User();
                 let name = session?.userName ?? ""
-                print(name)
+                
                 print(session?.userID  ?? "")
                 print(session?.authToken  ?? "")
                 print(session?.authTokenSecret  ?? "")
+                
+                user.twitterAccessToken = session?.authToken
+                user.twitterAccessSecret = session?.authTokenSecret
+                user.twitterId = session?.userID
+                user.username = name
+                user.isTwitter = 1;
+                
+                let loginURL = "user/login/format/json";
+                
+                print(user.toDictionary(user: user ))
+                self.userManage(jsonURL:loginURL,user: user);
+                
                 
             }else {
                 print("error: \(String(describing: error?.localizedDescription))");
@@ -47,7 +66,8 @@ class LoginStep1ViewController: UIViewController {
     
     @IBAction func facebookButtonClicked(_ sender: Any) {
         let fbloginManger: FBSDKLoginManager = FBSDKLoginManager()
-        fbloginManger.logIn(withReadPermissions: ["email, publish_pages"], from:self) {(result, error) -> Void in
+       
+        fbloginManger.logIn(withReadPermissions: ["email"], from:self) {(result, error) -> Void in
             if(error == nil){
                 let fbLoginResult: FBSDKLoginManagerLoginResult  = result!
                 
@@ -56,11 +76,12 @@ class LoginStep1ViewController: UIViewController {
                 
                 
                 if(fbLoginResult .grantedPermissions.contains("email")){
-                    self.getFbId()
+                   self.getFbId()
+                    
                 }
             }  }
     }
-    func getFbId(){
+    func getFbId()->Void{
         if(FBSDKAccessToken.current() != nil){
             FBSDKGraphRequest(graphPath: "me", parameters: ["fields": "id,name , first_name, last_name , email,picture.type(large)"]).start(completionHandler: { (connection, result, error) in
                 guard let Info = result as? [String: Any] else { return }
@@ -71,10 +92,39 @@ class LoginStep1ViewController: UIViewController {
                     
                 }
                 if(error == nil){
-                    print("result")
+                    let user = User();
+                    print(FBSDKAccessToken.current().tokenString)
+                    user.facebookAccessToken = String(FBSDKAccessToken.current().tokenString as! String);
+                    user.facebookId = String(Info["id"] as! String)
+                    user.username = String(Info["email"]as! String)
+                    user.isFacebook = 1;
+                    
+                   let loginURL = "user/login/format/json";
+                    
+                    self.userManage(jsonURL:loginURL,user: user);
+                }
+                else{
+                    
+                    let alert = UIAlertController.init(title: "Error", message: error as! String, preferredStyle: .alert);
+                    alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil));
+                    self.present(alert, animated: true)
+                    
                 }
             })
         }
+    }
+    
+    @IBAction func emailSignupClicked(_ sender: Any) {
+    
+        let user = User();
+        let registerationURL = "user/registration/format/json";
+        user.username = emailTextField.text;
+        user.password = passwordTextField.text;
+        let isValid = self.validateSignupForm(user: user); //CALLING VALIDATION FUNCTION
+        if(isValid==true){
+            self.userManage(jsonURL: registerationURL,user: user);
+        }
+        
     }
     /*
     // MARK: - Navigation
@@ -85,5 +135,63 @@ class LoginStep1ViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
-
+   
+    func validateSignupForm(user: User) -> Bool{
+        
+        var isValid = true;
+        var message = "";
+        if (user.username == "") {
+            message = "Username cannot be empty"
+            isValid = false
+        } else if (user.password == "") {
+            message = "Password cannot be empty"
+            isValid = false
+        }
+        if(isValid==false){
+            let alert = UIAlertController.init(title: "Error", message: message, preferredStyle: .alert);
+            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil));
+            self.present(alert, animated: true)
+        }
+        return isValid;
+       
+    }
+    func userManage(jsonURL:String,user : User)->Void{
+        //iPhone or iPad
+        //let model = UIDevice.current.model;
+        user.userDevice = 2;//
+        let userDefaults = UserDefaults.standard
+        if let tokenDataStr = userDefaults.value(forKey: "tokenData") as? String {
+            user.deviceToken = tokenDataStr;
+        } else {
+            user.deviceToken = "test";
+        }
+        
+        UserService().postUser(jsonURL: jsonURL,postData:user.toDictionary(user: user),complete:{(response) in
+            print(response);
+            if (Int(response.value(forKey: "status") as! String)! == 1) {
+                
+                let message = response.value(forKey: "message") as! String;
+                
+                let alert = UIAlertController.init(title: "Success", message: message, preferredStyle: .alert);
+                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil));
+                self.present(alert, animated: true)
+                
+                let userDict = response.value(forKey: "data") as! NSDictionary;
+                print(userDict)
+                let user = User().getUserData(userDataDict: userDict);
+                user.loadUserDefaults();
+                
+                let viewController: UserTypeActionViewController = self.storyboard?.instantiateViewController(withIdentifier: "UserTypeActionViewController") as! UserTypeActionViewController;
+                self.present(viewController, animated: true, completion: nil);
+                
+            } else {
+                let message = response.value(forKey: "message") as! String;
+                
+                let alert = UIAlertController.init(title: "Error", message: message, preferredStyle: .alert);
+                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil));
+                self.present(alert, animated: true)
+            }
+        })
+    }
+    
 }

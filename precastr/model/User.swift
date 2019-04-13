@@ -8,27 +8,43 @@
 
 import Foundation
 class User  {
-    var userId            : Int32!
-    var email             : String!
-    var facebookId        : String!
-    var twitterId         : String!
-    var isActive          : Bool!
-    var isDeleted         : Bool!
-    var createdOn         : String!
-    var isCastr           : Int!
-    var userCastSettingId : Int!
+    var userId              : Int32!
+    var username            : String!
+    var password            : String!
+    var facebookId          : String!
+    var facebookAccessToken : String!
+    var isFacebook          : Int8!
+    var twitterId           : String!
+    var twitterAccessToken  : String!
+    var twitterAccessSecret : String!
+    var isTwitter           : Int8!
+    var isActive            : Bool!
+    var isDeleted           : Bool!
+    var createdOn           : String!
+    var isCastr             : Int8!
+    var userCastSettingId   : Int32!
+    var userDevice          : Int8!
+    var deviceToken         : String!
+    
     
     func getUserData(userDataDict: NSDictionary)->User {
         let user = User();
-        user.userId = userDataDict.value(forKey: "user_id") as? Int32;
-        user.email = userDataDict.value(forKey: "username") as? String;
+        user.userId = Int32(userDataDict.value(forKey: "user_id") as! String);
+        user.username = userDataDict.value(forKey: "username") as? String;
         user.facebookId = userDataDict.value(forKey: "facebook_id") as? String;
+        user.facebookAccessToken = userDataDict.value(forKey: "facebook_access_token") as? String;
+        user.isFacebook = userDataDict.value(forKey: "is_facebook")as? Int8;
         user.twitterId = userDataDict.value(forKey: "twitter_id") as? String;
+        user.twitterAccessToken = userDataDict.value(forKey: "twitter_access_token") as? String;
+        user.twitterAccessSecret = userDataDict.value(forKey: "twitter_access_secret") as? String;
+        user.isTwitter = userDataDict.value(forKey: "is_twiter")as? Int8;
         user.isActive = userDataDict.value(forKey: "is_active") as? Bool;
         user.isDeleted = userDataDict.value(forKey: "is_deleted") as? Bool;
         user.createdOn = userDataDict.value(forKey: "created_on") as? String;
-        user.isCastr = userDataDict.value(forKey: "is_caster") as? Int;
-         user.userCastSettingId = userDataDict.value(forKey: "user_cast_setting_id") as? Int;
+        user.isCastr = userDataDict.value(forKey: "is_caster") as? Int8;
+        user.userCastSettingId = Int32(userDataDict.value(forKey: "user_cast_setting_id") as! String);
+        user.userDevice = userDataDict.value(forKey: "device_registered_from")as? Int8;
+        user.deviceToken = userDataDict.value(forKey: "device_token")as? String;
         return user;
     }
     
@@ -36,42 +52,63 @@ class User  {
     func toDictionary(user:User)->[String:Any]{
         var userJson: [String: Any] = [:];
         userJson["user_id"] = user.userId;
-        userJson["username"] = user.email;
+        userJson["username"] = user.username;
+        userJson["password"] = user.password;
         userJson["facebook_id"] = user.facebookId;
+        userJson["is_facebook"] = user.isFacebook
+        userJson["facebook_access_token"] = user.facebookAccessToken
         userJson["twitter_id"] = user.twitterId;
+        userJson["twitter_access_token"] = user.twitterAccessToken
+        userJson["twitter_access_secret"] = user.twitterAccessSecret
+        userJson["is_twiter"] = user.isTwitter
         userJson["is_active"] = user.isActive;
         userJson["is_deleted"] = user.isDeleted;
         userJson["created_on"] = user.createdOn;
         userJson["is_caster"] = user.isCastr;
         userJson["user_cast_setting_id"] = user.userCastSettingId;
+        userJson["device_registered_from"] = user.userDevice
+        userJson["device_token"] = user.deviceToken
         return userJson;
     }
     func loadUserDataFromUserDefaults(userDataDict: UserDefaults) -> User {
         
         let user = User();
         user.userId = userDataDict.value(forKey: "user_id") as? Int32;
-        user.email = userDataDict.value(forKey: "username") as? String;
+        user.username = userDataDict.value(forKey: "username") as? String;
+        user.password = userDataDict.value(forKey: "password") as? String;
         user.facebookId = userDataDict.value(forKey: "facebook_id") as? String;
+        user.isFacebook = userDataDict.value(forKey: "is_facebook")as? Int8;
+        user.twitterAccessToken = userDataDict.value(forKey: "facebook_access_token") as? String;
         user.twitterId = userDataDict.value(forKey: "twitter_id") as? String;
+        user.twitterAccessToken = userDataDict.value(forKey: "twitter_access_token") as? String;
+        user.twitterAccessSecret = userDataDict.value(forKey: "twitter_access_secret") as? String;
+        user.isTwitter = userDataDict.value(forKey: "is_twiter")as? Int8;
         user.isActive = userDataDict.value(forKey: "is_active") as? Bool;
         user.isDeleted = userDataDict.value(forKey: "is_deleted") as? Bool;
         user.createdOn = userDataDict.value(forKey: "created_on") as? String;
-        user.isCastr = userDataDict.value(forKey: "is_caster") as? Int;
-        user.userCastSettingId = userDataDict.value(forKey: "user_cast_setting_id") as? Int;
+        user.isCastr = userDataDict.value(forKey: "is_caster") as? Int8;
+        user.userCastSettingId = userDataDict.value(forKey: "user_cast_setting_id") as? Int32;
+        user.userDevice = userDataDict.value(forKey: "device_registered_from")as? Int8;
+        user.deviceToken = userDataDict.value(forKey: "device_token")as? String;
         
         return user;
     }
-    func loadUserDefaults(userDataDict:NSDictionary)->Void{
+    func loadUserDefaults()->Void{
        
-        setting.setValue(userId!, forKey: "user_id")
-        setting.setValue(email!, forKey: "username")
-        setting.setValue(facebookId!, forKey: "facebook_id")
-        setting.setValue(twitterId!, forKey: "twitter_id")
-        setting.setValue(isActive!, forKey: "is_active")
-        setting.setValue(isDeleted!, forKey: "is_deleted")
-        setting.setValue(createdOn!, forKey: "created_on")
-        setting.setValue(isCastr!, forKey: "is_caster")
-        setting.setValue(userCastSettingId!, forKey: "user_cast_setting_id")
+        setting.setValue(self.userId!, forKey: "user_id")
+        setting.setValue(self.username!, forKey: "username")
+        setting.setValue(self.facebookId!, forKey: "facebook_id")
+        setting.setValue(self.isFacebook, forKey: "is_facebook")
+        setting.setValue(self.facebookAccessToken, forKey: "facebook_access_token")
+        setting.setValue(self.twitterId!, forKey: "twitter_id")
+        setting.setValue(self.twitterAccessToken, forKey: "twitter_access_token")
+        setting.setValue(self.twitterAccessSecret, forKey: "twitter_access_secret")
+        setting.setValue(self.isTwitter, forKey: "is_twiter")
+        //setting.setValue(self.isActive!, forKey: "is_active")
+        //setting.setValue(self.isCastr!, forKey: "is_caster")
+        setting.setValue(self.userCastSettingId!, forKey: "user_cast_setting_id")
+        //setting.setValue(self.userDevice!, forKey: "device_registered_from")
+        //setting.setValue(self.deviceToken, forKey: "device_token")
         
     }
 }
