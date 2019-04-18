@@ -22,6 +22,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         
          TWTRTwitter.sharedInstance().start(withConsumerKey:"anwp6W4J66hoUWrB1PX9zMHiu", consumerSecret: "tXOlOLD8gcRQhrux93NcBQOA1v2WE24PcZTb9PrgLSS8c4DUAI")
+        
+        if let user_id = setting.value(forKey: "user_id") {
+            // Override point for customization after application launch.
+            window = UIWindow(frame: UIScreen.main.bounds)
+           window?.rootViewController = HomeViewController.MainViewController()
+            
+        }else{
+            window = UIWindow(frame: UIScreen.main.bounds)
+           
+            window?.rootViewController = LoginStep1ViewController.MainViewController()
+        }
+        
         return true
 
     }

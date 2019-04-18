@@ -13,6 +13,14 @@ import TwitterKit
 import TwitterCore
 
 class LoginStep1ViewController: UIViewController {
+    
+    
+    class func MainViewController() -> UINavigationController{
+        
+        return UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "navLogin") as! UINavigationController
+        
+    }
+    
     @IBOutlet weak var facebookButton:UIButton!
     @IBOutlet weak var twitterButton:UIButton!
     
@@ -55,7 +63,7 @@ class LoginStep1ViewController: UIViewController {
                 let loginURL = "user/login/format/json";
                 
                 print(user.toDictionary(user: user ))
-                self.userManage(jsonURL:loginURL,user: user);
+                self.userManage(jsonURL:loginURL,user: user,requestType: "");
                 
                 
             }else {
@@ -101,7 +109,7 @@ class LoginStep1ViewController: UIViewController {
                     
                    let loginURL = "user/login/format/json";
                     
-                    self.userManage(jsonURL:loginURL,user: user);
+                    self.userManage(jsonURL:loginURL,user: user,requestType: "");
                 }
                 else{
                     
@@ -122,7 +130,7 @@ class LoginStep1ViewController: UIViewController {
         user.password = passwordTextField.text;
         let isValid = self.validateSignupForm(user: user); //CALLING VALIDATION FUNCTION
         if(isValid==true){
-            self.userManage(jsonURL: registerationURL,user: user);
+            self.userManage(jsonURL: registerationURL,user: user,requestType: "");
         }
         
     }
@@ -155,7 +163,7 @@ class LoginStep1ViewController: UIViewController {
         return isValid;
        
     }
-    func userManage(jsonURL:String,user : User)->Void{
+    func userManage(jsonURL:String,user : User, requestType : String)->Void{
         //iPhone or iPad
         //let model = UIDevice.current.model;
         user.userDevice = 2;//
@@ -166,23 +174,37 @@ class LoginStep1ViewController: UIViewController {
             user.deviceToken = "test";
         }
         
-        UserService().postUser(jsonURL: jsonURL,postData:user.toDictionary(user: user),complete:{(response) in
+        UserService().postDataMethod(jsonURL: jsonURL,postData:user.toDictionary(user: user),complete:{(response) in
             print(response);
             if (Int(response.value(forKey: "status") as! String)! == 1) {
                 
                 let message = response.value(forKey: "message") as! String;
                 
                 let alert = UIAlertController.init(title: "Success", message: message, preferredStyle: .alert);
-                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil));
+                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: {(resp) in
+                    let userDict = response.value(forKey: "data") as! NSDictionary;
+                    print(userDict)
+                    let user = User().getUserData(userDataDict: userDict);
+                    user.loadUserDefaults();
+                    if(requestType == ""){
+                        
+                    let viewController: UserTypeActionViewController = self.storyboard?.instantiateViewController(withIdentifier: "UserTypeActionViewController") as! UserTypeActionViewController;
+                    self.navigationController?.pushViewController(viewController, animated: true);
+                        print(self.navigationController);
+                        
+                    }else if(requestType == "login"){
+                        UIApplication.shared.keyWindow?.rootViewController = HomeViewController.MainViewController()
+                        //let viewController: HomeViewController = self.storyboard?.instantiateViewController(withIdentifier: "HomeViewController") as! HomeViewController;
+                        //self.navigationController?.pushViewController(viewController, animated: true);
+                    }
+                    
+                    //let vc = UserTypeActionViewController(nibName: "UserTypeActionViewController", bundle: nil)
+                    //self.navigationController?.pushViewController(vc, animated: true )
+                    
+                }));
                 self.present(alert, animated: true)
                 
-                let userDict = response.value(forKey: "data") as! NSDictionary;
-                print(userDict)
-                let user = User().getUserData(userDataDict: userDict);
-                user.loadUserDefaults();
                 
-                let viewController: UserTypeActionViewController = self.storyboard?.instantiateViewController(withIdentifier: "UserTypeActionViewController") as! UserTypeActionViewController;
-                self.present(viewController, animated: true, completion: nil);
                 
             } else {
                 let message = response.value(forKey: "message") as! String;
@@ -194,4 +216,14 @@ class LoginStep1ViewController: UIViewController {
         })
     }
     
+    @IBAction func loginButtonClicked(_ sender: Any) {
+        let user = User();
+        let registerationURL = "user/login/format/json";
+        user.username = emailTextField.text;
+        user.password = passwordTextField.text;
+        let isValid = self.validateSignupForm(user: user); //CALLING VALIDATION FUNCTION
+        if(isValid==true){
+            self.userManage(jsonURL: registerationURL,user: user,requestType: "login");
+        }
+    }
 }

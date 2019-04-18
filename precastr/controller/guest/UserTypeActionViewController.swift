@@ -14,10 +14,11 @@ class UserTypeActionViewController: UIViewController {
     
     @IBOutlet weak var moderatorButton: UIButton!
     
-    
+    var loggedInUser : User!
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        loggedInUser = User().loadUserDataFromUserDefaults(userDataDict : setting);
         // Do any additional setup after loading the view.
     }
 
@@ -38,6 +39,8 @@ class UserTypeActionViewController: UIViewController {
     */
 
     @IBAction func casterButtonAction(_ sender: Any) {
+        let viewController: PrecastTypeSectionViewController = self.storyboard?.instantiateViewController(withIdentifier: "PrecastTypeSectionViewController") as! PrecastTypeSectionViewController;
+        self.navigationController?.pushViewController(viewController, animated: true);
     }
     
     @IBAction func moderatorButtonAction(_ sender: Any) {

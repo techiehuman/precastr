@@ -22,7 +22,12 @@
 		FA6AB59122531E8200C5491F /* precastrTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6AB59022531E8200C5491F /* precastrTests.swift */; };
 		FA6AB59C22531E8200C5491F /* precastrUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6AB59B22531E8200C5491F /* precastrUITests.swift */; };
 		FA6AB5AC2253359300C5491F /* LoginStep1ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6AB5AB2253359300C5491F /* LoginStep1ViewController.swift */; };
+		FA72E17922624DC500A259A1 /* CastModeratorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA72E17822624DC500A259A1 /* CastModeratorViewController.swift */; };
 		FA84055A2254C4DA00BA2D55 /* PublishViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8405592254C4DA00BA2D55 /* PublishViewController.swift */; };
+		FABF02482264EF650067960C /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABF02472264EF640067960C /* HomeViewController.swift */; };
+		FABF024B2264FC730067960C /* SideMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABF024A2264FC730067960C /* SideMenuViewController.swift */; };
+		FABF024E2265BFDF0067960C /* SideMenuViewController+TableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABF024D2265BFDF0067960C /* SideMenuViewController+TableView.swift */; };
+		FABF02502265DFBB0067960C /* TableTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABF024F2265DFBB0067960C /* TableTableViewController.swift */; };
 		FAE4DF61225F0E94008875C3 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE4DF60225F0E94008875C3 /* UserService.swift */; };
 		FAE4DF64225F155C008875C3 /* AppUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE4DF63225F155C008875C3 /* AppUtil.swift */; };
 		FEE73D1CBA1D94C8162E3DC6 /* Pods_precastrUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 561E50304594AB7F3B9F4993 /* Pods_precastrUITests.framework */; };
@@ -74,7 +79,12 @@
 		FA6AB59B22531E8200C5491F /* precastrUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = precastrUITests.swift; sourceTree = "<group>"; };
 		FA6AB59D22531E8200C5491F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FA6AB5AB2253359300C5491F /* LoginStep1ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginStep1ViewController.swift; sourceTree = "<group>"; };
+		FA72E17822624DC500A259A1 /* CastModeratorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CastModeratorViewController.swift; sourceTree = "<group>"; };
 		FA8405592254C4DA00BA2D55 /* PublishViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublishViewController.swift; sourceTree = "<group>"; };
+		FABF02472264EF640067960C /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		FABF024A2264FC730067960C /* SideMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuViewController.swift; sourceTree = "<group>"; };
+		FABF024D2265BFDF0067960C /* SideMenuViewController+TableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SideMenuViewController+TableView.swift"; sourceTree = "<group>"; };
+		FABF024F2265DFBB0067960C /* TableTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableTableViewController.swift; sourceTree = "<group>"; };
 		FAE4DF60225F0E94008875C3 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		FAE4DF63225F155C008875C3 /* AppUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUtil.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -206,6 +216,8 @@
 		FA6AB5A92253355800C5491F /* controller */ = {
 			isa = PBXGroup;
 			children = (
+				FABF02492264FB500067960C /* sidemenu */,
+				FABF02462264EE600067960C /* home */,
 				FA6AB5AA2253355F00C5491F /* guest */,
 			);
 			path = controller;
@@ -218,8 +230,35 @@
 				FA8405592254C4DA00BA2D55 /* PublishViewController.swift */,
 				FA4D544B2260F7F200E9589B /* UserTypeActionViewController.swift */,
 				FA4D544D2260F95200E9589B /* PrecastTypeSectionViewController.swift */,
+				FA72E17822624DC500A259A1 /* CastModeratorViewController.swift */,
 			);
 			path = guest;
+			sourceTree = "<group>";
+		};
+		FABF02462264EE600067960C /* home */ = {
+			isa = PBXGroup;
+			children = (
+				FABF02472264EF640067960C /* HomeViewController.swift */,
+			);
+			path = home;
+			sourceTree = "<group>";
+		};
+		FABF02492264FB500067960C /* sidemenu */ = {
+			isa = PBXGroup;
+			children = (
+				FABF024C2264FC9E0067960C /* extension */,
+				FABF024A2264FC730067960C /* SideMenuViewController.swift */,
+				FABF024F2265DFBB0067960C /* TableTableViewController.swift */,
+			);
+			path = sidemenu;
+			sourceTree = "<group>";
+		};
+		FABF024C2264FC9E0067960C /* extension */ = {
+			isa = PBXGroup;
+			children = (
+				FABF024D2265BFDF0067960C /* SideMenuViewController+TableView.swift */,
+			);
+			path = extension;
 			sourceTree = "<group>";
 		};
 		FAE4DF62225F1069008875C3 /* util */ = {
@@ -489,13 +528,18 @@
 				FAE4DF61225F0E94008875C3 /* UserService.swift in Sources */,
 				FA291B0A225380830093E6CE /* User.swift in Sources */,
 				FA4D544E2260F95200E9589B /* PrecastTypeSectionViewController.swift in Sources */,
+				FABF024B2264FC730067960C /* SideMenuViewController.swift in Sources */,
 				FA6AB57E22531E7300C5491F /* ViewController.swift in Sources */,
+				FA72E17922624DC500A259A1 /* CastModeratorViewController.swift in Sources */,
 				FA84055A2254C4DA00BA2D55 /* PublishViewController.swift in Sources */,
+				FABF02502265DFBB0067960C /* TableTableViewController.swift in Sources */,
 				FA4D544C2260F7F200E9589B /* UserTypeActionViewController.swift in Sources */,
 				FA6AB57C22531E7300C5491F /* AppDelegate.swift in Sources */,
 				FA6AB5AC2253359300C5491F /* LoginStep1ViewController.swift in Sources */,
 				FA291B0D2253ABCD0093E6CE /* HttpService.swift in Sources */,
+				FABF02482264EF650067960C /* HomeViewController.swift in Sources */,
 				FAE4DF64225F155C008875C3 /* AppUtil.swift in Sources */,
+				FABF024E2265BFDF0067960C /* SideMenuViewController+TableView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
