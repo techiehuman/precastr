@@ -28,6 +28,9 @@
 		FABF024B2264FC730067960C /* SideMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABF024A2264FC730067960C /* SideMenuViewController.swift */; };
 		FABF024E2265BFDF0067960C /* SideMenuViewController+TableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABF024D2265BFDF0067960C /* SideMenuViewController+TableView.swift */; };
 		FABF02502265DFBB0067960C /* TableTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABF024F2265DFBB0067960C /* TableTableViewController.swift */; };
+		FABF0258226DBA750067960C /* ModeratorViewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABF0256226DBA750067960C /* ModeratorViewTableViewCell.swift */; };
+		FABF0259226DBA750067960C /* ModeratorViewTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FABF0257226DBA750067960C /* ModeratorViewTableViewCell.xib */; };
+		FABF025B226DBE650067960C /* ModeratorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABF025A226DBE650067960C /* ModeratorViewController.swift */; };
 		FAE4DF61225F0E94008875C3 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE4DF60225F0E94008875C3 /* UserService.swift */; };
 		FAE4DF64225F155C008875C3 /* AppUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE4DF63225F155C008875C3 /* AppUtil.swift */; };
 		FEE73D1CBA1D94C8162E3DC6 /* Pods_precastrUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 561E50304594AB7F3B9F4993 /* Pods_precastrUITests.framework */; };
@@ -85,6 +88,9 @@
 		FABF024A2264FC730067960C /* SideMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuViewController.swift; sourceTree = "<group>"; };
 		FABF024D2265BFDF0067960C /* SideMenuViewController+TableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SideMenuViewController+TableView.swift"; sourceTree = "<group>"; };
 		FABF024F2265DFBB0067960C /* TableTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableTableViewController.swift; sourceTree = "<group>"; };
+		FABF0256226DBA750067960C /* ModeratorViewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModeratorViewTableViewCell.swift; sourceTree = "<group>"; };
+		FABF0257226DBA750067960C /* ModeratorViewTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ModeratorViewTableViewCell.xib; sourceTree = "<group>"; };
+		FABF025A226DBE650067960C /* ModeratorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModeratorViewController.swift; sourceTree = "<group>"; };
 		FAE4DF60225F0E94008875C3 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		FAE4DF63225F155C008875C3 /* AppUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUtil.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -246,9 +252,11 @@
 		FABF02492264FB500067960C /* sidemenu */ = {
 			isa = PBXGroup;
 			children = (
+				FABF02532269D35D0067960C /* cell */,
 				FABF024C2264FC9E0067960C /* extension */,
 				FABF024A2264FC730067960C /* SideMenuViewController.swift */,
 				FABF024F2265DFBB0067960C /* TableTableViewController.swift */,
+				FABF025A226DBE650067960C /* ModeratorViewController.swift */,
 			);
 			path = sidemenu;
 			sourceTree = "<group>";
@@ -259,6 +267,15 @@
 				FABF024D2265BFDF0067960C /* SideMenuViewController+TableView.swift */,
 			);
 			path = extension;
+			sourceTree = "<group>";
+		};
+		FABF02532269D35D0067960C /* cell */ = {
+			isa = PBXGroup;
+			children = (
+				FABF0256226DBA750067960C /* ModeratorViewTableViewCell.swift */,
+				FABF0257226DBA750067960C /* ModeratorViewTableViewCell.xib */,
+			);
+			path = cell;
 			sourceTree = "<group>";
 		};
 		FAE4DF62225F1069008875C3 /* util */ = {
@@ -390,6 +407,7 @@
 			files = (
 				FA6AB58622531E8200C5491F /* LaunchScreen.storyboard in Resources */,
 				FA6AB58322531E8200C5491F /* Assets.xcassets in Resources */,
+				FABF0259226DBA750067960C /* ModeratorViewTableViewCell.xib in Resources */,
 				FA6AB58122531E7300C5491F /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -524,6 +542,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FABF0258226DBA750067960C /* ModeratorViewTableViewCell.swift in Sources */,
 				FA0372E222605A3800C3B3C9 /* UserManager.swift in Sources */,
 				FAE4DF61225F0E94008875C3 /* UserService.swift in Sources */,
 				FA291B0A225380830093E6CE /* User.swift in Sources */,
@@ -540,6 +559,7 @@
 				FABF02482264EF650067960C /* HomeViewController.swift in Sources */,
 				FAE4DF64225F155C008875C3 /* AppUtil.swift in Sources */,
 				FABF024E2265BFDF0067960C /* SideMenuViewController+TableView.swift in Sources */,
+				FABF025B226DBE650067960C /* ModeratorViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -58,13 +58,17 @@ class CastModeratorViewController: UIViewController, CNContactPickerDelegate, MF
         postData["caster_user_id"] = loggedInUser.userId
         let joiner = ","
         let elements = contactsSelected
-        let joinedStrings = elements.joined(separator: joiner)
+        var joinedStrings = elements.joined(separator: joiner)
+        
+        joinedStrings = joinedStrings.replacingOccurrences(of: "(", with: "")
+        joinedStrings = joinedStrings.replacingOccurrences(of: ")", with: "-")
+        print(joinedStrings)
         postData["moderator_phone_number"] =  joinedStrings;
         let jsonURL = "user/select_moderator/format/json";
         
         UserService().postDataMethod(jsonURL:jsonURL,postData: postData, complete:{(response) in
            
-            
+            print(response);
         });
         
         if (MFMessageComposeViewController.canSendText()) {

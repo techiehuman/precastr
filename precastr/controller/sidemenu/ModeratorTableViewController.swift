@@ -1,17 +1,15 @@
 //
-//  TableTableViewController.swift
+//  ModeratorTableViewController.swift
 //  precastr
 //
-//  Created by Macbook on 16/04/19.
+//  Created by Macbook on 19/04/19.
 //  Copyright © 2019 Macbook. All rights reserved.
 //
 
 import UIKit
 
-class TableTableViewController: UITableViewController {
+class ModeratorTableViewController: UITableViewController {
 
-    private var dateCellExpanded: Bool = false
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -27,45 +25,18 @@ class TableTableViewController: UITableViewController {
         // Dispose of any resources that can be recreated.
     }
 
-    
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-       /* if  indexPath.row == 0 {
-            if dateCellExpanded {
-                dateCellExpanded = false
-            } else {
-                dateCellExpanded = true
-            }
-            tableView.beginUpdates()
-            tableView.endUpdates()
-        } */
-        if indexPath.row == 2 {
-            
-            
-            
-          /*
-            if dateCellExpanded {
-                dateCellExpanded = false
-            } else {
-                dateCellExpanded = true
-            }
-            tableView.beginUpdates()
-            tableView.endUpdates() */
-            
-            let viewController: ModeratorViewController = self.storyboard?.instantiateViewController(withIdentifier: "ModeratorViewController") as! ModeratorViewController;
-            self.navigationController?.pushViewController(viewController, animated: true);
-            
-        }
+    // MARK: - Table view data source
+
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        // #warning Incomplete implementation, return the number of sections
+        return 0
     }
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-       // if indexPath.row == 0 {
-            if dateCellExpanded {
-                return 250
-            } else {
-                return 50
-            }
-       // }
-        return 50
+
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        // #warning Incomplete implementation, return the number of rows
+        return 0
     }
+
     /*
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
@@ -120,5 +91,8 @@ class TableTableViewController: UITableViewController {
         // Pass the selected object to the new view controller.
     }
     */
-
+    
+    
+    @IBOutlet weak var moderatorList: UITableView!
+    
 }

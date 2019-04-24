@@ -24,6 +24,17 @@ class UserService{
         });
     };
     
+    func getDataMethod(jsonURL : String, complete: @escaping(NSDictionary)->Void) {
+        
+        let url = "\(ApiUrl)\(jsonURL)";
+        print("API Url : \(url)")
+        
+        HttpService().getMethod(url: url, complete: { (response ) in
+            complete(response);
+        });
+    };
+    
+    
   
     
 }
