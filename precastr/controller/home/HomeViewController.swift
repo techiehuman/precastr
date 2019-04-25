@@ -24,9 +24,10 @@ class HomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = UIColor (red: 0, green: 0.4745, blue: 0.9176, alpha: 1)
         let doneButton = UIButton(type: .system);
         doneButton.setTitle("Save", for: .normal);
-        doneButton.addTarget(self, action: #selector(selectFriendsDone(_ :)), for: .touchUpInside)
+       // doneButton.addTarget(self, action: #selector(selectFriendsDone(_ :)), for: .touchUpInside)
         
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: doneButton);
         // Do any additional setup after loading the view.
