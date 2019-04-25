@@ -24,7 +24,11 @@ class HomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        let doneButton = UIButton(type: .system);
+        doneButton.setTitle("Save", for: .normal);
+        doneButton.addTarget(self, action: #selector(selectFriendsDone(_ :)), for: .touchUpInside)
+        
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: doneButton);
         // Do any additional setup after loading the view.
     }
 
@@ -39,6 +43,9 @@ class HomeViewController: UIViewController {
         let viewController: TableTableViewController = self.storyboard?.instantiateViewController(withIdentifier: "TableTableViewController") as! TableTableViewController;
         self.navigationController?.pushViewController(viewController, animated: true);
        
+        
+    }
+    func selectFriendsDone(){
         
     }
     
