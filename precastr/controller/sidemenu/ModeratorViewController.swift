@@ -11,8 +11,10 @@ import UIKit
 class ModeratorViewController: UIViewController {
   
     @IBOutlet weak var moderatorList: UITableView!
+    var moderatorBool : Bool!
      var loggedInUser : User!
-    var moderators : [Int] = [];
+    var moderators : [User] = [User]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -22,15 +24,24 @@ class ModeratorViewController: UIViewController {
         
         
       moderatorList.register(UINib(nibName: "ModeratorViewTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "ModeratorViewTableViewCell")
+        print("moderatorBool")
+        print(Bool(moderatorBool))
+        var jsonURL = "";
         
-        
-        let jsonURL = "user/get_caster_moderator/format/json?user_id=\(1))&submit=1";
+        if(Bool(moderatorBool)==true){
+                 jsonURL = "user/get_caster_moderator/format/json?user_id=\(1))&submit=1";
+        }else{
+                 jsonURL = "user/get_moderator_casters/format/json?moderator_id=\(4))&submit=1";
+        }
         UserService().getDataMethod(jsonURL: jsonURL,complete:{(response) in
             print(response);
            let modeArray = response.value(forKey: "data") as! NSArray;
             for mode in modeArray{
+                var user : User = User()
                 var modeDict = mode as! NSDictionary;
-                self.moderators.append(Int((modeDict.value(forKey: "moderator_id") as! NSString) as String)!);
+               // self.moderators.append(String((modeDict.value(forKey: "username") as! NSString) as String)!);
+                user.username = modeDict.value(forKey: "username") as! String
+                self.moderators.append(user)
                 
             }
             self.moderatorList.reloadData();
@@ -73,8 +84,8 @@ extension ModeratorViewController: UITableViewDelegate, UITableViewDataSource {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "ModeratorViewTableViewCell", for: indexPath) as! ModeratorViewTableViewCell;
         print("******")
-        print(String(moderatorObject))
-        cell.moderatorLabel.text = String(moderatorObject);
+        print(String(moderatorObject.username))
+        cell.moderatorLabel.text = String(moderatorObject.username);
         cell.moderatorImage.image = UIImage.init(named: "small")
        
         cell.moderatorImage.layer.masksToBounds = false

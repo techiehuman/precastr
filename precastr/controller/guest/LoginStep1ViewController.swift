@@ -43,13 +43,16 @@ class LoginStep1ViewController: UIViewController {
     @IBAction func twitterButtonClicked(_ sender: Any) {
         // Swift
         // Get the current userID. This value should be managed by the developer but can be retrieved from the TWTRSessionStore.
-        
+        let store = TWTRTwitter.sharedInstance().sessionStore
+        if let userID = store.session()?.userID {
+            store.logOutUserID(userID)
+        }
         
         TWTRTwitter.sharedInstance().logIn { (session, error) in
             if (session != nil) {
                 let user = User();
                 let name = session?.userName ?? ""
-                
+               
                 print(session?.userID  ?? "")
                 print(session?.authToken  ?? "")
                 print(session?.authTokenSecret  ?? "")
@@ -74,7 +77,17 @@ class LoginStep1ViewController: UIViewController {
     
     @IBAction func facebookButtonClicked(_ sender: Any) {
         let fbloginManger: FBSDKLoginManager = FBSDKLoginManager()
-       
+    /*CODE FOR LOGOUT */
+        FBSDKAccessToken.setCurrent(nil)
+        FBSDKProfile.setCurrent(nil)
+
+        FBSDKLoginManager().logOut()
+        let cookies = HTTPCookieStorage.shared
+        let facebookCookies = cookies.cookies(for: URL(string: "https://facebook.com/")!)
+        for cookie in facebookCookies! {
+            cookies.deleteCookie(cookie )
+        }
+        /* CODE FOR LOGOUT */
         fbloginManger.logIn(withReadPermissions: ["email"], from:self) {(result, error) -> Void in
             if(error == nil){
                 let fbLoginResult: FBSDKLoginManagerLoginResult  = result!

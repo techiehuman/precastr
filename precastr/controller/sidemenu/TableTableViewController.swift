@@ -11,7 +11,7 @@ import UIKit
 class TableTableViewController: UITableViewController {
 
     private var dateCellExpanded: Bool = false
-    
+    var rowTypeVar : Bool = false
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -27,6 +27,11 @@ class TableTableViewController: UITableViewController {
         // Dispose of any resources that can be recreated.
     }
 
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let navVC = segue.destination as! ModeratorViewController
+       navVC.moderatorBool = rowTypeVar
+        
+    }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
        /* if  indexPath.row == 0 {
@@ -50,10 +55,17 @@ class TableTableViewController: UITableViewController {
             }
             tableView.beginUpdates()
             tableView.endUpdates() */
+            rowTypeVar = true
+           // let viewController: ModeratorViewController = self.storyboard?.instantiateViewController(withIdentifier: "ModeratorViewController") as! ModeratorViewController;
+          //  self.navigationController?.pushViewController(viewController, animated: true);
+            self.performSegue(withIdentifier: "moderatorSegue", sender: self);
             
-            let viewController: ModeratorViewController = self.storyboard?.instantiateViewController(withIdentifier: "ModeratorViewController") as! ModeratorViewController;
-            self.navigationController?.pushViewController(viewController, animated: true);
-            
+        }
+        if(indexPath.row == 3){
+            rowTypeVar = false
+           // let viewController: ModeratorViewController = self.storyboard?.instantiateViewController(withIdentifier: "ModeratorViewController") as! ModeratorViewController;
+           // self.navigationController?.pushViewController(viewController, animated: true);
+            self.performSegue(withIdentifier: "moderatorSegue", sender: self);
         }
     }
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
