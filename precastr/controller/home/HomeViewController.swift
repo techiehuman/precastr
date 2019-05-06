@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
 
@@ -35,7 +36,7 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: doneButton); */
         loggedInUser = User().loadUserDataFromUserDefaults(userDataDict : setting);
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(addTapped))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "New", style: .plain, target: self, action: #selector(redirectOnSocialPlatform))
         // Do any additional setup after loading the view.
         
         socialPostList.register(UINib(nibName: "HomeTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "HomeTableViewCell")
@@ -73,8 +74,11 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
        
         
     }
-    @objc func addTapped(){
+    @objc func redirectOnSocialPlatform(){
         print("hello addTapped")
+        let viewController: TwitterPostViewController = self.storyboard?.instantiateViewController(withIdentifier: "TwitterPostViewController") as! TwitterPostViewController;
+        self.navigationController?.pushViewController(viewController, animated: true);
+        
     }
     
     /*
@@ -95,7 +99,7 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         return self.homePosts.count;
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 90;
+        return 120;
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -104,23 +108,26 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "HomeTableViewCell", for: indexPath) as! HomeTableViewCell;
         print("******")
-       
-        cell.postTextLabel.text = (homeObject as AnyObject).value(forKey: "message") as? String
-        cell.profileLabel.text = (homeObject as AnyObject).value(forKey: "screen_name") as? String
-        cell.profileImage.image = (homeObject as AnyObject).value(forKey: "image_Url") as? UIImage
+       print((homeObject as AnyObject).value(forKey: "sharing_media_Url") as? String)
+        cell.postTextLabel.attributedText = ((homeObject as AnyObject).value(forKey: "sharing_media_Url") as? String)?.htmlToAttributedString
+        cell.profileLabel.text = ((homeObject as AnyObject).value(forKey: "short_user_name") as? String?)!
+        print((homeObject as AnyObject).value(forKey: "short_user_name") as? String)
+        cell.profileImage.sd_setImage(with: URL(string: (homeObject as AnyObject).value(forKey: "image_Url") as! String), placeholderImage: UIImage(named: "profile"));
+        
+        //cell.profileImage.image = (homeObject as AnyObject).value(forKey: "image_Url") as? UIImage
         
         cell.profileImage.layer.masksToBounds = false
         
         cell.profileImage.layer.cornerRadius = cell.profileImage.frame.height/2
         cell.profileImage.clipsToBounds = true
-        cell.sourceImage.image = (homeObject as AnyObject).value(forKey: "sharing_media_Url") as? UIImage
+        cell.sourceImage.image = UIImage.init(named: "twitter")
         cell.sourceImage.layer.masksToBounds = false
         
-        cell.sourceImage.layer.cornerRadius = cell.profileImage.frame.height/2
+       cell.sourceImage.layer.cornerRadius = cell.sourceImage.frame.height/2
         cell.sourceImage.clipsToBounds = true
 
         
-        cell.dateLabel.text = Calendar.current as? String
+        cell.dateLabel.text = (homeObject as AnyObject).value(forKey: "created_date") as! String
         return cell;
     }
 }

@@ -11,6 +11,7 @@ pod 'FBSDKShareKit'
 pod 'FBSDKPlacesKit'
 pod 'TwitterKit'
 pod 'Alamofire'
+pod 'SDWebImage', '~> 4.0'
   # Pods for precastr
 
   target 'precastrTests' do

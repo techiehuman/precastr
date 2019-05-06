@@ -57,6 +57,7 @@ class LoginStep1ViewController: UIViewController {
                 print(session?.authToken  ?? "")
                 print(session?.authTokenSecret  ?? "")
                 
+                
                 user.twitterAccessToken = session?.authToken
                 user.twitterAccessSecret = session?.authTokenSecret
                 user.twitterId = session?.userID

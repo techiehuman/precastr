@@ -26,6 +26,7 @@
 		FA6AB59C22531E8200C5491F /* precastrUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6AB59B22531E8200C5491F /* precastrUITests.swift */; };
 		FA6AB5AC2253359300C5491F /* LoginStep1ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6AB5AB2253359300C5491F /* LoginStep1ViewController.swift */; };
 		FA72E17922624DC500A259A1 /* CastModeratorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA72E17822624DC500A259A1 /* CastModeratorViewController.swift */; };
+		FA7A3644227AD0A900689E27 /* multiExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7A3643227AD0A900689E27 /* multiExtension.swift */; };
 		FA84055A2254C4DA00BA2D55 /* PublishViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8405592254C4DA00BA2D55 /* PublishViewController.swift */; };
 		FABF02482264EF650067960C /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABF02472264EF640067960C /* HomeViewController.swift */; };
 		FABF024B2264FC730067960C /* SideMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABF024A2264FC730067960C /* SideMenuViewController.swift */; };
@@ -89,6 +90,7 @@
 		FA6AB59D22531E8200C5491F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FA6AB5AB2253359300C5491F /* LoginStep1ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginStep1ViewController.swift; sourceTree = "<group>"; };
 		FA72E17822624DC500A259A1 /* CastModeratorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CastModeratorViewController.swift; sourceTree = "<group>"; };
+		FA7A3643227AD0A900689E27 /* multiExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = multiExtension.swift; sourceTree = "<group>"; };
 		FA8405592254C4DA00BA2D55 /* PublishViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublishViewController.swift; sourceTree = "<group>"; };
 		FABF02472264EF640067960C /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		FABF024A2264FC730067960C /* SideMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuViewController.swift; sourceTree = "<group>"; };
@@ -290,6 +292,7 @@
 			isa = PBXGroup;
 			children = (
 				FABF024D2265BFDF0067960C /* SideMenuViewController+TableView.swift */,
+				FA7A3643227AD0A900689E27 /* multiExtension.swift */,
 			);
 			path = extension;
 			sourceTree = "<group>";
@@ -504,6 +507,7 @@
 				"${BUILT_PRODUCTS_DIR}/FBSDKLoginKit/FBSDKLoginKit.framework",
 				"${BUILT_PRODUCTS_DIR}/FBSDKPlacesKit/FBSDKPlacesKit.framework",
 				"${BUILT_PRODUCTS_DIR}/FBSDKShareKit/FBSDKShareKit.framework",
+				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
 				"${PODS_ROOT}/TwitterCore/iOS/TwitterCore.framework",
 				"${PODS_ROOT}/TwitterKit/iOS/TwitterKit.framework",
 			);
@@ -515,6 +519,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKLoginKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKPlacesKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKShareKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TwitterCore.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TwitterKit.framework",
 			);
@@ -583,6 +588,7 @@
 				FA6AB57C22531E7300C5491F /* AppDelegate.swift in Sources */,
 				FA0294E3227315F300465318 /* TwitterPostViewController.swift in Sources */,
 				FA6AB5AC2253359300C5491F /* LoginStep1ViewController.swift in Sources */,
+				FA7A3644227AD0A900689E27 /* multiExtension.swift in Sources */,
 				FA291B0D2253ABCD0093E6CE /* HttpService.swift in Sources */,
 				FABF02482264EF650067960C /* HomeViewController.swift in Sources */,
 				FAE4DF64225F155C008875C3 /* AppUtil.swift in Sources */,

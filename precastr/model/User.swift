@@ -39,6 +39,7 @@ class User  {
         user.twitterAccessSecret = userDataDict.value(forKey: "twitter_access_secret") as? String;
         user.isTwitter = userDataDict.value(forKey: "is_twiter")as? Int8;
         user.isActive = userDataDict.value(forKey: "is_active") as? Bool;
+        //user.token = userDataDict.value(forKey: "token") as? String;
         user.isDeleted = userDataDict.value(forKey: "is_deleted") as? Bool;
         user.createdOn = userDataDict.value(forKey: "created_on") as? String;
         user.isCastr = userDataDict.value(forKey: "is_caster") as? Int8;
@@ -60,7 +61,19 @@ class User  {
         userJson["twitter_id"] = user.twitterId;
         userJson["twitter_access_token"] = user.twitterAccessToken
         userJson["twitter_access_secret"] = user.twitterAccessSecret
-        userJson["is_twiter"] = user.isTwitter
+        userJson["is_twiter"] = user.isTwitter;
+        if (user.isTwitter == 1) {
+            var token = "";
+            token = token + "{\"twitter_access_token\":\"\(user.twitterAccessToken!)\"";
+            token = token + ",\"twitter_access_secret\":\"\(user.twitterAccessSecret!)\"";
+            token = token + ",\"twitter_id\":\"\(user.twitterId!)\"}";
+            userJson["token"] = "\(token)";
+        } else if (user.isFacebook == 1) {
+            var token = "";
+            token = token + "{\"facebook_access_token\":\"\(user.facebookAccessToken!)\"}";
+            userJson["token"] = token;
+        }
+       
         userJson["is_active"] = user.isActive;
         userJson["is_deleted"] = user.isDeleted;
         userJson["created_on"] = user.createdOn;
@@ -84,6 +97,7 @@ class User  {
         user.twitterAccessSecret = userDataDict.value(forKey: "twitter_access_secret") as? String;
         user.isTwitter = userDataDict.value(forKey: "is_twiter")as? Int8;
         user.isActive = userDataDict.value(forKey: "is_active") as? Bool;
+        
         user.isDeleted = userDataDict.value(forKey: "is_deleted") as? Bool;
         user.createdOn = userDataDict.value(forKey: "created_on") as? String;
         user.isCastr = userDataDict.value(forKey: "is_caster") as? Int8;
