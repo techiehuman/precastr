@@ -31,8 +31,37 @@ class LoginStep1ViewController: UIViewController {
     @IBOutlet weak var passwordTextField: UITextField!
     override func viewDidLoad() {
         super.viewDidLoad()
-
         // Do any additional setup after loading the view.
+        self.navigationController?.navigationBar.isHidden = true
+        self.view.backgroundColor = UIColor(red: 12/255, green: 111/255, blue: 233/255, alpha: 1)
+        self.emailTextField.attributedPlaceholder = NSAttributedString(string: "Email Address", attributes: [NSAttributedStringKey.foregroundColor : UIColor.white ])
+        self.passwordTextField.attributedPlaceholder = NSAttributedString(string: "Password", attributes: [NSAttributedStringKey.foregroundColor : UIColor.white ])
+        self.emailTextField.layer.borderColor = UIColor.white.cgColor
+        self.emailTextField.layer.borderWidth = 0.5
+        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 25, height: 25))
+        let image = UIImage(named: "profile");
+        imageView.image = image;
+        self.emailTextField.leftView = imageView
+        self.emailTextField.leftViewMode = .always
+
+        
+       // self.emailTextField.leftView = UIView(frame: CGRect(x: 0, y: 0, width:15, height: self.emailTextField.frame.height))
+        self.passwordTextField.layer.borderColor = UIColor.white.cgColor
+        self.passwordTextField.layer.borderWidth = 0.5
+        self.passwordTextField.leftView = UIView(frame: CGRect(x: 0, y: 0, width:35, height: self.passwordTextField.frame.height))
+        
+        let imageViewP = UIImageView(frame: CGRect(x: 0, y: 0, width: 25, height: 25))
+        let imageP = UIImage(named: "password");
+        imageViewP.image = imageP;
+        self.passwordTextField.leftView = imageViewP
+        self.passwordTextField.leftViewMode = .always
+        
+    }
+        
+    
+    override func viewWillAppear(_ animated: Bool) {
+        
+        
     }
 
     override func didReceiveMemoryWarning() {

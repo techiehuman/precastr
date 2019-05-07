@@ -7,11 +7,14 @@
 //
 
 import UIKit
+import MobileCoreServices
+import Photos
 
-class TwitterPostViewController: UIViewController,UITextViewDelegate {
+class TwitterPostViewController: UIViewController,UITextViewDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate {
 
      @IBOutlet weak var postTextField: UITextView!
     var loggedInUser : User!
+    let picController = UIImagePickerController();
     override func viewDidLoad() {
         super.viewDidLoad()
        
@@ -52,9 +55,72 @@ class TwitterPostViewController: UIViewController,UITextViewDelegate {
     @IBOutlet weak var twitterBtnClicked: UIButton!
     
     @IBAction func AddSocialMedia(_ sender: Any) {
+        // create an actionSheet
+        let actionSheetController: UIAlertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        // create an action
+        let uploadPhotoAction: UIAlertAction = UIAlertAction(title: "Upload Photo", style: .default) { action -> Void in
+            self.selectPicture();
+        }
+        //uploadPhotoAction.setValue(selectedColor, forKey: "titleTextColor")
+        let takePhotoAction: UIAlertAction = UIAlertAction(title: "Take Photo", style: .default) { action -> Void in
+            self.takePicture();
+        }
+        //takePhotoAction.setValue(cenesLabelBlue, forKey: "titleTextColor")
+        
+        let cancelAction: UIAlertAction = UIAlertAction(title: "Cancel", style: .cancel) { action -> Void in }
+        cancelAction.setValue(UIColor.black, forKey: "titleTextColor")
+        
+        actionSheetController.addAction(uploadPhotoAction)
+        actionSheetController.addAction(takePhotoAction)
+        actionSheetController.addAction(cancelAction)
+        
+        // present an actionSheet...
+        present(actionSheetController, animated: true, completion: nil)
     }
     
+    func takePicture() {
+        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.camera) {
+            self.picController.sourceType = UIImagePickerControllerSourceType.camera
+            self.picController.allowsEditing = true
+            self.picController.delegate = self as! UIImagePickerControllerDelegate & UINavigationControllerDelegate
+            self.picController.mediaTypes = [kUTTypeImage as String]
+            present(picController, animated: true, completion: nil)
+        }
+    }
     
+    func selectPicture() {
+        //self.checkPermission();
+        
+        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.photoLibrary) {
+            self.picController.delegate = self as! UIImagePickerControllerDelegate & UINavigationControllerDelegate
+            self.picController.sourceType = UIImagePickerControllerSourceType.photoLibrary;
+            self.picController.allowsEditing = true
+            self.picController.mediaTypes = [kUTTypeImage as String]
+            self.present(picController, animated: true, completion: nil)
+        }
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        if let image = info[UIImagePickerControllerEditedImage] as? UIImage {
+           /* self.withoutimageView.isHidden = true;
+            
+            
+            DispatchQueue.main.async {
+                self.meTimeImageView.isHidden = false;
+                self.meTimeImageView.image = image;
+            }
+            self.imageToUpload = image;
+            let uploadImage = self.imageToUpload.compressImage(newSizeWidth: 212, newSizeHeight: 212, compressionQuality: 1.0) */
+        }
+        
+        picker.dismiss(animated: true, completion: nil);
+    }
+    
+    func uploadMeTimeImage() -> Void {
+        
+       
+    }
    
     @IBAction func postOnSocialPlatform(_ sender: Any) {
         let jsonURL = "posts/post_twitter_newpost/format/json"
