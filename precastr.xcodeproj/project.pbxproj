@@ -11,6 +11,7 @@
 		E8228EE2367B10CD930B1123 /* Pods_precastr.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 220036CD76F7644A5FF36C62 /* Pods_precastr.framework */; };
 		FA0294E3227315F300465318 /* TwitterPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0294E2227315F300465318 /* TwitterPostViewController.swift */; };
 		FA0372E222605A3800C3B3C9 /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0372E122605A3700C3B3C9 /* UserManager.swift */; };
+		FA1C1CDD228400A800583E1B /* Reusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1C1CDC228400A800583E1B /* Reusable.swift */; };
 		FA291B0A225380830093E6CE /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA291B09225380830093E6CE /* User.swift */; };
 		FA291B0D2253ABCD0093E6CE /* HttpService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA291B0C2253ABCD0093E6CE /* HttpService.swift */; };
 		FA4D544C2260F7F200E9589B /* UserTypeActionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA4D544B2260F7F200E9589B /* UserTypeActionViewController.swift */; };
@@ -70,6 +71,7 @@
 		C4DCE75455249966F5BD18FA /* Pods-precastr.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-precastr.release.xcconfig"; path = "Pods/Target Support Files/Pods-precastr/Pods-precastr.release.xcconfig"; sourceTree = "<group>"; };
 		FA0294E2227315F300465318 /* TwitterPostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwitterPostViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FA0372E122605A3700C3B3C9 /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
+		FA1C1CDC228400A800583E1B /* Reusable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reusable.swift; sourceTree = "<group>"; };
 		FA291B09225380830093E6CE /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		FA291B0C2253ABCD0093E6CE /* HttpService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpService.swift; sourceTree = "<group>"; };
 		FA4D544B2260F7F200E9589B /* UserTypeActionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTypeActionViewController.swift; sourceTree = "<group>"; };
@@ -161,6 +163,22 @@
 			path = manager;
 			sourceTree = "<group>";
 		};
+		FA1C1CDA2283FDA900583E1B /* extension */ = {
+			isa = PBXGroup;
+			children = (
+				FA7A3643227AD0A900689E27 /* multiExtension.swift */,
+			);
+			path = extension;
+			sourceTree = "<group>";
+		};
+		FA1C1CDB2284006F00583E1B /* protocol */ = {
+			isa = PBXGroup;
+			children = (
+				FA1C1CDC228400A800583E1B /* Reusable.swift */,
+			);
+			path = protocol;
+			sourceTree = "<group>";
+		};
 		FA291B08225380530093E6CE /* model */ = {
 			isa = PBXGroup;
 			children = (
@@ -212,6 +230,8 @@
 		FA6AB57A22531E7200C5491F /* precastr */ = {
 			isa = PBXGroup;
 			children = (
+				FA1C1CDB2284006F00583E1B /* protocol */,
+				FA1C1CDA2283FDA900583E1B /* extension */,
 				FA0294E1227307B900465318 /* CasterModerator */,
 				FA0372E0226059D200C3B3C9 /* manager */,
 				FAE4DF62225F1069008875C3 /* util */,
@@ -295,7 +315,6 @@
 			isa = PBXGroup;
 			children = (
 				FABF024D2265BFDF0067960C /* SideMenuViewController+TableView.swift */,
-				FA7A3643227AD0A900689E27 /* multiExtension.swift */,
 			);
 			path = extension;
 			sourceTree = "<group>";
@@ -590,6 +609,7 @@
 				FABF02502265DFBB0067960C /* TableTableViewController.swift in Sources */,
 				FA4D544C2260F7F200E9589B /* UserTypeActionViewController.swift in Sources */,
 				FA6AB57C22531E7300C5491F /* AppDelegate.swift in Sources */,
+				FA1C1CDD228400A800583E1B /* Reusable.swift in Sources */,
 				FA0294E3227315F300465318 /* TwitterPostViewController.swift in Sources */,
 				FA6AB5AC2253359300C5491F /* LoginStep1ViewController.swift in Sources */,
 				FA7A3644227AD0A900689E27 /* multiExtension.swift in Sources */,

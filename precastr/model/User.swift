@@ -10,6 +10,7 @@ import Foundation
 class User  {
     var userId              : Int32!
     var username            : String!
+    var name                : String!
     var password            : String!
     var facebookId          : String!
     var facebookAccessToken : String!
@@ -25,12 +26,14 @@ class User  {
     var userCastSettingId   : Int32!
     var userDevice          : Int8!
     var deviceToken         : String!
+    var profilePic          : String!
     
     
     func getUserData(userDataDict: NSDictionary)->User {
         let user = User();
         user.userId = Int32(userDataDict.value(forKey: "user_id") as! String);
         user.username = userDataDict.value(forKey: "username") as? String;
+        user.name = userDataDict.value(forKey: "name") as? String;
         user.facebookId = userDataDict.value(forKey: "facebook_id") as? String;
         user.facebookAccessToken = userDataDict.value(forKey: "facebook_access_token") as? String;
         user.isFacebook = userDataDict.value(forKey: "is_facebook")as? Int8;
@@ -39,7 +42,7 @@ class User  {
         user.twitterAccessSecret = userDataDict.value(forKey: "twitter_access_secret") as? String;
         user.isTwitter = userDataDict.value(forKey: "is_twiter")as? Int8;
         user.isActive = userDataDict.value(forKey: "is_active") as? Bool;
-        //user.token = userDataDict.value(forKey: "token") as? String;
+        user.profilePic = userDataDict.value(forKey: "profile_pic") as? String;
         user.isDeleted = userDataDict.value(forKey: "is_deleted") as? Bool;
         user.createdOn = userDataDict.value(forKey: "created_on") as? String;
         user.isCastr = userDataDict.value(forKey: "is_caster") as? Int8;
@@ -54,6 +57,7 @@ class User  {
         var userJson: [String: Any] = [:];
         userJson["user_id"] = user.userId;
         userJson["username"] = user.username;
+        userJson["name"] = user.name
         userJson["password"] = user.password;
         userJson["facebook_id"] = user.facebookId;
         userJson["is_facebook"] = user.isFacebook
@@ -81,6 +85,7 @@ class User  {
         userJson["user_cast_setting_id"] = user.userCastSettingId;
         userJson["device_registered_from"] = user.userDevice
         userJson["device_token"] = user.deviceToken
+        userJson["profile_pic"] = user.profilePic
         return userJson;
     }
     func loadUserDataFromUserDefaults(userDataDict: UserDefaults) -> User {
@@ -88,6 +93,7 @@ class User  {
         let user = User();
         user.userId = userDataDict.value(forKey: "user_id") as? Int32;
         user.username = userDataDict.value(forKey: "username") as? String;
+        user.name = userDataDict.value(forKey: "name") as? String;
         user.password = userDataDict.value(forKey: "password") as? String;
         user.facebookId = userDataDict.value(forKey: "facebook_id") as? String;
         user.isFacebook = userDataDict.value(forKey: "is_facebook")as? Int8;
@@ -104,6 +110,7 @@ class User  {
         user.userCastSettingId = userDataDict.value(forKey: "user_cast_setting_id") as? Int32;
         user.userDevice = userDataDict.value(forKey: "device_registered_from")as? Int8;
         user.deviceToken = userDataDict.value(forKey: "device_token")as? String;
+        user.profilePic = userDataDict.value(forKey: "profile_pic")as? String;
         
         return user;
     }
@@ -111,6 +118,7 @@ class User  {
        
         setting.setValue(self.userId!, forKey: "user_id")
         setting.setValue(self.username!, forKey: "username")
+        setting.setValue(self.name!, forKey: "name")
         setting.setValue(self.facebookId!, forKey: "facebook_id")
         setting.setValue(self.isFacebook, forKey: "is_facebook")
         setting.setValue(self.facebookAccessToken, forKey: "facebook_access_token")
@@ -121,6 +129,7 @@ class User  {
         //setting.setValue(self.isActive!, forKey: "is_active")
         //setting.setValue(self.isCastr!, forKey: "is_caster")
         setting.setValue(self.userCastSettingId!, forKey: "user_cast_setting_id")
+        setting.setValue(self.profilePic, forKey: "profile_pic")
         //setting.setValue(self.userDevice!, forKey: "device_registered_from")
         //setting.setValue(self.deviceToken, forKey: "device_token")
         

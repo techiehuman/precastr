@@ -7,14 +7,18 @@
 //
 
 import UIKit
-import MobileCoreServices
-import Photos
 
-class TwitterPostViewController: UIViewController,UITextViewDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate {
+
+protocol ImageLibProtocolT {
+    func takePicture(viewC : UIViewController);
+    func selectPicture(viewC : UIViewController,cameraView : UIImageView);
+}
+class TwitterPostViewController: UIViewController,UITextViewDelegate {
 
      @IBOutlet weak var postTextField: UITextView!
     var loggedInUser : User!
-    let picController = UIImagePickerController();
+    var uploadImage : UIImageView!
+    var imageDelegate : ImageLibProtocolT!
     override func viewDidLoad() {
         super.viewDidLoad()
        
@@ -22,7 +26,7 @@ class TwitterPostViewController: UIViewController,UITextViewDelegate,UIImagePick
             self.postTextField.text = "Please add text to be posted ..."
             self.postTextField.textColor = UIColor.lightGray
              loggedInUser = User().loadUserDataFromUserDefaults(userDataDict : setting);
-        
+        imageDelegate = Reusable()
         // Do any additional setup after loading the view.
     }
 
@@ -60,11 +64,11 @@ class TwitterPostViewController: UIViewController,UITextViewDelegate,UIImagePick
         
         // create an action
         let uploadPhotoAction: UIAlertAction = UIAlertAction(title: "Upload Photo", style: .default) { action -> Void in
-            self.selectPicture();
+            self.imageDelegate.selectPicture(viewC: self,cameraView: self.uploadImage);
         }
         //uploadPhotoAction.setValue(selectedColor, forKey: "titleTextColor")
         let takePhotoAction: UIAlertAction = UIAlertAction(title: "Take Photo", style: .default) { action -> Void in
-            self.takePicture();
+            self.imageDelegate.takePicture(viewC: self);
         }
         //takePhotoAction.setValue(cenesLabelBlue, forKey: "titleTextColor")
         
@@ -79,48 +83,8 @@ class TwitterPostViewController: UIViewController,UITextViewDelegate,UIImagePick
         present(actionSheetController, animated: true, completion: nil)
     }
     
-    func takePicture() {
-        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.camera) {
-            self.picController.sourceType = UIImagePickerControllerSourceType.camera
-            self.picController.allowsEditing = true
-            self.picController.delegate = self as! UIImagePickerControllerDelegate & UINavigationControllerDelegate
-            self.picController.mediaTypes = [kUTTypeImage as String]
-            present(picController, animated: true, completion: nil)
-        }
-    }
+   
     
-    func selectPicture() {
-        //self.checkPermission();
-        
-        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.photoLibrary) {
-            self.picController.delegate = self as! UIImagePickerControllerDelegate & UINavigationControllerDelegate
-            self.picController.sourceType = UIImagePickerControllerSourceType.photoLibrary;
-            self.picController.allowsEditing = true
-            self.picController.mediaTypes = [kUTTypeImage as String]
-            self.present(picController, animated: true, completion: nil)
-        }
-    }
-    
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        if let image = info[UIImagePickerControllerEditedImage] as? UIImage {
-           /* self.withoutimageView.isHidden = true;
-            
-            
-            DispatchQueue.main.async {
-                self.meTimeImageView.isHidden = false;
-                self.meTimeImageView.image = image;
-            }
-            self.imageToUpload = image;
-            let uploadImage = self.imageToUpload.compressImage(newSizeWidth: 212, newSizeHeight: 212, compressionQuality: 1.0) */
-        }
-        
-        picker.dismiss(animated: true, completion: nil);
-    }
-    
-    func uploadMeTimeImage() -> Void {
-        
-       
-    }
    
     @IBAction func postOnSocialPlatform(_ sender: Any) {
         let jsonURL = "posts/post_twitter_newpost/format/json"

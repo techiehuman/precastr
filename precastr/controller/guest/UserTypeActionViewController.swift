@@ -15,10 +15,16 @@ class UserTypeActionViewController: UIViewController {
     @IBOutlet weak var moderatorButton: UIButton!
     
     var loggedInUser : User!
+    
+    @IBOutlet weak var userProfilePic: UIImageView!
     override func viewDidLoad() {
         super.viewDidLoad()
         
         loggedInUser = User().loadUserDataFromUserDefaults(userDataDict : setting);
+        userProfilePic.roundImageView();
+        userProfilePic.layer.borderWidth = 1
+        userProfilePic.layer.borderColor = UIColor.white.cgColor
+        userProfilePic.image = UIImage(url: URL(string: "https://cdn.pixabay.com/photo/2013/07/13/11/44/penguin-158551__340.png"))
         // Do any additional setup after loading the view.
     }
 

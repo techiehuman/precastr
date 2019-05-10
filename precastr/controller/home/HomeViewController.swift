@@ -14,7 +14,7 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     @IBOutlet weak var socialPostList: UITableView!
     var homePosts : [Any] = [Any]()
     var loggedInUser : User!
-    
+    var postArray : [String:Any]!
     
     class func MainViewController() -> UINavigationController{
         
@@ -42,11 +42,14 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         socialPostList.register(UINib(nibName: "HomeTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "HomeTableViewCell")
         
         
-        let jsonURL = "posts/get_twitter_posts/format/json?user_id=\(String(loggedInUser.userId))&submit=1";
+        let jsonURL = "posts/all_caster_posts/format/json";
         print("loggedInUser")
         print(Int(loggedInUser.userId))
-        UserService().getDataMethod(jsonURL: jsonURL,complete:{(response) in
+        postArray["user_id"] = String(loggedInUser.userId)
+        
+        UserService().postDataMethod(jsonURL: jsonURL, postData: postArray, complete: {(response) in
             print(response);
+            
             let modeArray = response.value(forKey: "data") as! NSArray;
            /* for mode in modeArray{
                 var posts = [String : Any]()
@@ -118,14 +121,13 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         
         cell.profileImage.layer.masksToBounds = false
         
-        cell.profileImage.layer.cornerRadius = cell.profileImage.frame.height/2
-        cell.profileImage.clipsToBounds = true
+        cell.profileImage.roundImageView();
+      
         cell.sourceImage.image = UIImage.init(named: "twitter")
         cell.sourceImage.layer.masksToBounds = false
         
-       cell.sourceImage.layer.cornerRadius = cell.sourceImage.frame.height/2
-        cell.sourceImage.clipsToBounds = true
-
+      
+        cell.sourceImage.roundImageView();
         
         cell.dateLabel.text = (homeObject as AnyObject).value(forKey: "created_date") as! String
         return cell;

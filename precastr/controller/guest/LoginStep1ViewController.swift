@@ -39,7 +39,7 @@ class LoginStep1ViewController: UIViewController {
         self.emailTextField.layer.borderColor = UIColor.white.cgColor
         self.emailTextField.layer.borderWidth = 0.5
         let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 25, height: 25))
-        let image = UIImage(named: "profile");
+        let image = UIImage(named: "email");
         imageView.image = image;
         self.emailTextField.leftView = imageView
         self.emailTextField.leftViewMode = .always
@@ -167,6 +167,10 @@ class LoginStep1ViewController: UIViewController {
     
     @IBAction func emailSignupClicked(_ sender: Any) {
     
+        
+        let viewController: SignupViewController = self.storyboard?.instantiateViewController(withIdentifier: "SignupViewController") as! SignupViewController;
+        self.navigationController?.pushViewController(viewController, animated: true);
+        /*
         let user = User();
         let registerationURL = "user/registration/format/json";
         user.username = emailTextField.text;
@@ -174,7 +178,7 @@ class LoginStep1ViewController: UIViewController {
         let isValid = self.validateSignupForm(user: user); //CALLING VALIDATION FUNCTION
         if(isValid==true){
             self.userManage(jsonURL: registerationURL,user: user,requestType: "");
-        }
+        } */
         
     }
     /*
@@ -187,7 +191,7 @@ class LoginStep1ViewController: UIViewController {
     }
     */
    
-    func validateSignupForm(user: User) -> Bool{
+    func validateLoginForm(user: User) -> Bool{
         
         var isValid = true;
         var message = "";
@@ -264,7 +268,7 @@ class LoginStep1ViewController: UIViewController {
         let registerationURL = "user/login/format/json";
         user.username = emailTextField.text;
         user.password = passwordTextField.text;
-        let isValid = self.validateSignupForm(user: user); //CALLING VALIDATION FUNCTION
+        let isValid = self.validateLoginForm(user: user); //CALLING VALIDATION FUNCTION
         if(isValid==true){
             self.userManage(jsonURL: registerationURL,user: user,requestType: "login");
         }

@@ -53,4 +53,50 @@ class HttpService {
             complete(returnDict)
         }
     }
+    func postMultipartImage(url: String, image: UIImage, postData: [String:Any], complete: @escaping(NSDictionary)->Void) {
+        
+        let imgData = UIImageJPEGRepresentation(image, 0.2)!
+        
+        let Auth_header =  [ "X-API-KEY" : ApiToken ]
+        
+        Alamofire.upload(multipartFormData: { (MultipartFormData) in
+            MultipartFormData.append(imgData, withName: "profile_pic", fileName: "file.jpg", mimeType: "image/jpg")
+            MultipartFormData.append( "\(String(describing: postData["name"]!))".data(using: .utf8)!, withName: "name")
+            MultipartFormData.append( "\(String(describing: postData["username"]!))".data(using: .utf8)!, withName: "username")
+            MultipartFormData.append( "\(String(describing: postData["password"]!))".data(using: .utf8)!, withName: "password")
+            MultipartFormData.append( "\(String(describing: postData["device_registered_from"]!))".data(using: .utf8)!, withName: "device_registered_from")
+            MultipartFormData.append( "\(String(describing: postData["device_token"]!))".data(using: .utf8)!, withName: "device_token")
+            
+        }, usingThreshold: UInt64.init(), to: "\(url)", method: .post, headers:Auth_header ) { (result) in
+            
+            var returnDict = NSDictionary();
+            
+            switch result {
+            case .success(let upload,_,_):
+                
+                upload.uploadProgress(closure: { (progress) in
+                    print("Upload Progress: \(progress.fractionCompleted)")
+                })
+                
+                upload.responseJSON { response in
+                    
+                    print("Suceess:\(String(describing: response.result.value ))")
+                    /////let json = response.result.value as! NSDictionary
+                    returnDict = response.result.value as! NSDictionary;
+                    //returnDict.setValue(true, forKey: "success");
+                    //returnDict.setValue(response.result.value, forKey: "resp");
+                    complete(returnDict)
+                    
+                }
+            case .failure(let encodingError):
+                print(encodingError)
+                var responseDict: [String: Any] = [:]
+                responseDict["success"] = false;
+                responseDict["message"] = encodingError.localizedDescription;
+                returnDict = responseDict as NSDictionary;
+                complete(returnDict)
+                
+            }
+        }
+    }
 }
