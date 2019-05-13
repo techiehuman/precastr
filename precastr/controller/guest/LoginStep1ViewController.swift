@@ -91,12 +91,14 @@ class LoginStep1ViewController: UIViewController {
                 user.twitterAccessSecret = session?.authTokenSecret
                 user.twitterId = session?.userID
                 user.username = name
+                user.name = name
                 user.isTwitter = 1;
+                //user.profilePic = session?.
                 
                 let loginURL = "user/login/format/json";
                 
                 print(user.toDictionary(user: user ))
-                self.userManage(jsonURL:loginURL,user: user,requestType: "");
+                self.userManage(jsonURL:loginURL,user: user);
                 
                 
             }else {
@@ -138,8 +140,10 @@ class LoginStep1ViewController: UIViewController {
                 guard let Info = result as? [String: Any] else { return }
                 print("FacebookID : ")
                 print(Info["id"]!)
+                var profilePic :String = "";
                 if let imageURL = ((Info["picture"] as? [String: Any])?["data"] as? [String: Any])?["url"] as? String {
                     //Download image from imageURL
+                    profilePic = imageURL
                     
                 }
                 if(error == nil){
@@ -148,11 +152,13 @@ class LoginStep1ViewController: UIViewController {
                     user.facebookAccessToken = String(FBSDKAccessToken.current().tokenString as! String);
                     user.facebookId = String(Info["id"] as! String)
                     user.username = String(Info["email"]as! String)
+                    user.name = String(Info["name"] as! String)
+                    user.profilePic =  profilePic
                     user.isFacebook = 1;
                     
                    let loginURL = "user/login/format/json";
                     
-                    self.userManage(jsonURL:loginURL,user: user,requestType: "");
+                    self.userManage(jsonURL:loginURL,user: user);
                 }
                 else{
                     
@@ -210,7 +216,7 @@ class LoginStep1ViewController: UIViewController {
         return isValid;
        
     }
-    func userManage(jsonURL:String,user : User, requestType : String)->Void{
+    func userManage(jsonURL:String,user : User)->Void{
         //iPhone or iPad
         //let model = UIDevice.current.model;
         user.userDevice = 2;//
@@ -226,6 +232,9 @@ class LoginStep1ViewController: UIViewController {
             if (Int(response.value(forKey: "status") as! String)! == 1) {
                 
                 let message = response.value(forKey: "message") as! String;
+                let data = response.value(forKey: "data") as! NSDictionary;
+                let allStepsDone = (data.value(forKey: "user_cast_setting_id") as! NSString).intValue
+                print(allStepsDone)
                 
                 let alert = UIAlertController.init(title: "Success", message: message, preferredStyle: .alert);
                 alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: {(resp) in
@@ -233,13 +242,17 @@ class LoginStep1ViewController: UIViewController {
                     print(userDict)
                     let user = User().getUserData(userDataDict: userDict);
                     user.loadUserDefaults();
-                    if(requestType == ""){
+                    //if(requestType == ""){
+                    
+                    //If is the First Time user then we will send him to complete the steps.
+                    if (allStepsDone == 0) {
                         
-                    let viewController: UserTypeActionViewController = self.storyboard?.instantiateViewController(withIdentifier: "UserTypeActionViewController") as! UserTypeActionViewController;
-                    self.navigationController?.pushViewController(viewController, animated: true);
-                        print(self.navigationController);
+                        let viewController: UserTypeActionViewController = self.storyboard?.instantiateViewController(withIdentifier: "UserTypeActionViewController") as! UserTypeActionViewController;
+                        self.navigationController?.pushViewController(viewController, animated: true);
+                            print(self.navigationController);
                         
-                    }else if(requestType == "login"){
+                    } else if (allStepsDone != 0){//If its an already existing user
+                        //Then we will be sending him to home screen.
                         UIApplication.shared.keyWindow?.rootViewController = HomeViewController.MainViewController()
                         //let viewController: HomeViewController = self.storyboard?.instantiateViewController(withIdentifier: "HomeViewController") as! HomeViewController;
                         //self.navigationController?.pushViewController(viewController, animated: true);
@@ -270,7 +283,7 @@ class LoginStep1ViewController: UIViewController {
         user.password = passwordTextField.text;
         let isValid = self.validateLoginForm(user: user); //CALLING VALIDATION FUNCTION
         if(isValid==true){
-            self.userManage(jsonURL: registerationURL,user: user,requestType: "login");
+            self.userManage(jsonURL: registerationURL,user: user);
         }
     }
 }

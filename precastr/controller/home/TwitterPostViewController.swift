@@ -19,6 +19,10 @@ class TwitterPostViewController: UIViewController,UITextViewDelegate {
     var loggedInUser : User!
     var uploadImage : UIImageView!
     var imageDelegate : ImageLibProtocolT!
+    var socialMediaPlatform : Int!
+    
+    @IBOutlet weak var sendViewArea: UIView!
+    @IBOutlet weak var inputViewArea: UIView!
     override func viewDidLoad() {
         super.viewDidLoad()
        
@@ -28,6 +32,7 @@ class TwitterPostViewController: UIViewController,UITextViewDelegate {
              loggedInUser = User().loadUserDataFromUserDefaults(userDataDict : setting);
         imageDelegate = Reusable()
         // Do any additional setup after loading the view.
+        
     }
 
     func textViewDidBeginEditing(_ textView: UITextView) {
@@ -54,10 +59,13 @@ class TwitterPostViewController: UIViewController,UITextViewDelegate {
    
     
     @IBAction func facebookBtnClicked(_ sender: Any) {
+        self.socialMediaPlatform = 1
     }
     
-    @IBOutlet weak var twitterBtnClicked: UIButton!
     
+    @IBAction func twitterBtnClicked(_ sender: Any) {
+        self.socialMediaPlatform = 2
+    }
     @IBAction func AddSocialMedia(_ sender: Any) {
         // create an actionSheet
         let actionSheetController: UIAlertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)

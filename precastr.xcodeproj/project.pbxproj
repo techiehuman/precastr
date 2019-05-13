@@ -39,6 +39,7 @@
 		FADE6BCE2281EE490086EC07 /* SignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADE6BCD2281EE480086EC07 /* SignupViewController.swift */; };
 		FAE4DF61225F0E94008875C3 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE4DF60225F0E94008875C3 /* UserService.swift */; };
 		FAE4DF64225F155C008875C3 /* AppUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE4DF63225F155C008875C3 /* AppUtil.swift */; };
+		FAF601CA2286A3C700B54F9B /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF601C92286A3C700B54F9B /* SplashViewController.swift */; };
 		FEE73D1CBA1D94C8162E3DC6 /* Pods_precastrUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 561E50304594AB7F3B9F4993 /* Pods_precastrUITests.framework */; };
 /* End PBXBuildFile section */
 
@@ -105,6 +106,7 @@
 		FADE6BCD2281EE480086EC07 /* SignupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupViewController.swift; sourceTree = "<group>"; };
 		FAE4DF60225F0E94008875C3 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		FAE4DF63225F155C008875C3 /* AppUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUtil.swift; sourceTree = "<group>"; };
+		FAF601C92286A3C700B54F9B /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -285,6 +287,7 @@
 				FA4D544D2260F95200E9589B /* PrecastTypeSectionViewController.swift */,
 				FA72E17822624DC500A259A1 /* CastModeratorViewController.swift */,
 				FADE6BCD2281EE480086EC07 /* SignupViewController.swift */,
+				FAF601C92286A3C700B54F9B /* SplashViewController.swift */,
 			);
 			path = guest;
 			sourceTree = "<group>";
@@ -610,6 +613,7 @@
 				FA4D544C2260F7F200E9589B /* UserTypeActionViewController.swift in Sources */,
 				FA6AB57C22531E7300C5491F /* AppDelegate.swift in Sources */,
 				FA1C1CDD228400A800583E1B /* Reusable.swift in Sources */,
+				FAF601CA2286A3C700B54F9B /* SplashViewController.swift in Sources */,
 				FA0294E3227315F300465318 /* TwitterPostViewController.swift in Sources */,
 				FA6AB5AC2253359300C5491F /* LoginStep1ViewController.swift in Sources */,
 				FA7A3644227AD0A900689E27 /* multiExtension.swift in Sources */,

@@ -7,6 +7,10 @@
 //
 
 import UIKit
+import FBSDKLoginKit
+import FBSDKCoreKit
+import TwitterKit
+import TwitterCore
 
 protocol ImageLibProtocol {
     func takePicture(viewC : UIViewController);
@@ -121,7 +125,7 @@ class SignupViewController: UIViewController {
          let isValid = self.validateSignupForm(user: user); //CALLING VALIDATION FUNCTION
         
          if(isValid==true && agreeCheckBox==true){
-         self.userManage(jsonURL: registerationURL,user: user,requestType: "");
+         self.userManage(jsonURL: registerationURL,user: user);
          }else if(agreeCheckBox==false){
             let alert = UIAlertController.init(title: "Error", message: "Please agree to terms and conditions", preferredStyle: .alert);
             alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil));
@@ -143,10 +147,67 @@ class SignupViewController: UIViewController {
         
     }
     @IBAction func facebookSignupClicked(_ sender: Any) {
+        let fbloginManger: FBSDKLoginManager = FBSDKLoginManager()
+        /*CODE FOR LOGOUT */
+        FBSDKAccessToken.setCurrent(nil)
+        FBSDKProfile.setCurrent(nil)
+        
+        FBSDKLoginManager().logOut()
+        let cookies = HTTPCookieStorage.shared
+        let facebookCookies = cookies.cookies(for: URL(string: "https://facebook.com/")!)
+        for cookie in facebookCookies! {
+            cookies.deleteCookie(cookie )
+        }
+        /* CODE FOR LOGOUT */
+        fbloginManger.logIn(withReadPermissions: ["email"], from:self) {(result, error) -> Void in
+            if(error == nil){
+                let fbLoginResult: FBSDKLoginManagerLoginResult  = result!
+                
+                if( result?.isCancelled)!{
+                    return }
+                
+                
+                if(fbLoginResult .grantedPermissions.contains("email")){
+                    self.getFbId()
+                    
+                }
+            }  }
     }
     
     
     @IBAction func twitterSignupClicked(_ sender: Any) {
+        let store = TWTRTwitter.sharedInstance().sessionStore
+        if let userID = store.session()?.userID {
+            store.logOutUserID(userID)
+        }
+        
+        TWTRTwitter.sharedInstance().logIn { (session, error) in
+            if (session != nil) {
+                let user = User();
+                let name = session?.userName ?? ""
+                
+                print(session?.userID  ?? "")
+                print(session?.authToken  ?? "")
+                print(session?.authTokenSecret  ?? "")
+                
+                
+                user.twitterAccessToken = session?.authToken
+                user.twitterAccessSecret = session?.authTokenSecret
+                user.twitterId = session?.userID
+                user.username = name
+                user.name = name
+                user.isTwitter = 1;
+                
+                let loginURL = "user/login/format/json";
+                
+                print(user.toDictionary(user: user ))
+                self.userManage(jsonURL:loginURL,user: user);
+                
+                
+            }else {
+                print("error: \(String(describing: error?.localizedDescription))");
+            }
+        }
     }
     
     
@@ -181,7 +242,7 @@ class SignupViewController: UIViewController {
         return isValid;
         
     }
-    func userManage(jsonURL:String,user : User, requestType : String)->Void{
+    func userManage(jsonURL:String,user : User)->Void{
         //iPhone or iPad
         //let model = UIDevice.current.model;
         user.userDevice = 2;//
@@ -204,17 +265,13 @@ class SignupViewController: UIViewController {
                     print(userDict)
                     let user = User().getUserData(userDataDict: userDict);
                     user.loadUserDefaults();
-                    if(requestType == ""){
+                   
                         
                         let viewController: UserTypeActionViewController = self.storyboard?.instantiateViewController(withIdentifier: "UserTypeActionViewController") as! UserTypeActionViewController;
                         self.navigationController?.pushViewController(viewController, animated: true);
                         print(self.navigationController);
                         
-                    }else if(requestType == "login"){
-                        UIApplication.shared.keyWindow?.rootViewController = HomeViewController.MainViewController()
-                        //let viewController: HomeViewController = self.storyboard?.instantiateViewController(withIdentifier: "HomeViewController") as! HomeViewController;
-                        //self.navigationController?.pushViewController(viewController, animated: true);
-                    }
+                    
                     
                     //let vc = UserTypeActionViewController(nibName: "UserTypeActionViewController", bundle: nil)
                     //self.navigationController?.pushViewController(vc, animated: true )
@@ -242,5 +299,40 @@ class SignupViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
+    func getFbId()->Void{
+        if(FBSDKAccessToken.current() != nil){
+            FBSDKGraphRequest(graphPath: "me", parameters: ["fields": "id,name , first_name, last_name , email,picture.type(large)"]).start(completionHandler: { (connection, result, error) in
+                guard let Info = result as? [String: Any] else { return }
+                print("FacebookID : ")
+                var profilePic :String = "";
+                print(Info["id"]!)
+                if let imageURL = ((Info["picture"] as? [String: Any])?["data"] as? [String: Any])?["url"] as? String {
+                    //Download image from imageURL
+                    profilePic = imageURL
+                }
+                if(error == nil){
+                    let user = User();
+                    print(FBSDKAccessToken.current().tokenString)
+                    user.facebookAccessToken = String(FBSDKAccessToken.current().tokenString as! String);
+                    user.facebookId = String(Info["id"] as! String)
+                    user.username = String(Info["email"]as! String)
+                    user.name = String(Info["name"] as! String)
+                    user.profilePic =  profilePic
+                    user.isFacebook = 1;
+                    
+                    let loginURL = "user/login/format/json";
+                    
+                    self.userManage(jsonURL:loginURL,user: user);
+                }
+                else{
+                    
+                    let alert = UIAlertController.init(title: "Error", message: error as! String, preferredStyle: .alert);
+                    alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil));
+                    self.present(alert, animated: true)
+                    
+                }
+            })
+        }
+    }
 
 }

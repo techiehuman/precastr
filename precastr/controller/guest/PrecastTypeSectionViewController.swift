@@ -45,6 +45,10 @@ class PrecastTypeSectionViewController: UIViewController {
         let jsonURL = "user/update_precast_type/format/json";
         
         UserService().postDataMethod(jsonURL:jsonURL,postData: postData, complete:{(response) in
+            let userDict = response.value(forKey: "data") as! NSDictionary;
+            print(userDict)
+            let user = User().getUserData(userDataDict: userDict);
+            user.loadUserDefaults();
             let viewController: CastModeratorViewController = self.storyboard?.instantiateViewController(withIdentifier: "CastModeratorViewController") as! CastModeratorViewController;
             self.navigationController?.pushViewController(viewController, animated: true);
             

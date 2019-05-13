@@ -14,7 +14,7 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     @IBOutlet weak var socialPostList: UITableView!
     var homePosts : [Any] = [Any]()
     var loggedInUser : User!
-    var postArray : [String:Any]!
+    var postArray : [String:Any] = [String:Any]()
     
     class func MainViewController() -> UINavigationController{
         
@@ -37,6 +37,7 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: doneButton); */
         loggedInUser = User().loadUserDataFromUserDefaults(userDataDict : setting);
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "New", style: .plain, target: self, action: #selector(redirectOnSocialPlatform))
+        navigationItem.rightBarButtonItem?.tintColor = UIColor(red: 12/255, green: 111/255, blue: 233/255, alpha: 1)
         // Do any additional setup after loading the view.
         
         socialPostList.register(UINib(nibName: "HomeTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "HomeTableViewCell")
@@ -63,7 +64,10 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             self.socialPostList.reloadData();
         });
     }
-
+    override func viewWillAppear(_ animated: Bool) {
+        self.navigationController?.navigationBar.isHidden = false
+        self.navigationController?.navigationBar.tintColor = UIColor(red: 12/255, green: 111/255, blue: 233/255, alpha: 1)
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -115,7 +119,7 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         cell.postTextLabel.attributedText = ((homeObject as AnyObject).value(forKey: "sharing_media_Url") as? String)?.htmlToAttributedString
         cell.profileLabel.text = ((homeObject as AnyObject).value(forKey: "short_user_name") as? String?)!
         print((homeObject as AnyObject).value(forKey: "short_user_name") as? String)
-        cell.profileImage.sd_setImage(with: URL(string: (homeObject as AnyObject).value(forKey: "image_Url") as! String), placeholderImage: UIImage(named: "profile"));
+        cell.profileImage.sd_setImage(with: URL(string: (homeObject as AnyObject).value(forKey: "profile_pic") as! String), placeholderImage: UIImage(named: "profile"));
         
         //cell.profileImage.image = (homeObject as AnyObject).value(forKey: "image_Url") as? UIImage
         

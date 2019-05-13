@@ -9,30 +9,14 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "precastr/controller/guest/LoginStep1ViewController.swift"
-            timestampString = "579091349.97027"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "122"
-            endingLineNumber = "122"
-            landmarkName = "facebookButtonClicked(_:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "precastr/controller/home/HomeViewController.swift"
-            timestampString = "579091349.970348"
+            timestampString = "579448078.034452"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "68"
-            endingLineNumber = "68"
-            landmarkName = "didReceiveMemoryWarning()"
-            landmarkType = "7">
+            startingLineNumber = "75"
+            endingLineNumber = "75"
+            landmarkName = "HomeViewController"
+            landmarkType = "3">
             <Locations>
                <Location
                   shouldBeEnabled = "No"
@@ -74,12 +58,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "precastr/controller/guest/LoginStep1ViewController.swift"
-            timestampString = "579091349.970413"
+            timestampString = "579448078.034547"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "242"
-            endingLineNumber = "242"
-            landmarkName = "userManage(jsonURL:user:requestType:)"
+            startingLineNumber = "270"
+            endingLineNumber = "270"
+            landmarkName = "userManage(jsonURL:user:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -90,108 +74,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "precastr/controller/guest/LoginStep1ViewController.swift"
-            timestampString = "579091349.9704731"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "257"
-            endingLineNumber = "257"
-            landmarkName = "userManage(jsonURL:user:requestType:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "precastr/controller/guest/LoginStep1ViewController.swift"
-            timestampString = "579091349.9705319"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "244"
-            endingLineNumber = "244"
-            landmarkName = "userManage(jsonURL:user:requestType:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "precastr/controller/guest/LoginStep1ViewController.swift"
-            timestampString = "579091349.97059"
+            timestampString = "579448078.035019"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "236"
             endingLineNumber = "236"
-            landmarkName = "userManage(jsonURL:user:requestType:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "precastr/service/UserService.swift"
-            timestampString = "579190539.635777"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "22"
-            endingLineNumber = "22"
-            landmarkName = "postDataMethod(jsonURL:postData:complete:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "precastr.UserService.postDataMethod(jsonURL: Swift.String, postData: Swift.Dictionary&lt;Swift.String, Any&gt;, complete: (__ObjC.NSDictionary) -&gt; ()) -&gt; ()"
-                  moduleName = "precastr"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/macbook/Desktop/Mandeep/apps/projects/precastr/precastr/precastr/service/UserService.swift"
-                  timestampString = "578727469.0183589"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "22"
-                  endingLineNumber = "22"
-                  offsetFromSymbolStart = "1229">
-               </Location>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (__ObjC.NSDictionary) -&gt; () in precastr.UserService.postDataMethod(jsonURL: Swift.String, postData: Swift.Dictionary&lt;Swift.String, Any&gt;, complete: (__ObjC.NSDictionary) -&gt; ()) -&gt; ()"
-                  moduleName = "precastr"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/macbook/Desktop/Mandeep/apps/projects/precastr/precastr/precastr/service/UserService.swift"
-                  timestampString = "578727469.021288"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "23"
-                  endingLineNumber = "23"
-                  offsetFromSymbolStart = "22">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "precastr/controller/guest/LoginStep1ViewController.swift"
-            timestampString = "579091349.970681"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "150"
-            endingLineNumber = "150"
-            landmarkName = "getFbId()"
+            landmarkName = "userManage(jsonURL:user:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -201,157 +89,77 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "precastr/controller/guest/LoginStep1ViewController.swift"
-            timestampString = "579091349.970739"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "151"
-            endingLineNumber = "151"
-            landmarkName = "getFbId()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "precastr/controller/guest/LoginStep1ViewController.swift"
-            timestampString = "579091349.970795"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "98"
-            endingLineNumber = "98"
-            landmarkName = "twitterButtonClicked(_:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "precastr/controller/guest/LoginStep1ViewController.swift"
-            timestampString = "579091349.970853"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "99"
-            endingLineNumber = "99"
-            landmarkName = "twitterButtonClicked(_:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "precastr/controller/guest/LoginStep1ViewController.swift"
-            timestampString = "579091349.97091"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "92"
-            endingLineNumber = "92"
-            landmarkName = "twitterButtonClicked(_:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "precastr/service/UserService.swift"
-            timestampString = "579190539.635969"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "23"
-            endingLineNumber = "23"
-            landmarkName = "postDataMethod(jsonURL:postData:complete:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "precastr/controller/guest/SignupViewController.swift"
-            timestampString = "579190539.636058"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "195"
-            endingLineNumber = "195"
-            landmarkName = "userManage(jsonURL:user:requestType:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "precastr.SignupViewController.userManage(jsonURL: Swift.String, user: precastr.User, requestType: Swift.String) -&gt; ()"
-                  moduleName = "precastr"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/macbook/Desktop/Mandeep/apps/projects/precastr/precastr/precastr/controller/guest/SignupViewController.swift"
-                  timestampString = "579190539.974179"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "195"
-                  endingLineNumber = "195"
-                  offsetFromSymbolStart = "1234">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (__ObjC.NSDictionary) -&gt; () in precastr.SignupViewController.userManage(jsonURL: Swift.String, user: precastr.User, requestType: Swift.String) -&gt; ()"
-                  moduleName = "precastr"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/macbook/Desktop/Mandeep/apps/projects/precastr/precastr/precastr/controller/guest/SignupViewController.swift"
-                  timestampString = "579190539.976905"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "196"
-                  endingLineNumber = "196"
-                  offsetFromSymbolStart = "42">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "precastr/service/UserService.swift"
-            timestampString = "579190539.636807"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "37"
-            endingLineNumber = "37"
-            landmarkName = "postMultipartImageDataMethod(jsonURL:image:postData:complete:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "precastr/service/HttpService.swift"
-            timestampString = "579190539.636873"
+            filePath = "precastr/controller/guest/UserTypeActionViewController.swift"
+            timestampString = "579448078.035378"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "58"
             endingLineNumber = "58"
-            landmarkName = "postMultipartImage(url:image:postData:complete:)"
+            landmarkName = "casterButtonAction(_:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "precastr.UserTypeActionViewController.casterButtonAction(Any) -&gt; ()"
+                  moduleName = "precastr"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/macbook/Desktop/Mandeep/apps/projects/precastr/precastr/precastr/controller/guest/UserTypeActionViewController.swift"
+                  timestampString = "579448078.135509"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "58"
+                  endingLineNumber = "58"
+                  offsetFromSymbolStart = "18">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "precastr.UserTypeActionViewController.casterButtonAction(Any) -&gt; ()"
+                  moduleName = "precastr"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/macbook/Desktop/Mandeep/apps/projects/precastr/precastr/precastr/controller/guest/UserTypeActionViewController.swift"
+                  timestampString = "579448078.138204"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "58"
+                  endingLineNumber = "58"
+                  offsetFromSymbolStart = "451">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "precastr/controller/guest/UserTypeActionViewController.swift"
+            timestampString = "579448078.03585"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "59"
+            endingLineNumber = "59"
+            landmarkName = "casterButtonAction(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "precastr/controller/guest/LoginStep1ViewController.swift"
+            timestampString = "579448078.036216"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "89"
+            endingLineNumber = "89"
+            landmarkName = "twitterButtonClicked(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
