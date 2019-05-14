@@ -47,6 +47,7 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         print("loggedInUser")
         print(Int(loggedInUser.userId))
         postArray["user_id"] = String(loggedInUser.userId)
+       // postArray["social_media_platform_id"] = 2
         
         UserService().postDataMethod(jsonURL: jsonURL, postData: postArray, complete: {(response) in
             print(response);
@@ -114,14 +115,14 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         let homeObject = self.homePosts[indexPath.row];
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "HomeTableViewCell", for: indexPath) as! HomeTableViewCell;
-        print("******")
+       print("******")
        print((homeObject as AnyObject).value(forKey: "sharing_media_Url") as? String)
-        cell.postTextLabel.attributedText = ((homeObject as AnyObject).value(forKey: "sharing_media_Url") as? String)?.htmlToAttributedString
-        cell.profileLabel.text = ((homeObject as AnyObject).value(forKey: "short_user_name") as? String?)!
+        cell.postTextLabel.attributedText = ((homeObject as AnyObject).value(forKey: "post_description") as? String)?.htmlToAttributedString
+       /*  cell.profileLabel.text = ((homeObject as AnyObject).value(forKey: "short_user_name") as? String?)!
         print((homeObject as AnyObject).value(forKey: "short_user_name") as? String)
-        cell.profileImage.sd_setImage(with: URL(string: (homeObject as AnyObject).value(forKey: "profile_pic") as! String), placeholderImage: UIImage(named: "profile"));
+       cell.profileImage.sd_setImage(with: URL(string: (homeObject as AnyObject).value(forKey: "profile_pic") as! String), placeholderImage: UIImage(named: "profile"));
         
-        //cell.profileImage.image = (homeObject as AnyObject).value(forKey: "image_Url") as? UIImage
+        cell.profileImage.image = (homeObject as AnyObject).value(forKey: "image_Url") as? UIImage
         
         cell.profileImage.layer.masksToBounds = false
         
@@ -131,9 +132,9 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         cell.sourceImage.layer.masksToBounds = false
         
       
-        cell.sourceImage.roundImageView();
+        cell.sourceImage.roundImageView(); */
         
-        cell.dateLabel.text = (homeObject as AnyObject).value(forKey: "created_date") as! String
+        cell.dateLabel.text = (homeObject as AnyObject).value(forKey: "created_on") as! String
         return cell;
     }
 }

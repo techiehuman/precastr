@@ -12,7 +12,7 @@ import FBSDKCoreKit
 import TwitterKit
 import TwitterCore
 
-class LoginStep1ViewController: UIViewController {
+class LoginStep1ViewController: UIViewController,UITextFieldDelegate {
     
     
     class func MainViewController() -> UINavigationController{
@@ -93,7 +93,7 @@ class LoginStep1ViewController: UIViewController {
                 user.username = name
                 user.name = name
                 user.isTwitter = 1;
-                //user.profilePic = session?.
+                
                 
                 let loginURL = "user/login/format/json";
                 
@@ -285,5 +285,13 @@ class LoginStep1ViewController: UIViewController {
         if(isValid==true){
             self.userManage(jsonURL: registerationURL,user: user);
         }
+    }
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if (textField == emailTextField){
+            passwordTextField.becomeFirstResponder()
+        }else if(textField == passwordTextField){
+            textField.resignFirstResponder()
+        }
+        return true
     }
 }

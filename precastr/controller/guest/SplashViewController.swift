@@ -12,7 +12,7 @@ class SplashViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        self.view.backgroundColor = UIColor(red: 12/255, green: 111/255, blue: 233/255, alpha: 1)
         // Do any additional setup after loading the view.
         perform(#selector(navigateUser), with: nil, afterDelay: 3)
     }

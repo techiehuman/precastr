@@ -29,6 +29,7 @@ class UserTypeActionViewController: UIViewController {
         //userProfilePic.image = UIImage(url: URL(string: "https://cdn.pixabay.com/photo/2013/07/13/11/44/penguin-158551__340.png"))
         //userProfilePic.image = UIImage(url:URL(string: "\(siteURL)\(loggedInUser.profilePic!)"))
         loggedInNameUser.text = String(loggedInUser.name)
+        print(loggedInUser.name)
         if(String(loggedInUser.profilePic) != ""){
         userProfilePic.sd_setImage(with: URL(string: loggedInUser.profilePic!), placeholderImage: UIImage.init(named: "default_profile_pic"));
         // Do any additional setup after loading the view.
@@ -60,6 +61,8 @@ class UserTypeActionViewController: UIViewController {
     }
     
     @IBAction func moderatorButtonAction(_ sender: Any) {
+        let viewController: VerificationModeratorViewController = self.storyboard?.instantiateViewController(withIdentifier: "VerificationModeratorViewController") as! VerificationModeratorViewController;
+        self.navigationController?.pushViewController(viewController, animated: true);
     }
     
    

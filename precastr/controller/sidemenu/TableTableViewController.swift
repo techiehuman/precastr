@@ -70,13 +70,13 @@ class TableTableViewController: UITableViewController {
     }
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
        // if indexPath.row == 0 {
-            if dateCellExpanded {
-                return 250
+           /* if dateCellExpanded {
+                return 110
             } else {
                 return 50
-            }
+            } */
        // }
-        return 50
+        return 107
     }
     /*
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

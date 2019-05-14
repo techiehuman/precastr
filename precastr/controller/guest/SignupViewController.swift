@@ -18,7 +18,7 @@ protocol ImageLibProtocol {
   
 }
 
-class SignupViewController: UIViewController {
+class SignupViewController: UIViewController,UITextFieldDelegate {
 
     
     @IBOutlet weak var nameTextField: UITextField!
@@ -334,5 +334,16 @@ class SignupViewController: UIViewController {
             })
         }
     }
-
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+       
+        if (textField == nameTextField){
+            emailTextField.becomeFirstResponder()
+        }
+        else if (textField == emailTextField){
+            passwordTextField.becomeFirstResponder()
+        }else if(textField == passwordTextField){
+            textField.resignFirstResponder()
+        }
+        return true
+    }
 }

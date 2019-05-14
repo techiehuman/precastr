@@ -40,6 +40,7 @@
 		FAE4DF61225F0E94008875C3 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE4DF60225F0E94008875C3 /* UserService.swift */; };
 		FAE4DF64225F155C008875C3 /* AppUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE4DF63225F155C008875C3 /* AppUtil.swift */; };
 		FAF601CA2286A3C700B54F9B /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF601C92286A3C700B54F9B /* SplashViewController.swift */; };
+		FAF601CC228AAE6800B54F9B /* VerificationModeratorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF601CB228AAE6800B54F9B /* VerificationModeratorViewController.swift */; };
 		FEE73D1CBA1D94C8162E3DC6 /* Pods_precastrUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 561E50304594AB7F3B9F4993 /* Pods_precastrUITests.framework */; };
 /* End PBXBuildFile section */
 
@@ -107,6 +108,7 @@
 		FAE4DF60225F0E94008875C3 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		FAE4DF63225F155C008875C3 /* AppUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUtil.swift; sourceTree = "<group>"; };
 		FAF601C92286A3C700B54F9B /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
+		FAF601CB228AAE6800B54F9B /* VerificationModeratorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationModeratorViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -288,6 +290,7 @@
 				FA72E17822624DC500A259A1 /* CastModeratorViewController.swift */,
 				FADE6BCD2281EE480086EC07 /* SignupViewController.swift */,
 				FAF601C92286A3C700B54F9B /* SplashViewController.swift */,
+				FAF601CB228AAE6800B54F9B /* VerificationModeratorViewController.swift */,
 			);
 			path = guest;
 			sourceTree = "<group>";
@@ -618,6 +621,7 @@
 				FA6AB5AC2253359300C5491F /* LoginStep1ViewController.swift in Sources */,
 				FA7A3644227AD0A900689E27 /* multiExtension.swift in Sources */,
 				FA291B0D2253ABCD0093E6CE /* HttpService.swift in Sources */,
+				FAF601CC228AAE6800B54F9B /* VerificationModeratorViewController.swift in Sources */,
 				FABF02482264EF650067960C /* HomeViewController.swift in Sources */,
 				FAE4DF64225F155C008875C3 /* AppUtil.swift in Sources */,
 				FABF024E2265BFDF0067960C /* SideMenuViewController+TableView.swift in Sources */,
