@@ -14,6 +14,7 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     @IBOutlet weak var socialPostList: UITableView!
     var homePosts : [Any] = [Any]()
     var loggedInUser : User!
+    var social : SocialPlatform!
     var postArray : [String:Any] = [String:Any]()
     
     class func MainViewController() -> UINavigationController{
@@ -21,12 +22,6 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         return UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "nav") as! UINavigationController
         
     }
-    
-    
-    
-    
-
-    
     override func viewDidLoad() {
         super.viewDidLoad()
        // view.backgroundColor = UIColor (red: 0, green: 0.4745, blue: 0.9176, alpha: 1)
@@ -36,8 +31,7 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: doneButton); */
         loggedInUser = User().loadUserDataFromUserDefaults(userDataDict : setting);
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "New", style: .plain, target: self, action: #selector(redirectOnSocialPlatform))
-        navigationItem.rightBarButtonItem?.tintColor = UIColor(red: 12/255, green: 111/255, blue: 233/255, alpha: 1)
+        social = SocialPlatform().loadSocialDataFromUserDefaults();
         // Do any additional setup after loading the view.
         
         socialPostList.register(UINib(nibName: "HomeTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "HomeTableViewCell")
@@ -68,6 +62,12 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.navigationBar.isHidden = false
         self.navigationController?.navigationBar.tintColor = UIColor(red: 12/255, green: 111/255, blue: 233/255, alpha: 1)
+        
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: nil);
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "New", style: .plain, target: self, action: #selector(redirectOnSocialPlatform))
+        navigationItem.rightBarButtonItem?.tintColor = UIColor(red: 12/255, green: 111/255, blue: 233/255, alpha: 1)
+
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -107,7 +107,7 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         return self.homePosts.count;
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 120;
+        return 90;
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -116,25 +116,36 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "HomeTableViewCell", for: indexPath) as! HomeTableViewCell;
        print("******")
-       print((homeObject as AnyObject).value(forKey: "sharing_media_Url") as? String)
-        cell.postTextLabel.attributedText = ((homeObject as AnyObject).value(forKey: "post_description") as? String)?.htmlToAttributedString
-       /*  cell.profileLabel.text = ((homeObject as AnyObject).value(forKey: "short_user_name") as? String?)!
-        print((homeObject as AnyObject).value(forKey: "short_user_name") as? String)
-       cell.profileImage.sd_setImage(with: URL(string: (homeObject as AnyObject).value(forKey: "profile_pic") as! String), placeholderImage: UIImage(named: "profile"));
+       print((homeObject as AnyObject).value(forKey: "post_description") as? String)
+        //cell.postTextLabel.attributedText = ((homeObject as AnyObject).value(forKey: "post_description") as? String)?.htmlToAttributedString
+        cell.postTextLabel.text = ((homeObject as AnyObject).value(forKey: "post_description") as? String);
+        var postImage = (homeObject as! NSDictionary).value(forKey: "post_images") as? NSArray
         
-        cell.profileImage.image = (homeObject as AnyObject).value(forKey: "image_Url") as? UIImage
+        
+        var postImageURL = postImage![0] as! NSDictionary;
+        let imgUrl = postImageURL.value(forKey: "image") as! String;
+        print(imgUrl)
+        /* cell.profileLabel.text = ((homeObject as AnyObject).value(forKey: "short_user_name") as? String?)! */
+        //cell.profileLabel.text = ""
+       cell.profileImage.sd_setImage(with: URL(string: imgUrl as! String), placeholderImage: UIImage(named: "profile"));
+        
+        //cell.profileImage.image = (homeObject as AnyObject).value(forKey: "image_Url") as? UIImage
         
         cell.profileImage.layer.masksToBounds = false
         
-        cell.profileImage.roundImageView();
-      
-        cell.sourceImage.image = UIImage.init(named: "twitter")
+        //cell.profileImage.roundImageView();
+        let sourcePlatformArray = (homeObject as! NSDictionary).value(forKey: "social_media") as? NSArray
+        let sourcePlatform = Int(((((sourcePlatformArray![0]) as! NSDictionary).value(forKey: "id") as? NSString)?.doubleValue)!)
+        print(sourcePlatform)
+        if(Int(sourcePlatform) == social.socialPlatformId["facebook"]){
+            cell.sourceImage.image = UIImage.init(named: "facebook")
+        }else  if(Int(sourcePlatform) == social.socialPlatformId["twitter"]){
+            print("dsf")
+            cell.sourceImage.image = UIImage.init(named: "twitter")
+        }
+        
         cell.sourceImage.layer.masksToBounds = false
-        
-      
-        cell.sourceImage.roundImageView(); */
-        
-        cell.dateLabel.text = (homeObject as AnyObject).value(forKey: "created_on") as! String
+        cell.dateLabel.text = (homeObject as AnyObject).value(forKey: "elapsed_time_setting_value") as! String
         return cell;
     }
 }

@@ -255,6 +255,7 @@ class SignupViewController: UIViewController,UITextFieldDelegate {
         
         UserService().postMultipartImageDataMethod(jsonURL: jsonURL,image : uploadImage.image!, postData:user.toDictionary(user: user),complete:{(response) in
             print(response);
+            SocialPlatform().fetchSocialPlatformData();
             if (Int(response.value(forKey: "status") as! String)! == 1) {
                 
                 let message = response.value(forKey: "message") as! String;

@@ -99,4 +99,49 @@ class HttpService {
             }
         }
     }
+    func postMultipartImageSocial(url: String, image: UIImage, postData: [String:Any], complete: @escaping(NSDictionary)->Void) {
+        
+        let imgData = UIImageJPEGRepresentation(image, 0.2)!
+        
+        let Auth_header =  [ "X-API-KEY" : ApiToken ]
+        
+        Alamofire.upload(multipartFormData: { (MultipartFormData) in
+            MultipartFormData.append(imgData, withName: "post_imgs", fileName: "file.jpg", mimeType: "image/jpg")
+            MultipartFormData.append( "\(String(describing: postData["post_description"]!))".data(using: .utf8)!, withName: "post_description")
+            MultipartFormData.append( "\(String(describing: postData["social_media_id"]!))".data(using: .utf8)!, withName: "social_media_id")
+          
+            
+            
+        }, usingThreshold: UInt64.init(), to: "\(url)", method: .post, headers:Auth_header ) { (result) in
+            
+            var returnDict = NSDictionary();
+            
+            switch result {
+            case .success(let upload,_,_):
+                
+                upload.uploadProgress(closure: { (progress) in
+                    print("Upload Progress: \(progress.fractionCompleted)")
+                })
+                
+                upload.responseJSON { response in
+                    
+                    print("Suceess:\(String(describing: response.result.value ))")
+                    /////let json = response.result.value as! NSDictionary
+                    returnDict = response.result.value as! NSDictionary;
+                    //returnDict.setValue(true, forKey: "success");
+                    //returnDict.setValue(response.result.value, forKey: "resp");
+                    complete(returnDict)
+                    
+                }
+            case .failure(let encodingError):
+                print(encodingError)
+                var responseDict: [String: Any] = [:]
+                responseDict["success"] = false;
+                responseDict["message"] = encodingError.localizedDescription;
+                returnDict = responseDict as NSDictionary;
+                complete(returnDict)
+                
+            }
+        }
+    }
 }

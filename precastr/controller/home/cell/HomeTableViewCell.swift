@@ -13,6 +13,8 @@ class HomeTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        
+        sourceImage.roundImageView();
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

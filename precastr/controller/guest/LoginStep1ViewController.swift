@@ -235,13 +235,15 @@ class LoginStep1ViewController: UIViewController,UITextFieldDelegate {
                 let data = response.value(forKey: "data") as! NSDictionary;
                 let allStepsDone = (data.value(forKey: "user_cast_setting_id") as! NSString).intValue
                 print(allStepsDone)
-                
+                SocialPlatform().fetchSocialPlatformData();
                 let alert = UIAlertController.init(title: "Success", message: message, preferredStyle: .alert);
                 alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: {(resp) in
                     let userDict = response.value(forKey: "data") as! NSDictionary;
                     print(userDict)
                     let user = User().getUserData(userDataDict: userDict);
                     user.loadUserDefaults();
+                    
+                    
                     //if(requestType == ""){
                     
                     //If is the First Time user then we will send him to complete the steps.
