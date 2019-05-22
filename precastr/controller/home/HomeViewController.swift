@@ -47,14 +47,14 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             print(response);
             
             let modeArray = response.value(forKey: "data") as! NSArray;
-           /* for mode in modeArray{
-                var posts = [String : Any]()
-                var modeDict = mode as! NSDictionary;
-                // self.moderators.append(String((modeDict.value(forKey: "username") as! NSString) as String)!);
-                posts["short_user_name"] = modeDict.value(forKey: "short_user_name") as! String
-               
-                
-            } */
+            /* for mode in modeArray{
+             var posts = [String : Any]()
+             var modeDict = mode as! NSDictionary;
+             // self.moderators.append(String((modeDict.value(forKey: "username") as! NSString) as String)!);
+             posts["short_user_name"] = modeDict.value(forKey: "short_user_name") as! String
+             
+             
+             } */
             self.homePosts = modeArray as! [Any]
             self.socialPostList.reloadData();
         });
