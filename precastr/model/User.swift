@@ -74,7 +74,9 @@ class User  {
             userJson["token"] = "\(token)";
         } else if (user.isFacebook == 1) {
             var token = "";
-            token = token + "{\"facebook_access_token\":\"\(user.facebookAccessToken!)\"}";
+            
+            token = token + "{\"facebook_access_token\":\"\(user.facebookAccessToken!)\"";
+            token = token + ",\"facebook_id\":\"\(user.facebookId!)\"}";
             userJson["token"] = token;
         }
        
@@ -88,6 +90,9 @@ class User  {
         userJson["profile_pic"] = user.profilePic
         return userJson;
     }
+    
+    
+    
     func loadUserDataFromUserDefaults(userDataDict: UserDefaults) -> User {
         
         let user = User();
