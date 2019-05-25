@@ -46,6 +46,7 @@ class SplashViewController: UIViewController {
             performSegue(withIdentifier: "homeScreenSegue", sender: self)
             //window = UIWindow(frame: UIScreen.main.bounds)
             //window?.rootViewController = HomeViewController.MainViewController()
+                UIApplication.shared.keyWindow?.rootViewController = HomeViewController.MainViewController();
             }
         }else{
             //window = UIWindow(frame: UIScreen.main.bounds)

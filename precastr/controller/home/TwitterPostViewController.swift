@@ -21,7 +21,7 @@ class TwitterPostViewController: UIViewController,UITextViewDelegate {
      @IBOutlet weak var postTextField: UITextView!
     var loggedInUser : User!
     var social : SocialPlatform!
-    var uploadImage : UIImageView!
+    var uploadImage : UIImageView = UIImageView()
     var imageDelegate : ImageLibProtocolT!
     var socialMediaPlatform : [Int]!
     var uploadImageStatus = false
@@ -76,6 +76,8 @@ class TwitterPostViewController: UIViewController,UITextViewDelegate {
                 }
                 
             }
+            print(self.facebookExists)
+            print(self.twitterExists)
             
         });
     }
@@ -112,6 +114,12 @@ class TwitterPostViewController: UIViewController,UITextViewDelegate {
             self.facebookBtn.layer.borderWidth = 0
             let image = UIImage(named: "facebook")
             self.facebookBtn.setImage(image, for: UIControlState.normal)
+            for obj in self.social.socialPlatformId {
+                if (obj.key == "Facebook") {
+                    self.socialMediaPlatform.append(obj.value);
+                    break;
+                }
+            }
         }else{
             self.facebookStatus = false
             self.facebookBtn.layer.borderWidth = 1
@@ -119,8 +127,19 @@ class TwitterPostViewController: UIViewController,UITextViewDelegate {
             self.facebookBtn.backgroundColor = UIColor.white
             let image = UIImage(named: "facebook-group")
             self.facebookBtn.setImage(image, for: UIControlState.normal)
+            
+            for obj in self.social.socialPlatformId {
+                if (obj.key == "Facebook") {
+                    if let index = socialMediaPlatform.index(of:obj.value) {
+                        socialMediaPlatform.remove(at: index)
+                    }
+                    break;
+                }
+            }
+           
+           
         }
-        if(self.facebookExists == false){
+        if(self.facebookExists == false && self.facebookStatus == true){
             
             
             let fbloginManger: FBSDKLoginManager = FBSDKLoginManager()
@@ -155,7 +174,7 @@ class TwitterPostViewController: UIViewController,UITextViewDelegate {
                         var postData = [String : Any]()
                         for obj in self.social.socialPlatformId {
                             if (obj.key == "Facebook") {
-                                self.socialMediaPlatform.append(obj.value);
+                                
                                 postData["social_media"] = obj.value
                                 break;
                             }
@@ -180,12 +199,20 @@ class TwitterPostViewController: UIViewController,UITextViewDelegate {
     
     @IBAction func twitterBtnClicked(_ sender: Any) {
         
+        
+        
         if(self.twitterStatus==false){
             self.twitterStatus = true //setting as clicked
            self.twitterBtn.backgroundColor = UIColor.init(red: 12/255, green: 111/255, blue: 2333/255, alpha: 1);
             self.twitterBtn.layer.borderWidth = 0
             let image = UIImage(named: "twitter")
             self.twitterBtn.setImage(image, for: UIControlState.normal)
+            for obj in self.social.socialPlatformId {
+                if (obj.key == "Twitter") {
+                    self.socialMediaPlatform.append(obj.value);
+                    break;
+                }
+            }
         
         }else{
             self.twitterStatus = false //setting to initial state
@@ -195,9 +222,17 @@ class TwitterPostViewController: UIViewController,UITextViewDelegate {
             self.twitterBtn.backgroundColor = UIColor.white
              let image = UIImage(named: "twitter-group")
             self.twitterBtn.setImage(image, for: UIControlState.normal)
+            for obj in self.social.socialPlatformId {
+                if (obj.key == "Twitter") {
+                    if let index = socialMediaPlatform.index(of:obj.value) {
+                        socialMediaPlatform.remove(at: index)
+                    }
+                    break;
+                }
+            }
             
         }
-        if(self.twitterExists == false){
+        if(self.twitterExists == false && self.twitterStatus == true){
             let store = TWTRTwitter.sharedInstance().sessionStore
             if let userID = store.session()?.userID {
                 store.logOutUserID(userID)
@@ -225,12 +260,12 @@ class TwitterPostViewController: UIViewController,UITextViewDelegate {
                     postData["user_id"] = self.loggedInUser.userId
                     for obj in self.social.socialPlatformId {
                         if (obj.key == "Twitter") {
-                            self.socialMediaPlatform.append(obj.value);
+                            
                             postData["social_media"] = obj.value
                             break;
                         }
                     }
-                    postData["user_id"] = user.twitterAccessSecret
+                   
                     postData["twitter_id"] = user.twitterId
                     
                     if (user.isTwitter == 1) {
@@ -302,10 +337,11 @@ class TwitterPostViewController: UIViewController,UITextViewDelegate {
         for elementItem in elements! {
             joinedStrings = joinedStrings + "\(elementItem),";
         }
+            joinedStrings = String(joinedStrings.dropLast())
         print(joinedStrings)
         postData["social_media_id"] = String(joinedStrings.suffix(joinedStrings.count-1));
         
-        if(uploadImage.image != nil){
+        if(uploadImage != nil){
             UserService().postMultipartImageDataSocialMethod(jsonURL: jsonURL,image : uploadImage.image!, postData:postData,complete:{(response) in
                 print(response);
             })
@@ -343,7 +379,7 @@ class TwitterPostViewController: UIViewController,UITextViewDelegate {
         present(actionSheetController, animated: true, completion: nil)
     }
     func validateSocialPlatform()->Bool{
-        if(self.socialMediaPlatform == nil){
+        if(self.socialMediaPlatform.count == 0){
             let message = "Please select social media platforms"
             let alert = UIAlertController.init(title: "Error", message: message, preferredStyle: .alert);
             alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil));

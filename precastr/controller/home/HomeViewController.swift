@@ -17,24 +17,19 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     var social : SocialPlatform!
     var postArray : [String:Any] = [String:Any]()
     
-    class func MainViewController() -> UINavigationController{
+    class func MainViewController() -> UITabBarController{
         
-        return UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "nav") as! UINavigationController
+        return UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MadTabBar") as! UITabBarController
         
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-       // view.backgroundColor = UIColor (red: 0, green: 0.4745, blue: 0.9176, alpha: 1)
-       /* let doneButton = UIButton(type: .system);
-        doneButton.setTitle("Save", for: .normal);
-       // doneButton.addTarget(self, action: #selector(selectFriendsDone(_ :)), for: .touchUpInside)
-        
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: doneButton); */
+       
         loggedInUser = User().loadUserDataFromUserDefaults(userDataDict : setting);
         social = SocialPlatform().loadSocialDataFromUserDefaults();
         // Do any additional setup after loading the view.
         
-        socialPostList.register(UINib(nibName: "HomeTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "HomeTableViewCell")
+        socialPostList.register(UINib(nibName: "HomeTextPostTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "HomeTextPostTableViewCell")
         
         
         let jsonURL = "posts/all_caster_posts/format/json";
@@ -112,40 +107,39 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let homeObject = self.homePosts[indexPath.row];
+        let homeObject = self.homePosts[indexPath.row] as! NSDictionary ;
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "HomeTableViewCell", for: indexPath) as! HomeTableViewCell;
-       print("******")
-       print((homeObject as AnyObject).value(forKey: "post_description") as? String)
-        //cell.postTextLabel.attributedText = ((homeObject as AnyObject).value(forKey: "post_description") as? String)?.htmlToAttributedString
-        cell.postTextLabel.text = ((homeObject as AnyObject).value(forKey: "post_description") as? String);
-        var postImage = (homeObject as! NSDictionary).value(forKey: "post_images") as? NSArray
-        
-        
-        var postImageURL = postImage![0] as! NSDictionary;
-        let imgUrl = postImageURL.value(forKey: "image") as! String;
-        print(imgUrl)
-        /* cell.profileLabel.text = ((homeObject as AnyObject).value(forKey: "short_user_name") as? String?)! */
-        //cell.profileLabel.text = ""
-       cell.profileImage.sd_setImage(with: URL(string: imgUrl as! String), placeholderImage: UIImage(named: "profile"));
-        
-        //cell.profileImage.image = (homeObject as AnyObject).value(forKey: "image_Url") as? UIImage
-        
-        cell.profileImage.layer.masksToBounds = false
-        
-        //cell.profileImage.roundImageView();
-        let sourcePlatformArray = (homeObject as! NSDictionary).value(forKey: "social_media") as? NSArray
-        let sourcePlatform = Int(((((sourcePlatformArray![0]) as! NSDictionary).value(forKey: "id") as? NSString)?.doubleValue)!)
-        print(sourcePlatform)
-        if(Int(sourcePlatform) == social.socialPlatformId["facebook"]){
-            cell.sourceImage.image = UIImage.init(named: "facebook")
-        }else  if(Int(sourcePlatform) == social.socialPlatformId["twitter"]){
-            print("dsf")
-            cell.sourceImage.image = UIImage.init(named: "twitter")
+        let cell = tableView.dequeueReusableCell(withIdentifier: "HomeTextPostTableViewCell", for: indexPath) as! HomeTextPostTableViewCell;
+
+        cell.postTextLabel.text = String(homeObject.value(forKey: "post_description") as! String);
+        let postImage = homeObject.value(forKey: "post_images") as! NSArray
+        if (postImage != nil && postImage.count > 0) {
+            
+            let postImageURL = postImage[0] as! NSDictionary;
+            let imgUrl = postImageURL.value(forKey: "image") as! String;
+            print(imgUrl)
+          //  cell.sourceImageFacebook.sd_setImage(with: URL(string: imgUrl), placeholderImage: UIImage(named: "profile"));
+            //cell.sourceImageFacebook.layer.masksToBounds = false
         }
         
-        cell.sourceImage.layer.masksToBounds = false
-        cell.dateLabel.text = (homeObject as AnyObject).value(forKey: "elapsed_time_setting_value") as! String
+        
+        //cell.profileImage.roundImageView();
+        let sourcePlatformArray = homeObject.value(forKey: "social_media") as! NSArray
+        if (sourcePlatformArray != nil && sourcePlatformArray.count > 0) {
+            
+            let sourcePlatform = Int(((((sourcePlatformArray[0]) as! NSDictionary).value(forKey: "id") as? NSString)?.doubleValue)!)
+            print(sourcePlatform)
+            if(Int(sourcePlatform) == social.socialPlatformId["Facebook"]){
+                cell.sourceImageFacebook.image = UIImage.init(named: "facebook")
+            }else  if(Int(sourcePlatform) == social.socialPlatformId["Twitter"]){
+                print("dsf")
+                cell.sourceImageTwitter.image = UIImage.init(named: "twitter")
+            }
+            cell.sourceImageTwitter.layer.masksToBounds = false
+            cell.sourceImageFacebook.layer.masksToBounds = false
+        }
+        
+        cell.dateLabel.text = homeObject.value(forKey: "elapsed_time_setting_value") as! String
         return cell;
     }
 }

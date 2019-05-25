@@ -42,6 +42,8 @@
 		FAF601CA2286A3C700B54F9B /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF601C92286A3C700B54F9B /* SplashViewController.swift */; };
 		FAF601CC228AAE6800B54F9B /* VerificationModeratorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF601CB228AAE6800B54F9B /* VerificationModeratorViewController.swift */; };
 		FAFCE3C3228E8F0000AB6DB5 /* SocialPlatform.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFCE3C2228E8F0000AB6DB5 /* SocialPlatform.swift */; };
+		FAFCE3CA22999F1000AB6DB5 /* HomeTextPostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFCE3C822999F1000AB6DB5 /* HomeTextPostTableViewCell.swift */; };
+		FAFCE3CB22999F1000AB6DB5 /* HomeTextPostTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAFCE3C922999F1000AB6DB5 /* HomeTextPostTableViewCell.xib */; };
 		FEE73D1CBA1D94C8162E3DC6 /* Pods_precastrUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 561E50304594AB7F3B9F4993 /* Pods_precastrUITests.framework */; };
 /* End PBXBuildFile section */
 
@@ -111,6 +113,8 @@
 		FAF601C92286A3C700B54F9B /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		FAF601CB228AAE6800B54F9B /* VerificationModeratorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationModeratorViewController.swift; sourceTree = "<group>"; };
 		FAFCE3C2228E8F0000AB6DB5 /* SocialPlatform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialPlatform.swift; sourceTree = "<group>"; };
+		FAFCE3C822999F1000AB6DB5 /* HomeTextPostTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTextPostTableViewCell.swift; sourceTree = "<group>"; };
+		FAFCE3C922999F1000AB6DB5 /* HomeTextPostTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeTextPostTableViewCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -208,6 +212,8 @@
 			children = (
 				FA52DDCA2277195C0093FDF8 /* HomeTableViewCell.swift */,
 				FA52DDCB2277195C0093FDF8 /* HomeTableViewCell.xib */,
+				FAFCE3C822999F1000AB6DB5 /* HomeTextPostTableViewCell.swift */,
+				FAFCE3C922999F1000AB6DB5 /* HomeTextPostTableViewCell.xib */,
 			);
 			path = cell;
 			sourceTree = "<group>";
@@ -467,6 +473,7 @@
 				FA6AB58622531E8200C5491F /* LaunchScreen.storyboard in Resources */,
 				FA6AB58322531E8200C5491F /* Assets.xcassets in Resources */,
 				FABF0259226DBA750067960C /* ModeratorViewTableViewCell.xib in Resources */,
+				FAFCE3CB22999F1000AB6DB5 /* HomeTextPostTableViewCell.xib in Resources */,
 				FA52DDCD2277195C0093FDF8 /* HomeTableViewCell.xib in Resources */,
 				FA6AB58122531E7300C5491F /* Main.storyboard in Resources */,
 			);
@@ -619,6 +626,7 @@
 				FA4D544C2260F7F200E9589B /* UserTypeActionViewController.swift in Sources */,
 				FAFCE3C3228E8F0000AB6DB5 /* SocialPlatform.swift in Sources */,
 				FA6AB57C22531E7300C5491F /* AppDelegate.swift in Sources */,
+				FAFCE3CA22999F1000AB6DB5 /* HomeTextPostTableViewCell.swift in Sources */,
 				FA1C1CDD228400A800583E1B /* Reusable.swift in Sources */,
 				FAF601CA2286A3C700B54F9B /* SplashViewController.swift in Sources */,
 				FA0294E3227315F300465318 /* TwitterPostViewController.swift in Sources */,
