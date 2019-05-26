@@ -102,7 +102,7 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         return self.homePosts.count;
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 90;
+        return 120;
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -130,16 +130,35 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             let sourcePlatform = Int(((((sourcePlatformArray[0]) as! NSDictionary).value(forKey: "id") as? NSString)?.doubleValue)!)
             print(sourcePlatform)
             if(Int(sourcePlatform) == social.socialPlatformId["Facebook"]){
-                cell.sourceImageFacebook.image = UIImage.init(named: "facebook")
-            }else  if(Int(sourcePlatform) == social.socialPlatformId["Twitter"]){
+                cell.sourceImageFacebook.image = UIImage.init(named: "facebook-group")
+                cell.sourceImageFacebook.isHidden = false
+            }
+            if(Int(sourcePlatform) == social.socialPlatformId["Twitter"]){
                 print("dsf")
-                cell.sourceImageTwitter.image = UIImage.init(named: "twitter")
+                cell.sourceImageTwitter.image = UIImage.init(named: "twitter-group")
+                cell.sourceImageTwitter.isHidden = false
             }
             cell.sourceImageTwitter.layer.masksToBounds = false
             cell.sourceImageFacebook.layer.masksToBounds = false
         }
-        
-        cell.dateLabel.text = homeObject.value(forKey: "elapsed_time_setting_value") as! String
+        var imageStatus = ""
+        var status = (homeObject.value(forKey: "status") as! String)
+        if(status == "Pending"){
+            imageStatus = "pending-review"
+            status = "Pending review"
+        }else if(status == "Approved by moderator"){
+            imageStatus = "approved"
+            status = "Approved"
+        }else if (status == "Rejected by moderator"){
+            imageStatus = "rejected"
+            status = "Rejected"
+        }else if(status == ""){
+            imageStatus = ""
+        }
+        cell.statusImage.image = UIImage.init(named: imageStatus)
+        var pipe = " |"
+        cell.profileLabel.text = "\((status))\(pipe)"
+        cell.dateLabel.text = Date().ddspEEEEcmyyyy(dateStr: homeObject.value(forKey: "elapsed_time_setting_value") as! String)
         return cell;
     }
 }

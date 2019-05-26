@@ -38,7 +38,6 @@ class TwitterPostViewController: UIViewController,UITextViewDelegate {
     var postArray : [String:Any] = [String:Any]()
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "Create a new Cast";
         
         self.facebookBtn.layer.borderColor = UIColor(red: 12/255, green: 111/255, blue: 233/255, alpha: 1).cgColor;
         self.facebookBtn.layer.borderWidth = 1

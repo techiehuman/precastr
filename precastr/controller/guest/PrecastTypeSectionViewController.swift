@@ -10,9 +10,26 @@ import UIKit
 
 class PrecastTypeSectionViewController: UIViewController {
 
+    
+    @IBOutlet weak var handView: UIView!
+    
+    @IBOutlet weak var commentView: UIView!
+    
+    @IBOutlet weak var timeView: UIView!
+    
+    @IBOutlet weak var profilePic: UIImageView!
+    
     var loggedInUser : User!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        handView.roundView()
+        commentView.roundView();
+        timeView.roundView();
+        
+        profilePic.roundImageView()
+        
         loggedInUser = User().loadUserDataFromUserDefaults(userDataDict : setting);
         // Do any additional setup after loading the view.
     }

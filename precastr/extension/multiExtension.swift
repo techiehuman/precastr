@@ -22,13 +22,18 @@ extension String {
         return htmlToAttributedString?.string ?? ""
     }
 }
+extension UIView{
+    func roundView(){
+        self.layer.cornerRadius = self.frame.height/2
+        self.layer.masksToBounds = true
+    }
+}
+
 extension UIImageView{
     func roundImageView(){
         self.layer.cornerRadius = self.frame.height/2
         self.layer.masksToBounds = true
     }
-   
-
 }
 extension UIImage{
     func compressTo(_ expectedSizeInMb:Int) -> UIImage? {
@@ -66,5 +71,22 @@ extension UIImage {
             print("Cannot load image from url: \(url) with error: \(error)")
             return nil
         }
+    }
+}
+
+extension Date {
+    
+    func ddspEEEEcmyyyy(dateStr: String) -> String {
+        
+        let apiDateFormatter = DateFormatter();
+        apiDateFormatter.dateFormat = "yyyy-MM-dd hh:mm:ss";
+        let fDate = apiDateFormatter.date(from: dateStr)
+        
+        let dateFormatter = DateFormatter();
+        dateFormatter.dateFormat = "dd EEEE, yyyy";
+        if (fDate == nil) {
+            return dateFormatter.string(from: Date());
+        }
+        return dateFormatter.string(from: fDate!);
     }
 }

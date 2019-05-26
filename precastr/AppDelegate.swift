@@ -22,6 +22,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         
          TWTRTwitter.sharedInstance().start(withConsumerKey:"anwp6W4J66hoUWrB1PX9zMHiu", consumerSecret: "tXOlOLD8gcRQhrux93NcBQOA1v2WE24PcZTb9PrgLSS8c4DUAI")
+        UITabBar.appearance().barTintColor = UIColor.init(red:12/255, green:111/255, blue: 233/255, alpha: 1)
+        UINavigationBar.appearance().barTintColor = UIColor.init(red:12/255, green:111/255, blue: 233/255, alpha: 1)
+        UINavigationBar.appearance().tintColor = UIColor.white
+        UINavigationBar.appearance().titleTextAttributes = [NSAttributedStringKey.foregroundColor : UIColor.white]
+
         return true
 
     }
@@ -37,6 +42,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let userDefaults = UserDefaults.standard
         userDefaults.setValue(token , forKey: "tokenData")
         userDefaults.synchronize()
+            
+
     }
 
     

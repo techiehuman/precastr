@@ -26,6 +26,8 @@ class HomeTextPostTableViewCell: UITableViewCell {
     @IBOutlet weak var sourceImageTwitter: UIImageView!
     
     @IBOutlet weak var sourceImageFacebook: UIImageView!
+    
+    @IBOutlet weak var statusImage: UIImageView!
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 

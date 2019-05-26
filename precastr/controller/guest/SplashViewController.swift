@@ -43,7 +43,7 @@ class SplashViewController: UIViewController {
                 
             
             // Override point for customization after application launch.
-            performSegue(withIdentifier: "homeScreenSegue", sender: self)
+            //performSegue(withIdentifier: "homeScreenSegue", sender: self)
             //window = UIWindow(frame: UIScreen.main.bounds)
             //window?.rootViewController = HomeViewController.MainViewController()
                 UIApplication.shared.keyWindow?.rootViewController = HomeViewController.MainViewController();
