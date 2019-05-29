@@ -1,0 +1,82 @@
+# Uncomment the next line to define a global platform for your project
+# platform :ios, '9.0'
+
+target 'Alamofire' do
+  # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
+  use_frameworks!
+
+  # Pods for Alamofire
+
+end
+
+target 'Bolts' do
+  # Uncomment the next line if you're using Swift or would like to use dynamic frameworks
+  # use_frameworks!
+
+  # Pods for Bolts
+
+end
+
+target 'FBSDKCoreKit' do
+  # Uncomment the next line if you're using Swift or would like to use dynamic frameworks
+  # use_frameworks!
+
+  # Pods for FBSDKCoreKit
+
+end
+
+target 'FBSDKLoginKit' do
+  # Uncomment the next line if you're using Swift or would like to use dynamic frameworks
+  # use_frameworks!
+
+  # Pods for FBSDKLoginKit
+
+end
+
+target 'FBSDKPlacesKit' do
+  # Uncomment the next line if you're using Swift or would like to use dynamic frameworks
+  # use_frameworks!
+
+  # Pods for FBSDKPlacesKit
+
+end
+
+target 'FBSDKShareKit' do
+  # Uncomment the next line if you're using Swift or would like to use dynamic frameworks
+  # use_frameworks!
+
+  # Pods for FBSDKShareKit
+
+end
+
+target 'Pods-precastr' do
+  # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
+  use_frameworks!
+
+  # Pods for Pods-precastr
+
+end
+
+target 'Pods-precastrTests' do
+  # Uncomment the next line if you're using Swift or would like to use dynamic frameworks
+  # use_frameworks!
+
+  # Pods for Pods-precastrTests
+
+end
+
+target 'Pods-precastrUITests' do
+  # Uncomment the next line if you're using Swift or would like to use dynamic frameworks
+  # use_frameworks!
+
+  # Pods for Pods-precastrUITests
+
+end
+
+target 'SDWebImage' do
+  # Uncomment the next line if you're using Swift or would like to use dynamic frameworks
+  # use_frameworks!
+
+  # Pods for SDWebImage
+
+end

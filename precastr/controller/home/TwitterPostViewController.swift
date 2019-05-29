@@ -14,14 +14,14 @@ import TwitterCore
 
 protocol ImageLibProtocolT {
     func takePicture(viewC : UIViewController);
-    func selectPicture(viewC : UIViewController,cameraView : UIImageView);
+    func selectMultipleImages(viewC : UIViewController,cameraView : [UIImageView]);
 }
 class TwitterPostViewController: UIViewController,UITextViewDelegate {
 
      @IBOutlet weak var postTextField: UITextView!
     var loggedInUser : User!
     var social : SocialPlatform!
-    var uploadImage : UIImageView = UIImageView()
+    var uploadImage : [UIImageView] = [UIImageView]()
     var imageDelegate : ImageLibProtocolT!
     var socialMediaPlatform : [Int]!
     var uploadImageStatus = false
@@ -36,6 +36,8 @@ class TwitterPostViewController: UIViewController,UITextViewDelegate {
     @IBOutlet weak var sendViewArea: UIView!
     @IBOutlet weak var inputViewArea: UIView!
     var postArray : [String:Any] = [String:Any]()
+    
+    @IBOutlet weak var postedPicview: UIImageView!
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -52,7 +54,7 @@ class TwitterPostViewController: UIViewController,UITextViewDelegate {
             self.social = SocialPlatform().loadSocialDataFromUserDefaults();
             imageDelegate = Reusable()
         let imageTapGesture = UITapGestureRecognizer.init(target: self, action: #selector(imageUploadClicked))
-        //uploadImage.addGestureRecognizer(imageTapGesture);
+        postedPicview.addGestureRecognizer(imageTapGesture);
         // Do any additional setup after loading the view.
         self.socialMediaPlatform = [Int]();
         
@@ -171,6 +173,8 @@ class TwitterPostViewController: UIViewController,UITextViewDelegate {
                         
                         user.isFacebook = 1;
                         var postData = [String : Any]()
+                             postData["user_id"] = self.loggedInUser.userId
+                            postData["facebook_id"] = user.facebookId
                         for obj in self.social.socialPlatformId {
                             if (obj.key == "Facebook") {
                                 
@@ -299,7 +303,7 @@ class TwitterPostViewController: UIViewController,UITextViewDelegate {
         
         // create an action
         let uploadPhotoAction: UIAlertAction = UIAlertAction(title: "Upload Photo", style: .default) { action -> Void in
-            self.imageDelegate.selectPicture(viewC: self,cameraView: self.uploadImage);
+            self.imageDelegate.selectMultipleImages(viewC: self, cameraView: self.uploadImage);
         }
         //uploadPhotoAction.setValue(selectedColor, forKey: "titleTextColor")
         let takePhotoAction: UIAlertAction = UIAlertAction(title: "Take Photo", style: .default) { action -> Void in
@@ -329,7 +333,7 @@ class TwitterPostViewController: UIViewController,UITextViewDelegate {
         var postData : [String : Any] = [String : Any]()
         postData["post_description"] = self.postTextField.text
         postData["user_id"] = self.loggedInUser.userId
-        let joiner = ","
+        //let joiner = ","
         let elements = (self.socialMediaPlatform);
         
         var joinedStrings = "";
@@ -338,9 +342,11 @@ class TwitterPostViewController: UIViewController,UITextViewDelegate {
         }
             joinedStrings = String(joinedStrings.dropLast())
         print(joinedStrings)
-        postData["social_media_id"] = String(joinedStrings.suffix(joinedStrings.count-1));
-        
-        if(uploadImage != nil){
+      //  postData["social_media"] = String(joinedStrings.suffix(joinedStrings.count-1));
+            postData["social_media_id"] = joinedStrings
+       //  let size = CGSize(width: 0, height: 0)
+            
+        if(uploadImage.image != nil){
             UserService().postMultipartImageDataSocialMethod(jsonURL: jsonURL,image : uploadImage.image!, postData:postData,complete:{(response) in
                 print(response);
             })

@@ -8,10 +8,15 @@
 
 import UIKit
 
-class TableTableViewController: UITableViewController {
+class SideMenuTableViewController: UITableViewController {
 
+    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var profilePic: UIImageView!
+    
     private var dateCellExpanded: Bool = false
     var rowTypeVar : Bool = false
+    var loggedInUser: User!;
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -20,8 +25,22 @@ class TableTableViewController: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        self.loggedInUser = User().loadUserDataFromUserDefaults(userDataDict: setting);
+        
+        if (self.loggedInUser.name == nil) {
+            nameLabel.text = self.loggedInUser.name;
+        } else {
+            nameLabel.text = self.loggedInUser.username;
+        }
+    
+        profilePic.sd_setImage(with: URL(string: self.loggedInUser.profilePic), placeholderImage: UIImage.init(named: "profile"));
+        
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        self.tabBarController?.tabBar.isHidden = true;
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -34,27 +53,12 @@ class TableTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-       /* if  indexPath.row == 0 {
-            if dateCellExpanded {
-                dateCellExpanded = false
-            } else {
-                dateCellExpanded = true
-            }
-            tableView.beginUpdates()
-            tableView.endUpdates()
-        } */
+       
         if indexPath.row == 2 {
             
             
             
-          /*
-            if dateCellExpanded {
-                dateCellExpanded = false
-            } else {
-                dateCellExpanded = true
-            }
-            tableView.beginUpdates()
-            tableView.endUpdates() */
+          
             rowTypeVar = true
            // let viewController: ModeratorViewController = self.storyboard?.instantiateViewController(withIdentifier: "ModeratorViewController") as! ModeratorViewController;
           //  self.navigationController?.pushViewController(viewController, animated: true);
@@ -68,16 +72,7 @@ class TableTableViewController: UITableViewController {
             self.performSegue(withIdentifier: "moderatorSegue", sender: self);
         }
     }
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-       // if indexPath.row == 0 {
-           /* if dateCellExpanded {
-                return 110
-            } else {
-                return 50
-            } */
-       // }
-        return 107
-    }
+
     /*
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)

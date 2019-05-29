@@ -106,10 +106,10 @@ class HttpService {
         let Auth_header =  [ "X-API-KEY" : ApiToken ]
         
         Alamofire.upload(multipartFormData: { (MultipartFormData) in
-            MultipartFormData.append(imgData, withName: "post_imgs", fileName: "file.jpg", mimeType: "image/jpg")
+            MultipartFormData.append(imgData, withName: "post_imgs[]", fileName: "file.jpg", mimeType: "image/jpg")
             MultipartFormData.append( "\(String(describing: postData["post_description"]!))".data(using: .utf8)!, withName: "post_description")
             MultipartFormData.append( "\(String(describing: postData["social_media_id"]!))".data(using: .utf8)!, withName: "social_media_id")
-          
+          MultipartFormData.append( "\(String(describing: postData["user_id"]!))".data(using: .utf8)!, withName: "user_id")
             
             
         }, usingThreshold: UInt64.init(), to: "\(url)", method: .post, headers:Auth_header ) { (result) in

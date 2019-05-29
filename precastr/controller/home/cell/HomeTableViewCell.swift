@@ -9,6 +9,8 @@
 import UIKit
 
 class HomeTableViewCell: UITableViewCell {
+   
+    
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -32,4 +34,6 @@ class HomeTableViewCell: UITableViewCell {
     @IBOutlet weak var profileImage: UIImageView!
     
     @IBOutlet weak var sourceImage: UIImageView!
+    
+    
 }

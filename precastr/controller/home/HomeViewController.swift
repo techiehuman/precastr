@@ -16,6 +16,7 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     var loggedInUser : User!
     var social : SocialPlatform!
     var postArray : [String:Any] = [String:Any]()
+     private let refreshControl = UIRefreshControl()
     
     class func MainViewController() -> UITabBarController{
         
@@ -25,42 +26,33 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     override func viewDidLoad() {
         super.viewDidLoad()
        
-        loggedInUser = User().loadUserDataFromUserDefaults(userDataDict : setting);
-        social = SocialPlatform().loadSocialDataFromUserDefaults();
-        // Do any additional setup after loading the view.
+            // Add Refresh Control to Table View
+        if #available(iOS 10.0, *) {
+            self.socialPostList.refreshControl = refreshControl
+        } else {
+            self.socialPostList.addSubview(refreshControl)
+        }
+        refreshControl.addTarget(self, action: #selector(refreshPostsData(_:)), for: .valueChanged)
+        self.loadUserPosts();
         
-        socialPostList.register(UINib(nibName: "HomeTextPostTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "HomeTextPostTableViewCell")
-        
-        
-        let jsonURL = "posts/all_caster_posts/format/json";
-        print("loggedInUser")
-        print(Int(loggedInUser.userId))
-        postArray["user_id"] = String(loggedInUser.userId)
-       // postArray["social_media_platform_id"] = 2
-        
-        UserService().postDataMethod(jsonURL: jsonURL, postData: postArray, complete: {(response) in
-            print(response);
-            
-            let modeArray = response.value(forKey: "data") as! NSArray;
-            /* for mode in modeArray{
-             var posts = [String : Any]()
-             var modeDict = mode as! NSDictionary;
-             // self.moderators.append(String((modeDict.value(forKey: "username") as! NSString) as String)!);
-             posts["short_user_name"] = modeDict.value(forKey: "short_user_name") as! String
-             
-             
-             } */
-            self.homePosts = modeArray as! [Any]
-            self.socialPostList.reloadData();
-        });
+
     }
     override func viewWillAppear(_ animated: Bool) {
+        
+        self.tabBarController?.tabBar.isHidden = false;
         self.navigationController?.navigationBar.isHidden = false
         self.navigationController?.navigationBar.tintColor = UIColor(red: 12/255, green: 111/255, blue: 233/255, alpha: 1)
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: nil);
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "New", style: .plain, target: self, action: #selector(redirectOnSocialPlatform))
+        let menuButton = UIButton();
+        menuButton.setImage(UIImage.init(named: "menu"), for: .normal);
+        menuButton.addTarget(self, action: #selector(menuButtonClicked), for: UIControlEvents.touchUpInside)
+        menuButton.frame = CGRect.init(x: 0, y:0, width: 50, height: 5);
+
+        let barButton = UIBarButtonItem(customView: menuButton)
+        
+        navigationItem.rightBarButtonItem = barButton;
         navigationItem.rightBarButtonItem?.tintColor = UIColor(red: 12/255, green: 111/255, blue: 233/255, alpha: 1)
 
     }
@@ -69,16 +61,13 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func MenuButtonClicked(_ sender: Any) {
-        print("hello")
-        print(self.navigationController)
-        let viewController: TableTableViewController = self.storyboard?.instantiateViewController(withIdentifier: "TableTableViewController") as! TableTableViewController;
+    @objc func menuButtonClicked() {
+        let viewController: SideMenuTableViewController = self.storyboard?.instantiateViewController(withIdentifier: "SideMenuTableViewController") as! SideMenuTableViewController;
         self.navigationController?.pushViewController(viewController, animated: true);
        
         
     }
     @objc func redirectOnSocialPlatform(){
-        print("hello addTapped")
         let viewController: TwitterPostViewController = self.storyboard?.instantiateViewController(withIdentifier: "TwitterPostViewController") as! TwitterPostViewController;
         self.navigationController?.pushViewController(viewController, animated: true);
         
@@ -98,28 +87,37 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print(self.homePosts.count)
+      //  print(self.homePosts.count)
         return self.homePosts.count;
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 120;
+        let homeObject = self.homePosts[indexPath.row] as! NSDictionary ;
+        let postImage = homeObject.value(forKey: "post_images") as! NSArray
+        if (postImage != nil && postImage.count > 0) {
+            return 375
+        }
+        return 120
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let homeObject = self.homePosts[indexPath.row] as! NSDictionary ;
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "HomeTextPostTableViewCell", for: indexPath) as! HomeTextPostTableViewCell;
+        let cell: HomeTextPostTableViewCell = tableView.dequeueReusableCell(withIdentifier: "HomeTextPostTableViewCell", for: indexPath) as! HomeTextPostTableViewCell;
 
         cell.postTextLabel.text = String(homeObject.value(forKey: "post_description") as! String);
-        let postImage = homeObject.value(forKey: "post_images") as! NSArray
-        if (postImage != nil && postImage.count > 0) {
-            
-            let postImageURL = postImage[0] as! NSDictionary;
-            let imgUrl = postImageURL.value(forKey: "image") as! String;
-            print(imgUrl)
+        let postImages = homeObject.value(forKey: "post_images") as! NSArray
+        if (postImages != nil && postImages.count > 0) {
+            cell.postImageCollectionView.isHidden = false
+            for postImg in postImages {
+                let postImageURL = postImg as! NSDictionary;
+                let imgUrl: String = postImageURL.value(forKey: "image") as! String;
+                cell.imagesArray.append(imgUrl);
+            }
           //  cell.sourceImageFacebook.sd_setImage(with: URL(string: imgUrl), placeholderImage: UIImage(named: "profile"));
             //cell.sourceImageFacebook.layer.masksToBounds = false
+        } else {
+            cell.postImageCollectionView.isHidden = true;
         }
         
         
@@ -128,13 +126,13 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         if (sourcePlatformArray != nil && sourcePlatformArray.count > 0) {
             
             let sourcePlatform = Int(((((sourcePlatformArray[0]) as! NSDictionary).value(forKey: "id") as? NSString)?.doubleValue)!)
-            print(sourcePlatform)
+           // print(sourcePlatform)
             if(Int(sourcePlatform) == social.socialPlatformId["Facebook"]){
                 cell.sourceImageFacebook.image = UIImage.init(named: "facebook-group")
                 cell.sourceImageFacebook.isHidden = false
             }
             if(Int(sourcePlatform) == social.socialPlatformId["Twitter"]){
-                print("dsf")
+               // print("dsf")
                 cell.sourceImageTwitter.image = UIImage.init(named: "twitter-group")
                 cell.sourceImageTwitter.isHidden = false
             }
@@ -156,9 +154,39 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             imageStatus = ""
         }
         cell.statusImage.image = UIImage.init(named: imageStatus)
-        var pipe = " |"
+        let pipe = " |"
         cell.profileLabel.text = "\((status))\(pipe)"
-        cell.dateLabel.text = Date().ddspEEEEcmyyyy(dateStr: homeObject.value(forKey: "elapsed_time_setting_value") as! String)
+        cell.dateLabel.text = Date().ddspEEEEcmyyyy(dateStr: homeObject.value(forKey: "created_on") as! String)
         return cell;
+    }
+    @objc private func refreshPostsData(_ sender: Any) {
+      //  In this methid call the home screen api
+         self.loadUserPosts();
+        self.refreshControl.endRefreshing()
+       
+        
+    }
+    func loadUserPosts(){
+        loggedInUser = User().loadUserDataFromUserDefaults(userDataDict : setting);
+        social = SocialPlatform().loadSocialDataFromUserDefaults();
+        // Do any additional setup after loading the view.
+        
+        socialPostList.register(UINib(nibName: "HomeTextPostTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "HomeTextPostTableViewCell")
+        
+        
+        let jsonURL = "posts/all_caster_posts/format/json";
+        
+        postArray["user_id"] = String(loggedInUser.userId)
+        
+        
+        UserService().postDataMethod(jsonURL: jsonURL, postData: postArray, complete: {(response) in
+            
+            
+            let modeArray = response.value(forKey: "data") as! NSArray;
+            
+            self.homePosts = modeArray as! [Any]
+            self.socialPostList.reloadData();
+        });
+        
     }
 }

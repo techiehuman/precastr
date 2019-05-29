@@ -53,7 +53,9 @@ class ModeratorViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-
+    override func viewWillAppear(_ animated: Bool) {
+        self.title = "Moderators";
+    }
     /*
     // MARK: - Navigation
 
@@ -68,7 +70,7 @@ class ModeratorViewController: UIViewController {
 extension ModeratorViewController: UITableViewDelegate, UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 1;
+        return 2;
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
