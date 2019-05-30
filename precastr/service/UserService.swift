@@ -44,7 +44,7 @@ class UserService{
         });
     };
   
-    func postMultipartImageDataSocialMethod(jsonURL : String,image: UIImage,postData: [String : Any], complete: @escaping(NSDictionary)->Void) {
+    func postMultipartImageDataSocialMethod(jsonURL : String,image: [UIImage],postData: [String : Any], complete: @escaping(NSDictionary)->Void) {
         
         let url = "\(ApiUrl)\(jsonURL)";
         print("API Url : \(url)")

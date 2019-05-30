@@ -19,6 +19,30 @@ class PrecastTypeSectionViewController: UIViewController {
     
     @IBOutlet weak var profilePic: UIImageView!
     
+    @IBOutlet weak var moderateCheckBoxBtn: UIButton!
+    
+    @IBOutlet weak var commentateCheckBoxBtn: UIButton!
+    
+    
+    @IBOutlet weak var setIntervalCheckBoxBtn: UIButton!
+    var cast_setting_id = 0;
+    
+    @IBAction func submitBtnClicked(_ sender: Any) {
+        var postData = [String : Any]()
+        postData["user_id"] = loggedInUser.userId
+        postData["cast_setting_id"] = self.cast_setting_id;
+        let jsonURL = "user/update_precast_type/format/json";
+        
+        UserService().postDataMethod(jsonURL:jsonURL,postData: postData, complete:{(response) in
+            let userDict = response.value(forKey: "data") as! NSDictionary;
+            print(userDict)
+            let user = User().getUserData(userDataDict: userDict);
+            user.loadUserDefaults();
+            let viewController: HomeViewController = self.storyboard?.instantiateViewController(withIdentifier: "HomeViewController") as! HomeViewController;
+            self.navigationController?.pushViewController(viewController, animated: true);
+            
+        });
+    }
     var loggedInUser : User!
     
     override func viewDidLoad() {
@@ -31,7 +55,18 @@ class PrecastTypeSectionViewController: UIViewController {
         profilePic.roundImageView()
         
         loggedInUser = User().loadUserDataFromUserDefaults(userDataDict : setting);
+        
+        self.moderateCheckBoxBtn.blueBorderWrap()
+        self.commentateCheckBoxBtn.blueBorderWrap()
+        self.setIntervalCheckBoxBtn.blueBorderWrap()
         // Do any additional setup after loading the view.
+        if(String(loggedInUser.profilePic) != ""){
+            profilePic.sd_setImage(with: URL(string: loggedInUser.profilePic!), placeholderImage: UIImage.init(named: "profile"));
+            // Do any additional setup after loading the view.
+        }else{
+            let profileImage: UIImage = UIImage(named: "profile")!
+            profilePic.image = profileImage
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -40,36 +75,31 @@ class PrecastTypeSectionViewController: UIViewController {
     }
     
     @IBAction func multipleButtonClicked(_ sender: AnyObject) {
-        var cast_setting_id = 0;
-        
+       
         switch sender.tag {
-        case 1: cast_setting_id = 1 //button1
+        case 1: self.cast_setting_id = 1 //button1
+        self.moderateCheckBoxBtn.checkedBtnState()
+        self.commentateCheckBoxBtn.blueBorderWrap()
+        self.setIntervalCheckBoxBtn.blueBorderWrap()
         break;
-        case 2: cast_setting_id = 2 //button2
+        case 2: self.cast_setting_id = 2 //button2
+        self.moderateCheckBoxBtn.blueBorderWrap()
+        self.commentateCheckBoxBtn.checkedBtnState()
+        self.setIntervalCheckBoxBtn.blueBorderWrap()
         break;
-        case 3: cast_setting_id = 3 //button3
+        case 3: self.cast_setting_id = 3 //button3
+        self.moderateCheckBoxBtn.blueBorderWrap()
+        self.commentateCheckBoxBtn.blueBorderWrap()
+        self.setIntervalCheckBoxBtn.checkedBtnState()
         break;
        
-        default: cast_setting_id = 1
+        default: self.cast_setting_id = 1
         break;
         }
         
     
         
-        var postData = [String : Any]()
-        postData["user_id"] = loggedInUser.userId
-        postData["cast_setting_id"] = cast_setting_id;
-        let jsonURL = "user/update_precast_type/format/json";
         
-        UserService().postDataMethod(jsonURL:jsonURL,postData: postData, complete:{(response) in
-            let userDict = response.value(forKey: "data") as! NSDictionary;
-            print(userDict)
-            let user = User().getUserData(userDataDict: userDict);
-            user.loadUserDefaults();
-            let viewController: CastModeratorViewController = self.storyboard?.instantiateViewController(withIdentifier: "CastModeratorViewController") as! CastModeratorViewController;
-            self.navigationController?.pushViewController(viewController, animated: true);
-            
-        });
     }
     
    

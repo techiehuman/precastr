@@ -32,6 +32,8 @@
 		FA84F178229C5E7A007796A3 /* ModeratorsDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA84F177229C5E7A007796A3 /* ModeratorsDto.swift */; };
 		FA84F17B229D98B5007796A3 /* PostImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA84F179229D98B5007796A3 /* PostImageCollectionViewCell.swift */; };
 		FA84F17C229D98B5007796A3 /* PostImageCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA84F17A229D98B5007796A3 /* PostImageCollectionViewCell.xib */; };
+		FA84F18522A03289007796A3 /* SlideUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA84F18422A03289007796A3 /* SlideUIView.swift */; };
+		FA84F18722A0329D007796A3 /* Slide.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA84F18622A0329D007796A3 /* Slide.xib */; };
 		FABF02482264EF650067960C /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABF02472264EF640067960C /* HomeViewController.swift */; };
 		FABF02502265DFBB0067960C /* SideMenuTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABF024F2265DFBB0067960C /* SideMenuTableViewController.swift */; };
 		FABF0258226DBA750067960C /* ModeratorViewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABF0256226DBA750067960C /* ModeratorViewTableViewCell.swift */; };
@@ -104,6 +106,8 @@
 		FA84F177229C5E7A007796A3 /* ModeratorsDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModeratorsDto.swift; sourceTree = "<group>"; };
 		FA84F179229D98B5007796A3 /* PostImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		FA84F17A229D98B5007796A3 /* PostImageCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PostImageCollectionViewCell.xib; sourceTree = "<group>"; };
+		FA84F18422A03289007796A3 /* SlideUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideUIView.swift; sourceTree = "<group>"; };
+		FA84F18622A0329D007796A3 /* Slide.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Slide.xib; sourceTree = "<group>"; };
 		FABF02472264EF640067960C /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		FABF024F2265DFBB0067960C /* SideMenuTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuTableViewController.swift; sourceTree = "<group>"; };
 		FABF0256226DBA750067960C /* ModeratorViewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModeratorViewTableViewCell.swift; sourceTree = "<group>"; };
@@ -212,6 +216,7 @@
 		FA52DDCE227722AE0093FDF8 /* cell */ = {
 			isa = PBXGroup;
 			children = (
+				FA84F17F22A02FD9007796A3 /* views */,
 				FA52DDCA2277195C0093FDF8 /* HomeTableViewCell.swift */,
 				FA52DDCB2277195C0093FDF8 /* HomeTableViewCell.xib */,
 				FAFCE3C822999F1000AB6DB5 /* HomeTextPostTableViewCell.swift */,
@@ -315,6 +320,15 @@
 				FA84F177229C5E7A007796A3 /* ModeratorsDto.swift */,
 			);
 			path = dto;
+			sourceTree = "<group>";
+		};
+		FA84F17F22A02FD9007796A3 /* views */ = {
+			isa = PBXGroup;
+			children = (
+				FA84F18422A03289007796A3 /* SlideUIView.swift */,
+				FA84F18622A0329D007796A3 /* Slide.xib */,
+			);
+			path = views;
 			sourceTree = "<group>";
 		};
 		FABF02462264EE600067960C /* home */ = {
@@ -476,6 +490,7 @@
 				FA6AB58622531E8200C5491F /* LaunchScreen.storyboard in Resources */,
 				FA6AB58322531E8200C5491F /* Assets.xcassets in Resources */,
 				FABF0259226DBA750067960C /* ModeratorViewTableViewCell.xib in Resources */,
+				FA84F18722A0329D007796A3 /* Slide.xib in Resources */,
 				FAFCE3CB22999F1000AB6DB5 /* HomeTextPostTableViewCell.xib in Resources */,
 				FA84F17C229D98B5007796A3 /* PostImageCollectionViewCell.xib in Resources */,
 				FA52DDCD2277195C0093FDF8 /* HomeTableViewCell.xib in Resources */,
@@ -635,6 +650,7 @@
 				FA4D544C2260F7F200E9589B /* UserTypeActionViewController.swift in Sources */,
 				FAFCE3C3228E8F0000AB6DB5 /* SocialPlatform.swift in Sources */,
 				FA6AB57C22531E7300C5491F /* AppDelegate.swift in Sources */,
+				FA84F18522A03289007796A3 /* SlideUIView.swift in Sources */,
 				FAFCE3CA22999F1000AB6DB5 /* HomeTextPostTableViewCell.swift in Sources */,
 				FA1C1CDD228400A800583E1B /* Reusable.swift in Sources */,
 				FAF601CA2286A3C700B54F9B /* SplashViewController.swift in Sources */,

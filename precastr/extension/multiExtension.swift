@@ -90,3 +90,16 @@ extension Date {
         return dateFormatter.string(from: fDate!);
     }
 }
+extension UIButton {
+    func blueBorderWrap(){
+    self.layer.borderWidth = 1
+    self.layer.borderColor = UIColor(red: 12/255, green: 111/255, blue: 233/255, alpha: 1).cgColor
+    self.setImage(nil, for: .normal)
+    }
+    func checkedBtnState(){
+       // self.backgroundColor = UIColor(red: 12/255, green: 111/255, blue: 233/255, alpha: 1)
+        let image = UIImage(named: "checkbox")
+        self.setImage(image, for : .normal)
+       // self.layer.borderWidth = 0
+    }
+}

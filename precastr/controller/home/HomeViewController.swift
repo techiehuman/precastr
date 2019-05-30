@@ -17,7 +17,7 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     var social : SocialPlatform!
     var postArray : [String:Any] = [String:Any]()
      private let refreshControl = UIRefreshControl()
-    
+    var slides:[SlideUIView] = [];
     class func MainViewController() -> UITabBarController{
         
         return UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MadTabBar") as! UITabBarController
@@ -107,8 +107,9 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
 
         cell.postTextLabel.text = String(homeObject.value(forKey: "post_description") as! String);
         let postImages = homeObject.value(forKey: "post_images") as! NSArray
-        if (postImages != nil && postImages.count > 0) {
-            cell.postImageCollectionView.isHidden = false
+        if (postImages.count > 0) {
+            cell.imagesArray = [String]();
+            cell.imageGalleryScrollView.isHidden = false
             for postImg in postImages {
                 let postImageURL = postImg as! NSDictionary;
                 let imgUrl: String = postImageURL.value(forKey: "image") as! String;
@@ -117,7 +118,8 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
           //  cell.sourceImageFacebook.sd_setImage(with: URL(string: imgUrl), placeholderImage: UIImage(named: "profile"));
             //cell.sourceImageFacebook.layer.masksToBounds = false
         } else {
-            cell.postImageCollectionView.isHidden = true;
+            cell.imagesArray = [String]();
+            cell.imageGalleryScrollView.isHidden = true;
         }
         
         
@@ -157,6 +159,16 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         let pipe = " |"
         cell.profileLabel.text = "\((status))\(pipe)"
         cell.dateLabel.text = Date().ddspEEEEcmyyyy(dateStr: homeObject.value(forKey: "created_on") as! String)
+                
+        //ScrollView functionality
+        
+        self.slides = cell.createSlides()
+        cell.setupSlideScrollView(slides: slides)
+        
+        cell.pageControl.numberOfPages = self.slides.count
+        cell.pageControl.currentPage = 0
+        cell.contentView.bringSubview(toFront: cell.pageControl)
+        //ScrollView functionality
         return cell;
     }
     @objc private func refreshPostsData(_ sender: Any) {

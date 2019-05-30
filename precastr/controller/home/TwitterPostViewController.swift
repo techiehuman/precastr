@@ -11,17 +11,19 @@ import FBSDKLoginKit
 import FBSDKCoreKit
 import TwitterKit
 import TwitterCore
+import BSImagePicker
+import MobileCoreServices
+import Photos
 
 protocol ImageLibProtocolT {
     func takePicture(viewC : UIViewController);
-    func selectMultipleImages(viewC : UIViewController,cameraView : [UIImageView]);
 }
-class TwitterPostViewController: UIViewController,UITextViewDelegate {
+class TwitterPostViewController: UIViewController,UITextViewDelegate, UIImagePickerControllerDelegate {
 
      @IBOutlet weak var postTextField: UITextView!
     var loggedInUser : User!
     var social : SocialPlatform!
-    var uploadImage : [UIImageView] = [UIImageView]()
+    var uploadImage : [UIImage] = [UIImage]()
     var imageDelegate : ImageLibProtocolT!
     var socialMediaPlatform : [Int]!
     var uploadImageStatus = false
@@ -29,7 +31,9 @@ class TwitterPostViewController: UIViewController,UITextViewDelegate {
     var twitterExists = false
     var facebookStatus = false
     var twitterStatus = false
-    
+    var SelectedAssets = [PHAsset]()
+    var PhotoArray = [UIImage]()
+
     @IBOutlet weak var twitterBtn: UIButton!
     
     @IBOutlet weak var facebookBtn: UIButton!
@@ -52,7 +56,7 @@ class TwitterPostViewController: UIViewController,UITextViewDelegate {
         self.postTextField.layer.borderWidth = 1
              loggedInUser =  User().loadUserDataFromUserDefaults(userDataDict : setting);
             self.social = SocialPlatform().loadSocialDataFromUserDefaults();
-            imageDelegate = Reusable()
+            //imageDelegate = Reusable()
         let imageTapGesture = UITapGestureRecognizer.init(target: self, action: #selector(imageUploadClicked))
         postedPicview.addGestureRecognizer(imageTapGesture);
         // Do any additional setup after loading the view.
@@ -303,7 +307,8 @@ class TwitterPostViewController: UIViewController,UITextViewDelegate {
         
         // create an action
         let uploadPhotoAction: UIAlertAction = UIAlertAction(title: "Upload Photo", style: .default) { action -> Void in
-            self.imageDelegate.selectMultipleImages(viewC: self, cameraView: self.uploadImage);
+            //self.imageUploadClicked();
+            self.selectMultipleImages();
         }
         //uploadPhotoAction.setValue(selectedColor, forKey: "titleTextColor")
         let takePhotoAction: UIAlertAction = UIAlertAction(title: "Take Photo", style: .default) { action -> Void in
@@ -345,9 +350,9 @@ class TwitterPostViewController: UIViewController,UITextViewDelegate {
       //  postData["social_media"] = String(joinedStrings.suffix(joinedStrings.count-1));
             postData["social_media_id"] = joinedStrings
        //  let size = CGSize(width: 0, height: 0)
-            
-        if(uploadImage.image != nil){
-            UserService().postMultipartImageDataSocialMethod(jsonURL: jsonURL,image : uploadImage.image!, postData:postData,complete:{(response) in
+            print(PhotoArray.count)
+        if(PhotoArray.count > 0){
+            UserService().postMultipartImageDataSocialMethod(jsonURL: jsonURL,image : PhotoArray, postData:postData,complete:{(response) in
                 print(response);
             })
         }else{
@@ -363,8 +368,8 @@ class TwitterPostViewController: UIViewController,UITextViewDelegate {
         
         // create an action
         let uploadPhotoAction: UIAlertAction = UIAlertAction(title: "Upload Photo", style: .default) { action -> Void in
-            self.imageDelegate.selectPicture(viewC: self,cameraView: self.uploadImage);
-            self.uploadImage.isHidden = false
+            self.selectMultipleImages();
+            //self.uploadImage.isHidden = false
             self.uploadImageStatus = true
         }
         //uploadPhotoAction.setValue(selectedColor, forKey: "titleTextColor")
@@ -392,6 +397,66 @@ class TwitterPostViewController: UIViewController,UITextViewDelegate {
             return false
         }
         return true
+    }
+    
+    func selectMultipleImages(){
+        
+        // create an instance
+        let vc = BSImagePickerViewController()
+        
+        //display picture gallery
+        self.bs_presentImagePickerController(vc, animated: true,
+                                             select: { (asset: PHAsset) -> Void in
+                                                
+        }, deselect: { (asset: PHAsset) -> Void in
+            // User deselected an assets.
+            
+        }, cancel: { (assets: [PHAsset]) -> Void in
+            // User cancelled. And this where the assets currently selected.
+        }, finish: { (assets: [PHAsset]) -> Void in
+            // User finished with these assets
+            for i in 0..<assets.count
+            {
+                self.SelectedAssets.append(assets[i])
+                
+            }
+            
+            self.convertAssetToImages()
+            
+        }, completion: nil)
+        
+    }
+    
+    func convertAssetToImages() -> Void {
+        
+        if SelectedAssets.count != 0{
+            
+            
+            for i in 0..<SelectedAssets.count{
+                
+                let manager = PHImageManager.default()
+                let option = PHImageRequestOptions()
+                var thumbnail = UIImage()
+                option.isSynchronous = true
+                
+                
+                manager.requestImage(for: SelectedAssets[i], targetSize: CGSize(width: 200, height: 200), contentMode: .aspectFill, options: option, resultHandler: {(result, info)->Void in
+                    thumbnail = result!
+                    
+                })
+                
+                let data = UIImageJPEGRepresentation(thumbnail, 0.7)
+                let newImage = UIImage(data: data!)
+                
+                
+                PhotoArray.append(newImage! as UIImage)
+                
+            }
+            // self.imgView.animationImages = self.PhotoArray
+            //self.imgView.animationDuration = 3.0
+            //self.imgView.startAnimating()
+            
+        }
     }
     /*
     // MARK: - Navigation

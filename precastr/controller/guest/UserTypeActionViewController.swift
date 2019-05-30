@@ -26,12 +26,12 @@ class UserTypeActionViewController: UIViewController {
         userProfilePic.roundImageView();
         userProfilePic.layer.borderWidth = 2
         userProfilePic.layer.borderColor = UIColor.white.cgColor
-        //userProfilePic.image = UIImage(url: URL(string: "https://cdn.pixabay.com/photo/2013/07/13/11/44/penguin-158551__340.png"))
+        
         //userProfilePic.image = UIImage(url:URL(string: "\(siteURL)\(loggedInUser.profilePic!)"))
         loggedInNameUser.text = String(loggedInUser.name)
         print(loggedInUser.name)
         if(String(loggedInUser.profilePic) != ""){
-        userProfilePic.sd_setImage(with: URL(string: loggedInUser.profilePic!), placeholderImage: UIImage.init(named: "default_profile_pic"));
+        userProfilePic.sd_setImage(with: URL(string: loggedInUser.profilePic!), placeholderImage: UIImage.init(named: "profile"));
         // Do any additional setup after loading the view.
         }else{
             let profileImage: UIImage = UIImage(named: "profile")!

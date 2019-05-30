@@ -99,14 +99,20 @@ class HttpService {
             }
         }
     }
-    func postMultipartImageSocial(url: String, image: UIImage, postData: [String:Any], complete: @escaping(NSDictionary)->Void) {
+    func postMultipartImageSocial(url: String, image: [UIImage], postData: [String:Any], complete: @escaping(NSDictionary)->Void) {
         
-        let imgData = UIImageJPEGRepresentation(image, 0.2)!
+        
         
         let Auth_header =  [ "X-API-KEY" : ApiToken ]
-        
+        var key = 0
+      
         Alamofire.upload(multipartFormData: { (MultipartFormData) in
-            MultipartFormData.append(imgData, withName: "post_imgs[]", fileName: "file.jpg", mimeType: "image/jpg")
+            for img in image{
+                  let imgData = UIImageJPEGRepresentation(img, 0.2)!
+             MultipartFormData.append(imgData, withName: "post_imgs[]", fileName: "file\(key).jpg", mimeType: "image/jpg")
+                key = key + 1 ;
+            }
+           
             MultipartFormData.append( "\(String(describing: postData["post_description"]!))".data(using: .utf8)!, withName: "post_description")
             MultipartFormData.append( "\(String(describing: postData["social_media_id"]!))".data(using: .utf8)!, withName: "social_media_id")
           MultipartFormData.append( "\(String(describing: postData["user_id"]!))".data(using: .utf8)!, withName: "user_id")

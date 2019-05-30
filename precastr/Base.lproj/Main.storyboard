@@ -545,24 +545,27 @@
                                         <color key="backgroundColor" red="0.039215686274509803" green="0.34509803921568627" blue="0.72156862745098038" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Allow your moderator to review &amp; publish the posts on your behalf." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vpR-uN-cXF">
-                                        <rect key="frame" x="44" y="23" width="292" height="34"/>
+                                        <rect key="frame" x="50" y="23" width="290" height="34"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="12"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oRo-Lg-0hA">
-                                        <rect key="frame" x="41" y="3" width="240" height="20"/>
+                                        <rect key="frame" x="50" y="3" width="240" height="20"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0cL-0n-hAU">
-                                                <rect key="frame" x="4" y="5" width="10" height="10"/>
+                                            <button opaque="NO" tag="1" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0cL-0n-hAU">
+                                                <rect key="frame" x="0.0" y="5" width="15" height="15"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <state key="normal" title="Button"/>
+                                                <connections>
+                                                    <action selector="multipleButtonClicked:" destination="Doh-3v-8FM" eventType="touchUpInside" id="IMG-ht-gjt"/>
+                                                </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Moderate" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m0R-KX-rtj">
                                                 <rect key="frame" x="29" y="0.0" width="211" height="21"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="14"/>
+                                                <color key="textColor" red="0.039215686274509803" green="0.34509803921568627" blue="0.72156862745098038" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                         </subviews>
@@ -587,24 +590,27 @@
                                         <color key="backgroundColor" red="0.039215686270000001" green="0.34509803919999998" blue="0.72156862749999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Allow your moderator to review &amp; approve your posts and finally publish them yourself." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iuJ-Lm-k4L">
-                                        <rect key="frame" x="44" y="23" width="292" height="34"/>
+                                        <rect key="frame" x="50" y="23" width="290" height="34"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="12"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ycE-29-Qwb">
-                                        <rect key="frame" x="41" y="3" width="240" height="20"/>
+                                        <rect key="frame" x="50" y="3" width="240" height="20"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cI0-qv-gaT">
-                                                <rect key="frame" x="4" y="5" width="10" height="10"/>
+                                            <button opaque="NO" tag="2" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cI0-qv-gaT">
+                                                <rect key="frame" x="0.0" y="5" width="15" height="15"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <state key="normal" title="Button"/>
+                                                <connections>
+                                                    <action selector="multipleButtonClicked:" destination="Doh-3v-8FM" eventType="touchUpInside" id="h2o-zo-7Wk"/>
+                                                </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Commentate" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jld-UU-WPm">
                                                 <rect key="frame" x="29" y="0.0" width="211" height="21"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="14"/>
+                                                <color key="textColor" red="0.039215686274509803" green="0.34509803921568627" blue="0.72156862745098038" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                         </subviews>
@@ -629,24 +635,27 @@
                                         <color key="backgroundColor" red="0.039215686270000001" green="0.34509803919999998" blue="0.72156862749999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Set your posts to publish automatically after set time interval." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2So-XV-OPq">
-                                        <rect key="frame" x="44" y="23" width="292" height="34"/>
+                                        <rect key="frame" x="50" y="23" width="290" height="34"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="12"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vCq-ms-JBX">
-                                        <rect key="frame" x="41" y="3" width="240" height="20"/>
+                                        <rect key="frame" x="50" y="3" width="240" height="20"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7UR-cG-A4v">
-                                                <rect key="frame" x="4" y="5" width="10" height="10"/>
+                                            <button opaque="NO" tag="3" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7UR-cG-A4v">
+                                                <rect key="frame" x="0.0" y="5" width="15" height="15"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <state key="normal" title="Button"/>
+                                                <connections>
+                                                    <action selector="multipleButtonClicked:" destination="Doh-3v-8FM" eventType="touchUpInside" id="ozQ-Kk-btc"/>
+                                                </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="After a set time interval" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TAN-yq-yoN">
                                                 <rect key="frame" x="29" y="0.0" width="211" height="21"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="14"/>
+                                                <color key="textColor" red="0.039215686274509803" green="0.34509803921568627" blue="0.72156862745098038" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                         </subviews>
@@ -663,14 +672,28 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F4w-e9-abD">
+                                <rect key="frame" x="38" y="505" width="300" height="45"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.039215686274509803" green="0.34509803921568627" blue="0.72156862745098038" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" title="Submit"/>
+                                <connections>
+                                    <action selector="submitBtnClicked:" destination="Doh-3v-8FM" eventType="touchUpInside" id="XK5-8l-4yO"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="oR1-Mv-fZX"/>
                     </view>
                     <connections>
                         <outlet property="commentView" destination="BDu-DF-fvo" id="nN9-BY-Z7U"/>
+                        <outlet property="commentateCheckBoxBtn" destination="cI0-qv-gaT" id="yXT-Vc-3tc"/>
                         <outlet property="handView" destination="4uD-oW-gk5" id="07P-MF-u1W"/>
+                        <outlet property="moderateCheckBoxBtn" destination="0cL-0n-hAU" id="eM9-BT-Qyq"/>
                         <outlet property="profilePic" destination="K2y-v4-R53" id="yAc-7L-InR"/>
+                        <outlet property="setIntervalCheckBoxBtn" destination="7UR-cG-A4v" id="fyG-3K-liv"/>
                         <outlet property="timeView" destination="PoG-bn-iV4" id="34E-uk-25J"/>
                     </connections>
                 </viewController>

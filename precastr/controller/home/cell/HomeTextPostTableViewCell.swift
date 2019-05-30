@@ -8,12 +8,13 @@
 
 import UIKit
 
-class HomeTextPostTableViewCell: UITableViewCell,UICollectionViewDelegate,UICollectionViewDataSource {
+class HomeTextPostTableViewCell: UITableViewCell,UIScrollViewDelegate {
 
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        self.postImageCollectionView.register(UINib.init(nibName: "PostImageCollectionViewCell", bundle: Bundle.main), forCellWithReuseIdentifier: "PostImageCollectionViewCell")
+        //self.postImageCollectionView.register(UINib.init(nibName: "PostImageCollectionViewCell", bundle: Bundle.main), forCellWithReuseIdentifier: "PostImageCollectionViewCell")
+        self.imageGalleryScrollView.delegate = self
     }
 
     @IBOutlet weak var postTextLabel: UILabel!
@@ -30,26 +31,57 @@ class HomeTextPostTableViewCell: UITableViewCell,UICollectionViewDelegate,UIColl
     
     @IBOutlet weak var statusImage: UIImageView!
     
-    @IBOutlet weak var postImageCollectionView: UICollectionView!
-    
     var imagesArray : [String] = [String]();
     
     
+    @IBOutlet weak var imageGalleryScrollView: UIScrollView!
+    
+    @IBOutlet weak var pageControl: UIPageControl!
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
     }
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return imagesArray.count;
-    }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    func createSlides() -> [SlideUIView] {
         
-        let imageString : String = imagesArray[indexPath.row]
-        print(imageString)
-        let collectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "PostImageCollectionViewCell", for: indexPath) as! PostImageCollectionViewCell
-        collectionViewCell.postImageView.sd_setImage(with: URL(string: imageString)!, placeholderImage: UIImage.init(named: "approved"))
-        return collectionViewCell;
+        
+        var slide = [SlideUIView]();
+        
+        for image in imagesArray{
+            
+            let slideView:SlideUIView = Bundle.main.loadNibNamed("Slide", owner: self, options: nil)?.first as! SlideUIView
+            slideView.frame = CGRect.init(x: 0, y: 0, width: contentView.frame.width, height: 218);
+            
+            slideView.imageView.sd_setImage(with: URL(string: image), placeholderImage: UIImage.init(named: "post-image-placeholder"));
+            slide.append(slideView);
+        }
+        return slide;
+    }
+    func setupSlideScrollView(slides : [SlideUIView]) {
+        imageGalleryScrollView.frame = CGRect(x: 0, y: 110, width: contentView.frame.width, height: 218)
+        imageGalleryScrollView.contentSize = CGSize(width: contentView.frame.width * CGFloat(slides.count), height: contentView.frame.height)
+        imageGalleryScrollView.isPagingEnabled = true
+        
+        for i in 0 ..< slides.count {
+            slides[i].frame = CGRect(x: contentView.frame.width * CGFloat(i), y: 0, width: contentView.frame.width, height: 218)
+            imageGalleryScrollView.addSubview(slides[i])
+        }
+    }
+
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let pageIndex = round(scrollView.contentOffset.x/contentView.frame.width)
+        pageControl.currentPage = Int(pageIndex)
+        
+        let maximumHorizontalOffset: CGFloat = scrollView.contentSize.width - scrollView.frame.width
+        let currentHorizontalOffset: CGFloat = scrollView.contentOffset.x
+        
+        // vertical
+        let maximumVerticalOffset: CGFloat = scrollView.contentSize.height - scrollView.frame.height
+        let currentVerticalOffset: CGFloat = scrollView.contentOffset.y
+        
+        let percentageHorizontalOffset: CGFloat = currentHorizontalOffset / maximumHorizontalOffset
+        let percentageVerticalOffset: CGFloat = currentVerticalOffset / maximumVerticalOffset
+        
     }
 }

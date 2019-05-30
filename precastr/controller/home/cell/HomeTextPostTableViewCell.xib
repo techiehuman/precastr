@@ -12,11 +12,11 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="HomeTextPostTableViewCell" rowHeight="102" id="KGk-i7-Jjw" customClass="HomeTextPostTableViewCell" customModule="precastr" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="382" height="355"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="HomeTextPostTableViewCell" rowHeight="-166" id="KGk-i7-Jjw" customClass="HomeTextPostTableViewCell" customModule="precastr" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="382" height="375"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="382" height="354.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="382" height="374.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="y4W-yS-wtT">
@@ -67,34 +67,28 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="Eco-og-E2z">
-                        <rect key="frame" x="0.0" y="113" width="382" height="216"/>
+                    <pageControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="kmg-Py-FWc">
+                        <rect key="frame" x="133" y="582" width="76" height="37"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="47C-3r-fwP">
-                            <size key="itemSize" width="382" height="216"/>
-                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                        </collectionViewFlowLayout>
-                        <connections>
-                            <outlet property="dataSource" destination="KGk-i7-Jjw" id="DXa-Mj-uNb"/>
-                            <outlet property="delegate" destination="KGk-i7-Jjw" id="286-9C-j2g"/>
-                        </connections>
-                    </collectionView>
+                    </pageControl>
+                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DAD-Le-9Ur">
+                        <rect key="frame" x="0.0" y="123" width="382" height="218"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    </scrollView>
                 </subviews>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="dateLabel" destination="Gg1-ma-dqD" id="jRG-cp-U2e"/>
-                <outlet property="postImageCollectionView" destination="Eco-og-E2z" id="w48-Bb-qiR"/>
+                <outlet property="imageGalleryScrollView" destination="DAD-Le-9Ur" id="VZT-cB-gwl"/>
+                <outlet property="pageControl" destination="kmg-Py-FWc" id="MZP-Xw-frJ"/>
                 <outlet property="postTextLabel" destination="9ga-nV-ADV" id="aKO-oe-Xyp"/>
                 <outlet property="profileLabel" destination="vi0-ky-EEw" id="pK9-sv-uvp"/>
                 <outlet property="sourceImageFacebook" destination="TOd-OX-rkV" id="uP1-nJ-j6h"/>
                 <outlet property="sourceImageTwitter" destination="qjX-r6-ZZ2" id="3sQ-L3-2Ob"/>
                 <outlet property="statusImage" destination="Kbq-2p-8e2" id="t18-GW-yTc"/>
             </connections>
-            <point key="canvasLocation" x="69" y="83.5"/>
+            <point key="canvasLocation" x="69" y="-51"/>
         </tableViewCell>
     </objects>
     <resources>

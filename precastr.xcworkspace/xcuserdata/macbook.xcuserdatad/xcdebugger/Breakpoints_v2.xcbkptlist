@@ -10,7 +10,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "precastr/controller/home/HomeViewController.swift"
-            timestampString = "580822478.125524"
+            timestampString = "580931387.961143"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "63"
@@ -58,7 +58,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "precastr/controller/guest/LoginStep1ViewController.swift"
-            timestampString = "580504702.272547"
+            timestampString = "580931387.9612679"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "236"
@@ -74,7 +74,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "precastr/controller/guest/LoginStep1ViewController.swift"
-            timestampString = "580504702.272633"
+            timestampString = "580931387.961709"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "89"
@@ -122,11 +122,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "precastr/controller/home/TwitterPostViewController.swift"
-            timestampString = "580822478.1262521"
+            timestampString = "580931387.962099"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "337"
-            endingLineNumber = "337"
+            startingLineNumber = "342"
+            endingLineNumber = "342"
             landmarkName = "postOnSocialPlatform(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -138,11 +138,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "precastr/controller/home/TwitterPostViewController.swift"
-            timestampString = "580822478.1263469"
+            timestampString = "580931387.962193"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "189"
-            endingLineNumber = "189"
+            startingLineNumber = "193"
+            endingLineNumber = "193"
             landmarkName = "facebookBtnClicked(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -154,11 +154,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "precastr/controller/home/TwitterPostViewController.swift"
-            timestampString = "580822478.1264189"
+            timestampString = "580931387.962281"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "288"
-            endingLineNumber = "288"
+            startingLineNumber = "292"
+            endingLineNumber = "292"
             landmarkName = "twitterBtnClicked(_:)"
             landmarkType = "7">
             <Locations>
@@ -170,11 +170,11 @@
                   moduleName = "precastr"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/macbook/Desktop/Mandeep/apps/projects/precastr/precastr/precastr/controller/home/TwitterPostViewController.swift"
-                  timestampString = "580822478.47715"
+                  timestampString = "580928715.156232"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "288"
-                  endingLineNumber = "288"
+                  startingLineNumber = "292"
+                  endingLineNumber = "292"
                   offsetFromSymbolStart = "12134">
                </Location>
                <Location
@@ -185,11 +185,11 @@
                   moduleName = "precastr"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/macbook/Desktop/Mandeep/apps/projects/precastr/precastr/precastr/controller/home/TwitterPostViewController.swift"
-                  timestampString = "580822478.480752"
+                  timestampString = "580928715.1589251"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "289"
-                  endingLineNumber = "289"
+                  startingLineNumber = "293"
+                  endingLineNumber = "293"
                   offsetFromSymbolStart = "12">
                </Location>
             </Locations>
@@ -202,11 +202,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "precastr/controller/home/TwitterPostViewController.swift"
-            timestampString = "580822478.126497"
+            timestampString = "580931387.9623851"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "274"
-            endingLineNumber = "274"
+            startingLineNumber = "278"
+            endingLineNumber = "278"
             landmarkName = "twitterBtnClicked(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -218,11 +218,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "precastr/controller/home/TwitterPostViewController.swift"
-            timestampString = "580822478.126577"
+            timestampString = "580931387.962472"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "258"
-            endingLineNumber = "258"
+            startingLineNumber = "262"
+            endingLineNumber = "262"
             landmarkName = "twitterBtnClicked(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -233,28 +233,12 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "precastr/protocol/Reusable.swift"
-            timestampString = "580822478.12667"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "32"
-            endingLineNumber = "32"
-            landmarkName = "selectPicture(viewC:cameraView:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "precastr/controller/home/TwitterPostViewController.swift"
-            timestampString = "580822478.127039"
+            timestampString = "580931387.9625601"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "335"
-            endingLineNumber = "335"
+            startingLineNumber = "340"
+            endingLineNumber = "340"
             landmarkName = "postOnSocialPlatform(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -266,11 +250,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "precastr/controller/home/TwitterPostViewController.swift"
-            timestampString = "580822478.127146"
+            timestampString = "580931387.962647"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "344"
-            endingLineNumber = "344"
+            startingLineNumber = "349"
+            endingLineNumber = "349"
             landmarkName = "postOnSocialPlatform(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -282,11 +266,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "precastr/controller/home/TwitterPostViewController.swift"
-            timestampString = "580822478.127219"
+            timestampString = "580931387.962731"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "347"
-            endingLineNumber = "347"
+            startingLineNumber = "352"
+            endingLineNumber = "352"
             landmarkName = "postOnSocialPlatform(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -298,11 +282,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "precastr/service/HttpService.swift"
-            timestampString = "580822478.127293"
+            timestampString = "580931387.9628201"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "111"
-            endingLineNumber = "111"
+            startingLineNumber = "117"
+            endingLineNumber = "117"
             landmarkName = "postMultipartImageSocial(url:image:postData:complete:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -314,7 +298,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "precastr/service/HttpService.swift"
-            timestampString = "580822478.127363"
+            timestampString = "580931387.962898"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "102"
@@ -326,27 +310,11 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "precastr/protocol/Reusable.swift"
-            timestampString = "580822478.127424"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "45"
-            endingLineNumber = "45"
-            landmarkName = "imagePickerController(_:didFinishPickingMediaWithInfo:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "precastr/controller/guest/SignupViewController.swift"
-            timestampString = "580726551.320552"
+            timestampString = "580897831.1339869"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "83"
@@ -362,12 +330,28 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "precastr/controller/home/HomeViewController.swift"
-            timestampString = "580822478.127738"
+            timestampString = "580931387.963002"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "164"
-            endingLineNumber = "164"
+            startingLineNumber = "176"
+            endingLineNumber = "176"
             landmarkName = "refreshPostsData(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "precastr/controller/home/TwitterPostViewController.swift"
+            timestampString = "580931387.963091"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "452"
+            endingLineNumber = "452"
+            landmarkName = "convertAssetToImages()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -377,13 +361,93 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "precastr/controller/home/HomeViewController.swift"
-            timestampString = "580822478.128055"
+            filePath = "precastr/controller/home/TwitterPostViewController.swift"
+            timestampString = "580931387.963158"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "35"
-            endingLineNumber = "35"
-            landmarkName = "viewDidLoad()"
+            startingLineNumber = "355"
+            endingLineNumber = "355"
+            landmarkName = "postOnSocialPlatform(_:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "precastr.TwitterPostViewController.postOnSocialPlatform(Any) -&gt; ()"
+                  moduleName = "precastr"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/macbook/Desktop/Mandeep/apps/projects/precastr/precastr/precastr/controller/home/TwitterPostViewController.swift"
+                  timestampString = "580928715.212819"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "355"
+                  endingLineNumber = "355"
+                  offsetFromSymbolStart = "4112">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (__ObjC.NSDictionary) -&gt; () in precastr.TwitterPostViewController.postOnSocialPlatform(Any) -&gt; ()"
+                  moduleName = "precastr"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/macbook/Desktop/Mandeep/apps/projects/precastr/precastr/precastr/controller/home/TwitterPostViewController.swift"
+                  timestampString = "580928715.215645"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "356"
+                  endingLineNumber = "356"
+                  offsetFromSymbolStart = "12">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "precastr/controller/home/TwitterPostViewController.swift"
+            timestampString = "580931387.9632241"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "354"
+            endingLineNumber = "354"
+            landmarkName = "postOnSocialPlatform(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "precastr/extension/multiExtension.swift"
+            timestampString = "580931387.963293"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "101"
+            endingLineNumber = "101"
+            landmarkName = "checkedBtnState()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "precastr/controller/home/cell/HomeTextPostTableViewCell.swift"
+            timestampString = "580931387.963374"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "46"
+            endingLineNumber = "46"
+            landmarkName = "createSlides()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
