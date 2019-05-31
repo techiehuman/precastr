@@ -27,6 +27,7 @@ class User  {
     var userDevice          : Int8!
     var deviceToken         : String!
     var profilePic          : String!
+    var miscStatus          : Int!
     
     
     func getUserData(userDataDict: NSDictionary)->User {

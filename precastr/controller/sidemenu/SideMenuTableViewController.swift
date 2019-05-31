@@ -26,7 +26,7 @@ class SideMenuTableViewController: UITableViewController {
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
         self.loggedInUser = User().loadUserDataFromUserDefaults(userDataDict: setting);
-        
+        self.profilePic.roundImageView()
         if (self.loggedInUser.name == nil) {
             nameLabel.text = self.loggedInUser.name;
         } else {
@@ -66,7 +66,7 @@ class SideMenuTableViewController: UITableViewController {
             
         }
         if(indexPath.row == 3){
-            rowTypeVar = false
+            rowTypeVar = true
            // let viewController: ModeratorViewController = self.storyboard?.instantiateViewController(withIdentifier: "ModeratorViewController") as! ModeratorViewController;
            // self.navigationController?.pushViewController(viewController, animated: true);
             self.performSegue(withIdentifier: "moderatorSegue", sender: self);

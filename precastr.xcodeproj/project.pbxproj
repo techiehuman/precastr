@@ -34,10 +34,12 @@
 		FA84F17C229D98B5007796A3 /* PostImageCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA84F17A229D98B5007796A3 /* PostImageCollectionViewCell.xib */; };
 		FA84F18522A03289007796A3 /* SlideUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA84F18422A03289007796A3 /* SlideUIView.swift */; };
 		FA84F18722A0329D007796A3 /* Slide.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA84F18622A0329D007796A3 /* Slide.xib */; };
+		FA84F18B22A0E511007796A3 /* moderatorTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA84F18922A0E511007796A3 /* moderatorTableViewCell.swift */; };
+		FA84F18C22A0E511007796A3 /* moderatorTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA84F18A22A0E511007796A3 /* moderatorTableViewCell.xib */; };
+		FA84F19422A1355A007796A3 /* HeaderViewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA84F19222A1355A007796A3 /* HeaderViewTableViewCell.swift */; };
+		FA84F19522A1355A007796A3 /* HeaderViewTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA84F19322A1355A007796A3 /* HeaderViewTableViewCell.xib */; };
 		FABF02482264EF650067960C /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABF02472264EF640067960C /* HomeViewController.swift */; };
 		FABF02502265DFBB0067960C /* SideMenuTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABF024F2265DFBB0067960C /* SideMenuTableViewController.swift */; };
-		FABF0258226DBA750067960C /* ModeratorViewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABF0256226DBA750067960C /* ModeratorViewTableViewCell.swift */; };
-		FABF0259226DBA750067960C /* ModeratorViewTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FABF0257226DBA750067960C /* ModeratorViewTableViewCell.xib */; };
 		FABF025B226DBE650067960C /* ModeratorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABF025A226DBE650067960C /* ModeratorViewController.swift */; };
 		FADE6BCE2281EE490086EC07 /* SignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADE6BCD2281EE480086EC07 /* SignupViewController.swift */; };
 		FAE4DF61225F0E94008875C3 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE4DF60225F0E94008875C3 /* UserService.swift */; };
@@ -108,10 +110,12 @@
 		FA84F17A229D98B5007796A3 /* PostImageCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PostImageCollectionViewCell.xib; sourceTree = "<group>"; };
 		FA84F18422A03289007796A3 /* SlideUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideUIView.swift; sourceTree = "<group>"; };
 		FA84F18622A0329D007796A3 /* Slide.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Slide.xib; sourceTree = "<group>"; };
+		FA84F18922A0E511007796A3 /* moderatorTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = moderatorTableViewCell.swift; sourceTree = "<group>"; };
+		FA84F18A22A0E511007796A3 /* moderatorTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = moderatorTableViewCell.xib; sourceTree = "<group>"; };
+		FA84F19222A1355A007796A3 /* HeaderViewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderViewTableViewCell.swift; sourceTree = "<group>"; };
+		FA84F19322A1355A007796A3 /* HeaderViewTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HeaderViewTableViewCell.xib; sourceTree = "<group>"; };
 		FABF02472264EF640067960C /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		FABF024F2265DFBB0067960C /* SideMenuTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuTableViewController.swift; sourceTree = "<group>"; };
-		FABF0256226DBA750067960C /* ModeratorViewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModeratorViewTableViewCell.swift; sourceTree = "<group>"; };
-		FABF0257226DBA750067960C /* ModeratorViewTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ModeratorViewTableViewCell.xib; sourceTree = "<group>"; };
 		FABF025A226DBE650067960C /* ModeratorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModeratorViewController.swift; sourceTree = "<group>"; };
 		FADE6BCD2281EE480086EC07 /* SignupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupViewController.swift; sourceTree = "<group>"; };
 		FAE4DF60225F0E94008875C3 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
@@ -292,6 +296,7 @@
 		FA6AB5A92253355800C5491F /* controller */ = {
 			isa = PBXGroup;
 			children = (
+				FA84F18822A0E4C9007796A3 /* moderator */,
 				FABF02492264FB500067960C /* sidemenu */,
 				FABF02462264EE600067960C /* home */,
 				FA6AB5AA2253355F00C5491F /* guest */,
@@ -331,6 +336,26 @@
 			path = views;
 			sourceTree = "<group>";
 		};
+		FA84F18822A0E4C9007796A3 /* moderator */ = {
+			isa = PBXGroup;
+			children = (
+				FA84F18D22A0F5D1007796A3 /* cell */,
+				FABF025A226DBE650067960C /* ModeratorViewController.swift */,
+			);
+			path = moderator;
+			sourceTree = "<group>";
+		};
+		FA84F18D22A0F5D1007796A3 /* cell */ = {
+			isa = PBXGroup;
+			children = (
+				FA84F18A22A0E511007796A3 /* moderatorTableViewCell.xib */,
+				FA84F18922A0E511007796A3 /* moderatorTableViewCell.swift */,
+				FA84F19222A1355A007796A3 /* HeaderViewTableViewCell.swift */,
+				FA84F19322A1355A007796A3 /* HeaderViewTableViewCell.xib */,
+			);
+			path = cell;
+			sourceTree = "<group>";
+		};
 		FABF02462264EE600067960C /* home */ = {
 			isa = PBXGroup;
 			children = (
@@ -346,7 +371,6 @@
 			children = (
 				FABF02532269D35D0067960C /* cell */,
 				FABF024F2265DFBB0067960C /* SideMenuTableViewController.swift */,
-				FABF025A226DBE650067960C /* ModeratorViewController.swift */,
 			);
 			path = sidemenu;
 			sourceTree = "<group>";
@@ -354,8 +378,6 @@
 		FABF02532269D35D0067960C /* cell */ = {
 			isa = PBXGroup;
 			children = (
-				FABF0256226DBA750067960C /* ModeratorViewTableViewCell.swift */,
-				FABF0257226DBA750067960C /* ModeratorViewTableViewCell.xib */,
 			);
 			path = cell;
 			sourceTree = "<group>";
@@ -489,12 +511,13 @@
 			files = (
 				FA6AB58622531E8200C5491F /* LaunchScreen.storyboard in Resources */,
 				FA6AB58322531E8200C5491F /* Assets.xcassets in Resources */,
-				FABF0259226DBA750067960C /* ModeratorViewTableViewCell.xib in Resources */,
 				FA84F18722A0329D007796A3 /* Slide.xib in Resources */,
+				FA84F18C22A0E511007796A3 /* moderatorTableViewCell.xib in Resources */,
 				FAFCE3CB22999F1000AB6DB5 /* HomeTextPostTableViewCell.xib in Resources */,
 				FA84F17C229D98B5007796A3 /* PostImageCollectionViewCell.xib in Resources */,
 				FA52DDCD2277195C0093FDF8 /* HomeTableViewCell.xib in Resources */,
 				FA6AB58122531E7300C5491F /* Main.storyboard in Resources */,
+				FA84F19522A1355A007796A3 /* HeaderViewTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -636,11 +659,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FABF0258226DBA750067960C /* ModeratorViewTableViewCell.swift in Sources */,
 				FA0372E222605A3800C3B3C9 /* UserManager.swift in Sources */,
 				FADE6BCE2281EE490086EC07 /* SignupViewController.swift in Sources */,
 				FAE4DF61225F0E94008875C3 /* UserService.swift in Sources */,
 				FA291B0A225380830093E6CE /* User.swift in Sources */,
+				FA84F19422A1355A007796A3 /* HeaderViewTableViewCell.swift in Sources */,
 				FA4D544E2260F95200E9589B /* PrecastTypeSectionViewController.swift in Sources */,
 				FA52DDCC2277195C0093FDF8 /* HomeTableViewCell.swift in Sources */,
 				FA6AB57E22531E7300C5491F /* ViewController.swift in Sources */,
@@ -649,6 +672,7 @@
 				FABF02502265DFBB0067960C /* SideMenuTableViewController.swift in Sources */,
 				FA4D544C2260F7F200E9589B /* UserTypeActionViewController.swift in Sources */,
 				FAFCE3C3228E8F0000AB6DB5 /* SocialPlatform.swift in Sources */,
+				FA84F18B22A0E511007796A3 /* moderatorTableViewCell.swift in Sources */,
 				FA6AB57C22531E7300C5491F /* AppDelegate.swift in Sources */,
 				FA84F18522A03289007796A3 /* SlideUIView.swift in Sources */,
 				FAFCE3CA22999F1000AB6DB5 /* HomeTextPostTableViewCell.swift in Sources */,

@@ -10,6 +10,6 @@ import Foundation
 
 class ModeratorsDto {
     
-    var sectionName: String = "";
+    var sectionKey: String = "";
     var sectionObjects = [User]();
 }
