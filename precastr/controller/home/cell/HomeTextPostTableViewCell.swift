@@ -58,21 +58,31 @@ class HomeTextPostTableViewCell: UITableViewCell,UIScrollViewDelegate {
         }
         return slide;
     }
-    func setupSlideScrollView(slides : [SlideUIView]) {
+    func setupSlideScrollView() {
         imageGalleryScrollView.frame = CGRect(x: 0, y: 110, width: contentView.frame.width, height: 218)
-        imageGalleryScrollView.contentSize = CGSize(width: contentView.frame.width * CGFloat(slides.count), height: contentView.frame.height)
         imageGalleryScrollView.isPagingEnabled = true
         
-        for i in 0 ..< slides.count {
-            slides[i].frame = CGRect(x: contentView.frame.width * CGFloat(i), y: 0, width: contentView.frame.width, height: 218)
-            imageGalleryScrollView.addSubview(slides[i])
+        for i in 0 ..< imagesArray.count {
+            
+            let setupSlideScrollView = UIImageView();
+            setupSlideScrollView.sd_setImage(with: URL(string: imagesArray[i]), placeholderImage: UIImage.init(named: "post-image-placeholder"));
+            setupSlideScrollView.contentMode = .scaleAspectFill;
+            let xposition = self.contentView.frame.width * CGFloat(i);
+            setupSlideScrollView.frame = CGRect.init(x: xposition, y: 0, width: imageGalleryScrollView.frame.width, height: imageGalleryScrollView.frame.height);
+            
+            imageGalleryScrollView.contentSize.width = imageGalleryScrollView.frame.width * CGFloat(i + 1);
+
+            imageGalleryScrollView.addSubview(setupSlideScrollView)
         }
     }
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        
+        
         let pageIndex = round(scrollView.contentOffset.x/contentView.frame.width)
         pageControl.currentPage = Int(pageIndex)
-        
+        print(pageIndex)
+
         let maximumHorizontalOffset: CGFloat = scrollView.contentSize.width - scrollView.frame.width
         let currentHorizontalOffset: CGFloat = scrollView.contentOffset.x
         

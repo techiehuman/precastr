@@ -14,11 +14,12 @@ import TwitterCore
 import BSImagePicker
 import MobileCoreServices
 import Photos
+import NVActivityIndicatorView
 
 protocol ImageLibProtocolT {
     func takePicture(viewC : UIViewController);
 }
-class TwitterPostViewController: UIViewController,UITextViewDelegate, UIImagePickerControllerDelegate {
+class TwitterPostViewController: UIViewController,UITextViewDelegate, UIImagePickerControllerDelegate, NVActivityIndicatorViewable {
 
      @IBOutlet weak var postTextField: UITextView!
     var loggedInUser : User!
@@ -33,6 +34,7 @@ class TwitterPostViewController: UIViewController,UITextViewDelegate, UIImagePic
     var twitterStatus = false
     var SelectedAssets = [PHAsset]()
     var PhotoArray = [UIImage]()
+    var activityIndicatorView : NVActivityIndicatorView!;
 
     @IBOutlet weak var twitterBtn: UIButton!
     
@@ -41,29 +43,35 @@ class TwitterPostViewController: UIViewController,UITextViewDelegate, UIImagePic
     @IBOutlet weak var inputViewArea: UIView!
     var postArray : [String:Any] = [String:Any]()
     
-    @IBOutlet weak var postedPicview: UIImageView!
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        activityIndicatorView = NVActivityIndicatorView(frame: CGRect.init(x: self.view.frame.width/2, y: self.view.frame.height/2, width: 40, height: 40), type: NVActivityIndicatorType.lineScale, color: UIColor.gray, padding: 0);
+        self.view.addSubview(activityIndicatorView) // or use  webView.addSubview(activityIndicator)
+
         
         self.facebookBtn.layer.borderColor = UIColor(red: 12/255, green: 111/255, blue: 233/255, alpha: 1).cgColor;
         self.facebookBtn.layer.borderWidth = 1
         self.twitterBtn.layer.borderColor = UIColor(red: 12/255, green: 111/255, blue: 233/255, alpha: 1).cgColor;
         self.twitterBtn.layer.borderWidth = 1
-            self.postTextField.delegate = self
-            //self.postTextField.text = "Please add text to be posted ..."
-           // self.postTextField.textColor = UIColor.lightGray
-        self.postTextField.layer.borderColor =  UIColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 1).cgColor;
-        self.postTextField.layer.borderWidth = 1
-             loggedInUser =  User().loadUserDataFromUserDefaults(userDataDict : setting);
-            self.social = SocialPlatform().loadSocialDataFromUserDefaults();
+        
+        self.postTextField.delegate = self
+        self.postTextField.layer.borderColor =  UIColor(red: 146/255, green: 147/255, blue: 149/255, alpha: 1).cgColor;
+        self.postTextField.layer.borderWidth = 0.5
+        
+        loggedInUser =  User().loadUserDataFromUserDefaults(userDataDict : setting);
+        self.social = SocialPlatform().loadSocialDataFromUserDefaults();
             //imageDelegate = Reusable()
-        let imageTapGesture = UITapGestureRecognizer.init(target: self, action: #selector(imageUploadClicked))
-        postedPicview.addGestureRecognizer(imageTapGesture);
         // Do any additional setup after loading the view.
         self.socialMediaPlatform = [Int]();
         
+        //Looks for single or multiple taps.
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
+        
         let jsonURL = "user/get_user_details/format/json";
-         postArray["user_id"] = String(loggedInUser.userId)
+        postArray["user_id"] = String(loggedInUser.userId)
         UserService().postDataMethod(jsonURL: jsonURL, postData: postArray, complete: {(response) in
            // print(response);
            let modeArray = response.value(forKey: "data") as! NSDictionary;
@@ -98,7 +106,7 @@ class TwitterPostViewController: UIViewController,UITextViewDelegate, UIImagePic
         print("B")
         if self.postTextField.text == "" {
             
-            self.postTextField.text = "Placeholder text ..."
+            self.postTextField.text = "Write Something..."
             self.postTextField.textColor = UIColor.lightGray
         }
     }
@@ -107,8 +115,6 @@ class TwitterPostViewController: UIViewController,UITextViewDelegate, UIImagePic
         
         // Dispose of any resources that can be recreated.
     }
-    
-   
     
     @IBAction func facebookBtnClicked(_ sender: Any) {
         
@@ -334,6 +340,9 @@ class TwitterPostViewController: UIViewController,UITextViewDelegate, UIImagePic
         
         let isValid = self.validateSocialPlatform();
         if(isValid == true){
+        
+            self.activityIndicatorView.startAnimating();
+
         let jsonURL = "posts/create_new_caster_posts/format/json"
         var postData : [String : Any] = [String : Any]()
         postData["post_description"] = self.postTextField.text
@@ -347,17 +356,21 @@ class TwitterPostViewController: UIViewController,UITextViewDelegate, UIImagePic
         }
             joinedStrings = String(joinedStrings.dropLast())
         print(joinedStrings)
-      //  postData["social_media"] = String(joinedStrings.suffix(joinedStrings.count-1));
-            postData["social_media_id"] = joinedStrings
+        postData["social_media"] = String(joinedStrings.suffix(joinedStrings.count-1));
+        postData["social_media_id"] = joinedStrings
        //  let size = CGSize(width: 0, height: 0)
             print(PhotoArray.count)
         if(PhotoArray.count > 0){
             UserService().postMultipartImageDataSocialMethod(jsonURL: jsonURL,image : PhotoArray, postData:postData,complete:{(response) in
                 print(response);
+                self.activityIndicatorView.stopAnimating();
+                UIApplication.shared.keyWindow?.rootViewController = HomeViewController.MainViewController();
             })
         }else{
             UserService().postDataMethod(jsonURL: jsonURL, postData: postData, complete: { (response) in
                   print(response);
+                self.activityIndicatorView.stopAnimating();
+                UIApplication.shared.keyWindow?.rootViewController = HomeViewController.MainViewController();
             })
         }
     }
@@ -388,6 +401,13 @@ class TwitterPostViewController: UIViewController,UITextViewDelegate, UIImagePic
         // present an actionSheet...
         present(actionSheetController, animated: true, completion: nil)
     }
+    
+    //Calls this function when the tap is recognized.
+    @objc func dismissKeyboard() {
+        //Causes the view (or one of its embedded text fields) to resign the first responder status.
+        view.endEditing(true)
+    }
+    
     func validateSocialPlatform()->Bool{
         if(self.socialMediaPlatform.count == 0){
             let message = "Please select social media platforms"
@@ -458,14 +478,4 @@ class TwitterPostViewController: UIViewController,UITextViewDelegate, UIImagePic
             
         }
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

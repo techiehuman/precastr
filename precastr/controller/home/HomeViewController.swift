@@ -12,6 +12,9 @@ import SDWebImage
 class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
 
     @IBOutlet weak var socialPostList: UITableView!
+    
+    @IBOutlet weak var noPostsText: UILabel!
+    
     var homePosts : [Any] = [Any]()
     var loggedInUser : User!
     var social : SocialPlatform!
@@ -161,9 +164,8 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         cell.dateLabel.text = Date().ddspEEEEcmyyyy(dateStr: homeObject.value(forKey: "created_on") as! String)
                 
         //ScrollView functionality
-        
-        self.slides = cell.createSlides()
-        cell.setupSlideScrollView(slides: slides)
+        //self.slides = cell.createSlides()
+        cell.setupSlideScrollView()
         
         cell.pageControl.numberOfPages = self.slides.count
         cell.pageControl.currentPage = 0
@@ -178,7 +180,7 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
        
         
     }
-    func loadUserPosts(){
+    func loadUserPosts() {
         loggedInUser = User().loadUserDataFromUserDefaults(userDataDict : setting);
         social = SocialPlatform().loadSocialDataFromUserDefaults();
         // Do any additional setup after loading the view.
@@ -193,11 +195,19 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         
         UserService().postDataMethod(jsonURL: jsonURL, postData: postArray, complete: {(response) in
             
-            
             let modeArray = response.value(forKey: "data") as! NSArray;
             
-            self.homePosts = modeArray as! [Any]
-            self.socialPostList.reloadData();
+            if (modeArray.count != 0) {
+                
+                self.noPostsText.isHidden = true;
+                self.socialPostList.isHidden = false;
+                self.homePosts = modeArray as! [Any]
+                self.socialPostList.reloadData();
+
+            } else {
+                self.noPostsText.isHidden = false;
+                self.socialPostList.isHidden = true;
+            }
         });
         
     }
