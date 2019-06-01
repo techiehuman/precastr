@@ -74,6 +74,7 @@
 		24E4210145BAB85F25AB647E /* Pods-precastr.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-precastr.debug.xcconfig"; path = "Pods/Target Support Files/Pods-precastr/Pods-precastr.debug.xcconfig"; sourceTree = "<group>"; };
 		27A38E047A676826532D9793 /* Pods-precastrUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-precastrUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-precastrUITests/Pods-precastrUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		561E50304594AB7F3B9F4993 /* Pods_precastrUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_precastrUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5E1217CE22A28EE90075961A /* precastr.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = precastr.entitlements; sourceTree = "<group>"; };
 		6577135BB253B3BD32B16155 /* Pods-precastrTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-precastrTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-precastrTests/Pods-precastrTests.debug.xcconfig"; sourceTree = "<group>"; };
 		9562719E26A20DC50B681220 /* Pods-precastrUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-precastrUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-precastrUITests/Pods-precastrUITests.release.xcconfig"; sourceTree = "<group>"; };
 		A62D95851A596AF11E67E59A /* Pods_precastrTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_precastrTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -256,6 +257,7 @@
 		FA6AB57A22531E7200C5491F /* precastr */ = {
 			isa = PBXGroup;
 			children = (
+				5E1217CE22A28EE90075961A /* precastr.entitlements */,
 				FA84F176229C5E0F007796A3 /* dto */,
 				FA1C1CDB2284006F00583E1B /* protocol */,
 				FA1C1CDA2283FDA900583E1B /* extension */,
@@ -473,6 +475,14 @@
 				TargetAttributes = {
 					FA6AB57722531E7200C5491F = {
 						CreatedOnToolsVersion = 9.4.1;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 0;
+							};
+							com.apple.Siri = {
+								enabled = 0;
+							};
+						};
 					};
 					FA6AB58B22531E8200C5491F = {
 						CreatedOnToolsVersion = 9.4.1;
@@ -863,16 +873,18 @@
 			baseConfigurationReference = 24E4210145BAB85F25AB647E /* Pods-precastr.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = F7WNB8AWZ7;
+				DEVELOPMENT_TEAM = 6VW4H7JW9D;
 				INFOPLIST_FILE = precastr/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.precastr.precastr;
+				PRODUCT_BUNDLE_IDENTIFIER = com.lyons.precastr;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -883,16 +895,18 @@
 			baseConfigurationReference = C4DCE75455249966F5BD18FA /* Pods-precastr.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = F7WNB8AWZ7;
+				DEVELOPMENT_TEAM = 6VW4H7JW9D;
 				INFOPLIST_FILE = precastr/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.precastr.precastr;
+				PRODUCT_BUNDLE_IDENTIFIER = com.lyons.precastr;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

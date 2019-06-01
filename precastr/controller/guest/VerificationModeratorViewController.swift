@@ -26,10 +26,13 @@ class VerificationModeratorViewController: UIViewController,UITextFieldDelegate 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        verifyCode1.keyboardType = UIKeyboardType.numberPad
-        verifyCode2.keyboardType = UIKeyboardType.numberPad
-        verifyCode3.keyboardType = UIKeyboardType.numberPad
-        verifyCode4.keyboardType = UIKeyboardType.numberPad
+        verifyCode1.addTarget(self, action: #selector(self.textFieldDidChange(textField:)), for: UIControlEvents.editingChanged);
+        verifyCode2.addTarget(self, action: #selector(self.textFieldDidChange(textField:)), for: UIControlEvents.editingChanged);
+        verifyCode3.addTarget(self, action: #selector(self.textFieldDidChange(textField:)), for: UIControlEvents.editingChanged);
+        verifyCode4.addTarget(self, action: #selector(self.textFieldDidChange(textField:)), for: UIControlEvents.editingChanged);
+        
+        verifyCode1.becomeFirstResponder();
+        
         loggedInUser = User().loadUserDataFromUserDefaults(userDataDict : setting);
         userProfilePic.roundImageView();
         userProfilePic.layer.borderWidth = 2
@@ -49,73 +52,46 @@ class VerificationModeratorViewController: UIViewController,UITextFieldDelegate 
         // Dispose of any resources that can be recreated.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        let char = string.cString(using: String.Encoding.utf8)
-       var keyPressedCode = strcmp(char, "\\b")
-        print(keyPressedCode)
+    @objc func textFieldDidChange(textField: UITextField) {
         
-        if let text = textField.text,
-            let textRange = Range(range, in: text) {
-            let updatedText = text.replacingCharacters(in: textRange,
-                                                       with: string)
-            if (textField == verifyCode1) {
-                if (updatedText.count == 1 && keyPressedCode != -92) {
-                    verifyCode2.becomeFirstResponder()
-                }
+        let text = textField.text;
+        
+        if (text!.count == 1) {
+            
+            switch textField {
+            case verifyCode1:
+                verifyCode2.text = "";
+                verifyCode2.becomeFirstResponder();
+                
+            case verifyCode2:
+                verifyCode3.text = "";
+                verifyCode3.becomeFirstResponder();
+                
+            case verifyCode3:
+                verifyCode4.text = "";
+                verifyCode4.becomeFirstResponder();
+                
+            case verifyCode4:
+                verifyCode4.resignFirstResponder();
+                
+            default:
+                break;
             }
-            if (textField == verifyCode2) {
-                if (updatedText.count == 1 && keyPressedCode != -92) {
-                    verifyCode3.becomeFirstResponder()
-                } else {
-                    verifyCode1.becomeFirstResponder()
-                }
-            }
-            if (textField == verifyCode3) {
-                if (updatedText.count == 1 && keyPressedCode != -92) {
-                    verifyCode4.becomeFirstResponder()
-                } else {
-                    verifyCode2.becomeFirstResponder()
-                }
-            }
-            if (textField == verifyCode4) {
-                if (updatedText.count == 1 && keyPressedCode != -92) {
-                    verifyCode4.becomeFirstResponder()
-                } else {
-                    verifyCode3.becomeFirstResponder()
-                }
-            }
+            
         }
-        /*if(textField == verifyCode1 && verifyCode1.text!.count==1 && keyPressedCode != -92){
-            verifyCode2.becomeFirstResponder()
-        }else if(textField == verifyCode2 && verifyCode2.text!.count==1 && keyPressedCode != -92){
-            verifyCode3.becomeFirstResponder()
-        }else if(textField == verifyCode3 && verifyCode3.text!.count==1 && keyPressedCode != -92){
-            verifyCode4.becomeFirstResponder()
-        }else if(textField == verifyCode4 && verifyCode4.text!.count==1 && keyPressedCode != -92){
-            verifyCode4.resignFirstResponder()
-        }*/
-        return true
     }
-    /*func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        if(textField == verifyCode1 && verifyCode1.text!.count==1){
-            verifyCode2.becomeFirstResponder()
-        }else if(textField == verifyCode2 && verifyCode2.text!.count==1){
-            verifyCode3.becomeFirstResponder()
-        }else if(textField == verifyCode3 && verifyCode3.text!.count==1){
-            verifyCode4.becomeFirstResponder()
-        }else if(textField == verifyCode4 && verifyCode4.text!.count==1){
-            verifyCode4.resignFirstResponder()
-        }
-        return true
-    } */
+    
+    @IBAction func verifyBtnClicked(_ sender: Any) {
+        
+        var postData = [String: Any]();
+        postData["user_id"] = self.loggedInUser.userId
+        let otp = "\(self.verifyCode1.text!)\(self.verifyCode2.text!)\(self.verifyCode3.text!)\(self.verifyCode4.text!)";
+        postData["otp"] = String(otp)
+        print(otp)
+        let jsonURL = "user/verify_user_otp/format/json";
+        UserService().postDataMethod(jsonURL: jsonURL,postData:postData,complete:{(response) in
+            print(response)
+           UIApplication.shared.keyWindow?.rootViewController = HomeViewController.MainViewController();
+        });
+    }
 }

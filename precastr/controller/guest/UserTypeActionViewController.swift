@@ -56,14 +56,29 @@ class UserTypeActionViewController: UIViewController {
     */
 
     @IBAction func casterButtonAction(_ sender: Any) {
+       self.updateUserType(userRole: 1)
         let viewController: PrecastTypeSectionViewController = self.storyboard?.instantiateViewController(withIdentifier: "PrecastTypeSectionViewController") as! PrecastTypeSectionViewController;
         self.navigationController?.pushViewController(viewController, animated: true);
     }
     
     @IBAction func moderatorButtonAction(_ sender: Any) {
+        self.updateUserType(userRole: 2)
         let viewController: VerificationModeratorViewController = self.storyboard?.instantiateViewController(withIdentifier: "VerificationModeratorViewController") as! VerificationModeratorViewController;
         self.navigationController?.pushViewController(viewController, animated: true);
     }
-    
+    func updateUserType(userRole : Int8) {
+        var postData = [String: Any]();
+        postData["user_id"] = self.loggedInUser.userId
+        postData["role_id"] = userRole
+        let jsonURL = "user/add_user_role/format/json";
+        UserService().postDataMethod(jsonURL: jsonURL,postData:postData,complete:{(response) in
+            print(response)
+            if (Int(response.value(forKey: "status") as! String)! == 1) {
+                self.loggedInUser.isCastr  = userRole
+                self.loggedInUser.loadUserDefaults()
+            }
+            
+        });
+    }
    
 }

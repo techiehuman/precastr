@@ -23,7 +23,13 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     var slides:[SlideUIView] = [];
     class func MainViewController() -> UITabBarController{
         
-        return UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MadTabBar") as! UITabBarController
+        var tabBarContro = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MadTabBar") as! UITabBarController
+        var loggedInUser = User().loadUserDataFromUserDefaults(userDataDict: setting);
+        if (loggedInUser.isCastr == 2) {
+            tabBarContro.viewControllers?.remove(at: 1)
+        }
+        return tabBarContro;
+        //return UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MadTabBar") as! UITabBarController
         
     }
     override func viewDidLoad() {

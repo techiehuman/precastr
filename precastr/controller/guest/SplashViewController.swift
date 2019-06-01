@@ -35,22 +35,25 @@ class SplashViewController: UIViewController {
 
     @objc func navigateUser() {
         if let user_id = setting.value(forKey: "user_id") {
-            let user_cast_setting_id = (setting.value(forKey: "user_cast_setting_id") as! NSNumber);
-                
-            if(user_cast_setting_id == 0){
-                performSegue(withIdentifier: "userTypeSegue", sender: self)
-            }else{
-                
             
-            // Override point for customization after application launch.
-            //performSegue(withIdentifier: "homeScreenSegue", sender: self)
-            //window = UIWindow(frame: UIScreen.main.bounds)
-            //window?.rootViewController = HomeViewController.MainViewController()
+            let userDefaultRole = setting.value(forKey: "default_role") as? Int8 ?? nil
+            let user_cast_setting_id = setting.value(forKey: "user_cast_setting_id") as? Int32 ?? nil;
+            
+            if (userDefaultRole == nil || userDefaultRole == 0) {
+                performSegue(withIdentifier: "userTypeSegue", sender: self)
+                
+            } else if(userDefaultRole == 1 && (user_cast_setting_id == nil || user_cast_setting_id == 0)){
+                
+                performSegue(withIdentifier: "castTypeSegue", sender: self)
+                
+            } else {
+                // Override point for customization after application launch.
+                //performSegue(withIdentifier: "homeScreenSegue", sender: self)
+                //window = UIWindow(frame: UIScreen.main.bounds)
+                //window?.rootViewController = HomeViewController.MainViewController()
                 UIApplication.shared.keyWindow?.rootViewController = HomeViewController.MainViewController();
             }
         }else{
-            //window = UIWindow(frame: UIScreen.main.bounds)
-            
             //window?.rootViewController = LoginStep1ViewController.MainViewController()
             performSegue(withIdentifier: "loginScreenSegue", sender: self)
 

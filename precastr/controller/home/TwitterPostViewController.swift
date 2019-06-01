@@ -415,6 +415,12 @@ class TwitterPostViewController: UIViewController,UITextViewDelegate, UIImagePic
             alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil));
             self.present(alert, animated: true)
             return false
+        } else  if(self.postTextField.text == "" ){
+            let message = "Text field is empty"
+            let alert = UIAlertController.init(title: "Error", message: message, preferredStyle: .alert);
+            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil));
+            self.present(alert, animated: true)
+            return false
         }
         return true
     }

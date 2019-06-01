@@ -28,7 +28,7 @@ class User  {
     var deviceToken         : String!
     var profilePic          : String!
     var miscStatus          : Int!
-    
+    var casterReferalCode   : String!
     
     func getUserData(userDataDict: NSDictionary)->User {
         let user = User();
@@ -46,10 +46,12 @@ class User  {
         user.profilePic = userDataDict.value(forKey: "profile_pic") as? String;
         user.isDeleted = userDataDict.value(forKey: "is_deleted") as? Bool;
         user.createdOn = userDataDict.value(forKey: "created_on") as? String;
-        user.isCastr = userDataDict.value(forKey: "is_caster") as? Int8;
+        user.isCastr = Int8(userDataDict.value(forKey: "default_role") as! String);
         user.userCastSettingId = Int32(userDataDict.value(forKey: "user_cast_setting_id") as! String);
         user.userDevice = userDataDict.value(forKey: "device_registered_from")as? Int8;
         user.deviceToken = userDataDict.value(forKey: "device_token")as? String;
+        user.casterReferalCode = userDataDict.value(forKey: "caster_referral_code")as? String;
+
         return user;
     }
     
@@ -84,7 +86,7 @@ class User  {
         userJson["is_active"] = user.isActive;
         userJson["is_deleted"] = user.isDeleted;
         userJson["created_on"] = user.createdOn;
-        userJson["is_caster"] = user.isCastr;
+        userJson["default_role"] = user.isCastr;
         userJson["user_cast_setting_id"] = user.userCastSettingId;
         userJson["device_registered_from"] = user.userDevice
         userJson["device_token"] = user.deviceToken
@@ -112,12 +114,13 @@ class User  {
         
         user.isDeleted = userDataDict.value(forKey: "is_deleted") as? Bool;
         user.createdOn = userDataDict.value(forKey: "created_on") as? String;
-        user.isCastr = userDataDict.value(forKey: "is_caster") as? Int8;
+        user.isCastr = userDataDict.value(forKey: "default_role") as? Int8;
         user.userCastSettingId = userDataDict.value(forKey: "user_cast_setting_id") as? Int32;
         user.userDevice = userDataDict.value(forKey: "device_registered_from")as? Int8;
         user.deviceToken = userDataDict.value(forKey: "device_token")as? String;
         user.profilePic = userDataDict.value(forKey: "profile_pic")as? String;
-        
+        user.casterReferalCode = userDataDict.value(forKey: "caster_referral_code")as? String;
+
         return user;
     }
     func loadUserDefaults()->Void{
@@ -133,9 +136,10 @@ class User  {
         setting.setValue(self.twitterAccessSecret, forKey: "twitter_access_secret")
         setting.setValue(self.isTwitter, forKey: "is_twiter")
         //setting.setValue(self.isActive!, forKey: "is_active")
-        //setting.setValue(self.isCastr!, forKey: "is_caster")
+        setting.setValue(self.isCastr, forKey: "default_role")
         setting.setValue(self.userCastSettingId!, forKey: "user_cast_setting_id")
         setting.setValue(self.profilePic, forKey: "profile_pic")
+        setting.setValue(self.casterReferalCode, forKey: "caster_referral_code");
         //setting.setValue(self.userDevice!, forKey: "device_registered_from")
         //setting.setValue(self.deviceToken, forKey: "device_token")
         

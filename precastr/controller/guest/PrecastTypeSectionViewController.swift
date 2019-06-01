@@ -38,9 +38,8 @@ class PrecastTypeSectionViewController: UIViewController {
             print(userDict)
             let user = User().getUserData(userDataDict: userDict);
             user.loadUserDefaults();
-            let viewController: HomeViewController = self.storyboard?.instantiateViewController(withIdentifier: "HomeViewController") as! HomeViewController;
-            self.navigationController?.pushViewController(viewController, animated: true);
             
+            UIApplication.shared.keyWindow?.rootViewController = HomeViewController.MainViewController();
         });
     }
     var loggedInUser : User!

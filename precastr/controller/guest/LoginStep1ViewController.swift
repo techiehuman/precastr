@@ -234,6 +234,7 @@ class LoginStep1ViewController: UIViewController,UITextFieldDelegate {
                 let message = response.value(forKey: "message") as! String;
                 let data = response.value(forKey: "data") as! NSDictionary;
                 let allStepsDone = (data.value(forKey: "user_cast_setting_id") as! NSString).intValue
+                let userDefaultRole = setting.value(forKey: "default_role") as? Int8 ?? nil
                 print(allStepsDone)
                 SocialPlatform().fetchSocialPlatformData();
                 let alert = UIAlertController.init(title: "Success", message: message, preferredStyle: .alert);
@@ -247,13 +248,17 @@ class LoginStep1ViewController: UIViewController,UITextFieldDelegate {
                     //if(requestType == ""){
                     
                     //If is the First Time user then we will send him to complete the steps.
-                    if (allStepsDone == 0) {
+                    if (allStepsDone == 0 && userDefaultRole == 0) {
                         
                         let viewController: UserTypeActionViewController = self.storyboard?.instantiateViewController(withIdentifier: "UserTypeActionViewController") as! UserTypeActionViewController;
                         self.navigationController?.pushViewController(viewController, animated: true);
                             print(self.navigationController);
                         
-                    } else if (allStepsDone != 0){//If its an already existing user
+                    } else if(allStepsDone == 0 && userDefaultRole == 1){
+                        let viewController: PrecastTypeSectionViewController = self.storyboard?.instantiateViewController(withIdentifier: "PrecastTypeSectionViewController") as! PrecastTypeSectionViewController;
+                        self.navigationController?.pushViewController(viewController, animated: true);
+                    }
+                    else if (allStepsDone != 0){//If its an already existing user
                         //Then we will be sending him to home screen.
                         UIApplication.shared.keyWindow?.rootViewController = HomeViewController.MainViewController()
                         //let viewController: HomeViewController = self.storyboard?.instantiateViewController(withIdentifier: "HomeViewController") as! HomeViewController;
