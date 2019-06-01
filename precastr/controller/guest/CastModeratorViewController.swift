@@ -78,6 +78,10 @@ class CastModeratorViewController: UIViewController, CNContactPickerDelegate, MF
             controller.messageComposeDelegate = self
             self.present(controller, animated: true, completion: nil)
         } else {
+            let message = "Requests to moderators sent!"
+            let alert = UIAlertController.init(title: "Success", message: message, preferredStyle: .alert);
+            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil));
+            self.present(alert, animated: true)
             //self.navigationController?.popToRootViewController(animated: false);
             let homePageViewController: HomeViewController = self.storyboard?.instantiateViewController(withIdentifier: "HomeViewController") as! HomeViewController;
              //self.window?.rootViewController = homePageViewController
