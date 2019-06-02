@@ -233,8 +233,8 @@ class LoginStep1ViewController: UIViewController,UITextFieldDelegate {
                 
                 let message = response.value(forKey: "message") as! String;
                 let data = response.value(forKey: "data") as! NSDictionary;
-                let allStepsDone = (data.value(forKey: "user_cast_setting_id") as! NSString).intValue
-                let userDefaultRole = setting.value(forKey: "default_role") as? Int8 ?? nil
+                let allStepsDone = Int32(data.value(forKey: "user_cast_setting_id") as! String)
+                let userDefaultRole = Int8((data.value(forKey: "default_role") as? String)!) ?? nil
                 print(allStepsDone)
                 SocialPlatform().fetchSocialPlatformData();
                 let alert = UIAlertController.init(title: "Success", message: message, preferredStyle: .alert);
@@ -243,31 +243,24 @@ class LoginStep1ViewController: UIViewController,UITextFieldDelegate {
                     print(userDict)
                     let user = User().getUserData(userDataDict: userDict);
                     user.loadUserDefaults();
-                    
-                    
-                    //if(requestType == ""){
-                    
                     //If is the First Time user then we will send him to complete the steps.
-                    if (allStepsDone == 0 && userDefaultRole == 0) {
+                    if (userDefaultRole == 0) {
                         
                         let viewController: UserTypeActionViewController = self.storyboard?.instantiateViewController(withIdentifier: "UserTypeActionViewController") as! UserTypeActionViewController;
                         self.navigationController?.pushViewController(viewController, animated: true);
                             print(self.navigationController);
                         
-                    } else if(allStepsDone == 0 && userDefaultRole == 1){
-                        let viewController: PrecastTypeSectionViewController = self.storyboard?.instantiateViewController(withIdentifier: "PrecastTypeSectionViewController") as! PrecastTypeSectionViewController;
-                        self.navigationController?.pushViewController(viewController, animated: true);
-                    }
-                    else if (allStepsDone != 0){//If its an already existing user
+                    } else if(userDefaultRole == 1){//If user type is casetr then we will let him choose the
+                                                                        // Posts cast type
+                        if (allStepsDone == 0) {
+                            let viewController: PrecastTypeSectionViewController = self.storyboard?.instantiateViewController(withIdentifier: "PrecastTypeSectionViewController") as! PrecastTypeSectionViewController;
+                            self.navigationController?.pushViewController(viewController, animated: true);
+                        }
+                        
+                    } else if (userDefaultRole == 2){//If user is moderator
                         //Then we will be sending him to home screen.
                         UIApplication.shared.keyWindow?.rootViewController = HomeViewController.MainViewController()
-                        //let viewController: HomeViewController = self.storyboard?.instantiateViewController(withIdentifier: "HomeViewController") as! HomeViewController;
-                        //self.navigationController?.pushViewController(viewController, animated: true);
                     }
-                    
-                    //let vc = UserTypeActionViewController(nibName: "UserTypeActionViewController", bundle: nil)
-                    //self.navigationController?.pushViewController(vc, animated: true )
-                    
                 }));
                 self.present(alert, animated: true)
                 

@@ -75,9 +75,8 @@ class TwitterPostViewController: UIViewController,UITextViewDelegate, UIImagePic
         UserService().postDataMethod(jsonURL: jsonURL, postData: postArray, complete: {(response) in
            // print(response);
            let modeArray = response.value(forKey: "data") as! NSDictionary;
-            var tokens  = modeArray.value(forKey: "tokens") as! NSArray
+            let tokens  = modeArray.value(forKey: "tokens") as! NSArray
             for mode in tokens{
-                var type = [String : Any]()
                 var modeDict = mode as! NSDictionary;
                 // self.moderators.append(String((modeDict.value(forKey: "username") as! NSString) as String)!);
                 print(modeDict.value(forKey: "type") as! String);

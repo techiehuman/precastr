@@ -24,7 +24,7 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     class func MainViewController() -> UITabBarController{
         
         var tabBarContro = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MadTabBar") as! UITabBarController
-        var loggedInUser = User().loadUserDataFromUserDefaults(userDataDict: setting);
+        let loggedInUser = User().loadUserDataFromUserDefaults(userDataDict: setting);
         if (loggedInUser.isCastr == 2) {
             tabBarContro.viewControllers?.remove(at: 1)
         }
@@ -42,6 +42,8 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             self.socialPostList.addSubview(refreshControl)
         }
         refreshControl.addTarget(self, action: #selector(refreshPostsData(_:)), for: .valueChanged)
+        loggedInUser = User().loadUserDataFromUserDefaults(userDataDict : setting);
+
         self.loadUserPosts();
         
 
@@ -51,6 +53,12 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         self.tabBarController?.tabBar.isHidden = false;
         self.navigationController?.navigationBar.isHidden = false
         self.navigationController?.navigationBar.tintColor = UIColor(red: 12/255, green: 111/255, blue: 233/255, alpha: 1)
+        //If Logged in user is a moderator, then we will
+        if (loggedInUser.isCastr == 2) {
+            self.navigationItem.title = "Moderate Casts";
+        } else {
+            self.navigationItem.title = "My Casts";
+        }
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: nil);
         
@@ -187,7 +195,6 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         
     }
     func loadUserPosts() {
-        loggedInUser = User().loadUserDataFromUserDefaults(userDataDict : setting);
         social = SocialPlatform().loadSocialDataFromUserDefaults();
         // Do any additional setup after loading the view.
         

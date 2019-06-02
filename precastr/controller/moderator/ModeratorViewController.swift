@@ -13,6 +13,9 @@ import MessageUI
 class ModeratorViewController: UIViewController, CNContactPickerDelegate, MFMessageComposeViewControllerDelegate {
 
     @IBOutlet weak var moderatorList: UITableView!
+    
+    @IBOutlet weak var inviteModeratorButton: UIButton!
+    
     var moderatorBool : Bool!
     var loggedInUser : User!
     var moderatorDto : [ModeratorsDto] = [ModeratorsDto]()
@@ -101,6 +104,7 @@ class ModeratorViewController: UIViewController, CNContactPickerDelegate, MFMess
         
         moderatorList.register(UINib(nibName: "HeaderViewTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "HeaderViewTableViewCell")
         // Do any additional setup after loading the view.
+        self.inviteModeratorButton.layer.cornerRadius = 4;
         self.loadModeratorData();
         
         

@@ -26,7 +26,8 @@ class moderatorTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        
+        acceptActionBtn.layer.cornerRadius = 4;
+        removeActionBtn.layer.cornerRadius = 4;
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
