@@ -255,6 +255,8 @@ class LoginStep1ViewController: UIViewController,UITextFieldDelegate {
                         if (allStepsDone == 0) {
                             let viewController: PrecastTypeSectionViewController = self.storyboard?.instantiateViewController(withIdentifier: "PrecastTypeSectionViewController") as! PrecastTypeSectionViewController;
                             self.navigationController?.pushViewController(viewController, animated: true);
+                        } else {
+                            UIApplication.shared.keyWindow?.rootViewController = HomeViewController.MainViewController()
                         }
                         
                     } else if (userDefaultRole == 2){//If user is moderator
