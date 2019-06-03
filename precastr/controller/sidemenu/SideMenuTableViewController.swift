@@ -69,24 +69,29 @@ class SideMenuTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-       
-        if indexPath.row == 2 {
-            
-            
-            
-          
-            rowTypeVar = true
-           // let viewController: ModeratorViewController = self.storyboard?.instantiateViewController(withIdentifier: "ModeratorViewController") as! ModeratorViewController;
-          //  self.navigationController?.pushViewController(viewController, animated: true);
+        
+        switch indexPath.row {
+        case 0:
+            print("")
+        case 1:
+            print("")
+        case 2:
+            print("")
+        case 3:
             self.performSegue(withIdentifier: "moderatorSegue", sender: self);
+
+        case 4:
+            print("")
+        case 5:
+            print("")
             
-        } else if(indexPath.row == 3){
-            rowTypeVar = true
-           // let viewController: ModeratorViewController = self.storyboard?.instantiateViewController(withIdentifier: "ModeratorViewController") as! ModeratorViewController;
-           // self.navigationController?.pushViewController(viewController, animated: true);
-            self.performSegue(withIdentifier: "moderatorSegue", sender: self);
-        } else if(indexPath.row == 7){
+        case 6:
+            print("")
+        case 7:
             self.logout();
+
+        default:
+            print("")
         }
     }
 
