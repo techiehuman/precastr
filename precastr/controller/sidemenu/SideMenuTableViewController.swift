@@ -52,6 +52,22 @@ class SideMenuTableViewController: UITableViewController {
         
     }
     
+    func logout() {
+        
+        let alert = UIAlertController.init(title: "Logout!", message: "Are you sure?", preferredStyle: .alert);
+        alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil));
+        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: {(response) in
+            let defaults = UserDefaults.standard
+            let dictionary = defaults.dictionaryRepresentation()
+            dictionary.keys.forEach { key in
+                defaults.removeObject(forKey: key)
+            }
+            UIApplication.shared.keyWindow?.rootViewController = LoginStep1ViewController.MainViewController();
+        }));
+
+        self.present(alert, animated: true)
+    }
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
        
         if indexPath.row == 2 {
@@ -64,12 +80,13 @@ class SideMenuTableViewController: UITableViewController {
           //  self.navigationController?.pushViewController(viewController, animated: true);
             self.performSegue(withIdentifier: "moderatorSegue", sender: self);
             
-        }
-        if(indexPath.row == 3){
+        } else if(indexPath.row == 3){
             rowTypeVar = true
            // let viewController: ModeratorViewController = self.storyboard?.instantiateViewController(withIdentifier: "ModeratorViewController") as! ModeratorViewController;
            // self.navigationController?.pushViewController(viewController, animated: true);
             self.performSegue(withIdentifier: "moderatorSegue", sender: self);
+        } else if(indexPath.row == 7){
+            self.logout();
         }
     }
 

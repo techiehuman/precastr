@@ -41,10 +41,11 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         } else {
             self.socialPostList.addSubview(refreshControl)
         }
-        refreshControl.addTarget(self, action: #selector(refreshPostsData(_:)), for: .valueChanged)
+        refreshControl.addTarget(self, action: #selector(refreshPostsData(_:)), for: .valueChanged);
+        socialPostList.register(UINib(nibName: "HomeTextPostTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "HomeTextPostTableViewCell")
+        
         loggedInUser = User().loadUserDataFromUserDefaults(userDataDict : setting);
-
-        self.loadUserPosts();
+        
         
 
     }
@@ -72,6 +73,11 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         navigationItem.rightBarButtonItem = barButton;
         navigationItem.rightBarButtonItem?.tintColor = UIColor(red: 12/255, green: 111/255, blue: 233/255, alpha: 1)
 
+        if (loggedInUser.isCastr == 1) {
+            self.loadUserPosts();
+        } else if (loggedInUser.isCastr == 2) {
+            loadModeratorUserPosts();
+        }
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -194,10 +200,10 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
        
         
     }
+    
     func loadUserPosts() {
         social = SocialPlatform().loadSocialDataFromUserDefaults();
         // Do any additional setup after loading the view.
-        
         socialPostList.register(UINib(nibName: "HomeTextPostTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "HomeTextPostTableViewCell")
         
         
@@ -222,6 +228,31 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 self.socialPostList.isHidden = true;
             }
         });
+    }
+    
+    func loadModeratorUserPosts() {
+        social = SocialPlatform().loadSocialDataFromUserDefaults();
+        // Do any additional setup after loading the view.
+        let jsonURL = "posts/all_moderator_caster_posts/format/json";
         
+        postArray["user_id"] = String(loggedInUser.userId)
+        
+        
+        UserService().postDataMethod(jsonURL: jsonURL, postData: postArray, complete: {(response) in
+            
+            let modeArray = response.value(forKey: "data") as! NSArray;
+            
+            if (modeArray.count != 0) {
+                
+                self.noPostsText.isHidden = true;
+                self.socialPostList.isHidden = false;
+                self.homePosts = modeArray as! [Any]
+                self.socialPostList.reloadData();
+                
+            } else {
+                self.noPostsText.isHidden = false;
+                self.socialPostList.isHidden = true;
+            }
+        });
     }
 }
