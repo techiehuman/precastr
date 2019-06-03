@@ -42,6 +42,22 @@
 		FABF02502265DFBB0067960C /* SideMenuTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABF024F2265DFBB0067960C /* SideMenuTableViewController.swift */; };
 		FABF025B226DBE650067960C /* ModeratorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABF025A226DBE650067960C /* ModeratorViewController.swift */; };
 		FADE6BCE2281EE490086EC07 /* SignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADE6BCD2281EE480086EC07 /* SignupViewController.swift */; };
+		FADFEAF322A51A46006E3CD2 /* VisbyCF-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = FADFEAE322A51A46006E3CD2 /* VisbyCF-Bold.otf */; };
+		FADFEAF422A51A46006E3CD2 /* VisbyCF-BoldOblique.otf in Resources */ = {isa = PBXBuildFile; fileRef = FADFEAE422A51A46006E3CD2 /* VisbyCF-BoldOblique.otf */; };
+		FADFEAF522A51A46006E3CD2 /* VisbyCF-DemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = FADFEAE522A51A46006E3CD2 /* VisbyCF-DemiBold.otf */; };
+		FADFEAF622A51A46006E3CD2 /* VisbyCF-DemiBoldOblique.otf in Resources */ = {isa = PBXBuildFile; fileRef = FADFEAE622A51A46006E3CD2 /* VisbyCF-DemiBoldOblique.otf */; };
+		FADFEAF722A51A46006E3CD2 /* VisbyCF-ExtraBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = FADFEAE722A51A46006E3CD2 /* VisbyCF-ExtraBold.otf */; };
+		FADFEAF822A51A46006E3CD2 /* VisbyCF-ExtraBoldOblique.otf in Resources */ = {isa = PBXBuildFile; fileRef = FADFEAE822A51A46006E3CD2 /* VisbyCF-ExtraBoldOblique.otf */; };
+		FADFEAF922A51A46006E3CD2 /* VisbyCF-Heavy.otf in Resources */ = {isa = PBXBuildFile; fileRef = FADFEAE922A51A46006E3CD2 /* VisbyCF-Heavy.otf */; };
+		FADFEAFA22A51A46006E3CD2 /* VisbyCF-HeavyOblique.otf in Resources */ = {isa = PBXBuildFile; fileRef = FADFEAEA22A51A46006E3CD2 /* VisbyCF-HeavyOblique.otf */; };
+		FADFEAFB22A51A46006E3CD2 /* VisbyCF-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = FADFEAEB22A51A46006E3CD2 /* VisbyCF-Light.otf */; };
+		FADFEAFC22A51A46006E3CD2 /* VisbyCF-LightOblique.otf in Resources */ = {isa = PBXBuildFile; fileRef = FADFEAEC22A51A46006E3CD2 /* VisbyCF-LightOblique.otf */; };
+		FADFEAFD22A51A46006E3CD2 /* VisbyCF-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = FADFEAED22A51A46006E3CD2 /* VisbyCF-Medium.otf */; };
+		FADFEAFE22A51A46006E3CD2 /* VisbyCF-MediumOblique.otf in Resources */ = {isa = PBXBuildFile; fileRef = FADFEAEE22A51A46006E3CD2 /* VisbyCF-MediumOblique.otf */; };
+		FADFEAFF22A51A46006E3CD2 /* VisbyCF-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = FADFEAEF22A51A46006E3CD2 /* VisbyCF-Regular.otf */; };
+		FADFEB0022A51A46006E3CD2 /* VisbyCF-RegularOblique.otf in Resources */ = {isa = PBXBuildFile; fileRef = FADFEAF022A51A46006E3CD2 /* VisbyCF-RegularOblique.otf */; };
+		FADFEB0122A51A46006E3CD2 /* VisbyCF-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = FADFEAF122A51A46006E3CD2 /* VisbyCF-Thin.otf */; };
+		FADFEB0222A51A46006E3CD2 /* VisbyCF-ThinOblique.otf in Resources */ = {isa = PBXBuildFile; fileRef = FADFEAF222A51A46006E3CD2 /* VisbyCF-ThinOblique.otf */; };
 		FAE4DF61225F0E94008875C3 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE4DF60225F0E94008875C3 /* UserService.swift */; };
 		FAE4DF64225F155C008875C3 /* AppUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE4DF63225F155C008875C3 /* AppUtil.swift */; };
 		FAF601CA2286A3C700B54F9B /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF601C92286A3C700B54F9B /* SplashViewController.swift */; };
@@ -119,6 +135,22 @@
 		FABF024F2265DFBB0067960C /* SideMenuTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuTableViewController.swift; sourceTree = "<group>"; };
 		FABF025A226DBE650067960C /* ModeratorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModeratorViewController.swift; sourceTree = "<group>"; };
 		FADE6BCD2281EE480086EC07 /* SignupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupViewController.swift; sourceTree = "<group>"; };
+		FADFEAE322A51A46006E3CD2 /* VisbyCF-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "VisbyCF-Bold.otf"; sourceTree = "<group>"; };
+		FADFEAE422A51A46006E3CD2 /* VisbyCF-BoldOblique.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "VisbyCF-BoldOblique.otf"; sourceTree = "<group>"; };
+		FADFEAE522A51A46006E3CD2 /* VisbyCF-DemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "VisbyCF-DemiBold.otf"; sourceTree = "<group>"; };
+		FADFEAE622A51A46006E3CD2 /* VisbyCF-DemiBoldOblique.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "VisbyCF-DemiBoldOblique.otf"; sourceTree = "<group>"; };
+		FADFEAE722A51A46006E3CD2 /* VisbyCF-ExtraBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "VisbyCF-ExtraBold.otf"; sourceTree = "<group>"; };
+		FADFEAE822A51A46006E3CD2 /* VisbyCF-ExtraBoldOblique.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "VisbyCF-ExtraBoldOblique.otf"; sourceTree = "<group>"; };
+		FADFEAE922A51A46006E3CD2 /* VisbyCF-Heavy.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "VisbyCF-Heavy.otf"; sourceTree = "<group>"; };
+		FADFEAEA22A51A46006E3CD2 /* VisbyCF-HeavyOblique.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "VisbyCF-HeavyOblique.otf"; sourceTree = "<group>"; };
+		FADFEAEB22A51A46006E3CD2 /* VisbyCF-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "VisbyCF-Light.otf"; sourceTree = "<group>"; };
+		FADFEAEC22A51A46006E3CD2 /* VisbyCF-LightOblique.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "VisbyCF-LightOblique.otf"; sourceTree = "<group>"; };
+		FADFEAED22A51A46006E3CD2 /* VisbyCF-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "VisbyCF-Medium.otf"; sourceTree = "<group>"; };
+		FADFEAEE22A51A46006E3CD2 /* VisbyCF-MediumOblique.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "VisbyCF-MediumOblique.otf"; sourceTree = "<group>"; };
+		FADFEAEF22A51A46006E3CD2 /* VisbyCF-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "VisbyCF-Regular.otf"; sourceTree = "<group>"; };
+		FADFEAF022A51A46006E3CD2 /* VisbyCF-RegularOblique.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "VisbyCF-RegularOblique.otf"; sourceTree = "<group>"; };
+		FADFEAF122A51A46006E3CD2 /* VisbyCF-Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "VisbyCF-Thin.otf"; sourceTree = "<group>"; };
+		FADFEAF222A51A46006E3CD2 /* VisbyCF-ThinOblique.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "VisbyCF-ThinOblique.otf"; sourceTree = "<group>"; };
 		FAE4DF60225F0E94008875C3 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		FAE4DF63225F155C008875C3 /* AppUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUtil.swift; sourceTree = "<group>"; };
 		FAF601C92286A3C700B54F9B /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
@@ -257,6 +289,7 @@
 		FA6AB57A22531E7200C5491F /* precastr */ = {
 			isa = PBXGroup;
 			children = (
+				FADFEAE122A519A7006E3CD2 /* fonts */,
 				5E1217CE22A28EE90075961A /* precastr.entitlements */,
 				FA84F176229C5E0F007796A3 /* dto */,
 				FA1C1CDB2284006F00583E1B /* protocol */,
@@ -382,6 +415,37 @@
 			children = (
 			);
 			path = cell;
+			sourceTree = "<group>";
+		};
+		FADFEAE122A519A7006E3CD2 /* fonts */ = {
+			isa = PBXGroup;
+			children = (
+				FADFEAE222A51A46006E3CD2 /* OTF */,
+			);
+			path = fonts;
+			sourceTree = "<group>";
+		};
+		FADFEAE222A51A46006E3CD2 /* OTF */ = {
+			isa = PBXGroup;
+			children = (
+				FADFEAE322A51A46006E3CD2 /* VisbyCF-Bold.otf */,
+				FADFEAE422A51A46006E3CD2 /* VisbyCF-BoldOblique.otf */,
+				FADFEAE522A51A46006E3CD2 /* VisbyCF-DemiBold.otf */,
+				FADFEAE622A51A46006E3CD2 /* VisbyCF-DemiBoldOblique.otf */,
+				FADFEAE722A51A46006E3CD2 /* VisbyCF-ExtraBold.otf */,
+				FADFEAE822A51A46006E3CD2 /* VisbyCF-ExtraBoldOblique.otf */,
+				FADFEAE922A51A46006E3CD2 /* VisbyCF-Heavy.otf */,
+				FADFEAEA22A51A46006E3CD2 /* VisbyCF-HeavyOblique.otf */,
+				FADFEAEB22A51A46006E3CD2 /* VisbyCF-Light.otf */,
+				FADFEAEC22A51A46006E3CD2 /* VisbyCF-LightOblique.otf */,
+				FADFEAED22A51A46006E3CD2 /* VisbyCF-Medium.otf */,
+				FADFEAEE22A51A46006E3CD2 /* VisbyCF-MediumOblique.otf */,
+				FADFEAEF22A51A46006E3CD2 /* VisbyCF-Regular.otf */,
+				FADFEAF022A51A46006E3CD2 /* VisbyCF-RegularOblique.otf */,
+				FADFEAF122A51A46006E3CD2 /* VisbyCF-Thin.otf */,
+				FADFEAF222A51A46006E3CD2 /* VisbyCF-ThinOblique.otf */,
+			);
+			path = OTF;
 			sourceTree = "<group>";
 		};
 		FAE4DF62225F1069008875C3 /* util */ = {
@@ -520,14 +584,30 @@
 			buildActionMask = 2147483647;
 			files = (
 				FA6AB58622531E8200C5491F /* LaunchScreen.storyboard in Resources */,
+				FADFEAFE22A51A46006E3CD2 /* VisbyCF-MediumOblique.otf in Resources */,
+				FADFEB0022A51A46006E3CD2 /* VisbyCF-RegularOblique.otf in Resources */,
+				FADFEAFD22A51A46006E3CD2 /* VisbyCF-Medium.otf in Resources */,
 				FA6AB58322531E8200C5491F /* Assets.xcassets in Resources */,
+				FADFEB0122A51A46006E3CD2 /* VisbyCF-Thin.otf in Resources */,
 				FA84F18722A0329D007796A3 /* Slide.xib in Resources */,
+				FADFEAF622A51A46006E3CD2 /* VisbyCF-DemiBoldOblique.otf in Resources */,
+				FADFEAF822A51A46006E3CD2 /* VisbyCF-ExtraBoldOblique.otf in Resources */,
 				FA84F18C22A0E511007796A3 /* moderatorTableViewCell.xib in Resources */,
 				FAFCE3CB22999F1000AB6DB5 /* HomeTextPostTableViewCell.xib in Resources */,
+				FADFEAF322A51A46006E3CD2 /* VisbyCF-Bold.otf in Resources */,
+				FADFEAFC22A51A46006E3CD2 /* VisbyCF-LightOblique.otf in Resources */,
+				FADFEAF922A51A46006E3CD2 /* VisbyCF-Heavy.otf in Resources */,
+				FADFEAFB22A51A46006E3CD2 /* VisbyCF-Light.otf in Resources */,
+				FADFEAF522A51A46006E3CD2 /* VisbyCF-DemiBold.otf in Resources */,
 				FA84F17C229D98B5007796A3 /* PostImageCollectionViewCell.xib in Resources */,
 				FA52DDCD2277195C0093FDF8 /* HomeTableViewCell.xib in Resources */,
+				FADFEAF722A51A46006E3CD2 /* VisbyCF-ExtraBold.otf in Resources */,
+				FADFEAFA22A51A46006E3CD2 /* VisbyCF-HeavyOblique.otf in Resources */,
+				FADFEAF422A51A46006E3CD2 /* VisbyCF-BoldOblique.otf in Resources */,
 				FA6AB58122531E7300C5491F /* Main.storyboard in Resources */,
 				FA84F19522A1355A007796A3 /* HeaderViewTableViewCell.xib in Resources */,
+				FADFEB0222A51A46006E3CD2 /* VisbyCF-ThinOblique.otf in Resources */,
+				FADFEAFF22A51A46006E3CD2 /* VisbyCF-Regular.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -599,7 +679,6 @@
 				"${BUILT_PRODUCTS_DIR}/FBSDKLoginKit/FBSDKLoginKit.framework",
 				"${BUILT_PRODUCTS_DIR}/FBSDKPlacesKit/FBSDKPlacesKit.framework",
 				"${BUILT_PRODUCTS_DIR}/FBSDKShareKit/FBSDKShareKit.framework",
-				"${BUILT_PRODUCTS_DIR}/NVActivityIndicatorView/NVActivityIndicatorView.framework",
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
 				"${PODS_ROOT}/TwitterCore/iOS/TwitterCore.framework",
 				"${PODS_ROOT}/TwitterKit/iOS/TwitterKit.framework",
@@ -615,7 +694,6 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKLoginKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKPlacesKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKShareKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NVActivityIndicatorView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TwitterCore.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TwitterKit.framework",
