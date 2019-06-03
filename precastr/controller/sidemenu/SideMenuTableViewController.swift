@@ -12,10 +12,12 @@ class SideMenuTableViewController: UITableViewController {
 
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var profilePic: UIImageView!
-    
+    @IBOutlet weak var moderatorRoleSwitch: UISwitch!
+
     private var dateCellExpanded: Bool = false
     var rowTypeVar : Bool = false
     var loggedInUser: User!;
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,12 +35,19 @@ class SideMenuTableViewController: UITableViewController {
             nameLabel.text = self.loggedInUser.username;
         }
     
+        if (self.loggedInUser.isCastr == 1) {
+            moderatorRoleSwitch.setOn(false, animated: false);
+        } else if (self.loggedInUser.isCastr == 2) {
+            moderatorRoleSwitch.setOn(true, animated: false);
+        }
+
         profilePic.sd_setImage(with: URL(string: self.loggedInUser.profilePic), placeholderImage: UIImage.init(named: "profile"));
         
     }
 
     override func viewWillAppear(_ animated: Bool) {
         self.tabBarController?.tabBar.isHidden = true;
+        self.setUpNavigationBarItems();
     }
     
     override func didReceiveMemoryWarning() {
@@ -66,6 +75,22 @@ class SideMenuTableViewController: UITableViewController {
         }));
 
         self.present(alert, animated: true)
+    }
+    
+    func setUpNavigationBarItems() {
+        
+        let menuButton = UIButton();
+        menuButton.setImage(UIImage.init(named: "left-arrow"), for: .normal);
+        menuButton.addTarget(self, action: #selector(backButtonPressed), for: UIControlEvents.touchUpInside)
+        menuButton.frame = CGRect.init(x: 0, y:0, width: 20, height: 15);
+        
+        let barButton = UIBarButtonItem(customView: menuButton)
+        
+        navigationItem.leftBarButtonItem = barButton;
+    }
+    
+    @objc func backButtonPressed() {
+        self.navigationController?.popViewController(animated: true);
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

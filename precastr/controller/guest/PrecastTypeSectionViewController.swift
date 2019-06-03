@@ -67,10 +67,23 @@ class PrecastTypeSectionViewController: UIViewController {
             profilePic.image = profileImage
         }
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.setupNavigationBarItems();
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func setupNavigationBarItems() {
+        
+        self.navigationController?.navigationBar.isHidden = false;
+        self.navigationItem.title = "How would you like to preCast?";
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: nil);
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: nil);
+        
     }
     
     @IBAction func multipleButtonClicked(_ sender: AnyObject) {
@@ -95,10 +108,6 @@ class PrecastTypeSectionViewController: UIViewController {
         default: self.cast_setting_id = 1
         break;
         }
-        
-    
-        
-        
     }
     
    

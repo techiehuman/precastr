@@ -1002,6 +1002,10 @@
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1J9-RH-nzj">
                                                     <rect key="frame" x="312" y="8" width="49" height="31"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                                    <accessibility key="accessibilityConfiguration" label="OFF">
+                                                        <bool key="isElement" value="NO"/>
+                                                    </accessibility>
+                                                    <color key="onTintColor" red="0.047058823529411764" green="0.43529411764705883" blue="0.9137254901960784" alpha="1" colorSpace="calibratedRGB"/>
                                                 </switch>
                                             </subviews>
                                         </tableViewCellContentView>
@@ -1099,6 +1103,7 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Settings" id="ydW-Jy-7OF"/>
                     <connections>
+                        <outlet property="moderatorRoleSwitch" destination="1J9-RH-nzj" id="jJ0-FA-Z0h"/>
                         <outlet property="nameLabel" destination="v1D-b1-FX9" id="ohm-Uf-Ekw"/>
                         <outlet property="profilePic" destination="dFP-eO-fMe" id="82u-Ub-JRj"/>
                         <segue destination="NcG-Ea-4eO" kind="show" identifier="moderatorSegue" id="nHi-Yq-lga"/>

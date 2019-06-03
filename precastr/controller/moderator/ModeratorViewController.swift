@@ -85,15 +85,28 @@ class ModeratorViewController: UIViewController, CNContactPickerDelegate, MFMess
             let jsonURL = "user/select_moderator/format/json";
             
             UserService().postDataMethod(jsonURL:jsonURL,postData: postData, complete:{(response) in
-                
-                
-                
                 UIApplication.shared.keyWindow?.rootViewController = HomeViewController.MainViewController();
             });
             self.dismiss(animated: true, completion: nil)
         default:
             break;
         }
+    }
+    
+    func setUpNavigationBarItems() {
+        
+        let menuButton = UIButton();
+        menuButton.setImage(UIImage.init(named: "left-arrow"), for: .normal);
+        menuButton.addTarget(self, action: #selector(backButtonPressed), for: UIControlEvents.touchUpInside)
+        menuButton.frame = CGRect.init(x: 0, y:0, width: 20, height: 15);
+        
+        let barButton = UIBarButtonItem(customView: menuButton)
+        
+        navigationItem.leftBarButtonItem = barButton;
+    }
+    
+    @objc func backButtonPressed() {
+        self.navigationController?.popViewController(animated: true);
     }
     
     override func viewDidLoad() {
@@ -118,6 +131,9 @@ class ModeratorViewController: UIViewController, CNContactPickerDelegate, MFMess
     
     override func viewWillAppear(_ animated: Bool) {
         self.title = "Moderators";
+        
+        setUpNavigationBarItems();
+        
     }
     /*
     // MARK: - Navigation
