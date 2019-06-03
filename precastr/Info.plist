@@ -81,6 +81,25 @@
 	<string>precastr camera use</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>precastr photo use</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>VisbyCF-ThinOblique.otf</string>
+		<string>VisbyCF-Thin.otf</string>
+		<string>VisbyCF-RegularOblique.otf</string>
+		<string>VisbyCF-Regular.otf</string>
+		<string>VisbyCF-Medium.otf</string>
+		<string>VisbyCF-MediumOblique.otf</string>
+		<string>VisbyCF-Light.otf</string>
+		<string>VisbyCF-LightOblique.otf</string>
+		<string>VisbyCF-HeavyOblique.otf</string>
+		<string>VisbybyCF-Heavy.otf</string>
+		<string>VisbyCF-ExtraBoldOblique.otf</string>
+		<string>VisbyCF-ExtraBold.otf</string>
+		<string>VisbyCF-DemiBoldOblique.otf</string>
+		<string>VisbyCF-DemiBold.otf</string>
+		<string>VisbyCF-BoldOblique.otf</string>
+		<string>VisbyCF-Bold.otf</string>
+	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
