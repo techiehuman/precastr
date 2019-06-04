@@ -1218,9 +1218,6 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vd4-ta-Aq5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-<<<<<<< HEAD
-            <point key="canvasLocation" x="-36" y="2312"/>
-=======
             <point key="canvasLocation" x="-36" y="1651"/>
         </scene>
         <!--Create a new Cast-->
