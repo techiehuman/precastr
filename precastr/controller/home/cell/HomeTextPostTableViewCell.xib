@@ -75,7 +75,7 @@
                         <rect key="frame" x="16" y="68" width="344" height="60"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                         <string key="text">Lorem Ipsum is simply dummy text of the printing and since the typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,</string>
-                        <fontDescription key="fontDescription" name="VisbyCF-Regular" family="Visby CF" pointSize="12"/>
+                        <fontDescription key="fontDescription" name="VisbyCF-Regular" family="Visby CF" pointSize="14"/>
                         <color key="textColor" red="0.13333333333333333" green="0.13333333333333333" blue="0.13333333333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
