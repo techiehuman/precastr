@@ -401,11 +401,6 @@ class TwitterPostViewController: UIViewController,UITextViewDelegate, UIImagePic
         present(actionSheetController, animated: true, completion: nil)
     }
     
-    //Calls this function when the tap is recognized.
-    @objc func dismissKeyboard() {
-        //Causes the view (or one of its embedded text fields) to resign the first responder status.
-        view.endEditing(true)
-    }
     
     func validateSocialPlatform()->Bool{
         if(self.socialMediaPlatform.count == 0){

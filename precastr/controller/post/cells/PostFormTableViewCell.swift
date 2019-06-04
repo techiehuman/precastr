@@ -16,7 +16,7 @@ class PostFormTableViewCell: UITableViewCell, UITextViewDelegate {
     @IBOutlet weak var sendViewArea: UIView!
     @IBOutlet weak var inputViewArea: UIView!
 
-    var createPostViewControllerDelegate: CreatePostViewController;
+    var createPostViewControllerDelegate: CreatePostViewController!;
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -57,7 +57,7 @@ class PostFormTableViewCell: UITableViewCell, UITextViewDelegate {
     
     
     
-    @IBAction func facebookBtnClicked(_ sender: Any) {
+    /*@IBAction func facebookBtnClicked(_ sender: Any) {
         
         //self.socialMediaPlatform.append((social.socialPlatformId["facebook"])!)
         if(createPostViewControllerDelegate.facebookStatus==false){
@@ -314,5 +314,5 @@ class PostFormTableViewCell: UITableViewCell, UITextViewDelegate {
                 })
             }
         }
-    }
+    }*/
 }
