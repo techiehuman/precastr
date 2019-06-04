@@ -121,7 +121,16 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         let homeObject = self.homePosts[indexPath.row] as! NSDictionary ;
         
         let cell: HomeTextPostTableViewCell = tableView.dequeueReusableCell(withIdentifier: "HomeTextPostTableViewCell", for: indexPath) as! HomeTextPostTableViewCell;
+        
+        if (loggedInUser.isCastr == 1) {
+            cell.profilePicImageView.isHidden = true
+            cell.socialIconsView.frame = CGRect.init(x: 15, y: 15, width: 35, height: 25)
+        } else {
+            cell.profilePicImageView.isHidden = false
+            cell.socialIconsView.frame = CGRect.init(x: 65, y: 15, width: 35, height: 25)
+        }
 
+        
         cell.postTextLabel.text = String(homeObject.value(forKey: "post_description") as! String);
         let postImages = homeObject.value(forKey: "post_images") as! NSArray
         if (postImages.count > 0) {
@@ -141,6 +150,8 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         
         
         //cell.profileImage.roundImageView();
+        var facebookIconHidden = true;
+        var twitterIconHidden = false;
         let sourcePlatformArray = homeObject.value(forKey: "social_media") as! NSArray
         if (sourcePlatformArray != nil && sourcePlatformArray.count > 0) {
             
@@ -154,16 +165,29 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 if(Int(sourcePlatformId) == social.socialPlatformId["Facebook"]){
                     cell.sourceImageFacebook.image = UIImage.init(named: "facebook-group")
                     cell.sourceImageFacebook.isHidden = false
+                    facebookIconHidden = false;
                 }  else if(Int(sourcePlatformId) == social.socialPlatformId["Twitter"]) {
                     // print("dsf")
                     cell.sourceImageTwitter.image = UIImage.init(named: "twitter-group")
                     cell.sourceImageTwitter.isHidden = false
+                    twitterIconHidden = false;
                 }
             }
             
             cell.sourceImageTwitter.layer.masksToBounds = false
             cell.sourceImageFacebook.layer.masksToBounds = false
         }
+        
+        if (facebookIconHidden == true) {
+            cell.sourceImageFacebook.isHidden = true;
+        }
+        if (twitterIconHidden == true) {
+            cell.sourceImageTwitter.isHidden = true;
+        }
+        if (twitterIconHidden == true && facebookIconHidden == false) {
+            cell.sourceImageFacebook.frame = CGRect.init(x: 2, y: 3, width: 15, height: 15)
+        }
+        
         var imageStatus = ""
         var status = (homeObject.value(forKey: "status") as! String)
         if(status == "Pending"){
@@ -186,17 +210,18 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         //ScrollView functionality
         //self.slides = cell.createSlides()
         if(homeObject["username"] != nil){
-        let profileUserName = homeObject.value(forKey: "username") as! String;
-        let profilePic = homeObject.value(forKey: "profile_pic") as! String;
-        if(profileUserName != ""){
-            cell.usernameLabel.text = String(profileUserName)
-            cell.usernameLabel.isHidden = false
-        }
-        if(profilePic != ""){
-            cell.profilePicImageView.sd_setImage(with: URL(string: profilePic), placeholderImage: UIImage.init(named: "profile"));
-            cell.profilePicImageView.isHidden = false
-            cell.profilePicImageView.roundImageView()
-        }
+            let profileUserName = homeObject.value(forKey: "username") as! String;
+            let profilePic = homeObject.value(forKey: "profile_pic") as! String;
+            if(profileUserName != ""){
+                cell.usernameLabel.text = String(profileUserName)
+                cell.usernameLabel.isHidden = false
+            }
+            
+            if(profilePic != "") {
+                cell.profilePicImageView.sd_setImage(with: URL(string: profilePic), placeholderImage: UIImage.init(named: "profile"));
+                cell.profilePicImageView.isHidden = false
+                cell.profilePicImageView.roundImageView()
+            }
         }
         cell.setupSlideScrollView()
         
