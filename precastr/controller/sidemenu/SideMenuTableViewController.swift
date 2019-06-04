@@ -120,6 +120,35 @@ class SideMenuTableViewController: UITableViewController {
         }
     }
 
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        switch indexPath.row {
+        case 0:
+            return 70;
+        case 1:
+            return 50;
+        case 2:
+            return 50;
+        case 3:
+            
+            if (loggedInUser.isCastr == 1) {//If Logged In User is Caster We will show Moderators Row
+                return 50
+            } else {
+                return 0;//If Logged In User is Moderator We will hide Moderators Row
+            }
+        case 4:
+            return 50;
+        case 5:
+            return 50;
+
+        case 6:
+            return 50;
+        case 7:
+            return 50;
+        default:
+            return 50;
+        }
+
+    }
     /*
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)

@@ -30,6 +30,8 @@ class CreatePostViewController: UIViewController, UIImagePickerControllerDelegat
     var twitterExists = false
     var facebookStatus = false
     var twitterStatus = false
+    var facebookAPI = false
+    var twitterAPI = false
     var SelectedAssets = [PHAsset]()
     var PhotoArray = [UIImage]()
     var postArray : [String:Any] = [String:Any]()

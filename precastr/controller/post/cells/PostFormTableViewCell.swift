@@ -231,12 +231,12 @@ class PostFormTableViewCell: UITableViewCell, UITextViewDelegate {
                         token = token + ",\"twitter_access_secret\":\"\(user.twitterAccessSecret!)\"";
                         token = token + ",\"twitter_id\":\"\(user.twitterId!)\"}";
                         postData["token"] = "\(token)";
-                    } else if (user.isFacebook == 1) {
+                    } /*else if (user.isFacebook == 1) {
                         var token = "";
                         token = token + "{\"facebook_access_token\":\"\(user.facebookAccessToken!)\"";
                         token = token + ",\"facebook_id\":\"\(user.facebookId!)\"}";
                         postData["token"] = token;
-                    }
+                    } */
                     
                     print(user.toDictionary(user: user ))
                     UserService().postDataMethod(jsonURL: jsonURL,postData:postData,complete:{(response) in
@@ -309,6 +309,22 @@ class PostFormTableViewCell: UITableViewCell, UITextViewDelegate {
             alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil));
             self.createPostViewControllerDelegate.present(alert, animated: true)
             return false
+        }
+        else if(self.createPostViewControllerDelegate.socialMediaPlatform.count > 0){
+            if(self.createPostViewControllerDelegate.twitterStatus == true && self.createPostViewControllerDelegate.twitterAPI == false){
+                let message = "Please wait, you need to sync your Twitter account"
+                let alert = UIAlertController.init(title: "Error", message: message, preferredStyle: .alert);
+                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil));
+                self.createPostViewControllerDelegate.present(alert, animated: true)
+                return false;
+            }
+            if(self.createPostViewControllerDelegate.facebookStatus == true && self.createPostViewControllerDelegate.facebookAPI == false){
+                let message = "Please wait, you need to sync your Facebook account"
+                let alert = UIAlertController.init(title: "Error", message: message, preferredStyle: .alert);
+                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil));
+                self.createPostViewControllerDelegate.present(alert, animated: true)
+                return false;
+            }
         }
         return true
     }
