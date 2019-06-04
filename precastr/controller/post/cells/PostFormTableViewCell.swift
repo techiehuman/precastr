@@ -65,7 +65,7 @@ class PostFormTableViewCell: UITableViewCell, UITextViewDelegate {
         
         //self.socialMediaPlatform.append((social.socialPlatformId["facebook"])!)
         if(createPostViewControllerDelegate.facebookStatus==false){
-            createPostViewControllerDelegate.facebookStatus = true
+           
             self.facebookBtn.backgroundColor = UIColor.init(red: 12/255, green: 111/255, blue: 2333/255, alpha: 1);
             self.facebookBtn.layer.borderWidth = 0
             let image = UIImage(named: "facebook")
@@ -73,8 +73,12 @@ class PostFormTableViewCell: UITableViewCell, UITextViewDelegate {
             for obj in createPostViewControllerDelegate.social.socialPlatformId {
                 if (obj.key == "Facebook") {
                     createPostViewControllerDelegate.socialMediaPlatform.append(obj.value);
+                     createPostViewControllerDelegate.facebookStatus = true
                     break;
                 }
+            }
+            if(self.createPostViewControllerDelegate.facebookExists == false){
+                self.facebookSocialSync();
             }
         }else{
             createPostViewControllerDelegate.facebookStatus = false
@@ -95,65 +99,7 @@ class PostFormTableViewCell: UITableViewCell, UITextViewDelegate {
             
             
         }
-        if(createPostViewControllerDelegate.facebookExists == false && createPostViewControllerDelegate.facebookStatus == true){
-            
-            
-            let fbloginManger: FBSDKLoginManager = FBSDKLoginManager()
-            /*CODE FOR LOGOUT */
-            FBSDKAccessToken.setCurrent(nil)
-            FBSDKProfile.setCurrent(nil)
-            
-            FBSDKLoginManager().logOut()
-            let cookies = HTTPCookieStorage.shared
-            let facebookCookies = cookies.cookies(for: URL(string: "https://facebook.com/")!)
-            for cookie in facebookCookies! {
-                cookies.deleteCookie(cookie )
-            }
-            /* CODE FOR LOGOUT */
-            fbloginManger.logIn(withReadPermissions: ["email"], from:createPostViewControllerDelegate) {(result, error) -> Void in
-                if(error == nil){
-                    let fbLoginResult: FBSDKLoginManagerLoginResult  = result!
-                    
-                    if( result?.isCancelled)!{
-                        return }
-                    
-                    
-                    if(fbLoginResult .grantedPermissions.contains("email")){
-                        FBSDKGraphRequest(graphPath: "me", parameters: ["fields": "id"]).start(completionHandler: { (connection, result, error) in
-                            guard let Info = result as? [String: Any] else { return }
-                            let user = User();
-                            print(FBSDKAccessToken.current().tokenString)
-                            user.facebookAccessToken = String(FBSDKAccessToken.current().tokenString as! String);
-                            user.facebookId = String(Info["id"] as! String)
-                            
-                            user.isFacebook = 1;
-                            var postData = [String : Any]()
-                            postData["user_id"] = self.createPostViewControllerDelegate.loggedInUser.userId
-                            postData["facebook_id"] = user.facebookId
-                            for obj in self.createPostViewControllerDelegate.social.socialPlatformId {
-                                if (obj.key == "Facebook") {
-                                    
-                                    postData["social_media"] = obj.value
-                                    break;
-                                }
-                            }
-                            var token = "";
-                            token = token + "{\"facebook_access_token\":\"\(user.facebookAccessToken!)\"";
-                            token = token + ",\"facebook_id\":\"\(user.facebookId!)\"}";
-                            postData["token"] = token;
-                            self.createPostViewControllerDelegate.facebookAPI = true
-                            let jsonURL = "user/upate_user_tokens/format/json";
-                            UserService().postDataMethod(jsonURL: jsonURL,postData:postData,complete:{(response) in
-                                print(response)
-                            });
-                        });
-                        
-                    }
-                }  }
-        }else if(self.createPostViewControllerDelegate.facebookExists == true && self.createPostViewControllerDelegate.facebookStatus == true){
-            self.createPostViewControllerDelegate.facebookAPI = true
-        }
-        
+     
         
     }
     
@@ -162,7 +108,7 @@ class PostFormTableViewCell: UITableViewCell, UITextViewDelegate {
         
         
         if(createPostViewControllerDelegate.twitterStatus==false){
-            createPostViewControllerDelegate.twitterStatus = true //setting as clicked
+            
             self.twitterBtn.backgroundColor = UIColor.init(red: 12/255, green: 111/255, blue: 2333/255, alpha: 1);
             self.twitterBtn.layer.borderWidth = 0
             let image = UIImage(named: "twitter")
@@ -170,10 +116,13 @@ class PostFormTableViewCell: UITableViewCell, UITextViewDelegate {
             for obj in createPostViewControllerDelegate.social.socialPlatformId {
                 if (obj.key == "Twitter") {
                     createPostViewControllerDelegate.socialMediaPlatform.append(obj.value);
+                    createPostViewControllerDelegate.twitterStatus = true //setting as clicked
                     break;
                 }
             }
-            
+            if(self.createPostViewControllerDelegate.twitterStatus == false){
+                self.twitterSocialSync();
+            }
         }else{
             createPostViewControllerDelegate.twitterStatus = false //setting to initial state
             
@@ -192,68 +141,6 @@ class PostFormTableViewCell: UITableViewCell, UITextViewDelegate {
             }
             
         }
-        if(createPostViewControllerDelegate.twitterExists == false && createPostViewControllerDelegate.twitterStatus == true){
-            let store = TWTRTwitter.sharedInstance().sessionStore
-            if let userID = store.session()?.userID {
-                store.logOutUserID(userID)
-            }
-            
-            TWTRTwitter.sharedInstance().logIn { (session, error) in
-                if (session != nil) {
-                    let user = User();
-                    let name = session?.userName ?? ""
-                    
-                    print(session?.userID  ?? "")
-                    print(session?.authToken  ?? "")
-                    print(session?.authTokenSecret  ?? "")
-                    
-                    
-                    user.twitterAccessToken = session?.authToken
-                    user.twitterAccessSecret = session?.authTokenSecret
-                    user.twitterId = session?.userID
-                    
-                    user.isTwitter = 1;
-                    
-                    let jsonURL = "user/upate_user_tokens/format/json";
-                    
-                    var postData = [String: Any]();
-                    postData["user_id"] = self.createPostViewControllerDelegate.loggedInUser.userId
-                    for obj in self.createPostViewControllerDelegate.social.socialPlatformId {
-                        if (obj.key == "Twitter") {
-                            
-                            postData["social_media"] = obj.value
-                            break;
-                        }
-                    }
-                    
-                    postData["twitter_id"] = user.twitterId
-                    
-                    if (user.isTwitter == 1) {
-                        var token = "";
-                        token = token + "{\"twitter_access_token\":\"\(user.twitterAccessToken!)\"";
-                        token = token + ",\"twitter_access_secret\":\"\(user.twitterAccessSecret!)\"";
-                        token = token + ",\"twitter_id\":\"\(user.twitterId!)\"}";
-                        postData["token"] = "\(token)";
-                        self.createPostViewControllerDelegate.twitterAPI = true
-                    } /*else if (user.isFacebook == 1) {
-                        var token = "";
-                        token = token + "{\"facebook_access_token\":\"\(user.facebookAccessToken!)\"";
-                        token = token + ",\"facebook_id\":\"\(user.facebookId!)\"}";
-                        postData["token"] = token;
-                    } */	
-                    
-                    print(user.toDictionary(user: user ))
-                    UserService().postDataMethod(jsonURL: jsonURL,postData:postData,complete:{(response) in
-                        print(response)
-                    });
-                    
-                }else if(self.createPostViewControllerDelegate.twitterExists == true && self.createPostViewControllerDelegate.twitterStatus == true){
-                    self.createPostViewControllerDelegate.twitterAPI = true
-                }else {
-                    print("error: \(String(describing: error?.localizedDescription))");
-                }
-            }
-        }
         
         
     }
@@ -266,6 +153,7 @@ class PostFormTableViewCell: UITableViewCell, UITextViewDelegate {
         
         let isValid = self.validateSocialPlatform();
         if(isValid == true){
+           
             
             self.createPostViewControllerDelegate.activityIndicator.startAnimating();
             
@@ -316,22 +204,118 @@ class PostFormTableViewCell: UITableViewCell, UITextViewDelegate {
             self.createPostViewControllerDelegate.present(alert, animated: true)
             return false
         }
-        else if(self.createPostViewControllerDelegate.socialMediaPlatform.count > 0){
-            if(self.createPostViewControllerDelegate.twitterStatus == true && self.createPostViewControllerDelegate.twitterAPI == false){
-                let message = "Please wait, you need to sync your Twitter account"
-                let alert = UIAlertController.init(title: "Error", message: message, preferredStyle: .alert);
-                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil));
-                self.createPostViewControllerDelegate.present(alert, animated: true)
-                return false;
+        
+        return true
+    }
+    func facebookSocialSync(){
+        if(createPostViewControllerDelegate.facebookExists == false){
+            
+            
+            let fbloginManger: FBSDKLoginManager = FBSDKLoginManager()
+            /*CODE FOR LOGOUT */
+            FBSDKAccessToken.setCurrent(nil)
+            FBSDKProfile.setCurrent(nil)
+            
+            FBSDKLoginManager().logOut()
+            let cookies = HTTPCookieStorage.shared
+            let facebookCookies = cookies.cookies(for: URL(string: "https://facebook.com/")!)
+            for cookie in facebookCookies! {
+                cookies.deleteCookie(cookie )
             }
-            if(self.createPostViewControllerDelegate.facebookStatus == true && self.createPostViewControllerDelegate.facebookAPI == false){
-                let message = "Please wait, you need to sync your Facebook account"
-                let alert = UIAlertController.init(title: "Error", message: message, preferredStyle: .alert);
-                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil));
-                self.createPostViewControllerDelegate.present(alert, animated: true)
-                return false;
+            /* CODE FOR LOGOUT */
+            fbloginManger.logIn(withReadPermissions: ["email"], from:createPostViewControllerDelegate) {(result, error) -> Void in
+                if(error == nil){
+                    let fbLoginResult: FBSDKLoginManagerLoginResult  = result!
+                    
+                    if( result?.isCancelled)!{
+                        return }
+                    
+                    
+                    if(fbLoginResult .grantedPermissions.contains("email")){
+                        FBSDKGraphRequest(graphPath: "me", parameters: ["fields": "id"]).start(completionHandler: { (connection, result, error) in
+                            guard let Info = result as? [String: Any] else { return }
+                            let user = User();
+                            print(FBSDKAccessToken.current().tokenString)
+                            user.facebookAccessToken = String(FBSDKAccessToken.current().tokenString as! String);
+                            user.facebookId = String(Info["id"] as! String)
+                            
+                            user.isFacebook = 1;
+                            var postData = [String : Any]()
+                            postData["user_id"] = self.createPostViewControllerDelegate.loggedInUser.userId
+                            postData["facebook_id"] = user.facebookId
+                            for obj in self.createPostViewControllerDelegate.social.socialPlatformId {
+                                if (obj.key == "Facebook") {
+                                    
+                                    postData["social_media"] = obj.value
+                                    break;
+                                }
+                            }
+                            var token = "";
+                            token = token + "{\"facebook_access_token\":\"\(user.facebookAccessToken!)\"";
+                            token = token + ",\"facebook_id\":\"\(user.facebookId!)\"}";
+                            postData["token"] = token;
+                           
+                            self.createPostViewControllerDelegate.facebookStatus = true
+                            let jsonURL = "user/upate_user_tokens/format/json";
+                            UserService().postDataMethod(jsonURL: jsonURL,postData:postData,complete:{(response) in
+                                print(response)
+                            });
+                        });
+                        
+                    }
+                }  }
+        }
+        
+    }
+    func twitterSocialSync(){
+        if(createPostViewControllerDelegate.twitterExists == false){
+            let store = TWTRTwitter.sharedInstance().sessionStore
+            if let userID = store.session()?.userID {
+                store.logOutUserID(userID)
+            }
+            
+            TWTRTwitter.sharedInstance().logIn { (session, error) in
+                if (session != nil) {
+                    let user = User();
+                    let name = session?.userName ?? ""
+            
+                    user.twitterAccessToken = session?.authToken
+                    user.twitterAccessSecret = session?.authTokenSecret
+                    user.twitterId = session?.userID
+                    
+                    user.isTwitter = 1;
+                    
+                    let jsonURL = "user/upate_user_tokens/format/json";
+                    
+                    var postData = [String: Any]();
+                    postData["user_id"] = self.createPostViewControllerDelegate.loggedInUser.userId
+                    for obj in self.createPostViewControllerDelegate.social.socialPlatformId {
+                        if (obj.key == "Twitter") {
+                            postData["social_media"] = obj.value
+                            break;
+                        }
+                    }
+                    
+                    postData["twitter_id"] = user.twitterId
+                    
+                    if (user.isTwitter == 1) {
+                        var token = "";
+                        token = token + "{\"twitter_access_token\":\"\(user.twitterAccessToken!)\"";
+                        token = token + ",\"twitter_access_secret\":\"\(user.twitterAccessSecret!)\"";
+                        token = token + ",\"twitter_id\":\"\(user.twitterId!)\"}";
+                        postData["token"] = "\(token)";
+                        self.createPostViewControllerDelegate.twitterStatus = true
+                    }
+                    print(user.toDictionary(user: user ))
+                    UserService().postDataMethod(jsonURL: jsonURL,postData:postData,complete:{(response) in
+                        print(response)
+                    });
+                    
+                }else {
+                    print("error: \(String(describing: error?.localizedDescription))");
+                }
             }
         }
-        return true
+        
     }
 }
