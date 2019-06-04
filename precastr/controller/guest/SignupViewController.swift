@@ -13,7 +13,7 @@ import TwitterKit
 import TwitterCore
 
 protocol ImageLibProtocol {
-    func takePicture(viewC : UIViewController);
+    func takePicture(viewC : UIViewController, cameraView : UIImageView);
     func selectPicture(viewC : UIViewController, cameraView : UIImageView);
   
 }
@@ -39,6 +39,7 @@ class SignupViewController: UIViewController,UITextFieldDelegate {
     var agreeCheckBox = false
     var uploadImageStatus = false
     var imageDelegate : ImageLibProtocol!
+    var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView();
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -83,6 +84,11 @@ class SignupViewController: UIViewController,UITextFieldDelegate {
         let imageTapGesture = UITapGestureRecognizer.init(target: self, action: #selector(imageUploadClicked))
         cameraUIView.addGestureRecognizer(imageTapGesture);
         // Do any additional setup after loading the view.
+        
+        activityIndicator.center = self.view.center;
+        activityIndicator.hidesWhenStopped = true;
+        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.whiteLarge;
+        self.view.addSubview(activityIndicator);
     }
 
     override func didReceiveMemoryWarning() {
@@ -101,7 +107,9 @@ class SignupViewController: UIViewController,UITextFieldDelegate {
         }
         //uploadPhotoAction.setValue(selectedColor, forKey: "titleTextColor")
         let takePhotoAction: UIAlertAction = UIAlertAction(title: "Take Photo", style: .default) { action -> Void in
-            self.imageDelegate.takePicture(viewC: self);
+            self.imageDelegate.takePicture(viewC: self, cameraView: self.uploadImage);
+            self.uploadImage.isHidden = false
+            self.uploadImageStatus = true
         }
         //takePhotoAction.setValue(cenesLabelBlue, forKey: "titleTextColor")
         
@@ -230,10 +238,10 @@ class SignupViewController: UIViewController,UITextFieldDelegate {
             message = "Password cannot be empty"
             isValid = false
         }
-        else if(uploadImageStatus == false){
+        /*else if(uploadImageStatus == false){
             message = "Please upload profile picture"
             isValid = false
-        }
+        }*/
         if(isValid==false){
             let alert = UIAlertController.init(title: "Error", message: message, preferredStyle: .alert);
             alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil));
@@ -253,43 +261,49 @@ class SignupViewController: UIViewController,UITextFieldDelegate {
             user.deviceToken = "test";
         }
         
-        UserService().postMultipartImageDataMethod(jsonURL: jsonURL,image : uploadImage.image!, postData:user.toDictionary(user: user),complete:{(response) in
-            print(response);
-            SocialPlatform().fetchSocialPlatformData();
-            if (Int(response.value(forKey: "status") as! String)! == 1) {
-                
-                let message = response.value(forKey: "message") as! String;
-                
-                let alert = UIAlertController.init(title: "Success", message: message, preferredStyle: .alert);
-                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: {(resp) in
-                    let userDict = response.value(forKey: "data") as! NSDictionary;
-                    print(userDict)
-                    let user = User().getUserData(userDataDict: userDict);
-                    user.loadUserDefaults();
-                   
-                        
-                        let viewController: UserTypeActionViewController = self.storyboard?.instantiateViewController(withIdentifier: "UserTypeActionViewController") as! UserTypeActionViewController;
-                        self.navigationController?.pushViewController(viewController, animated: true);
-                        print(self.navigationController);
-                        
-                    
-                    
-                    //let vc = UserTypeActionViewController(nibName: "UserTypeActionViewController", bundle: nil)
-                    //self.navigationController?.pushViewController(vc, animated: true )
-                    
-                }));
-                self.present(alert, animated: true)
-                
-                
-                
-            } else {
-                let message = response.value(forKey: "message") as! String;
-                
-                let alert = UIAlertController.init(title: "Error", message: message, preferredStyle: .alert);
-                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil));
-                self.present(alert, animated: true)
-            }
-        })
+        
+        activityIndicator.startAnimating();
+        UIApplication.shared.beginIgnoringInteractionEvents();
+        
+        if (uploadImageStatus == true) {
+            UserService().postMultipartImageDataMethod(jsonURL: jsonURL,image : uploadImage.image!, postData:user.toDictionary(user: user),complete:{(response) in
+                self.signUpSuccessCallback(response: response);
+            })
+        } else {
+            UserService().postDataMethod(jsonURL: jsonURL, postData: user.toDictionary(user: user), complete: {(response) in
+                self.signUpSuccessCallback(response: response);
+
+            })
+        }
+        
+    }
+    
+    func signUpSuccessCallback(response: NSDictionary) {
+        
+        activityIndicator.stopAnimating();
+        UIApplication.shared.endIgnoringInteractionEvents();
+        
+        print(response);
+        SocialPlatform().fetchSocialPlatformData();
+
+        if (Int(response.value(forKey: "status") as! String)! == 1) {
+            
+            let userDict = response.value(forKey: "data") as! NSDictionary;
+            
+            print(userDict)
+            let user = User().getUserData(userDataDict: userDict);
+            user.loadUserDefaults();
+            
+            let viewController: UserTypeActionViewController = self.storyboard?.instantiateViewController(withIdentifier: "UserTypeActionViewController") as! UserTypeActionViewController;
+            self.navigationController?.pushViewController(viewController, animated: true);
+            
+        } else {
+            let message = response.value(forKey: "message") as! String;
+            
+            let alert = UIAlertController.init(title: "Error", message: message, preferredStyle: .alert);
+            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil));
+            self.present(alert, animated: true)
+        }
     }
     /*
     // MARK: - Navigation

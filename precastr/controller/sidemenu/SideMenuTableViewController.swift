@@ -40,7 +40,7 @@ class SideMenuTableViewController: UITableViewController {
         } else if (self.loggedInUser.isCastr == 2) {
             moderatorRoleSwitch.setOn(true, animated: false);
         }
-
+        moderatorRoleSwitch.isEnabled = false;
         profilePic.sd_setImage(with: URL(string: self.loggedInUser.profilePic), placeholderImage: UIImage.init(named: "profile"));
         
     }

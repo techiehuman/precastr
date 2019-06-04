@@ -14,13 +14,14 @@ class Reusable : UIViewController,UIImagePickerControllerDelegate,UINavigationCo
     
     let picController = UIImagePickerController();
     var imageView = UIImageView()
-    func takePicture(viewC : UIViewController) {
+    func takePicture(viewC : UIViewController, cameraView : UIImageView) {
         if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.camera) {
             self.picController.sourceType = UIImagePickerControllerSourceType.camera
             self.picController.allowsEditing = true
             self.picController.delegate = self as UIImagePickerControllerDelegate & UINavigationControllerDelegate
             self.picController.mediaTypes = [kUTTypeImage as String]
             viewC.present(picController, animated: true, completion: nil)
+            imageView = cameraView
         }
     }
     

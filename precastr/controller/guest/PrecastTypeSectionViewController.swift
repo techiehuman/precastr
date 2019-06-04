@@ -66,6 +66,9 @@ class PrecastTypeSectionViewController: UIViewController {
             let profileImage: UIImage = UIImage(named: "profile")!
             profilePic.image = profileImage
         }
+        
+        self.setupNavigationBarItems();
+
     }
     
     override func viewWillAppear(_ animated: Bool) {

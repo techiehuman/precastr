@@ -34,7 +34,8 @@ class TwitterPostViewController: UIViewController,UITextViewDelegate, UIImagePic
     var twitterStatus = false
     var SelectedAssets = [PHAsset]()
     var PhotoArray = [UIImage]()
-    /*var activityIndicatorView : NVActivityIndicatorView!; */
+
+    var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView();
 
     @IBOutlet weak var twitterBtn: UIButton!
     
@@ -45,11 +46,12 @@ class TwitterPostViewController: UIViewController,UITextViewDelegate, UIImagePic
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-       /* activityIndicatorView = NVActivityIndicatorView(frame: CGRect.init(x: self.view.frame.width/2, y: self.view.frame.height/2, width: 40, height: 40), type: NVActivityIndicatorType.lineScale, color: UIColor.gray, padding: 0);
-        self.view.addSubview(activityIndicatorView) // or use  webView.addSubview(activityIndicator) */
 
-        
+        activityIndicator.center = self.view.center;
+        activityIndicator.hidesWhenStopped = true;
+        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.whiteLarge;
+        self.view.addSubview(activityIndicator);
+   
         self.facebookBtn.layer.borderColor = UIColor(red: 12/255, green: 111/255, blue: 233/255, alpha: 1).cgColor;
         self.facebookBtn.layer.borderWidth = 1
         self.twitterBtn.layer.borderColor = UIColor(red: 12/255, green: 111/255, blue: 233/255, alpha: 1).cgColor;
@@ -64,11 +66,6 @@ class TwitterPostViewController: UIViewController,UITextViewDelegate, UIImagePic
             //imageDelegate = Reusable()
         // Do any additional setup after loading the view.
         self.socialMediaPlatform = [Int]();
-        
-        //Looks for single or multiple taps.
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
-        tap.cancelsTouchesInView = false
-        view.addGestureRecognizer(tap)
         
         let jsonURL = "user/get_user_details/format/json";
         postArray["user_id"] = String(loggedInUser.userId)
@@ -340,7 +337,8 @@ class TwitterPostViewController: UIViewController,UITextViewDelegate, UIImagePic
         let isValid = self.validateSocialPlatform();
         if(isValid == true){
         
-           /* self.activityIndicatorView.startAnimating(); */
+
+            self.activityIndicator.startAnimating();
 
         let jsonURL = "posts/create_new_caster_posts/format/json"
         var postData : [String : Any] = [String : Any]()
@@ -362,13 +360,15 @@ class TwitterPostViewController: UIViewController,UITextViewDelegate, UIImagePic
         if(PhotoArray.count > 0){
             UserService().postMultipartImageDataSocialMethod(jsonURL: jsonURL,image : PhotoArray, postData:postData,complete:{(response) in
                 print(response);
-               /* self.activityIndicatorView.stopAnimating(); */
+
+                self.activityIndicator.stopAnimating();
                 UIApplication.shared.keyWindow?.rootViewController = HomeViewController.MainViewController();
             })
         }else{
             UserService().postDataMethod(jsonURL: jsonURL, postData: postData, complete: { (response) in
                   print(response);
-              /*  self.activityIndicatorView.stopAnimating(); */
+
+                self.activityIndicator.stopAnimating();
                 UIApplication.shared.keyWindow?.rootViewController = HomeViewController.MainViewController();
             })
         }
