@@ -892,7 +892,7 @@
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Mandeep Singh" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v1D-b1-FX9">
-                                                    <rect key="frame" x="73" y="12" width="280" height="21"/>
+                                                    <rect key="frame" x="73" y="10" width="280" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="14"/>
                                                     <nil key="highlightedColor"/>
@@ -1295,10 +1295,10 @@
             </objects>
             <point key="canvasLocation" x="756" y="1652"/>
         </scene>
-        <!--Create Post View Controller-->
+        <!--Create a new Cast-->
         <scene sceneID="KUj-9M-fNA">
             <objects>
-                <viewController storyboardIdentifier="CreatePostViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="VuP-qd-c5h" customClass="CreatePostViewController" customModule="precastr" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CreatePostViewController" title="Create a new Cast" useStoryboardIdentifierAsRestorationIdentifier="YES" id="VuP-qd-c5h" customClass="CreatePostViewController" customModule="precastr" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="tsl-4Y-9pP">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1316,7 +1316,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="yf5-0T-gs0"/>
                     </view>
-                    <navigationItem key="navigationItem" id="xWP-8z-Hos"/>
+                    <navigationItem key="navigationItem" title="Create a new Cast" id="xWP-8z-Hos"/>
                     <connections>
                         <outlet property="createPostTableView" destination="OgN-kc-vG9" id="Q6n-9l-FHL"/>
                     </connections>

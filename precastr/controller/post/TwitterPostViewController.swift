@@ -7,19 +7,18 @@
 //
 
 import UIKit
+import BSImagePicker
+import MobileCoreServices
+import Photos
 import FBSDKLoginKit
 import FBSDKCoreKit
 import TwitterKit
 import TwitterCore
-import BSImagePicker
-import MobileCoreServices
-import Photos
-import NVActivityIndicatorView
 
 protocol ImageLibProtocolT {
     func takePicture(viewC : UIViewController);
 }
-class TwitterPostViewController: UIViewController,UITextViewDelegate, UIImagePickerControllerDelegate, NVActivityIndicatorViewable {
+class TwitterPostViewController: UIViewController,UITextViewDelegate, UIImagePickerControllerDelegate {
 
      @IBOutlet weak var postTextField: UITextView!
     var loggedInUser : User!
@@ -397,11 +396,6 @@ class TwitterPostViewController: UIViewController,UITextViewDelegate, UIImagePic
         present(actionSheetController, animated: true, completion: nil)
     }
     
-    //Calls this function when the tap is recognized.
-    @objc func dismissKeyboard() {
-        //Causes the view (or one of its embedded text fields) to resign the first responder status.
-        view.endEditing(true)
-    }
     
     func validateSocialPlatform()->Bool{
         if(self.socialMediaPlatform.count == 0){

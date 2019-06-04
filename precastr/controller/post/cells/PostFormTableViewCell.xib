@@ -70,7 +70,7 @@
                                 <inset key="imageEdgeInsets" minX="4" minY="4" maxX="4" maxY="4"/>
                                 <state key="normal" image="twitter-group"/>
                                 <connections>
-                                    <action selector="twitterBtnClicked:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="E3F-nA-WxY"/>
+                                    <action selector="twitterBtnClicked:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="rIe-br-WZK"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="51Z-mG-oGt">
@@ -80,7 +80,7 @@
                                 <inset key="imageEdgeInsets" minX="4" minY="4" maxX="4" maxY="4"/>
                                 <state key="normal" image="facebook-group"/>
                                 <connections>
-                                    <action selector="facebookBtnClicked:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="4O0-2Z-OCv"/>
+                                    <action selector="facebookBtnClicked:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="H50-66-t75"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -123,11 +123,11 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
-                <outlet property="facebookBtn" destination="k1J-A5-9pZ" id="31a-1Q-W2j"/>
+                <outlet property="facebookBtn" destination="51Z-mG-oGt" id="bBe-u6-6dx"/>
                 <outlet property="inputViewArea" destination="9J3-tt-J6t" id="pTg-Vg-iMZ"/>
                 <outlet property="postTextField" destination="3sx-VK-U2i" id="FPF-9X-LVK"/>
                 <outlet property="sendViewArea" destination="fPF-VQ-8Jh" id="eZj-LR-HFN"/>
-                <outlet property="twitterBtn" destination="51Z-mG-oGt" id="8VH-81-ewO"/>
+                <outlet property="twitterBtn" destination="k1J-A5-9pZ" id="bwZ-V8-VA2"/>
             </connections>
             <point key="canvasLocation" x="115.94202898550725" y="92.745535714285708"/>
         </tableViewCell>

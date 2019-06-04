@@ -41,9 +41,8 @@ class CreatePostViewController: UIViewController, UIImagePickerControllerDelegat
         createPostTableView.register(UINib.init(nibName: "PostFormTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "PostFormTableViewCell");
         self.hideKeyboadOnTapOutside();
         
-        activityIndicator.center = self.view.center;
         activityIndicator.hidesWhenStopped = true;
-        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.whiteLarge;
+        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.gray;
         self.view.addSubview(activityIndicator);
         
         loggedInUser =  User().loadUserDataFromUserDefaults(userDataDict : setting);
@@ -64,15 +63,14 @@ class CreatePostViewController: UIViewController, UIImagePickerControllerDelegat
     }
     */
 
-    @objc func imageUploadClicked(){
+    func imageUploadClicked(){
         // create an actionSheet
         let actionSheetController: UIAlertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
         // create an action
         let uploadPhotoAction: UIAlertAction = UIAlertAction(title: "Upload Photo", style: .default) { action -> Void in
+            //self.imageUploadClicked();
             self.selectMultipleImages();
-            //self.uploadImage.isHidden = false
-            self.uploadImageStatus = true
         }
         //uploadPhotoAction.setValue(selectedColor, forKey: "titleTextColor")
         let takePhotoAction: UIAlertAction = UIAlertAction(title: "Take Photo", style: .default) { action -> Void in
@@ -88,31 +86,9 @@ class CreatePostViewController: UIViewController, UIImagePickerControllerDelegat
         actionSheetController.addAction(cancelAction)
         
         // present an actionSheet...
-        present(actionSheetController, animated: true, completion: nil)
+        self.present(actionSheetController, animated: true, completion: nil)
     }
     
-    //Calls this function when the tap is recognized.
-    @objc func dismissKeyboard() {
-        //Causes the view (or one of its embedded text fields) to resign the first responder status.
-        view.endEditing(true)
-    }
-    
-    func validateSocialPlatform()->Bool{
-        if(self.socialMediaPlatform.count == 0){
-            let message = "Please select social media platforms"
-            let alert = UIAlertController.init(title: "Error", message: message, preferredStyle: .alert);
-            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil));
-            self.present(alert, animated: true)
-            return false
-        } else  if(self.postTextField.text == "" ){
-            let message = "Text field is empty"
-            let alert = UIAlertController.init(title: "Error", message: message, preferredStyle: .alert);
-            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil));
-            self.present(alert, animated: true)
-            return false
-        }
-        return true
-    }
     
     func selectMultipleImages(){
         
@@ -189,6 +165,8 @@ extension CreatePostViewController: UITableViewDelegate, UITableViewDataSource {
         
         let cell: PostFormTableViewCell = tableView.dequeueReusableCell(withIdentifier: "PostFormTableViewCell") as! PostFormTableViewCell;
         cell.createPostViewControllerDelegate = self;
+        activityIndicator.center = cell.center;
+
         return cell;
     }
     

@@ -7,6 +7,10 @@
 //
 
 import UIKit
+import FBSDKLoginKit
+import FBSDKCoreKit
+import TwitterKit
+import TwitterCore
 
 class PostFormTableViewCell: UITableViewCell, UITextViewDelegate {
 
@@ -16,7 +20,7 @@ class PostFormTableViewCell: UITableViewCell, UITextViewDelegate {
     @IBOutlet weak var sendViewArea: UIView!
     @IBOutlet weak var inputViewArea: UIView!
 
-    var createPostViewControllerDelegate: CreatePostViewController;
+    var createPostViewControllerDelegate: CreatePostViewController!;
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -49,7 +53,6 @@ class PostFormTableViewCell: UITableViewCell, UITextViewDelegate {
     func textViewDidEndEditing(_ textView: UITextView) {
         print("B")
         if self.postTextField.text == "" {
-            
             self.postTextField.text = "Write Something..."
             self.postTextField.textColor = UIColor.lightGray
         }
@@ -106,7 +109,7 @@ class PostFormTableViewCell: UITableViewCell, UITextViewDelegate {
                 cookies.deleteCookie(cookie )
             }
             /* CODE FOR LOGOUT */
-            fbloginManger.logIn(withReadPermissions: ["email"], from:self) {(result, error) -> Void in
+            fbloginManger.logIn(withReadPermissions: ["email"], from:createPostViewControllerDelegate) {(result, error) -> Void in
                 if(error == nil){
                     let fbLoginResult: FBSDKLoginManagerLoginResult  = result!
                     
@@ -124,9 +127,9 @@ class PostFormTableViewCell: UITableViewCell, UITextViewDelegate {
                             
                             user.isFacebook = 1;
                             var postData = [String : Any]()
-                            postData["user_id"] = self.loggedInUser.userId
+                            postData["user_id"] = self.createPostViewControllerDelegate.loggedInUser.userId
                             postData["facebook_id"] = user.facebookId
-                            for obj in self.social.socialPlatformId {
+                            for obj in self.createPostViewControllerDelegate.social.socialPlatformId {
                                 if (obj.key == "Facebook") {
                                     
                                     postData["social_media"] = obj.value
@@ -210,8 +213,8 @@ class PostFormTableViewCell: UITableViewCell, UITextViewDelegate {
                     let jsonURL = "user/upate_user_tokens/format/json";
                     
                     var postData = [String: Any]();
-                    postData["user_id"] = self.loggedInUser.userId
-                    for obj in self.social.socialPlatformId {
+                    postData["user_id"] = self.createPostViewControllerDelegate.loggedInUser.userId
+                    for obj in self.createPostViewControllerDelegate.social.socialPlatformId {
                         if (obj.key == "Twitter") {
                             
                             postData["social_media"] = obj.value
@@ -248,47 +251,23 @@ class PostFormTableViewCell: UITableViewCell, UITextViewDelegate {
         
     }
     @IBAction func AddSocialMedia(_ sender: Any) {
-        // create an actionSheet
-        let actionSheetController: UIAlertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
-        // create an action
-        let uploadPhotoAction: UIAlertAction = UIAlertAction(title: "Upload Photo", style: .default) { action -> Void in
-            //self.imageUploadClicked();
-            self.selectMultipleImages();
-        }
-        //uploadPhotoAction.setValue(selectedColor, forKey: "titleTextColor")
-        let takePhotoAction: UIAlertAction = UIAlertAction(title: "Take Photo", style: .default) { action -> Void in
-            self.imageDelegate.takePicture(viewC: self);
-        }
-        //takePhotoAction.setValue(cenesLabelBlue, forKey: "titleTextColor")
-        
-        let cancelAction: UIAlertAction = UIAlertAction(title: "Cancel", style: .cancel) { action -> Void in }
-        cancelAction.setValue(UIColor.black, forKey: "titleTextColor")
-        
-        actionSheetController.addAction(uploadPhotoAction)
-        actionSheetController.addAction(takePhotoAction)
-        actionSheetController.addAction(cancelAction)
-        
-        // present an actionSheet...
-        present(actionSheetController, animated: true, completion: nil)
+        self.createPostViewControllerDelegate.imageUploadClicked();
     }
-    
-    
-    
     
     @IBAction func postOnSocialPlatform(_ sender: Any) {
         
         let isValid = self.validateSocialPlatform();
         if(isValid == true){
             
-            self.activityIndicator.startAnimating();
+            self.createPostViewControllerDelegate.activityIndicator.startAnimating();
             
             let jsonURL = "posts/create_new_caster_posts/format/json"
             var postData : [String : Any] = [String : Any]()
             postData["post_description"] = self.postTextField.text
-            postData["user_id"] = self.loggedInUser.userId
+            postData["user_id"] = self.createPostViewControllerDelegate.loggedInUser.userId
             //let joiner = ","
-            let elements = (self.socialMediaPlatform);
+            let elements = (self.createPostViewControllerDelegate.socialMediaPlatform);
             
             var joinedStrings = "";
             for elementItem in elements! {
@@ -299,20 +278,37 @@ class PostFormTableViewCell: UITableViewCell, UITextViewDelegate {
             postData["social_media"] = String(joinedStrings.suffix(joinedStrings.count-1));
             postData["social_media_id"] = joinedStrings
             //  let size = CGSize(width: 0, height: 0)
-            print(PhotoArray.count)
-            if(PhotoArray.count > 0){
-                UserService().postMultipartImageDataSocialMethod(jsonURL: jsonURL,image : PhotoArray, postData:postData,complete:{(response) in
+            print(self.createPostViewControllerDelegate.PhotoArray.count)
+            if(self.createPostViewControllerDelegate.PhotoArray.count > 0){
+                UserService().postMultipartImageDataSocialMethod(jsonURL: jsonURL,image : self.createPostViewControllerDelegate.PhotoArray, postData:postData,complete:{(response) in
                     print(response);
-                    self.activityIndicator.stopAnimating();
+                    self.createPostViewControllerDelegate.activityIndicator.stopAnimating();
                     UIApplication.shared.keyWindow?.rootViewController = HomeViewController.MainViewController();
                 })
             }else{
                 UserService().postDataMethod(jsonURL: jsonURL, postData: postData, complete: { (response) in
                     print(response);
-                    self.activityIndicator.stopAnimating();
+                    self.createPostViewControllerDelegate.activityIndicator.stopAnimating();
                     UIApplication.shared.keyWindow?.rootViewController = HomeViewController.MainViewController();
                 })
             }
         }
+    }
+    
+    func validateSocialPlatform()->Bool{
+        if(self.createPostViewControllerDelegate.socialMediaPlatform.count == 0){
+            let message = "Please select social media platforms"
+            let alert = UIAlertController.init(title: "Error", message: message, preferredStyle: .alert);
+            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil));
+            self.createPostViewControllerDelegate.present(alert, animated: true)
+            return false
+        } else  if(self.postTextField.text == "" ){
+            let message = "Text field is empty"
+            let alert = UIAlertController.init(title: "Error", message: message, preferredStyle: .alert);
+            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil));
+            self.createPostViewControllerDelegate.present(alert, animated: true)
+            return false
+        }
+        return true
     }
 }
