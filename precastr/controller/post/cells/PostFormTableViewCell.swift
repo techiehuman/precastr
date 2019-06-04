@@ -141,6 +141,7 @@ class PostFormTableViewCell: UITableViewCell, UITextViewDelegate {
                             token = token + "{\"facebook_access_token\":\"\(user.facebookAccessToken!)\"";
                             token = token + ",\"facebook_id\":\"\(user.facebookId!)\"}";
                             postData["token"] = token;
+                            self.createPostViewControllerDelegate.facebookAPI = true
                             let jsonURL = "user/upate_user_tokens/format/json";
                             UserService().postDataMethod(jsonURL: jsonURL,postData:postData,complete:{(response) in
                                 print(response)
@@ -149,14 +150,14 @@ class PostFormTableViewCell: UITableViewCell, UITextViewDelegate {
                         
                     }
                 }  }
+        }else if(self.createPostViewControllerDelegate.facebookExists == true && self.createPostViewControllerDelegate.facebookStatus == true){
+            self.createPostViewControllerDelegate.facebookAPI = true
         }
         
         
     }
     
     @IBAction func twitterBtnClicked(_ sender: Any) {
-        
-        
         
         if(createPostViewControllerDelegate.twitterStatus==false){
             createPostViewControllerDelegate.twitterStatus = true //setting as clicked
@@ -231,18 +232,21 @@ class PostFormTableViewCell: UITableViewCell, UITextViewDelegate {
                         token = token + ",\"twitter_access_secret\":\"\(user.twitterAccessSecret!)\"";
                         token = token + ",\"twitter_id\":\"\(user.twitterId!)\"}";
                         postData["token"] = "\(token)";
+                        self.createPostViewControllerDelegate.twitterAPI = true
                     } /*else if (user.isFacebook == 1) {
                         var token = "";
                         token = token + "{\"facebook_access_token\":\"\(user.facebookAccessToken!)\"";
                         token = token + ",\"facebook_id\":\"\(user.facebookId!)\"}";
                         postData["token"] = token;
-                    } */
+                    } */	
                     
                     print(user.toDictionary(user: user ))
                     UserService().postDataMethod(jsonURL: jsonURL,postData:postData,complete:{(response) in
                         print(response)
                     });
                     
+                }else if(self.createPostViewControllerDelegate.twitterExists == true && self.createPostViewControllerDelegate.twitterStatus == true){
+                    self.createPostViewControllerDelegate.twitterAPI = true
                 }else {
                     print("error: \(String(describing: error?.localizedDescription))");
                 }
