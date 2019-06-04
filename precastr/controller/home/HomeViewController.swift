@@ -87,14 +87,8 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     @objc func menuButtonClicked() {
         let viewController: SideMenuTableViewController = self.storyboard?.instantiateViewController(withIdentifier: "SideMenuTableViewController") as! SideMenuTableViewController;
         self.navigationController?.pushViewController(viewController, animated: true);
-       
-        
     }
-    @objc func redirectOnSocialPlatform(){
-        let viewController: TwitterPostViewController = self.storyboard?.instantiateViewController(withIdentifier: "TwitterPostViewController") as! TwitterPostViewController;
-        self.navigationController?.pushViewController(viewController, animated: true);
-        
-    }
+
     
     /*
     // MARK: - Navigation

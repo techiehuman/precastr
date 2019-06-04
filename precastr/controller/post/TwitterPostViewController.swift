@@ -14,24 +14,13 @@ import FBSDKLoginKit
 import FBSDKCoreKit
 import TwitterKit
 import TwitterCore
-<<<<<<< HEAD
-=======
-import BSImagePicker
-import MobileCoreServices
-import Photos
-/*import NVActivityIndicatorView*/
->>>>>>> e8369df1ce227368ceaf743f38ad664a20796c29
 
 protocol ImageLibProtocolT {
     func takePicture(viewC : UIViewController);
 }
-<<<<<<< HEAD
 class TwitterPostViewController: UIViewController,UITextViewDelegate, UIImagePickerControllerDelegate {
-=======
-class TwitterPostViewController: UIViewController,UITextViewDelegate, UIImagePickerControllerDelegate/*, NVActivityIndicatorViewable*/ {
->>>>>>> e8369df1ce227368ceaf743f38ad664a20796c29
 
-     @IBOutlet weak var postTextField: UITextView!
+    @IBOutlet weak var postTextField: UITextView!
     var loggedInUser : User!
     var social : SocialPlatform!
     var uploadImage : [UIImage] = [UIImage]()
