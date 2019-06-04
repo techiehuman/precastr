@@ -192,6 +192,7 @@ extension ModeratorViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerCell = tableView.dequeueReusableCell(withIdentifier: "HeaderViewTableViewCell") as!  HeaderViewTableViewCell;
         headerCell.headerTitleLabel.text = self.moderatorDto[section].sectionKey;
+        headerCell.headerTitleLabel.font =  UIFont(name: "VisbyCF-Medium", size: 14.0)
         return headerCell;
         
     }
