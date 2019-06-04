@@ -60,10 +60,10 @@ class PrecastTypeSectionViewController: UIViewController {
         self.setIntervalCheckBoxBtn.blueBorderWrap()
         // Do any additional setup after loading the view.
         if(String(loggedInUser.profilePic) != ""){
-            profilePic.sd_setImage(with: URL(string: loggedInUser.profilePic!), placeholderImage: UIImage.init(named: "my-account-black"));
+            profilePic.sd_setImage(with: URL(string: loggedInUser.profilePic!), placeholderImage: UIImage.init(named: "profile"));
             // Do any additional setup after loading the view.
         }else{
-            let profileImage: UIImage = UIImage(named: "my-account-black")!
+            let profileImage: UIImage = UIImage(named: "profile")!
             profilePic.image = profileImage
         }
         
