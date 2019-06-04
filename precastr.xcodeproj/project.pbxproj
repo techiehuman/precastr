@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5EF623F522A588E900124C55 /* PostFormTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF623F322A588E900124C55 /* PostFormTableViewCell.swift */; };
+		5EF623F622A588E900124C55 /* PostFormTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5EF623F422A588E900124C55 /* PostFormTableViewCell.xib */; };
+		5EF623F822A58ADB00124C55 /* CreatePostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF623F722A58ADB00124C55 /* CreatePostViewController.swift */; };
 		5F7380ED63B94D468C59736D /* Pods_precastrTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A62D95851A596AF11E67E59A /* Pods_precastrTests.framework */; };
 		E8228EE2367B10CD930B1123 /* Pods_precastr.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 220036CD76F7644A5FF36C62 /* Pods_precastr.framework */; };
 		FA0294E3227315F300465318 /* TwitterPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0294E2227315F300465318 /* TwitterPostViewController.swift */; };
@@ -91,6 +94,9 @@
 		27A38E047A676826532D9793 /* Pods-precastrUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-precastrUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-precastrUITests/Pods-precastrUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		561E50304594AB7F3B9F4993 /* Pods_precastrUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_precastrUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5E1217CE22A28EE90075961A /* precastr.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = precastr.entitlements; sourceTree = "<group>"; };
+		5EF623F322A588E900124C55 /* PostFormTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostFormTableViewCell.swift; sourceTree = "<group>"; };
+		5EF623F422A588E900124C55 /* PostFormTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PostFormTableViewCell.xib; sourceTree = "<group>"; };
+		5EF623F722A58ADB00124C55 /* CreatePostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePostViewController.swift; sourceTree = "<group>"; };
 		6577135BB253B3BD32B16155 /* Pods-precastrTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-precastrTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-precastrTests/Pods-precastrTests.debug.xcconfig"; sourceTree = "<group>"; };
 		9562719E26A20DC50B681220 /* Pods-precastrUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-precastrUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-precastrUITests/Pods-precastrUITests.release.xcconfig"; sourceTree = "<group>"; };
 		A62D95851A596AF11E67E59A /* Pods_precastrTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_precastrTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -188,6 +194,25 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5EF623F122A5889A00124C55 /* post */ = {
+			isa = PBXGroup;
+			children = (
+				5EF623F222A588AC00124C55 /* cells */,
+				FA0294E2227315F300465318 /* TwitterPostViewController.swift */,
+				5EF623F722A58ADB00124C55 /* CreatePostViewController.swift */,
+			);
+			path = post;
+			sourceTree = "<group>";
+		};
+		5EF623F222A588AC00124C55 /* cells */ = {
+			isa = PBXGroup;
+			children = (
+				5EF623F322A588E900124C55 /* PostFormTableViewCell.swift */,
+				5EF623F422A588E900124C55 /* PostFormTableViewCell.xib */,
+			);
+			path = cells;
+			sourceTree = "<group>";
+		};
 		7D851FD80E0DB6D1609F26EE /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -331,6 +356,7 @@
 		FA6AB5A92253355800C5491F /* controller */ = {
 			isa = PBXGroup;
 			children = (
+				5EF623F122A5889A00124C55 /* post */,
 				FA84F18822A0E4C9007796A3 /* moderator */,
 				FABF02492264FB500067960C /* sidemenu */,
 				FABF02462264EE600067960C /* home */,
@@ -395,7 +421,6 @@
 			isa = PBXGroup;
 			children = (
 				FABF02472264EF640067960C /* HomeViewController.swift */,
-				FA0294E2227315F300465318 /* TwitterPostViewController.swift */,
 				FA52DDCE227722AE0093FDF8 /* cell */,
 			);
 			path = home;
@@ -590,6 +615,7 @@
 				FA6AB58322531E8200C5491F /* Assets.xcassets in Resources */,
 				FADFEB0122A51A46006E3CD2 /* VisbyCF-Thin.otf in Resources */,
 				FA84F18722A0329D007796A3 /* Slide.xib in Resources */,
+				5EF623F622A588E900124C55 /* PostFormTableViewCell.xib in Resources */,
 				FADFEAF622A51A46006E3CD2 /* VisbyCF-DemiBoldOblique.otf in Resources */,
 				FADFEAF822A51A46006E3CD2 /* VisbyCF-ExtraBoldOblique.otf in Resources */,
 				FA84F18C22A0E511007796A3 /* moderatorTableViewCell.xib in Resources */,
@@ -776,8 +802,10 @@
 				FA84F17B229D98B5007796A3 /* PostImageCollectionViewCell.swift in Sources */,
 				FAF601CC228AAE6800B54F9B /* VerificationModeratorViewController.swift in Sources */,
 				FABF02482264EF650067960C /* HomeViewController.swift in Sources */,
+				5EF623F822A58ADB00124C55 /* CreatePostViewController.swift in Sources */,
 				FAE4DF64225F155C008875C3 /* AppUtil.swift in Sources */,
 				FABF025B226DBE650067960C /* ModeratorViewController.swift in Sources */,
+				5EF623F522A588E900124C55 /* PostFormTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

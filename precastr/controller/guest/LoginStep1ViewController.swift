@@ -29,6 +29,9 @@ class LoginStep1ViewController: UIViewController,UITextFieldDelegate {
     
     
     @IBOutlet weak var passwordTextField: UITextField!
+    
+    var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView();
+
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -55,7 +58,11 @@ class LoginStep1ViewController: UIViewController,UITextFieldDelegate {
         imageViewP.image = imageP;
         self.passwordTextField.leftView = imageViewP
         self.passwordTextField.leftViewMode = .always
-        
+     
+        activityIndicator.center = self.view.center;
+        activityIndicator.hidesWhenStopped = true;
+        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.whiteLarge;
+        self.view.addSubview(activityIndicator);
     }
         
     
@@ -227,8 +234,12 @@ class LoginStep1ViewController: UIViewController,UITextFieldDelegate {
             user.deviceToken = "test";
         }
         
+        activityIndicator.startAnimating();
+        
         UserService().postDataMethod(jsonURL: jsonURL,postData:user.toDictionary(user: user),complete:{(response) in
             print(response);
+            self.activityIndicator.stopAnimating();
+            
             if (Int(response.value(forKey: "status") as! String)! == 1) {
                 
                 let message = response.value(forKey: "message") as! String;
@@ -237,36 +248,31 @@ class LoginStep1ViewController: UIViewController,UITextFieldDelegate {
                 let userDefaultRole = Int8((data.value(forKey: "default_role") as? String)!) ?? nil
                 print(allStepsDone)
                 SocialPlatform().fetchSocialPlatformData();
-                let alert = UIAlertController.init(title: "Success", message: message, preferredStyle: .alert);
-                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: {(resp) in
-                    let userDict = response.value(forKey: "data") as! NSDictionary;
-                    print(userDict)
-                    let user = User().getUserData(userDataDict: userDict);
-                    user.loadUserDefaults();
-                    //If is the First Time user then we will send him to complete the steps.
-                    if (userDefaultRole == 0) {
-                        
-                        let viewController: UserTypeActionViewController = self.storyboard?.instantiateViewController(withIdentifier: "UserTypeActionViewController") as! UserTypeActionViewController;
+                
+                let userDict = response.value(forKey: "data") as! NSDictionary;
+                print(userDict)
+                let user = User().getUserData(userDataDict: userDict);
+                user.loadUserDefaults();
+                //If is the First Time user then we will send him to complete the steps.
+                if (userDefaultRole == 0) {
+                    
+                    let viewController: UserTypeActionViewController = self.storyboard?.instantiateViewController(withIdentifier: "UserTypeActionViewController") as! UserTypeActionViewController;
+                    self.navigationController?.pushViewController(viewController, animated: true);
+                    print(self.navigationController);
+                    
+                } else if(userDefaultRole == 1){//If user type is casetr then we will let him choose the
+                    // Posts cast type
+                    if (allStepsDone == 0) {
+                        let viewController: PrecastTypeSectionViewController = self.storyboard?.instantiateViewController(withIdentifier: "PrecastTypeSectionViewController") as! PrecastTypeSectionViewController;
                         self.navigationController?.pushViewController(viewController, animated: true);
-                            print(self.navigationController);
-                        
-                    } else if(userDefaultRole == 1){//If user type is casetr then we will let him choose the
-                                                                        // Posts cast type
-                        if (allStepsDone == 0) {
-                            let viewController: PrecastTypeSectionViewController = self.storyboard?.instantiateViewController(withIdentifier: "PrecastTypeSectionViewController") as! PrecastTypeSectionViewController;
-                            self.navigationController?.pushViewController(viewController, animated: true);
-                        } else {
-                            UIApplication.shared.keyWindow?.rootViewController = HomeViewController.MainViewController()
-                        }
-                        
-                    } else if (userDefaultRole == 2){//If user is moderator
-                        //Then we will be sending him to home screen.
+                    } else {
                         UIApplication.shared.keyWindow?.rootViewController = HomeViewController.MainViewController()
                     }
-                }));
-                self.present(alert, animated: true)
-                
-                
+                    
+                } else if (userDefaultRole == 2){//If user is moderator
+                    //Then we will be sending him to home screen.
+                    UIApplication.shared.keyWindow?.rootViewController = HomeViewController.MainViewController()
+                }
                 
             } else {
                 let message = response.value(forKey: "message") as! String;
