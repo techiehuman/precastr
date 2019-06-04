@@ -18,9 +18,6 @@ PODS:
     - FBSDKCoreKit
   - FBSDKShareKit (4.33.0):
     - FBSDKCoreKit (~> 4.33.0)
-  - NVActivityIndicatorView (4.6.1):
-    - NVActivityIndicatorView/Presenter (= 4.6.1)
-  - NVActivityIndicatorView/Presenter (4.6.1)
   - SDWebImage (4.4.1):
     - SDWebImage/Core (= 4.4.1)
   - SDWebImage/Core (4.4.1)
@@ -36,7 +33,6 @@ DEPENDENCIES:
   - FBSDKLoginKit
   - FBSDKPlacesKit
   - FBSDKShareKit
-  - NVActivityIndicatorView
   - SDWebImage (~> 4.0)
   - TwitterKit
 
@@ -50,7 +46,6 @@ SPEC REPOS:
     - FBSDKLoginKit
     - FBSDKPlacesKit
     - FBSDKShareKit
-    - NVActivityIndicatorView
     - SDWebImage
     - TwitterCore
     - TwitterKit
@@ -65,12 +60,11 @@ SPEC CHECKSUMS:
   FBSDKLoginKit: 88cb456349cfb3b554427ce4f8b43729d85dfb40
   FBSDKPlacesKit: 6480c499b458b919840733c39c93fd3fc58e47d7
   FBSDKShareKit: 1869cb24db2cea90666a50cb9d568deb38e2d16e
-  NVActivityIndicatorView: 4ca19fccc84595a78957336a086d00a49be6ce61
   SDWebImage: 47e9b5b925cbce75946c23f0c42dd19464189af4
   TwitterCore: 644d59e75abccb26cf0a9050d2c4dea0e5412241
   TwitterKit: a2e60ddcedbf54091eac6f27685ca7a87681e1d7
   UIImageViewModeScaleAspect: 11a790a0b9d248a13dc63e3a78991f1463b6d84e
 
-PODFILE CHECKSUM: 1c06fa215e1921a1ca23a8da2dd6492e026969be
+PODFILE CHECKSUM: f16ed8af29acf53108b8fc87adc0a71b4032b7a0
 
 COCOAPODS: 1.5.3

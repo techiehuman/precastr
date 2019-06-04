@@ -14,12 +14,12 @@ import TwitterCore
 import BSImagePicker
 import MobileCoreServices
 import Photos
-import NVActivityIndicatorView
+/*import NVActivityIndicatorView*/
 
 protocol ImageLibProtocolT {
     func takePicture(viewC : UIViewController);
 }
-class TwitterPostViewController: UIViewController,UITextViewDelegate, UIImagePickerControllerDelegate, NVActivityIndicatorViewable {
+class TwitterPostViewController: UIViewController,UITextViewDelegate, UIImagePickerControllerDelegate/*, NVActivityIndicatorViewable*/ {
 
      @IBOutlet weak var postTextField: UITextView!
     var loggedInUser : User!
@@ -34,7 +34,7 @@ class TwitterPostViewController: UIViewController,UITextViewDelegate, UIImagePic
     var twitterStatus = false
     var SelectedAssets = [PHAsset]()
     var PhotoArray = [UIImage]()
-    var activityIndicatorView : NVActivityIndicatorView!;
+    /*var activityIndicatorView : NVActivityIndicatorView!; */
 
     @IBOutlet weak var twitterBtn: UIButton!
     
@@ -46,8 +46,8 @@ class TwitterPostViewController: UIViewController,UITextViewDelegate, UIImagePic
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        activityIndicatorView = NVActivityIndicatorView(frame: CGRect.init(x: self.view.frame.width/2, y: self.view.frame.height/2, width: 40, height: 40), type: NVActivityIndicatorType.lineScale, color: UIColor.gray, padding: 0);
-        self.view.addSubview(activityIndicatorView) // or use  webView.addSubview(activityIndicator)
+       /* activityIndicatorView = NVActivityIndicatorView(frame: CGRect.init(x: self.view.frame.width/2, y: self.view.frame.height/2, width: 40, height: 40), type: NVActivityIndicatorType.lineScale, color: UIColor.gray, padding: 0);
+        self.view.addSubview(activityIndicatorView) // or use  webView.addSubview(activityIndicator) */
 
         
         self.facebookBtn.layer.borderColor = UIColor(red: 12/255, green: 111/255, blue: 233/255, alpha: 1).cgColor;
@@ -73,7 +73,7 @@ class TwitterPostViewController: UIViewController,UITextViewDelegate, UIImagePic
         let jsonURL = "user/get_user_details/format/json";
         postArray["user_id"] = String(loggedInUser.userId)
         UserService().postDataMethod(jsonURL: jsonURL, postData: postArray, complete: {(response) in
-           // print(response);
+            print(response);
            let modeArray = response.value(forKey: "data") as! NSDictionary;
             let tokens  = modeArray.value(forKey: "tokens") as! NSArray
             for mode in tokens{
@@ -340,7 +340,7 @@ class TwitterPostViewController: UIViewController,UITextViewDelegate, UIImagePic
         let isValid = self.validateSocialPlatform();
         if(isValid == true){
         
-            self.activityIndicatorView.startAnimating();
+           /* self.activityIndicatorView.startAnimating(); */
 
         let jsonURL = "posts/create_new_caster_posts/format/json"
         var postData : [String : Any] = [String : Any]()
@@ -362,13 +362,13 @@ class TwitterPostViewController: UIViewController,UITextViewDelegate, UIImagePic
         if(PhotoArray.count > 0){
             UserService().postMultipartImageDataSocialMethod(jsonURL: jsonURL,image : PhotoArray, postData:postData,complete:{(response) in
                 print(response);
-                self.activityIndicatorView.stopAnimating();
+               /* self.activityIndicatorView.stopAnimating(); */
                 UIApplication.shared.keyWindow?.rootViewController = HomeViewController.MainViewController();
             })
         }else{
             UserService().postDataMethod(jsonURL: jsonURL, postData: postData, complete: { (response) in
                   print(response);
-                self.activityIndicatorView.stopAnimating();
+              /*  self.activityIndicatorView.stopAnimating(); */
                 UIApplication.shared.keyWindow?.rootViewController = HomeViewController.MainViewController();
             })
         }

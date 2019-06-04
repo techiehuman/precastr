@@ -13,7 +13,7 @@ pod 'TwitterKit'
 pod 'Alamofire'
 pod 'SDWebImage', '~> 4.0'
 pod 'BSImagePicker'
-pod 'NVActivityIndicatorView'
+
 
   # Pods for precastr
 
