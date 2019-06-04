@@ -159,7 +159,7 @@ class LoginScreenTableViewCell: UITableViewCell, UITextFieldDelegate {
     }
     
     @IBAction func emailSignupClicked(_ sender: Any) {
-        let viewController: SignupViewController = self.loginViewControllerDelegate.storyboard?.instantiateViewController(withIdentifier: "SignupViewController") as! SignupViewController;
+        let viewController: SignupScreenViewController = self.loginViewControllerDelegate.storyboard?.instantiateViewController(withIdentifier: "SignupScreenViewController") as! SignupScreenViewController;
         self.loginViewControllerDelegate.navigationController?.pushViewController(viewController, animated: true);
     }
     
