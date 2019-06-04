@@ -12,7 +12,8 @@ import FBSDKCoreKit
 import TwitterKit
 import TwitterCore
 
-class SignupScreenTableViewCell: UITableViewCell, UITextFieldDelegate {
+class SignupScreenTableViewCell: UITableViewCell, UITextFieldDelegate, SignupCellProtocol {
+    
 
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var emailTextField: UITextField!
@@ -20,6 +21,7 @@ class SignupScreenTableViewCell: UITableViewCell, UITextFieldDelegate {
     @IBOutlet weak var cameraUIView: UIView!
     @IBOutlet weak var agreecheckBoxBtn: UIButton!
     @IBOutlet weak var uploadImage: UIImageView!
+    @IBOutlet weak var cameraImage: UIImageView!
     
     var signupScreenViewDelegate: SignupScreenViewController!;
     var agreeCheckBox = false
@@ -28,6 +30,7 @@ class SignupScreenTableViewCell: UITableViewCell, UITextFieldDelegate {
         super.awakeFromNib()
         // Initialization code
         
+        self.uploadImage.roundImageView();
         self.agreecheckBoxBtn.layer.borderWidth = 1
         self.agreecheckBoxBtn.layer.borderColor = UIColor.white.cgColor
         self.cameraUIView.layer.cornerRadius = self.cameraUIView.frame.height/2
@@ -226,5 +229,13 @@ class SignupScreenTableViewCell: UITableViewCell, UITextFieldDelegate {
             textField.resignFirstResponder()
         }
         return true
+    }
+    
+    func pictureSelected(selectedImage: UIImage) {
+        uploadImage.isHidden = false;
+        DispatchQueue.main.async {
+            self.uploadImage.image = selectedImage;
+            self.uploadImage.setNeedsDisplay();
+        }
     }
 }

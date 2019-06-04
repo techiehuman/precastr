@@ -7,25 +7,34 @@
 //
 
 import UIKit
+import Photos
+import MobileCoreServices
 
 protocol ImageLibProtocol {
     func takePicture(viewC : UIViewController, cameraView : UIImageView);
     func selectPicture(viewC : UIViewController, cameraView : UIImageView);
 }
-class SignupScreenViewController: UIViewController {
+protocol SignupCellProtocol {
+    func pictureSelected(selectedImage: UIImage);
+}
+class SignupScreenViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
     @IBOutlet weak var signupTableView: UITableView!
-    var uploadImage: UIImageView!
+    var uploadImage: UIImage = UIImage();
 
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView();
     var uploadImageStatus = false
     var imageDelegate : ImageLibProtocol!
+    var signupCellProtocolDelegate: SignupCellProtocol!;
+    let picController = UIImagePickerController();
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
         signupTableView.register(UINib.init(nibName: "SignupScreenTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "SignupScreenTableViewCell");
+        imageDelegate = Reusable()
+
         self.hideKeyboadOnTapOutside();
     }
     
@@ -36,15 +45,12 @@ class SignupScreenViewController: UIViewController {
         
         // create an action
         let uploadPhotoAction: UIAlertAction = UIAlertAction(title: "Upload Photo", style: .default) { action -> Void in
-            self.imageDelegate.selectPicture(viewC: self,cameraView: self.uploadImage);
-            self.uploadImage.isHidden = false
-            self.uploadImageStatus = true
+            self.selectPicture()
         }
         //uploadPhotoAction.setValue(selectedColor, forKey: "titleTextColor")
         let takePhotoAction: UIAlertAction = UIAlertAction(title: "Take Photo", style: .default) { action -> Void in
-            self.imageDelegate.takePicture(viewC: self, cameraView: self.uploadImage);
-            self.uploadImage.isHidden = false
-            self.uploadImageStatus = true
+            self.takePicture();
+
         }
         //takePhotoAction.setValue(cenesLabelBlue, forKey: "titleTextColor")
         
@@ -57,6 +63,50 @@ class SignupScreenViewController: UIViewController {
         
         // present an actionSheet...
         present(actionSheetController, animated: true, completion: nil)
+    }
+    
+    func takePicture() {
+        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.camera) {
+            self.picController.sourceType = UIImagePickerControllerSourceType.camera
+            self.picController.allowsEditing = true
+            self.picController.delegate = self
+            self.picController.mediaTypes = [kUTTypeImage as String]
+            self.present(picController, animated: true, completion: nil)
+        }
+    }
+    
+    func selectPicture() {
+        //self.checkPermission();
+        
+        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.photoLibrary) {
+            self.picController.delegate = self
+            self.picController.sourceType = UIImagePickerControllerSourceType.photoLibrary;
+            self.picController.allowsEditing = true
+            self.picController.mediaTypes = [kUTTypeImage as String]
+            self.present(picController, animated: true, completion: nil)
+        }
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        if let image = info[UIImagePickerControllerEditedImage] as? UIImage {
+            
+            self.uploadImageStatus = true
+
+            self.uploadImage = image;
+            /* self.withoutimageView.isHidden = true;
+             
+             
+             DispatchQueue.main.async {
+             self.meTimeImageView.isHidden = false;
+             self.meTimeImageView.image = image;
+             }
+             self.imageToUpload = image;
+             let uploadImage = self.imageToUpload.compressImage(newSizeWidth: 212, newSizeHeight: 212, compressionQuality: 1.0) */
+            self.signupCellProtocolDelegate.pictureSelected(selectedImage: image)
+            
+        }
+        
+        picker.dismiss(animated: true, completion: nil);
     }
     
     func validateSignupForm(user: User) -> Bool{
@@ -102,7 +152,7 @@ class SignupScreenViewController: UIViewController {
         UIApplication.shared.beginIgnoringInteractionEvents();
         
         if (uploadImageStatus == true) {
-            UserService().postMultipartImageDataMethod(jsonURL: jsonURL,image : uploadImage.image!, postData:user.toDictionary(user: user),complete:{(response) in
+            UserService().postMultipartImageDataMethod(jsonURL: jsonURL,image : self.uploadImage, postData:user.toDictionary(user: user),complete:{(response) in
                 self.signUpSuccessCallback(response: response);
             })
         } else {
@@ -159,11 +209,13 @@ extension SignupScreenViewController: UITableViewDataSource, UITableViewDelegate
         let cell: SignupScreenTableViewCell = tableView.dequeueReusableCell(withIdentifier: "SignupScreenTableViewCell") as! SignupScreenTableViewCell;
         
         cell.signupScreenViewDelegate = self;
+        
         activityIndicator.center = cell.center;
         activityIndicator.hidesWhenStopped = true;
         activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.whiteLarge;
         cell.addSubview(activityIndicator);
         
+        signupCellProtocolDelegate = cell;
         return cell;
     }
     
