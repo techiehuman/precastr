@@ -17,6 +17,9 @@ class HomeTextPostTableViewCell: UITableViewCell,UIScrollViewDelegate {
         self.imageGalleryScrollView.delegate = self
     }
 
+    @IBOutlet weak var profilePicImageView: UIImageView!
+    
+    @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var postTextLabel: UILabel!
     
     @IBOutlet weak var dateLabel: UILabel!

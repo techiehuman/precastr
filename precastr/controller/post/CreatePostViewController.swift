@@ -14,9 +14,8 @@ import TwitterCore
 import BSImagePicker
 import MobileCoreServices
 import Photos
-import NVActivityIndicatorView
 
-class CreatePostViewController: UIViewController, UIImagePickerControllerDelegate, NVActivityIndicatorViewable {
+class CreatePostViewController: UIViewController, UIImagePickerControllerDelegate {
 
     @IBOutlet weak var createPostTableView: UITableView!
     
@@ -40,10 +39,6 @@ class CreatePostViewController: UIViewController, UIImagePickerControllerDelegat
         // Do any additional setup after loading the view.
         createPostTableView.register(UINib.init(nibName: "PostFormTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "PostFormTableViewCell");
         self.hideKeyboadOnTapOutside();
-        
-        activityIndicator.hidesWhenStopped = true;
-        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.gray;
-        self.view.addSubview(activityIndicator);
         
         loggedInUser =  User().loadUserDataFromUserDefaults(userDataDict : setting);
         self.social = SocialPlatform().loadSocialDataFromUserDefaults();
@@ -165,8 +160,13 @@ extension CreatePostViewController: UITableViewDelegate, UITableViewDataSource {
         
         let cell: PostFormTableViewCell = tableView.dequeueReusableCell(withIdentifier: "PostFormTableViewCell") as! PostFormTableViewCell;
         cell.createPostViewControllerDelegate = self;
+        
+        
         activityIndicator.center = cell.center;
-
+        activityIndicator.hidesWhenStopped = true;
+        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.gray;
+        cell.addSubview(activityIndicator);
+        
         return cell;
     }
     

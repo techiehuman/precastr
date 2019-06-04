@@ -60,7 +60,7 @@ class PostFormTableViewCell: UITableViewCell, UITextViewDelegate {
     
     
     
-    @IBAction func facebookBtnClicked(_ sender: Any) {
+    /*@IBAction func facebookBtnClicked(_ sender: Any) {
         
         //self.socialMediaPlatform.append((social.socialPlatformId["facebook"])!)
         if(createPostViewControllerDelegate.facebookStatus==false){
@@ -293,6 +293,7 @@ class PostFormTableViewCell: UITableViewCell, UITextViewDelegate {
                 })
             }
         }
+<<<<<<< HEAD
     }
     
     func validateSocialPlatform()->Bool{
@@ -311,4 +312,7 @@ class PostFormTableViewCell: UITableViewCell, UITextViewDelegate {
         }
         return true
     }
+=======
+    }*/
+>>>>>>> e8369df1ce227368ceaf743f38ad664a20796c29
 }

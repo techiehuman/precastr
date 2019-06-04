@@ -117,9 +117,9 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         let homeObject = self.homePosts[indexPath.row] as! NSDictionary ;
         let postImage = homeObject.value(forKey: "post_images") as! NSArray
         if (postImage != nil && postImage.count > 0) {
-            return 375
+            return 400
         }
-        return 120
+        return 150
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -150,17 +150,23 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         let sourcePlatformArray = homeObject.value(forKey: "social_media") as! NSArray
         if (sourcePlatformArray != nil && sourcePlatformArray.count > 0) {
             
-            let sourcePlatform = Int(((((sourcePlatformArray[0]) as! NSDictionary).value(forKey: "id") as? NSString)?.doubleValue)!)
-           // print(sourcePlatform)
-            if(Int(sourcePlatform) == social.socialPlatformId["Facebook"]){
-                cell.sourceImageFacebook.image = UIImage.init(named: "facebook-group")
-                cell.sourceImageFacebook.isHidden = false
+            for sourcePlatform in sourcePlatformArray {
+                let sourcePlatformDict = sourcePlatform as! NSDictionary;
+                
+                let sourcePlatformId = Int(((sourcePlatformDict.value(forKey: "id") as? NSString)?.doubleValue)!)
+                
+                print("sourcePlatform")
+                print(sourcePlatform)
+                if(Int(sourcePlatformId) == social.socialPlatformId["Facebook"]){
+                    cell.sourceImageFacebook.image = UIImage.init(named: "facebook-group")
+                    cell.sourceImageFacebook.isHidden = false
+                }  else if(Int(sourcePlatformId) == social.socialPlatformId["Twitter"]) {
+                    // print("dsf")
+                    cell.sourceImageTwitter.image = UIImage.init(named: "twitter-group")
+                    cell.sourceImageTwitter.isHidden = false
+                }
             }
-            if(Int(sourcePlatform) == social.socialPlatformId["Twitter"]){
-               // print("dsf")
-                cell.sourceImageTwitter.image = UIImage.init(named: "twitter-group")
-                cell.sourceImageTwitter.isHidden = false
-            }
+            
             cell.sourceImageTwitter.layer.masksToBounds = false
             cell.sourceImageFacebook.layer.masksToBounds = false
         }
@@ -185,6 +191,19 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 
         //ScrollView functionality
         //self.slides = cell.createSlides()
+        if(homeObject["username"] != nil){
+        let profileUserName = homeObject.value(forKey: "username") as! String;
+        let profilePic = homeObject.value(forKey: "profile_pic") as! String;
+        if(profileUserName != ""){
+            cell.usernameLabel.text = String(profileUserName)
+            cell.usernameLabel.isHidden = false
+        }
+        if(profilePic != ""){
+            cell.profilePicImageView.sd_setImage(with: URL(string: profilePic), placeholderImage: UIImage.init(named: "profile"));
+            cell.profilePicImageView.isHidden = false
+            cell.profilePicImageView.roundImageView()
+        }
+        }
         cell.setupSlideScrollView()
         
         cell.pageControl.numberOfPages = self.slides.count
@@ -195,7 +214,11 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     }
     @objc private func refreshPostsData(_ sender: Any) {
       //  In this methid call the home screen api
-         self.loadUserPosts();
+        if (loggedInUser.isCastr == 1) {
+            self.loadUserPosts();
+        } else if (loggedInUser.isCastr == 2) {
+            loadModeratorUserPosts();
+        }
         self.refreshControl.endRefreshing()
        
         
@@ -239,7 +262,7 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         
         
         UserService().postDataMethod(jsonURL: jsonURL, postData: postArray, complete: {(response) in
-            
+            print(response)
             let modeArray = response.value(forKey: "data") as! NSArray;
             
             if (modeArray.count != 0) {
