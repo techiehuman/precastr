@@ -32,7 +32,8 @@ class CreatePostViewController: UIViewController, UIImagePickerControllerDelegat
     var twitterStatus = false
     var SelectedAssets = [PHAsset]()
     var PhotoArray = [UIImage]()
-    
+    var postArray : [String:Any] = [String:Any]()
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -47,7 +48,43 @@ class CreatePostViewController: UIViewController, UIImagePickerControllerDelegat
         self.socialMediaPlatform = [Int]();
     }
     
-
+    override func viewWillAppear(_ animated: Bool) {
+        
+        
+        let menuButton = UIButton();
+        menuButton.setImage(UIImage.init(named: "menu"), for: .normal);
+        menuButton.addTarget(self, action: #selector(menuButtonClicked), for: UIControlEvents.touchUpInside)
+        menuButton.frame = CGRect.init(x: 0, y:0, width: 24, height: 24);
+        
+        let barButton = UIBarButtonItem(customView: menuButton)
+        
+        navigationItem.rightBarButtonItem = barButton;
+        navigationItem.rightBarButtonItem?.tintColor = UIColor(red: 12/255, green: 111/255, blue: 233/255, alpha: 1)
+        self.tabBarController?.tabBar.isHidden = false;
+        
+        let jsonURL = "user/get_user_details/format/json";
+        postArray["user_id"] = String(loggedInUser.userId)
+        UserService().postDataMethod(jsonURL: jsonURL, postData: postArray, complete: {(response) in
+            print(response);
+            let modeArray = response.value(forKey: "data") as! NSDictionary;
+            let tokens  = modeArray.value(forKey: "tokens") as! NSArray
+            for mode in tokens{
+                var modeDict = mode as! NSDictionary;
+                // self.moderators.append(String((modeDict.value(forKey: "username") as! NSString) as String)!);
+                print(modeDict.value(forKey: "type") as! String);
+                if(modeDict.value(forKey: "type") as! String == "Facebook") {
+                    self.facebookExists = true
+                }
+                if(modeDict.value(forKey: "type") as! String == "Twitter") {
+                    self.twitterExists = true
+                }
+                
+            }
+            print(self.facebookExists)
+            print(self.twitterExists)
+            
+        });
+    }
     /*
     // MARK: - Navigation
 
@@ -68,16 +105,16 @@ class CreatePostViewController: UIViewController, UIImagePickerControllerDelegat
             self.selectMultipleImages();
         }
         //uploadPhotoAction.setValue(selectedColor, forKey: "titleTextColor")
-        let takePhotoAction: UIAlertAction = UIAlertAction(title: "Take Photo", style: .default) { action -> Void in
-            self.imageDelegate.takePicture(viewC: self);
-        }
+        //let takePhotoAction: UIAlertAction = UIAlertAction(title: "Take Photo", style: .default) { action -> Void in
+        //    self.imageDelegate.takePicture(viewC: self);
+        //}
         //takePhotoAction.setValue(cenesLabelBlue, forKey: "titleTextColor")
         
         let cancelAction: UIAlertAction = UIAlertAction(title: "Cancel", style: .cancel) { action -> Void in }
         cancelAction.setValue(UIColor.black, forKey: "titleTextColor")
         
         actionSheetController.addAction(uploadPhotoAction)
-        actionSheetController.addAction(takePhotoAction)
+        //actionSheetController.addAction(takePhotoAction)
         actionSheetController.addAction(cancelAction)
         
         // present an actionSheet...
@@ -143,6 +180,11 @@ class CreatePostViewController: UIViewController, UIImagePickerControllerDelegat
             //self.imgView.startAnimating()
             
         }
+    }
+    
+    @objc func menuButtonClicked() {
+        let viewController: SideMenuTableViewController = self.storyboard?.instantiateViewController(withIdentifier: "SideMenuTableViewController") as! SideMenuTableViewController;
+        self.navigationController?.pushViewController(viewController, animated: true);
     }
 }
 

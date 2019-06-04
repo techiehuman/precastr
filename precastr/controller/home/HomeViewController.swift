@@ -66,7 +66,7 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         let menuButton = UIButton();
         menuButton.setImage(UIImage.init(named: "menu"), for: .normal);
         menuButton.addTarget(self, action: #selector(menuButtonClicked), for: UIControlEvents.touchUpInside)
-        menuButton.frame = CGRect.init(x: 0, y:0, width: 50, height: 5);
+        menuButton.frame = CGRect.init(x: 0, y:0, width: 24, height: 24);
 
         let barButton = UIBarButtonItem(customView: menuButton)
         

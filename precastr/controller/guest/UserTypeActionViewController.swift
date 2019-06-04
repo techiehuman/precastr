@@ -57,8 +57,8 @@ class UserTypeActionViewController: UIViewController {
 
     @IBAction func casterButtonAction(_ sender: Any) {
        self.updateUserType(userRole: 1)
-        let viewController: PrecastTypeSectionViewController = self.storyboard?.instantiateViewController(withIdentifier: "PrecastTypeSectionViewController") as! PrecastTypeSectionViewController;
-        self.navigationController?.pushViewController(viewController, animated: true);
+        let viewController: UINavigationController = self.storyboard?.instantiateViewController(withIdentifier: "precastTypeNav") as! UINavigationController;
+        UIApplication.shared.keyWindow?.rootViewController = viewController;
     }
     
     @IBAction func moderatorButtonAction(_ sender: Any) {

@@ -71,7 +71,7 @@ class SideMenuTableViewController: UITableViewController {
             dictionary.keys.forEach { key in
                 defaults.removeObject(forKey: key)
             }
-            UIApplication.shared.keyWindow?.rootViewController = LoginStep1ViewController.MainViewController();
+            UIApplication.shared.keyWindow?.rootViewController = LoginScreenViewController.MainViewController();
         }));
 
         self.present(alert, animated: true)
