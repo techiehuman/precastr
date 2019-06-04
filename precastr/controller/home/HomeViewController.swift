@@ -110,10 +110,15 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         let homeObject = self.homePosts[indexPath.row] as! NSDictionary ;
         let postImage = homeObject.value(forKey: "post_images") as! NSArray
-        if (postImage != nil && postImage.count > 0) {
-            return 400
+        var heightToAdd = 0;
+        if (loggedInUser.isCastr == 2) {
+            heightToAdd = 30;//height for name
         }
-        return 150
+        
+        if (postImage != nil && postImage.count > 0) {
+            return (CGFloat(340 + heightToAdd))
+        }
+        return (CGFloat(110 + heightToAdd))
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -121,15 +126,6 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         let homeObject = self.homePosts[indexPath.row] as! NSDictionary ;
         
         let cell: HomeTextPostTableViewCell = tableView.dequeueReusableCell(withIdentifier: "HomeTextPostTableViewCell", for: indexPath) as! HomeTextPostTableViewCell;
-        
-        if (loggedInUser.isCastr == 1) {
-            cell.profilePicImageView.isHidden = true
-            cell.socialIconsView.frame = CGRect.init(x: 15, y: 15, width: 35, height: 25)
-        } else {
-            cell.profilePicImageView.isHidden = false
-            cell.socialIconsView.frame = CGRect.init(x: 65, y: 15, width: 35, height: 25)
-        }
-
         
         cell.postTextLabel.text = String(homeObject.value(forKey: "post_description") as! String);
         let postImages = homeObject.value(forKey: "post_images") as! NSArray
@@ -141,12 +137,41 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 let imgUrl: String = postImageURL.value(forKey: "image") as! String;
                 cell.imagesArray.append(imgUrl);
             }
-          //  cell.sourceImageFacebook.sd_setImage(with: URL(string: imgUrl), placeholderImage: UIImage(named: "profile"));
+            //  cell.sourceImageFacebook.sd_setImage(with: URL(string: imgUrl), placeholderImage: UIImage(named: "profile"));
             //cell.sourceImageFacebook.layer.masksToBounds = false
         } else {
             cell.imagesArray = [String]();
             cell.imageGalleryScrollView.isHidden = true;
         }
+        
+        if (loggedInUser.isCastr == 1) { //If user is a caster
+            cell.profilePicImageView.isHidden = true
+            cell.socialIconsView.frame = CGRect.init(x: 15, y: 20, width: 35, height: 25)
+            cell.postTextLabel.frame = CGRect.init(x: 15, y: 45, width: (cell.frame.width - 15), height: 54)
+            
+            if (postImages.count > 0) {
+                cell.imageGalleryScrollView.frame = CGRect.init(x: 0, y: 110, width: cell.frame.width, height: 218);
+                cell.imageGalleryScrollView.isHidden = false;
+            } else {
+                cell.imageGalleryScrollView.isHidden = true;
+            }
+        } else {
+            
+            //If user is a moderator
+            cell.profilePicImageView.isHidden = false
+            cell.socialIconsView.frame = CGRect.init(x: 65, y: 20, width: 35, height: 25)
+            cell.postTextLabel.frame = CGRect.init(x: 15, y: 75, width: (cell.frame.width - 15), height: 54)
+            if (postImages.count > 0) {
+                cell.imageGalleryScrollView.frame = CGRect.init(x: 0, y: 130, width: cell.frame.width, height: 218);
+                cell.imageGalleryScrollView.isHidden = false;
+            } else {
+                cell.imageGalleryScrollView.isHidden = true;
+            }
+            
+        }
+
+        
+        
         
         
         //cell.profileImage.roundImageView();

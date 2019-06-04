@@ -54,7 +54,7 @@ class ModeratorViewController: UIViewController, CNContactPickerDelegate, MFMess
         
         if (MFMessageComposeViewController.canSendText()) {
             let controller = MFMessageComposeViewController()
-            controller.body = "Hey! I’m using a cool app called preCastr and I’d like you to be my moderator cick on this link to download the free app and get going \n https://www.precastr.com. Use the 4 didit code \(self.loggedInUser.casterReferalCode!) to be a moderator."
+            controller.body = "Hey! \r\nI’m using a cool app called preCastr and I’d like you to be my moderator click on this link to download the free app and get going \r\n\r\nhttps://www.precastr.com. \r\n\r\nUse the 4 didit code \(self.loggedInUser.casterReferalCode!) to be a moderator."
             controller.recipients = self.contactsSelected
             controller.messageComposeDelegate = self
             self.present(controller, animated: true, completion: nil)
