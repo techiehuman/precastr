@@ -10,6 +10,9 @@
 		5EEC6B5B22A66EAA005B1C34 /* LoginScreenTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EEC6B5922A66EAA005B1C34 /* LoginScreenTableViewCell.swift */; };
 		5EEC6B5C22A66EAA005B1C34 /* LoginScreenTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5EEC6B5A22A66EAA005B1C34 /* LoginScreenTableViewCell.xib */; };
 		5EEC6B5E22A67052005B1C34 /* LoginScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EEC6B5D22A67052005B1C34 /* LoginScreenViewController.swift */; };
+		5EEC6B6122A6842F005B1C34 /* SignupScreenTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EEC6B5F22A6842F005B1C34 /* SignupScreenTableViewCell.swift */; };
+		5EEC6B6222A6842F005B1C34 /* SignupScreenTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5EEC6B6022A6842F005B1C34 /* SignupScreenTableViewCell.xib */; };
+		5EEC6B6422A68450005B1C34 /* SignupScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EEC6B6322A68450005B1C34 /* SignupScreenViewController.swift */; };
 		5EF623F522A588E900124C55 /* PostFormTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF623F322A588E900124C55 /* PostFormTableViewCell.swift */; };
 		5EF623F622A588E900124C55 /* PostFormTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5EF623F422A588E900124C55 /* PostFormTableViewCell.xib */; };
 		5EF623F822A58ADB00124C55 /* CreatePostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF623F722A58ADB00124C55 /* CreatePostViewController.swift */; };
@@ -100,6 +103,9 @@
 		5EEC6B5922A66EAA005B1C34 /* LoginScreenTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginScreenTableViewCell.swift; sourceTree = "<group>"; };
 		5EEC6B5A22A66EAA005B1C34 /* LoginScreenTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoginScreenTableViewCell.xib; sourceTree = "<group>"; };
 		5EEC6B5D22A67052005B1C34 /* LoginScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginScreenViewController.swift; sourceTree = "<group>"; };
+		5EEC6B5F22A6842F005B1C34 /* SignupScreenTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupScreenTableViewCell.swift; sourceTree = "<group>"; };
+		5EEC6B6022A6842F005B1C34 /* SignupScreenTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SignupScreenTableViewCell.xib; sourceTree = "<group>"; };
+		5EEC6B6322A68450005B1C34 /* SignupScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupScreenViewController.swift; sourceTree = "<group>"; };
 		5EF623F322A588E900124C55 /* PostFormTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostFormTableViewCell.swift; sourceTree = "<group>"; };
 		5EF623F422A588E900124C55 /* PostFormTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PostFormTableViewCell.xib; sourceTree = "<group>"; };
 		5EF623F722A58ADB00124C55 /* CreatePostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePostViewController.swift; sourceTree = "<group>"; };
@@ -205,6 +211,8 @@
 			children = (
 				5EEC6B5922A66EAA005B1C34 /* LoginScreenTableViewCell.swift */,
 				5EEC6B5A22A66EAA005B1C34 /* LoginScreenTableViewCell.xib */,
+				5EEC6B5F22A6842F005B1C34 /* SignupScreenTableViewCell.swift */,
+				5EEC6B6022A6842F005B1C34 /* SignupScreenTableViewCell.xib */,
 			);
 			path = cells;
 			sourceTree = "<group>";
@@ -393,6 +401,7 @@
 				FAF601C92286A3C700B54F9B /* SplashViewController.swift */,
 				FAF601CB228AAE6800B54F9B /* VerificationModeratorViewController.swift */,
 				5EEC6B5D22A67052005B1C34 /* LoginScreenViewController.swift */,
+				5EEC6B6322A68450005B1C34 /* SignupScreenViewController.swift */,
 			);
 			path = guest;
 			sourceTree = "<group>";
@@ -652,6 +661,7 @@
 				FA84F19522A1355A007796A3 /* HeaderViewTableViewCell.xib in Resources */,
 				FADFEB0222A51A46006E3CD2 /* VisbyCF-ThinOblique.otf in Resources */,
 				FADFEAFF22A51A46006E3CD2 /* VisbyCF-Regular.otf in Resources */,
+				5EEC6B6222A6842F005B1C34 /* SignupScreenTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -802,10 +812,12 @@
 				FA52DDCC2277195C0093FDF8 /* HomeTableViewCell.swift in Sources */,
 				FA6AB57E22531E7300C5491F /* ViewController.swift in Sources */,
 				FA72E17922624DC500A259A1 /* CastModeratorViewController.swift in Sources */,
+				5EEC6B6422A68450005B1C34 /* SignupScreenViewController.swift in Sources */,
 				FA84055A2254C4DA00BA2D55 /* PublishViewController.swift in Sources */,
 				FABF02502265DFBB0067960C /* SideMenuTableViewController.swift in Sources */,
 				5EEC6B5E22A67052005B1C34 /* LoginScreenViewController.swift in Sources */,
 				FA4D544C2260F7F200E9589B /* UserTypeActionViewController.swift in Sources */,
+				5EEC6B6122A6842F005B1C34 /* SignupScreenTableViewCell.swift in Sources */,
 				FAFCE3C3228E8F0000AB6DB5 /* SocialPlatform.swift in Sources */,
 				FA84F18B22A0E511007796A3 /* moderatorTableViewCell.swift in Sources */,
 				FA6AB57C22531E7300C5491F /* AppDelegate.swift in Sources */,

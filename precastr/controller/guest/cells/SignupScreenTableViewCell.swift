@@ -1,8 +1,8 @@
 //
-//  SignupViewController.swift
+//  SignupScreenTableViewCell.swift
 //  precastr
 //
-//  Created by Macbook on 07/05/19.
+//  Created by Cenes_Dev on 04/06/2019.
 //  Copyright © 2019 Macbook. All rights reserved.
 //
 
@@ -12,33 +12,22 @@ import FBSDKCoreKit
 import TwitterKit
 import TwitterCore
 
-class SignupViewController: UIViewController,UITextFieldDelegate {
+class SignupScreenTableViewCell: UITableViewCell, UITextFieldDelegate {
 
-    
     @IBOutlet weak var nameTextField: UITextField!
-    
-    
     @IBOutlet weak var emailTextField: UITextField!
-    
-    
     @IBOutlet weak var passwordTextField: UITextField!
-    
-    
     @IBOutlet weak var cameraUIView: UIView!
-    
     @IBOutlet weak var agreecheckBoxBtn: UIButton!
-    
-    
     @IBOutlet weak var uploadImage: UIImageView!
-    var agreeCheckBox = false
-    var uploadImageStatus = false
-    var imageDelegate : ImageLibProtocol!
-    var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView();
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-      self.uploadImage.roundImageView()
-        imageDelegate = Reusable()
+    var signupScreenViewDelegate: SignupScreenViewController!;
+    var agreeCheckBox = false
+
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        // Initialization code
+        
         self.agreecheckBoxBtn.layer.borderWidth = 1
         self.agreecheckBoxBtn.layer.borderColor = UIColor.white.cgColor
         self.cameraUIView.layer.cornerRadius = self.cameraUIView.frame.height/2
@@ -51,7 +40,7 @@ class SignupViewController: UIViewController,UITextFieldDelegate {
         imageViewN.image = imageN;
         self.nameTextField.leftView = imageViewN
         self.nameTextField.leftViewMode = .always
-       // self.nameTextField.leftView = UIView(frame: CGRect(x: 0, y: 0, width:35, height: self.nameTextField.frame.height))
+        // self.nameTextField.leftView = UIView(frame: CGRect(x: 0, y: 0, width:35, height: self.nameTextField.frame.height))
         
         self.emailTextField.attributedPlaceholder = NSAttributedString(string: "Email Address", attributes: [NSAttributedStringKey.foregroundColor : UIColor.white ])
         
@@ -62,7 +51,7 @@ class SignupViewController: UIViewController,UITextFieldDelegate {
         imageView.image = image;
         self.emailTextField.leftView = imageView
         self.emailTextField.leftViewMode = .always
-         // self.emailTextField.leftView = UIView(frame: CGRect(x: 0, y: 0, width:15, height: self.emailTextField.frame.height))
+        // self.emailTextField.leftView = UIView(frame: CGRect(x: 0, y: 0, width:15, height: self.emailTextField.frame.height))
         
         self.passwordTextField.attributedPlaceholder = NSAttributedString(string: "Password", attributes: [NSAttributedStringKey.foregroundColor : UIColor.white ])
         self.passwordTextField.layer.borderColor = UIColor.white.cgColor
@@ -74,64 +63,37 @@ class SignupViewController: UIViewController,UITextFieldDelegate {
         imageViewP.image = imageP;
         self.passwordTextField.leftView = imageViewP
         self.passwordTextField.leftViewMode = .always
-
+        
         let imageTapGesture = UITapGestureRecognizer.init(target: self, action: #selector(imageUploadClicked))
         cameraUIView.addGestureRecognizer(imageTapGesture);
         // Do any additional setup after loading the view.
-        
-        activityIndicator.center = self.view.center;
-        activityIndicator.hidesWhenStopped = true;
-        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.whiteLarge;
-        self.view.addSubview(activityIndicator);
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+
+        // Configure the view for the selected state
     }
-    @objc func imageUploadClicked(){
-        // create an actionSheet
-        let actionSheetController: UIAlertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        
-        // create an action
-        let uploadPhotoAction: UIAlertAction = UIAlertAction(title: "Upload Photo", style: .default) { action -> Void in
-            self.imageDelegate.selectPicture(viewC: self,cameraView: self.uploadImage);
-            self.uploadImage.isHidden = false
-            self.uploadImageStatus = true
-        }
-        //uploadPhotoAction.setValue(selectedColor, forKey: "titleTextColor")
-        let takePhotoAction: UIAlertAction = UIAlertAction(title: "Take Photo", style: .default) { action -> Void in
-            self.imageDelegate.takePicture(viewC: self, cameraView: self.uploadImage);
-            self.uploadImage.isHidden = false
-            self.uploadImageStatus = true
-        }
-        //takePhotoAction.setValue(cenesLabelBlue, forKey: "titleTextColor")
-        
-        let cancelAction: UIAlertAction = UIAlertAction(title: "Cancel", style: .cancel) { action -> Void in }
-        cancelAction.setValue(UIColor.black, forKey: "titleTextColor")
-        
-        actionSheetController.addAction(uploadPhotoAction)
-        actionSheetController.addAction(takePhotoAction)
-        actionSheetController.addAction(cancelAction)
-        
-        // present an actionSheet...
-        present(actionSheetController, animated: true, completion: nil)
+    
+    @objc func imageUploadClicked() {
+        signupScreenViewDelegate.imageUploadClicked();
     }
+    
     @IBAction func emailSignUpClicked(_ sender: Any) {
         
-         let user = User();
-         let registerationURL = "user/registration/format/json";
-         user.username = emailTextField.text;
+        let user = User();
+        let registerationURL = "user/registration/format/json";
+        user.username = emailTextField.text;
         user.name = nameTextField.text;
-         user.password = passwordTextField.text;
-         let isValid = self.validateSignupForm(user: user); //CALLING VALIDATION FUNCTION
+        user.password = passwordTextField.text;
+        let isValid = self.signupScreenViewDelegate.validateSignupForm(user: user); //CALLING VALIDATION FUNCTION
         
-         if(isValid==true && agreeCheckBox==true){
-         self.userManage(jsonURL: registerationURL,user: user);
-         }else if(agreeCheckBox==false){
+        if(isValid==true && agreeCheckBox==true){
+            self.signupScreenViewDelegate.userManage(jsonURL: registerationURL,user: user);
+        }else if(agreeCheckBox==false){
             let alert = UIAlertController.init(title: "Error", message: "Please agree to terms and conditions", preferredStyle: .alert);
             alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil));
-            self.present(alert, animated: true)
+            self.signupScreenViewDelegate.present(alert, animated: true)
         }
     }
     
@@ -161,7 +123,7 @@ class SignupViewController: UIViewController,UITextFieldDelegate {
             cookies.deleteCookie(cookie )
         }
         /* CODE FOR LOGOUT */
-        fbloginManger.logIn(withReadPermissions: ["email"], from:self) {(result, error) -> Void in
+        fbloginManger.logIn(withReadPermissions: ["email"], from:self.signupScreenViewDelegate) {(result, error) -> Void in
             if(error == nil){
                 let fbLoginResult: FBSDKLoginManagerLoginResult  = result!
                 
@@ -203,7 +165,7 @@ class SignupViewController: UIViewController,UITextFieldDelegate {
                 let loginURL = "user/login/format/json";
                 
                 print(user.toDictionary(user: user ))
-                self.userManage(jsonURL:loginURL,user: user);
+                self.signupScreenViewDelegate.userManage(jsonURL:loginURL,user: user);
                 
                 
             }else {
@@ -214,100 +176,10 @@ class SignupViewController: UIViewController,UITextFieldDelegate {
     
     
     @IBAction func LoginBtnClicked(_ sender: Any) {
-        let viewController: LoginStep1ViewController = self.storyboard?.instantiateViewController(withIdentifier: "LoginStep1ViewController") as! LoginStep1ViewController;
-        self.navigationController?.pushViewController(viewController, animated: true);
-    }
-    func validateSignupForm(user: User) -> Bool{
-        
-        var isValid = true;
-        var message = "";
-        if (user.name == "") {
-            message = "Name cannot be empty"
-            isValid = false
-        }
-       else if (user.username == "") {
-            message = "Username cannot be empty"
-            isValid = false
-        } else if (user.password == "") {
-            message = "Password cannot be empty"
-            isValid = false
-        }
-        /*else if(uploadImageStatus == false){
-            message = "Please upload profile picture"
-            isValid = false
-        }*/
-        if(isValid==false){
-            let alert = UIAlertController.init(title: "Error", message: message, preferredStyle: .alert);
-            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil));
-            self.present(alert, animated: true)
-        }
-        return isValid;
-        
-    }
-    func userManage(jsonURL:String,user : User)->Void{
-        //iPhone or iPad
-        //let model = UIDevice.current.model;
-        user.userDevice = 2;//
-        let userDefaults = UserDefaults.standard
-        if let tokenDataStr = userDefaults.value(forKey: "tokenData") as? String {
-            user.deviceToken = tokenDataStr;
-        } else {
-            user.deviceToken = "test";
-        }
-        
-        
-        activityIndicator.startAnimating();
-        UIApplication.shared.beginIgnoringInteractionEvents();
-        
-        if (uploadImageStatus == true) {
-            UserService().postMultipartImageDataMethod(jsonURL: jsonURL,image : uploadImage.image!, postData:user.toDictionary(user: user),complete:{(response) in
-                self.signUpSuccessCallback(response: response);
-            })
-        } else {
-            UserService().postDataMethod(jsonURL: jsonURL, postData: user.toDictionary(user: user), complete: {(response) in
-                self.signUpSuccessCallback(response: response);
-
-            })
-        }
-        
+        let viewController: LoginScreenViewController = self.signupScreenViewDelegate.storyboard?.instantiateViewController(withIdentifier: "LoginScreenViewController") as! LoginScreenViewController;
+        self.signupScreenViewDelegate.navigationController?.pushViewController(viewController, animated: true);
     }
     
-    func signUpSuccessCallback(response: NSDictionary) {
-        
-        activityIndicator.stopAnimating();
-        UIApplication.shared.endIgnoringInteractionEvents();
-        
-        print(response);
-        SocialPlatform().fetchSocialPlatformData();
-
-        if (Int(response.value(forKey: "status") as! String)! == 1) {
-            
-            let userDict = response.value(forKey: "data") as! NSDictionary;
-            
-            print(userDict)
-            let user = User().getUserData(userDataDict: userDict);
-            user.loadUserDefaults();
-            
-            let viewController: UserTypeActionViewController = self.storyboard?.instantiateViewController(withIdentifier: "UserTypeActionViewController") as! UserTypeActionViewController;
-            self.navigationController?.pushViewController(viewController, animated: true);
-            
-        } else {
-            let message = response.value(forKey: "message") as! String;
-            
-            let alert = UIAlertController.init(title: "Error", message: message, preferredStyle: .alert);
-            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil));
-            self.present(alert, animated: true)
-        }
-    }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
     func getFbId()->Void{
         if(FBSDKAccessToken.current() != nil){
             FBSDKGraphRequest(graphPath: "me", parameters: ["fields": "id,name , first_name, last_name , email,picture.type(large)"]).start(completionHandler: { (connection, result, error) in
@@ -331,20 +203,20 @@ class SignupViewController: UIViewController,UITextFieldDelegate {
                     
                     let loginURL = "user/login/format/json";
                     
-                    self.userManage(jsonURL:loginURL,user: user);
+                    self.signupScreenViewDelegate.userManage(jsonURL:loginURL,user: user);
                 }
                 else{
                     
                     let alert = UIAlertController.init(title: "Error", message: error as! String, preferredStyle: .alert);
                     alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil));
-                    self.present(alert, animated: true)
+                    self.signupScreenViewDelegate.present(alert, animated: true)
                     
                 }
             })
         }
     }
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-       
+        
         if (textField == nameTextField){
             emailTextField.becomeFirstResponder()
         }
