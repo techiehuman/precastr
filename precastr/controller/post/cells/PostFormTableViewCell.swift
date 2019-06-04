@@ -34,6 +34,7 @@ class PostFormTableViewCell: UITableViewCell, UITextViewDelegate {
         self.postTextField.delegate = self
         self.postTextField.layer.borderColor =  UIColor(red: 146/255, green: 147/255, blue: 149/255, alpha: 1).cgColor;
         self.postTextField.layer.borderWidth = 0.5
+        self.postTextField.textColor = UIColor(red: 34/255, green: 34/255, blue: 34/255, alpha: 1);
 
     }
 
