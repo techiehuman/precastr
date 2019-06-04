@@ -31,6 +31,8 @@ class TwitterPostViewController: UIViewController,UITextViewDelegate, UIImagePic
     var twitterExists = false
     var facebookStatus = false
     var twitterStatus = false
+    var facebookAPI = false
+    var twitterAPI = false
     var SelectedAssets = [PHAsset]()
     var PhotoArray = [UIImage]()
 
@@ -191,6 +193,7 @@ class TwitterPostViewController: UIViewController,UITextViewDelegate, UIImagePic
                         token = token + "{\"facebook_access_token\":\"\(user.facebookAccessToken!)\"";
                         token = token + ",\"facebook_id\":\"\(user.facebookId!)\"}";
                         postData["token"] = token;
+                        self.facebookAPI = true
                         let jsonURL = "user/upate_user_tokens/format/json";
                             UserService().postDataMethod(jsonURL: jsonURL,postData:postData,complete:{(response) in
                                 print(response)
@@ -282,12 +285,13 @@ class TwitterPostViewController: UIViewController,UITextViewDelegate, UIImagePic
                         token = token + ",\"twitter_access_secret\":\"\(user.twitterAccessSecret!)\"";
                         token = token + ",\"twitter_id\":\"\(user.twitterId!)\"}";
                         postData["token"] = "\(token)";
-                    } else if (user.isFacebook == 1) {
+                        self.twitterAPI = true
+                    } /*else if (user.isFacebook == 1) {
                         var token = "";
                         token = token + "{\"facebook_access_token\":\"\(user.facebookAccessToken!)\"";
                         token = token + ",\"facebook_id\":\"\(user.facebookId!)\"}";
                         postData["token"] = token;
-                    }
+                    } */
                     
                     print(user.toDictionary(user: user ))
                     UserService().postDataMethod(jsonURL: jsonURL,postData:postData,complete:{(response) in
@@ -414,6 +418,21 @@ class TwitterPostViewController: UIViewController,UITextViewDelegate, UIImagePic
             alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil));
             self.present(alert, animated: true)
             return false
+        } else if(self.socialMediaPlatform.count > 0){
+            if(self.twitterStatus == true && self.twitterAPI == false){
+                let message = "Please wait, you need to sync your Twitter account"
+                let alert = UIAlertController.init(title: "Error", message: message, preferredStyle: .alert);
+                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil));
+                self.present(alert, animated: true)
+                return false;
+            }
+            if(self.facebookStatus == true && self.facebookAPI == false){
+                let message = "Please wait, you need to sync your Facebook account"
+                let alert = UIAlertController.init(title: "Error", message: message, preferredStyle: .alert);
+                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil));
+                self.present(alert, animated: true)
+                return false;
+            }
         }
         return true
     }

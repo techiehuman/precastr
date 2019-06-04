@@ -232,7 +232,8 @@ extension ModeratorViewController: UITableViewDelegate, UITableViewDataSource {
          self.userListPending  = [User]()
         var jsonURL = "";
         print(String(loggedInUser.userId))
-        if(Bool(moderatorBool)==true){
+      //  if(Bool(moderatorBool)==true){
+        if(self.loggedInUser.isCastr == 1){
             jsonURL = "user/get_caster_moderator/format/json?user_id=\(String(loggedInUser.userId))&submit=1";
         }else{
             jsonURL = "user/get_moderator_casters/format/json?moderator_id=\(String(loggedInUser.userId))&submit=1";
