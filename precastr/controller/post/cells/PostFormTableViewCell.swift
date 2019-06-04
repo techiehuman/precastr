@@ -59,24 +59,33 @@ class PostFormTableViewCell: UITableViewCell, UITextViewDelegate {
         }
     }
     
-    
-    
+    func activeFacebookIcon() {
+        self.facebookBtn.backgroundColor = UIColor.init(red: 12/255, green: 111/255, blue: 2333/255, alpha: 1);
+        self.facebookBtn.layer.borderWidth = 0
+        let image = UIImage(named: "facebook")
+        self.facebookBtn.setImage(image, for: UIControlState.normal)
+        for obj in createPostViewControllerDelegate.social.socialPlatformId {
+            if (obj.key == "Facebook") {
+                createPostViewControllerDelegate.socialMediaPlatform.append(obj.value);
+                createPostViewControllerDelegate.facebookStatus = true
+                break;
+            }
+        }
+    }
+
     @IBAction func facebookBtnClicked(_ sender: Any) {
         
         //self.socialMediaPlatform.append((social.socialPlatformId["facebook"])!)
-        if(createPostViewControllerDelegate.facebookStatus==false){
-            createPostViewControllerDelegate.facebookStatus = true
-            self.facebookBtn.backgroundColor = UIColor.init(red: 12/255, green: 111/255, blue: 2333/255, alpha: 1);
-            self.facebookBtn.layer.borderWidth = 0
-            let image = UIImage(named: "facebook")
-            self.facebookBtn.setImage(image, for: UIControlState.normal)
-            for obj in createPostViewControllerDelegate.social.socialPlatformId {
-                if (obj.key == "Facebook") {
-                    createPostViewControllerDelegate.socialMediaPlatform.append(obj.value);
-                    break;
-                }
+        if(createPostViewControllerDelegate.facebookStatus == false){//If facebook is not clicked.
+            
+            if(self.createPostViewControllerDelegate.facebookExists == true){//If facebook is synced.
+                self.activeFacebookIcon();                                     //Active the icon
+            } else {
+                self.facebookSocialSync();//if facebook not synced. We will sync it
+
             }
         }else{
+            //If facebook is already clicked. That means it is synced. Then we have to unsync it.
             createPostViewControllerDelegate.facebookStatus = false
             self.facebookBtn.layer.borderWidth = 1
             self.facebookBtn.layer.borderColor =  UIColor(red: 12/255, green: 111/255, blue: 233/255, alpha: 1).cgColor;
@@ -92,11 +101,135 @@ class PostFormTableViewCell: UITableViewCell, UITextViewDelegate {
                     break;
                 }
             }
+        }
+     
+        
+    }
+    
+    
+    func activeTwitterIcon () {
+        self.twitterBtn.backgroundColor = UIColor.init(red: 12/255, green: 111/255, blue: 2333/255, alpha: 1);
+        self.twitterBtn.layer.borderWidth = 0
+        let image = UIImage(named: "twitter")
+        self.twitterBtn.setImage(image, for: UIControlState.normal)
+        for obj in createPostViewControllerDelegate.social.socialPlatformId {
+            if (obj.key == "Twitter") {
+                createPostViewControllerDelegate.socialMediaPlatform.append(obj.value);
+                createPostViewControllerDelegate.twitterStatus = true //setting as clicked
+                break;
+            }
+        }
+    }
+    
+    @IBAction func twitterBtnClicked(_ sender: Any) {
+        
+        if(createPostViewControllerDelegate.twitterStatus==false) {//Twitter is not clicked yet.
             
+            //If user clicked twitter
+            //Lets check if user is already linked.
+            if (createPostViewControllerDelegate.twitterExists == true) {//If user already linked to twotter
+                                                                        //hight light twitter icon
+                activeTwitterIcon();
+            } else {
+                //Else sync with twitter
+                self.twitterSocialSync();
+            }
+            
+            
+        }else{ //If icon is already clicked. User wnant to uncheck, then deactive it.
+            createPostViewControllerDelegate.twitterStatus = false //setting to initial state
+            
+            self.twitterBtn.layer.borderWidth = 1
+            self.twitterBtn.layer.borderColor =  UIColor(red: 12/255, green: 111/255, blue: 233/255, alpha: 1).cgColor;
+            self.twitterBtn.backgroundColor = UIColor.white
+            let image = UIImage(named: "twitter-group")
+            self.twitterBtn.setImage(image, for: UIControlState.normal)
+            /*for obj in createPostViewControllerDelegate.social.socialPlatformId {
+                if (obj.key == "Twitter") {
+                    if let index = createPostViewControllerDelegate.socialMediaPlatform.index(of:obj.value) {
+                        createPostViewControllerDelegate.socialMediaPlatform.remove(at: index)
+                    }
+                    break;
+                }
+            }*/
             
         }
-        if(createPostViewControllerDelegate.facebookExists == false && createPostViewControllerDelegate.facebookStatus == true){
+        
+        
+    }
+    @IBAction func AddSocialMedia(_ sender: Any) {
+        
+        self.createPostViewControllerDelegate.imageUploadClicked();
+    }
+    
+    @IBAction func postOnSocialPlatform(_ sender: Any) {
+        
+        let isValid = self.validateSocialPlatform();
+        if(isValid == true){
+           
             
+            self.createPostViewControllerDelegate.activityIndicator.startAnimating();
+            
+            let jsonURL = "posts/create_new_caster_posts/format/json"
+            var postData : [String : Any] = [String : Any]()
+            postData["post_description"] = self.postTextField.text
+            postData["user_id"] = self.createPostViewControllerDelegate.loggedInUser.userId
+            //let joiner = ","
+            
+            var joinedStrings = "";
+            for obj in createPostViewControllerDelegate.social.socialPlatformId {
+                if (obj.key == "Facebook" && self.createPostViewControllerDelegate.facebookStatus == true) {//If user selcts facebook
+                    joinedStrings = joinedStrings + "\(obj.value),";
+                } else if (obj.key == "Twitter" && self.createPostViewControllerDelegate.twitterStatus == true) {//If user selcts twiiter
+                    joinedStrings = joinedStrings + "\(obj.value),";
+                }
+            }
+            
+            let elements = (self.createPostViewControllerDelegate.socialMediaPlatform);
+            
+            /*            for elementItem in elements! {
+                joinedStrings = joinedStrings + "\(elementItem),";
+            }*/
+            joinedStrings = String(joinedStrings.dropLast())
+            print(joinedStrings)
+            postData["social_media"] = String(joinedStrings.suffix(joinedStrings.count-1));
+            postData["social_media_id"] = joinedStrings
+            //  let size = CGSize(width: 0, height: 0)
+            print(self.createPostViewControllerDelegate.PhotoArray.count)
+            if(self.createPostViewControllerDelegate.PhotoArray.count > 0){
+                UserService().postMultipartImageDataSocialMethod(jsonURL: jsonURL,image : self.createPostViewControllerDelegate.PhotoArray, postData:postData,complete:{(response) in
+                    print(response);
+                    self.createPostViewControllerDelegate.activityIndicator.stopAnimating();
+                    UIApplication.shared.keyWindow?.rootViewController = HomeViewController.MainViewController();
+                })
+            }else{
+                UserService().postDataMethod(jsonURL: jsonURL, postData: postData, complete: { (response) in
+                    print(response);
+                    self.createPostViewControllerDelegate.activityIndicator.stopAnimating();
+                    UIApplication.shared.keyWindow?.rootViewController = HomeViewController.MainViewController();
+                })
+            }
+        }
+    }
+    
+    func validateSocialPlatform()->Bool{
+        if(self.createPostViewControllerDelegate.twitterStatus == false && self.createPostViewControllerDelegate.facebookStatus == false){
+            let message = "Please select social media platforms"
+            let alert = UIAlertController.init(title: "Error", message: message, preferredStyle: .alert);
+            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil));
+            self.createPostViewControllerDelegate.present(alert, animated: true)
+            return false
+        } else  if(self.postTextField.text == "" ){
+            let message = "Text field is empty"
+            let alert = UIAlertController.init(title: "Error", message: message, preferredStyle: .alert);
+            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil));
+            self.createPostViewControllerDelegate.present(alert, animated: true)
+            return false
+        }
+        
+        return true
+    }
+    func facebookSocialSync() {
             
             let fbloginManger: FBSDKLoginManager = FBSDKLoginManager()
             /*CODE FOR LOGOUT */
@@ -141,56 +274,21 @@ class PostFormTableViewCell: UITableViewCell, UITextViewDelegate {
                             token = token + "{\"facebook_access_token\":\"\(user.facebookAccessToken!)\"";
                             token = token + ",\"facebook_id\":\"\(user.facebookId!)\"}";
                             postData["token"] = token;
-                            self.createPostViewControllerDelegate.facebookAPI = true
+                           
+                            self.createPostViewControllerDelegate.facebookStatus = true;
+                            self.createPostViewControllerDelegate.facebookExists = true;
                             let jsonURL = "user/upate_user_tokens/format/json";
                             UserService().postDataMethod(jsonURL: jsonURL,postData:postData,complete:{(response) in
-                                print(response)
+                                print(response);
+                                
+                                self.activeFacebookIcon();
                             });
                         });
                         
                     }
                 }  }
-        }else if(self.createPostViewControllerDelegate.facebookExists == true && self.createPostViewControllerDelegate.facebookStatus == true){
-            self.createPostViewControllerDelegate.facebookAPI = true
-        }
-        
-        
     }
-    
-    @IBAction func twitterBtnClicked(_ sender: Any) {
-        
-        if(createPostViewControllerDelegate.twitterStatus==false){
-            createPostViewControllerDelegate.twitterStatus = true //setting as clicked
-            self.twitterBtn.backgroundColor = UIColor.init(red: 12/255, green: 111/255, blue: 2333/255, alpha: 1);
-            self.twitterBtn.layer.borderWidth = 0
-            let image = UIImage(named: "twitter")
-            self.twitterBtn.setImage(image, for: UIControlState.normal)
-            for obj in createPostViewControllerDelegate.social.socialPlatformId {
-                if (obj.key == "Twitter") {
-                    createPostViewControllerDelegate.socialMediaPlatform.append(obj.value);
-                    break;
-                }
-            }
-            
-        }else{
-            createPostViewControllerDelegate.twitterStatus = false //setting to initial state
-            
-            self.twitterBtn.layer.borderWidth = 1
-            self.twitterBtn.layer.borderColor =  UIColor(red: 12/255, green: 111/255, blue: 233/255, alpha: 1).cgColor;
-            self.twitterBtn.backgroundColor = UIColor.white
-            let image = UIImage(named: "twitter-group")
-            self.twitterBtn.setImage(image, for: UIControlState.normal)
-            for obj in createPostViewControllerDelegate.social.socialPlatformId {
-                if (obj.key == "Twitter") {
-                    if let index = createPostViewControllerDelegate.socialMediaPlatform.index(of:obj.value) {
-                        createPostViewControllerDelegate.socialMediaPlatform.remove(at: index)
-                    }
-                    break;
-                }
-            }
-            
-        }
-        if(createPostViewControllerDelegate.twitterExists == false && createPostViewControllerDelegate.twitterStatus == true){
+    func twitterSocialSync(){
             let store = TWTRTwitter.sharedInstance().sessionStore
             if let userID = store.session()?.userID {
                 store.logOutUserID(userID)
@@ -200,12 +298,7 @@ class PostFormTableViewCell: UITableViewCell, UITextViewDelegate {
                 if (session != nil) {
                     let user = User();
                     let name = session?.userName ?? ""
-                    
-                    print(session?.userID  ?? "")
-                    print(session?.authToken  ?? "")
-                    print(session?.authTokenSecret  ?? "")
-                    
-                    
+            
                     user.twitterAccessToken = session?.authToken
                     user.twitterAccessSecret = session?.authTokenSecret
                     user.twitterId = session?.userID
@@ -218,7 +311,6 @@ class PostFormTableViewCell: UITableViewCell, UITextViewDelegate {
                     postData["user_id"] = self.createPostViewControllerDelegate.loggedInUser.userId
                     for obj in self.createPostViewControllerDelegate.social.socialPlatformId {
                         if (obj.key == "Twitter") {
-                            
                             postData["social_media"] = obj.value
                             break;
                         }
@@ -232,104 +324,19 @@ class PostFormTableViewCell: UITableViewCell, UITextViewDelegate {
                         token = token + ",\"twitter_access_secret\":\"\(user.twitterAccessSecret!)\"";
                         token = token + ",\"twitter_id\":\"\(user.twitterId!)\"}";
                         postData["token"] = "\(token)";
-                        self.createPostViewControllerDelegate.twitterAPI = true
-                    } /*else if (user.isFacebook == 1) {
-                        var token = "";
-                        token = token + "{\"facebook_access_token\":\"\(user.facebookAccessToken!)\"";
-                        token = token + ",\"facebook_id\":\"\(user.facebookId!)\"}";
-                        postData["token"] = token;
-                    } */	
-                    
+                        self.createPostViewControllerDelegate.twitterStatus = true
+                        self.createPostViewControllerDelegate.twitterExists = true
+
+                    }
                     print(user.toDictionary(user: user ))
                     UserService().postDataMethod(jsonURL: jsonURL,postData:postData,complete:{(response) in
                         print(response)
                     });
                     
-                }else if(self.createPostViewControllerDelegate.twitterExists == true && self.createPostViewControllerDelegate.twitterStatus == true){
-                    self.createPostViewControllerDelegate.twitterAPI = true
                 }else {
                     print("error: \(String(describing: error?.localizedDescription))");
                 }
             }
-        }
         
-        
-    }
-    @IBAction func AddSocialMedia(_ sender: Any) {
-        
-        self.createPostViewControllerDelegate.imageUploadClicked();
-    }
-    
-    @IBAction func postOnSocialPlatform(_ sender: Any) {
-        
-        let isValid = self.validateSocialPlatform();
-        if(isValid == true){
-            
-            self.createPostViewControllerDelegate.activityIndicator.startAnimating();
-            
-            let jsonURL = "posts/create_new_caster_posts/format/json"
-            var postData : [String : Any] = [String : Any]()
-            postData["post_description"] = self.postTextField.text
-            postData["user_id"] = self.createPostViewControllerDelegate.loggedInUser.userId
-            //let joiner = ","
-            let elements = (self.createPostViewControllerDelegate.socialMediaPlatform);
-            
-            var joinedStrings = "";
-            for elementItem in elements! {
-                joinedStrings = joinedStrings + "\(elementItem),";
-            }
-            joinedStrings = String(joinedStrings.dropLast())
-            print(joinedStrings)
-            postData["social_media"] = String(joinedStrings.suffix(joinedStrings.count-1));
-            postData["social_media_id"] = joinedStrings
-            //  let size = CGSize(width: 0, height: 0)
-            print(self.createPostViewControllerDelegate.PhotoArray.count)
-            if(self.createPostViewControllerDelegate.PhotoArray.count > 0){
-                UserService().postMultipartImageDataSocialMethod(jsonURL: jsonURL,image : self.createPostViewControllerDelegate.PhotoArray, postData:postData,complete:{(response) in
-                    print(response);
-                    self.createPostViewControllerDelegate.activityIndicator.stopAnimating();
-                    UIApplication.shared.keyWindow?.rootViewController = HomeViewController.MainViewController();
-                })
-            }else{
-                UserService().postDataMethod(jsonURL: jsonURL, postData: postData, complete: { (response) in
-                    print(response);
-                    self.createPostViewControllerDelegate.activityIndicator.stopAnimating();
-                    UIApplication.shared.keyWindow?.rootViewController = HomeViewController.MainViewController();
-                })
-            }
-        }
-    }
-    
-    func validateSocialPlatform()->Bool{
-        if(self.createPostViewControllerDelegate.socialMediaPlatform.count == 0){
-            let message = "Please select social media platforms"
-            let alert = UIAlertController.init(title: "Error", message: message, preferredStyle: .alert);
-            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil));
-            self.createPostViewControllerDelegate.present(alert, animated: true)
-            return false
-        } else  if(self.postTextField.text == "" ){
-            let message = "Text field is empty"
-            let alert = UIAlertController.init(title: "Error", message: message, preferredStyle: .alert);
-            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil));
-            self.createPostViewControllerDelegate.present(alert, animated: true)
-            return false
-        }
-        else if(self.createPostViewControllerDelegate.socialMediaPlatform.count > 0){
-            if(self.createPostViewControllerDelegate.twitterStatus == true && self.createPostViewControllerDelegate.twitterAPI == false){
-                let message = "Please wait, you need to sync your Twitter account"
-                let alert = UIAlertController.init(title: "Error", message: message, preferredStyle: .alert);
-                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil));
-                self.createPostViewControllerDelegate.present(alert, animated: true)
-                return false;
-            }
-            if(self.createPostViewControllerDelegate.facebookStatus == true && self.createPostViewControllerDelegate.facebookAPI == false){
-                let message = "Please wait, you need to sync your Facebook account"
-                let alert = UIAlertController.init(title: "Error", message: message, preferredStyle: .alert);
-                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil));
-                self.createPostViewControllerDelegate.present(alert, animated: true)
-                return false;
-            }
-        }
-        return true
     }
 }

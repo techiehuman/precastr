@@ -176,7 +176,7 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         
         //cell.profileImage.roundImageView();
         var facebookIconHidden = true;
-        var twitterIconHidden = false;
+        var twitterIconHidden = true;
         let sourcePlatformArray = homeObject.value(forKey: "social_media") as! NSArray
         if (sourcePlatformArray != nil && sourcePlatformArray.count > 0) {
             
