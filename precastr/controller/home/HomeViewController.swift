@@ -218,7 +218,7 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             }
             
             if(profilePic != "") {
-                cell.profilePicImageView.sd_setImage(with: URL(string: profilePic), placeholderImage: UIImage.init(named: "profile"));
+                cell.profilePicImageView.sd_setImage(with: URL(string: profilePic), placeholderImage: UIImage.init(named: "my-account-black"));
                 cell.profilePicImageView.isHidden = false
                 cell.profilePicImageView.roundImageView()
             }
