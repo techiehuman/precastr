@@ -250,11 +250,17 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             }
         }
         cell.setupSlideScrollView()
-        
+        print("current")
+        print(cell.pageControl.currentPage)
         cell.pageControl.numberOfPages = cell.imagesArray.count
         cell.pageControl.currentPage = 0
         cell.contentView.bringSubview(toFront: cell.pageControl)
-        
+        if(cell.imagesArray.count > 1){
+            cell.imageCounterView.isHidden = false
+            cell.totalCountImageLbl.text = "\(cell.imagesArray.count)";
+            cell.currentCountImageLbl.text = "1 / "
+        }
+       
         //ScrollView functionality
         return cell;
     }

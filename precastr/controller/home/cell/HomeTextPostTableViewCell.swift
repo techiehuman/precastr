@@ -15,7 +15,7 @@ class HomeTextPostTableViewCell: UITableViewCell,UIScrollViewDelegate {
         // Initialization code
         //self.postImageCollectionView.register(UINib.init(nibName: "PostImageCollectionViewCell", bundle: Bundle.main), forCellWithReuseIdentifier: "PostImageCollectionViewCell")
         self.imageGalleryScrollView.delegate = self
-        self.imageCounterView.layer.cornerRadius = 50
+        self.imageCounterView.layer.cornerRadius = 10
     }
 
     @IBOutlet weak var profilePicImageView: UIImageView!
@@ -48,6 +48,11 @@ class HomeTextPostTableViewCell: UITableViewCell,UIScrollViewDelegate {
     
     @IBOutlet weak var imageCounterView: UIView!
     
+    @IBOutlet weak var currentCountImageLbl : UILabel!
+    
+    @IBOutlet weak var totalCountImageLbl : UILabel!
+    
+    var currentCount : Int!
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
@@ -83,9 +88,10 @@ class HomeTextPostTableViewCell: UITableViewCell,UIScrollViewDelegate {
             imageGalleryScrollView.contentSize.width = imageGalleryScrollView.frame.width * CGFloat(i + 1);
 
             imageGalleryScrollView.addSubview(setupSlideScrollView)
+            self.currentCount = i as! Int
         }
         
-        imageGalleryScrollView.addSubview(imageCounterView);
+        //imageGalleryScrollView.addSubview(imageCounterView);
     }
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
