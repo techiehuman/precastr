@@ -62,28 +62,31 @@ class CreatePostViewController: UIViewController, UIImagePickerControllerDelegat
         navigationItem.rightBarButtonItem?.tintColor = UIColor(red: 12/255, green: 111/255, blue: 233/255, alpha: 1)
         self.tabBarController?.tabBar.isHidden = false;
         
-        let jsonURL = "user/get_user_details/format/json";
-        postArray["user_id"] = String(loggedInUser.userId)
-        UserService().postDataMethod(jsonURL: jsonURL, postData: postArray, complete: {(response) in
-            print(response);
-            let modeArray = response.value(forKey: "data") as! NSDictionary;
-            let tokens  = modeArray.value(forKey: "tokens") as! NSArray
-            for mode in tokens{
-                var modeDict = mode as! NSDictionary;
-                // self.moderators.append(String((modeDict.value(forKey: "username") as! NSString) as String)!);
-                print(modeDict.value(forKey: "type") as! String);
-                if(modeDict.value(forKey: "type") as! String == "Facebook") {
-                    self.facebookExists = true
+        
+        DispatchQueue.global(qos: .background).async {
+            let jsonURL = "user/get_user_details/format/json";
+            self.postArray["user_id"] = String(self.loggedInUser.userId)
+            UserService().postDataMethod(jsonURL: jsonURL, postData: self.postArray, complete: {(response) in
+                print(response);
+                let modeArray = response.value(forKey: "data") as! NSDictionary;
+                let tokens  = modeArray.value(forKey: "tokens") as! NSArray
+                for mode in tokens{
+                    var modeDict = mode as! NSDictionary;
+                    // self.moderators.append(String((modeDict.value(forKey: "username") as! NSString) as String)!);
+                    print(modeDict.value(forKey: "type") as! String);
+                    if(modeDict.value(forKey: "type") as! String == "Facebook") {
+                        self.facebookExists = true
+                    }
+                    if(modeDict.value(forKey: "type") as! String == "Twitter") {
+                        self.twitterExists = true
+                    }
+                    
                 }
-                if(modeDict.value(forKey: "type") as! String == "Twitter") {
-                    self.twitterExists = true
-                }
+                print(self.facebookExists)
+                print(self.twitterExists)
                 
-            }
-            print(self.facebookExists)
-            print(self.twitterExists)
-            
-        });
+            });
+        }
     }
     /*
     // MARK: - Navigation
@@ -163,7 +166,7 @@ class CreatePostViewController: UIViewController, UIImagePickerControllerDelegat
                 option.isSynchronous = true
                 
                 
-                manager.requestImage(for: SelectedAssets[i], targetSize: CGSize(width: 200, height: 200), contentMode: .aspectFill, options: option, resultHandler: {(result, info)->Void in
+                manager.requestImage(for: SelectedAssets[i], targetSize: CGSize(width: 512, height: 512), contentMode: .aspectFill, options: option, resultHandler: {(result, info)->Void in
                     thumbnail = result!
                     
                 })
@@ -178,7 +181,11 @@ class CreatePostViewController: UIViewController, UIImagePickerControllerDelegat
             // self.imgView.animationImages = self.PhotoArray
             //self.imgView.animationDuration = 3.0
             //self.imgView.startAnimating()
-            
+            DispatchQueue.main.async {
+
+                self.showToast(message: "\(self.SelectedAssets.count) Images Uploaded")
+                
+            }
         }
     }
     

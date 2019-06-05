@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="a6n-jY-43O">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="a6n-jY-43O">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -589,7 +589,7 @@
                                                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.16" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Mandeep Singh" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v1D-b1-FX9">
-                                                    <rect key="frame" x="73" y="21" width="280" height="21"/>
+                                                    <rect key="frame" x="73" y="19" width="280" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" name="VisbyCF-Medium" family="Visby CF" pointSize="14"/>
                                                     <color key="textColor" red="0.13333333333333333" green="0.13333333333333333" blue="0.13333333333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -822,10 +822,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="PS6-cN-Uqg">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="PS6-cN-Uqg">
                                 <rect key="frame" x="0.0" y="125" width="375" height="542"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <connections>
                                     <outlet property="dataSource" destination="NcG-Ea-4eO" id="Xuq-zf-puN"/>
                                     <outlet property="delegate" destination="NcG-Ea-4eO" id="1zL-oE-ZzU"/>
@@ -1066,7 +1067,7 @@
             </objects>
             <point key="canvasLocation" x="-199" y="3838"/>
         </scene>
-        <!--View Controller-->
+        <!--Notifications-->
         <scene sceneID="C4h-j3-dFo">
             <objects>
                 <viewController id="2eh-vb-lrP" sceneMemberID="viewController">
@@ -1076,7 +1077,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="G62-bH-lao"/>
                     </view>
-                    <navigationItem key="navigationItem" id="kUz-kA-5EB"/>
+                    <navigationItem key="navigationItem" title="Notifications" id="kUz-kA-5EB"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="p5g-pN-TbX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1337,11 +1338,11 @@
         <image name="add-new" width="18" height="18"/>
         <image name="add-new-black" width="20" height="20"/>
         <image name="back" width="5" height="9"/>
-        <image name="chat" width="23" height="21"/>
+        <image name="chat" width="23" height="21.5"/>
         <image name="clips" width="16" height="14"/>
         <image name="facebook-group" width="15" height="15"/>
         <image name="faq" width="18" height="18"/>
-        <image name="hold" width="16" height="20"/>
+        <image name="hold" width="16.333333969116211" height="20.333333969116211"/>
         <image name="home" width="18" height="18"/>
         <image name="home-black" width="18" height="18"/>
         <image name="logo" width="138" height="138"/>
@@ -1349,8 +1350,8 @@
         <image name="membership" width="18" height="18"/>
         <image name="my-account" width="18" height="18"/>
         <image name="my-account-black" width="18" height="18"/>
-        <image name="passage-of-time" width="20" height="18"/>
-        <image name="sent-email" width="16" height="14"/>
+        <image name="passage-of-time" width="20" height="18.666666030883789"/>
+        <image name="sent-email" width="16" height="14.5"/>
         <image name="twitter-group" width="15" height="15"/>
     </resources>
     <inferredMetricsTieBreakers>

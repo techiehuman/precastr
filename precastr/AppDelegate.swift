@@ -26,7 +26,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UITabBar.appearance().tintColor = UIColor.white;
         UINavigationBar.appearance().barTintColor = UIColor.init(red:12/255, green:111/255, blue: 233/255, alpha: 1)
         UINavigationBar.appearance().tintColor = UIColor.white
-        UINavigationBar.appearance().titleTextAttributes = [NSAttributedStringKey.foregroundColor : UIColor.white]
+        
+        let navbarFont = UIFont(name: "VisbyCF-Medium", size: 16)!
+        UINavigationBar.appearance().titleTextAttributes = [NSAttributedStringKey.font: navbarFont, NSAttributedStringKey.foregroundColor : UIColor.white]
+        
+        
+        let tabBarFont = UIFont(name: "VisbyCF-Medium", size: 10)!
+        UITabBarItem.appearance().setTitleTextAttributes([NSAttributedStringKey.font: tabBarFont], for: .normal)
+        UITabBarItem.appearance().setTitleTextAttributes([NSAttributedStringKey.font: tabBarFont], for: .selected)
+
         UITabBar.appearance().unselectedItemTintColor = UIColor.init(red: 34/255, green: 34/255, blue: 34/255, alpha: 1);
         return true
 
