@@ -47,6 +47,7 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         loggedInUser = User().loadUserDataFromUserDefaults(userDataDict : setting);
         
         
+        
 
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -116,7 +117,7 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         }
         
         if (postImage != nil && postImage.count > 0) {
-            return (CGFloat(340 + heightToAdd))
+            return (CGFloat(380 + heightToAdd))
         }
         return (CGFloat(110 + heightToAdd))
     }
@@ -250,9 +251,10 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         }
         cell.setupSlideScrollView()
         
-        cell.pageControl.numberOfPages = self.slides.count
+        cell.pageControl.numberOfPages = cell.imagesArray.count
         cell.pageControl.currentPage = 0
         cell.contentView.bringSubview(toFront: cell.pageControl)
+        
         //ScrollView functionality
         return cell;
     }

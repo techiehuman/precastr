@@ -5,10 +5,13 @@ target 'precastr' do
   # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
   use_frameworks!
   
-pod 'FBSDKCoreKit'
-pod 'FBSDKLoginKit'
-pod 'FBSDKShareKit'
-pod 'FBSDKPlacesKit'
+pod 'FacebookSDK'
+pod 'FacebookSDK/LoginKit'
+pod 'FacebookSDK/ShareKit'
+pod 'FacebookSDK/PlacesKit'
+  
+pod 'FBSDKMessengerShareKit'
+
 pod 'TwitterKit'
 pod 'Alamofire'
 pod 'SDWebImage', '~> 4.0'

@@ -15,6 +15,7 @@ class HomeTextPostTableViewCell: UITableViewCell,UIScrollViewDelegate {
         // Initialization code
         //self.postImageCollectionView.register(UINib.init(nibName: "PostImageCollectionViewCell", bundle: Bundle.main), forCellWithReuseIdentifier: "PostImageCollectionViewCell")
         self.imageGalleryScrollView.delegate = self
+        self.imageCounterView.layer.cornerRadius = 50
     }
 
     @IBOutlet weak var profilePicImageView: UIImageView!
@@ -43,6 +44,10 @@ class HomeTextPostTableViewCell: UITableViewCell,UIScrollViewDelegate {
     @IBOutlet weak var imageGalleryScrollView: UIScrollView!
     
     @IBOutlet weak var pageControl: UIPageControl!
+    
+    
+    @IBOutlet weak var imageCounterView: UIView!
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
@@ -79,6 +84,8 @@ class HomeTextPostTableViewCell: UITableViewCell,UIScrollViewDelegate {
 
             imageGalleryScrollView.addSubview(setupSlideScrollView)
         }
+        
+        imageGalleryScrollView.addSubview(imageCounterView);
     }
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -99,4 +106,6 @@ class HomeTextPostTableViewCell: UITableViewCell,UIScrollViewDelegate {
         let percentageVerticalOffset: CGFloat = currentVerticalOffset / maximumVerticalOffset
         
     }
+    
+    
 }
