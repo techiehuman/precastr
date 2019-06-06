@@ -137,7 +137,20 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         let cell: HomeTextPostTableViewCell = tableView.dequeueReusableCell(withIdentifier: "HomeTextPostTableViewCell", for: indexPath) as! HomeTextPostTableViewCell;
             
             
-            cell.postTextLabel.text = String(homeObject.value(forKey: "post_description") as! String);
+            //cell.postTextLabel.text = String(homeObject.value(forKey: "post_description") as! String);
+            let attributedString = NSMutableAttributedString(string: String(homeObject.value(forKey: "post_description") as! String))
+            
+            // *** Create instance of `NSMutableParagraphStyle`
+            let paragraphStyle = NSMutableParagraphStyle()
+            
+            // *** set LineSpacing property in points ***
+            paragraphStyle.lineSpacing = 2 // Whatever line spacing you want in points
+            
+            // *** Apply attribute to string ***
+            attributedString.addAttribute(NSAttributedString.Key.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, attributedString.length))
+            
+            // *** Set Attributed String to your label ***
+            cell.postTextLabel.attributedText = attributedString
             let postImages = homeObject.value(forKey: "post_images") as! NSArray
             if (postImages.count > 0) {
                 cell.imagesArray = [String]();
@@ -191,12 +204,22 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             
             if (facebookIconHidden == true) {
                 cell.sourceImageFacebook.isHidden = true;
+            } else {
+                cell.sourceImageFacebook.isHidden = false;
             }
             if (twitterIconHidden == true) {
                 cell.sourceImageTwitter.isHidden = true;
+            } else {
+                cell.sourceImageTwitter.isHidden = false;
             }
             if (twitterIconHidden == true && facebookIconHidden == false) {
-                cell.sourceImageFacebook.frame = CGRect.init(x: 2, y: 3, width: 15, height: 15)
+                cell.sourceImageFacebook.frame = CGRect.init(x: 0, y: 5, width: 15, height: 15)
+            } else if (twitterIconHidden == false && facebookIconHidden == true) {
+                cell.sourceImageTwitter.frame = CGRect.init(x: 0, y: 5, width: 15, height: 15)
+
+            } else if (twitterIconHidden == true && facebookIconHidden == true) {
+                cell.sourceImageTwitter.frame = CGRect.init(x: 0, y: 3, width: 15, height: 15)
+                cell.sourceImageFacebook.frame = CGRect.init(x: 20, y: 3, width: 15, height: 15)
             }
             
             var imageStatus = ""
@@ -250,7 +273,21 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             return cell;
         }else if (loggedInUser.isCastr == 2) { // moderator
              let cell: ModeratorCastsTableViewCell = tableView.dequeueReusableCell(withIdentifier: "ModeratorCastsTableViewCell", for: indexPath) as! ModeratorCastsTableViewCell;
-            cell.postTextLabel.text = String(homeObject.value(forKey: "post_description") as! String);
+            //cell.postTextLabel.text = String(homeObject.value(forKey: "post_description") as! String);
+            let attributedString = NSMutableAttributedString(string: String(homeObject.value(forKey: "post_description") as! String))
+            
+            // *** Create instance of `NSMutableParagraphStyle`
+            let paragraphStyle = NSMutableParagraphStyle()
+            
+            // *** set LineSpacing property in points ***
+            paragraphStyle.lineSpacing = 2 // Whatever line spacing you want in points
+            
+            // *** Apply attribute to string ***
+            attributedString.addAttribute(NSAttributedString.Key.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, attributedString.length))
+            
+            // *** Set Attributed String to your label ***
+            cell.postTextLabel.attributedText = attributedString
+            
             let postImages = homeObject.value(forKey: "post_images") as! NSArray
             if (postImages.count > 0) {
                 cell.imagesArray = [String]();
