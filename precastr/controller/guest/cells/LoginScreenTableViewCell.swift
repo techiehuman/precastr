@@ -35,11 +35,11 @@ class LoginScreenTableViewCell: UITableViewCell, UITextFieldDelegate {
         let image = UIImage(named: "email");
         imageView.image = image;
         let iconContainerView: UIView = UIView(frame:
-            CGRect(x: 30, y: 0, width: 30, height: 30))
+            CGRect(x: 20, y: 20, width: 40, height: 40))
         iconContainerView.addSubview(imageView)
         self.emailTextField.leftView = iconContainerView
         self.emailTextField.leftViewMode = .always
-
+       
         let lineView = UIView(frame: CGRect(x: 0, y: self.signUpBtn.frame.size.height-6, width: self.signUpBtn.frame.size.width, height: 1))
         lineView.backgroundColor = UIColor.white
         self.signUpBtn.addSubview(lineView)
