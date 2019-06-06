@@ -92,7 +92,16 @@ class VerificationModeratorViewController: UIViewController,UITextFieldDelegate 
             let jsonURL = "user/verify_user_otp/format/json";
             UserService().postDataMethod(jsonURL: jsonURL,postData:postData,complete:{(response) in
                 print(response)
+                 if (Int(response.value(forKey: "status") as! String)! == 0) {
+                    let message = response.value(forKey: "message") as! String;
+                    
+                    let alert = UIAlertController.init(title: "Error", message: message, preferredStyle: .alert);
+                    alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil));
+                    self.present(alert, animated: true)
+                    
+                 }else{
                 UIApplication.shared.keyWindow?.rootViewController = HomeViewController.MainViewController();
+                }
             });
         }
         
