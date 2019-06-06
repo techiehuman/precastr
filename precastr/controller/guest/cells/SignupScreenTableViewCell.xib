@@ -173,20 +173,13 @@
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FnW-CQ-5d8">
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FnW-CQ-5d8">
                                         <rect key="frame" x="197" y="2" width="40" height="28"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                                        <state key="normal">
-                                            <attributedString key="attributedTitle">
-                                                <fragment content="Login">
-                                                    <attributes>
-                                                        <color key="NSColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                        <font key="NSFont" metaFont="system" size="16"/>
-                                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                                        <integer key="NSUnderline" value="1"/>
-                                                    </attributes>
-                                                </fragment>
-                                            </attributedString>
+                                        <fontDescription key="fontDescription" name="VisbyCF-Regular" family="Visby CF" pointSize="16"/>
+                                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <state key="normal" title="Login">
+                                            <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <connections>
                                             <action selector="LoginBtnClicked:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="Jcq-Je-wVt"/>
@@ -232,6 +225,7 @@
                 <outlet property="cameraImage" destination="9KM-sY-xGb" id="WXZ-D5-hkR"/>
                 <outlet property="cameraUIView" destination="VK9-a9-4eb" id="3SU-05-faf"/>
                 <outlet property="emailTextField" destination="Dhe-Hy-usf" id="hy0-hN-nxP"/>
+                <outlet property="loginBtn" destination="FnW-CQ-5d8" id="bva-MU-U3p"/>
                 <outlet property="nameTextField" destination="7Ww-yh-NDN" id="hd7-Io-LgD"/>
                 <outlet property="passwordTextField" destination="fE2-nq-zaO" id="won-jq-J4i"/>
                 <outlet property="uploadImage" destination="PDl-Tk-gDj" id="aKl-N6-wdd"/>

@@ -83,7 +83,7 @@ extension Date {
         let fDate = apiDateFormatter.date(from: dateStr)
         
         let dateFormatter = DateFormatter();
-        dateFormatter.dateFormat = "dd EEEE, yyyy";
+        dateFormatter.dateFormat = "dd MMMM, yyyy";
         if (fDate == nil) {
             return dateFormatter.string(from: Date());
         }

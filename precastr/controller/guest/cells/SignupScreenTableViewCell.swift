@@ -23,6 +23,7 @@ class SignupScreenTableViewCell: UITableViewCell, UITextFieldDelegate, SignupCel
     @IBOutlet weak var uploadImage: UIImageView!
     @IBOutlet weak var cameraImage: UIImageView!
     
+    @IBOutlet weak var loginBtn: UIButton!
     var signupScreenViewDelegate: SignupScreenViewController!;
     var agreeCheckBox = false
 
@@ -74,6 +75,11 @@ class SignupScreenTableViewCell: UITableViewCell, UITextFieldDelegate, SignupCel
         passwordIconContainerView.addSubview(passwordImageView)
         self.passwordTextField.leftView = passwordIconContainerView
         self.passwordTextField.leftViewMode = .always
+        
+        let lineView = UIView(frame: CGRect(x: 2, y: self.loginBtn.frame.size.height-6, width: self.loginBtn.frame.size.width-4, height: 1))
+        lineView.backgroundColor = UIColor.white
+        self.loginBtn.addSubview(lineView)
+
         
         let imageTapGesture = UITapGestureRecognizer.init(target: self, action: #selector(imageUploadClicked))
         cameraUIView.addGestureRecognizer(imageTapGesture);

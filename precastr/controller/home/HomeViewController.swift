@@ -113,20 +113,20 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         let homeObject = self.homePosts[indexPath.row] as! NSDictionary ;
         let postImage = homeObject.value(forKey: "post_images") as! NSArray
-        var heightToAdd = 0;
         if (loggedInUser.isCastr == 2) {
             
             if (postImage != nil && postImage.count > 0) {
-                return 410
+                return 420
             } else {
-                return 140
+                return 165
             }
+        } else {
+            if (postImage != nil && postImage.count > 0) {
+                return 390
+            }
+            return 130
         }
-        
-        if (postImage != nil && postImage.count > 0) {
-            return (CGFloat(380 + heightToAdd))
-        }
-        return (CGFloat(110 + heightToAdd))
+        return 0;
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -154,30 +154,10 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 cell.imageGalleryScrollView.isHidden = true;
             }
             
-            if (loggedInUser.isCastr == 1) { //If user is a caster
-                cell.profilePicImageView.isHidden = true
-                cell.socialIconsView.frame = CGRect.init(x: 15, y: 20, width: 35, height: 25)
-                cell.postTextLabel.frame = CGRect.init(x: 15, y: 45, width: (cell.frame.width - 15), height: 54)
-                
-                if (postImages.count > 0) {
-                    cell.imageGalleryScrollView.frame = CGRect.init(x: 0, y: 110, width: cell.frame.width, height: 218);
-                    cell.imageGalleryScrollView.isHidden = false;
-                } else {
-                    cell.imageGalleryScrollView.isHidden = true;
-                }
+            if (postImages.count > 0) {
+                cell.imageGalleryScrollView.isHidden = false;
             } else {
-                
-                //If user is a moderator
-                cell.profilePicImageView.isHidden = false
-                cell.socialIconsView.frame = CGRect.init(x: 65, y: 20, width: 35, height: 25)
-                cell.postTextLabel.frame = CGRect.init(x: 15, y: 75, width: (cell.frame.width - 15), height: 54)
-                if (postImages.count > 0) {
-                    cell.imageGalleryScrollView.frame = CGRect.init(x: 0, y: 130, width: cell.frame.width, height: 218);
-                    cell.imageGalleryScrollView.isHidden = false;
-                } else {
-                    cell.imageGalleryScrollView.isHidden = true;
-                }
-                
+                cell.imageGalleryScrollView.isHidden = true;
             }
             
             //cell.profileImage.roundImageView();
@@ -245,30 +225,7 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             cell.profileLabel.text = "\((status))\(pipe)"
             cell.dateLabel.text = Date().ddspEEEEcmyyyy(dateStr: homeObject.value(forKey: "created_on") as! String)
             
-            //ScrollView functionality
-            //self.slides = cell.createSlides()
-            if(homeObject["username"] != nil){
-                let profileUserName = homeObject.value(forKey: "username") as! String;
-                let profilePic = homeObject.value(forKey: "profile_pic") as! String;
-                let name =  homeObject.value(forKey: "name") as! String;
-                
-                if (name != "") {
-                    cell.usernameLabel.text = String(profileUserName)
-                    cell.usernameLabel.isHidden = false
-                } else if(profileUserName != ""){
-                    cell.usernameLabel.text = String(profileUserName)
-                    cell.usernameLabel.isHidden = false
-                }
-                
-                if(profilePic != "") {
-                    cell.profilePicImageView.sd_setImage(with: URL(string: profilePic), placeholderImage: UIImage.init(named: "Moderate Casts"));
-                    cell.profilePicImageView.isHidden = false
-                    cell.profilePicImageView.roundImageView()
-                }
-            }
             cell.setupSlideScrollView()
-            print("current")
-            print(cell.pageControl.currentPage)
             cell.pageControl.numberOfPages = cell.imagesArray.count
             cell.pageControl.currentPage = 0
             cell.contentView.bringSubview(toFront: cell.pageControl)
