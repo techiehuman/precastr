@@ -75,6 +75,7 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         navigationItem.rightBarButtonItem = barButton;
         navigationItem.rightBarButtonItem?.tintColor = UIColor(red: 12/255, green: 111/255, blue: 233/255, alpha: 1)
 
+        noPostsText.text = "Loading, please wait...";
         if (loggedInUser.isCastr == 1) {
             self.loadUserPosts();
         } else if (loggedInUser.isCastr == 2) {
@@ -314,6 +315,8 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 self.socialPostList.reloadData();
 
             } else {
+                self.noPostsText.text = "You do not have any casts, please check on \"Add New\" in order to create a new Cast !";
+
                 self.noPostsText.isHidden = false;
                 self.noPostsIcon.isHidden = false;
 
@@ -344,6 +347,7 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 self.socialPostList.reloadData();
                 
             } else {
+                self.noPostsText.text = "You do not have any casts, please check on \"Add New\" in order to create a new Cast !";
                 self.noPostsText.isHidden = false;
                 self.noPostsIcon.isHidden = false;
 

@@ -41,7 +41,7 @@ class LoginScreenTableViewCell: UITableViewCell, UITextFieldDelegate {
         self.emailTextField.leftView = iconContainerView
         self.emailTextField.leftViewMode = .always
        
-        let lineView = UIView(frame: CGRect(x: 0, y: self.signUpBtn.frame.size.height-6, width: self.signUpBtn.frame.size.width, height: 1))
+        let lineView = UIView(frame: CGRect(x: 2, y: self.signUpBtn.frame.size.height-6, width: self.signUpBtn.frame.size.width-4, height: 1))
         lineView.backgroundColor = UIColor.white
         self.signUpBtn.addSubview(lineView)
       

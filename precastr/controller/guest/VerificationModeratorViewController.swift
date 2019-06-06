@@ -83,12 +83,18 @@ class VerificationModeratorViewController: UIViewController,UITextFieldDelegate 
         var postData = [String: Any]();
         postData["user_id"] = self.loggedInUser.userId
         let otp = "\(self.verifyCode1.text!)\(self.verifyCode2.text!)\(self.verifyCode3.text!)\(self.verifyCode4.text!)";
-        postData["otp"] = String(otp)
-        print(otp)
-        let jsonURL = "user/verify_user_otp/format/json";
-        UserService().postDataMethod(jsonURL: jsonURL,postData:postData,complete:{(response) in
-            print(response)
-           UIApplication.shared.keyWindow?.rootViewController = HomeViewController.MainViewController();
-        });
+        if (otp.count < 4) {
+            let alert = UIAlertController.init(title: "Error", message: "Please enter the code", preferredStyle: .alert);
+            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil));
+            self.present(alert, animated: true)
+        } else {
+            postData["otp"] = String(otp)
+            let jsonURL = "user/verify_user_otp/format/json";
+            UserService().postDataMethod(jsonURL: jsonURL,postData:postData,complete:{(response) in
+                print(response)
+                UIApplication.shared.keyWindow?.rootViewController = HomeViewController.MainViewController();
+            });
+        }
+        
     }
 }

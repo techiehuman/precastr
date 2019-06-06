@@ -34,7 +34,7 @@ class SignupScreenTableViewCell: UITableViewCell, UITextFieldDelegate, SignupCel
         self.agreecheckBoxBtn.layer.borderWidth = 1
         self.agreecheckBoxBtn.layer.borderColor = UIColor.white.cgColor
         self.cameraUIView.layer.cornerRadius = self.cameraUIView.frame.height/2
-        self.nameTextField.attributedPlaceholder = NSAttributedString(string: " Name", attributes: [NSAttributedStringKey.foregroundColor : UIColor.white ])
+        self.nameTextField.attributedPlaceholder = NSAttributedString(string: "Name", attributes: [NSAttributedStringKey.foregroundColor : UIColor.white ])
         
         self.nameTextField.layer.borderColor = UIColor.white.cgColor
         self.nameTextField.layer.borderWidth = 0.5
@@ -48,7 +48,7 @@ class SignupScreenTableViewCell: UITableViewCell, UITextFieldDelegate, SignupCel
         self.nameTextField.leftViewMode = .always
         // self.nameTextField.leftView = UIView(frame: CGRect(x: 0, y: 0, width:35, height: self.nameTextField.frame.height))
         
-        self.emailTextField.attributedPlaceholder = NSAttributedString(string: " Email Address", attributes: [NSAttributedStringKey.foregroundColor : UIColor.white ])
+        self.emailTextField.attributedPlaceholder = NSAttributedString(string: "Email Address", attributes: [NSAttributedStringKey.foregroundColor : UIColor.white ])
         self.emailTextField.layer.borderColor = UIColor.white.cgColor
         self.emailTextField.layer.borderWidth = 0.5
         let emailIconContainerView: UIView = UIView(frame:
@@ -61,7 +61,7 @@ class SignupScreenTableViewCell: UITableViewCell, UITextFieldDelegate, SignupCel
         self.emailTextField.leftViewMode = .always
         // self.emailTextField.leftView = UIView(frame: CGRect(x: 0, y: 0, width:15, height: self.emailTextField.frame.height))
         
-        self.passwordTextField.attributedPlaceholder = NSAttributedString(string: " Password", attributes: [NSAttributedStringKey.foregroundColor : UIColor.white ])
+        self.passwordTextField.attributedPlaceholder = NSAttributedString(string: "Password", attributes: [NSAttributedStringKey.foregroundColor : UIColor.white ])
         self.passwordTextField.layer.borderColor = UIColor.white.cgColor
         self.passwordTextField.layer.borderWidth = 0.5
         self.passwordTextField.leftView = UIView(frame: CGRect(x: 0, y: 0, width:35, height: self.passwordTextField.frame.height))
@@ -112,11 +112,17 @@ class SignupScreenTableViewCell: UITableViewCell, UITextFieldDelegate, SignupCel
     @IBAction func agreeCheckboxBtnClicked(_ sender: Any) {
         if(agreeCheckBox==false){
             agreeCheckBox = true
+            self.agreecheckBoxBtn.layer.backgroundColor = UIColor.white.cgColor
+           self.agreecheckBoxBtn.layer.borderWidth = 0
             let image = UIImage(named: "checkbox")
             self.agreecheckBoxBtn.setImage(image, for : .normal)
+           
         }else{
             agreeCheckBox = false
             self.agreecheckBoxBtn.setImage(nil, for: .normal)
+            self.agreecheckBoxBtn.layer.borderWidth = 1
+            self.agreecheckBoxBtn.layer.backgroundColor = UIColor.clear.cgColor
+            self.agreecheckBoxBtn.layer.borderColor = UIColor.white.cgColor
             
         }
         
