@@ -170,10 +170,6 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             }
             
         }
-
-        
-        
-        
         
         //cell.profileImage.roundImageView();
         var facebookIconHidden = true;
@@ -244,17 +240,34 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             }
             
             if(profilePic != "") {
-                cell.profilePicImageView.sd_setImage(with: URL(string: profilePic), placeholderImage: UIImage.init(named: "profile"));
+                cell.profilePicImageView.sd_setImage(with: URL(string: profilePic), placeholderImage: UIImage.init(named: "Moderate Casts"));
                 cell.profilePicImageView.isHidden = false
                 cell.profilePicImageView.roundImageView()
             }
         }
         cell.setupSlideScrollView()
-        
+        print("current")
+        print(cell.pageControl.currentPage)
         cell.pageControl.numberOfPages = cell.imagesArray.count
         cell.pageControl.currentPage = 0
         cell.contentView.bringSubview(toFront: cell.pageControl)
-        
+        if(cell.imagesArray.count > 1){
+            cell.imageCounterView.isHidden = false
+            cell.totalCountImageLbl.text = " \(cell.imagesArray.count)";
+            cell.currentCountImageLbl.text = "1"
+            
+            cell.imageCounterView.isHidden = false
+
+            //If logged in user is a caster
+            //70 width of counter view
+            //20 Padding from right
+            //20 from top of image scroll view
+            cell.imageCounterView.frame = CGRect.init(x: (cell.frame.width - (60 + 20) ), y: (cell.imageGalleryScrollView.frame.origin.y + 20), width: 60, height: 25)
+
+        } else {
+            cell.imageCounterView.isHidden = true
+        }
+       
         //ScrollView functionality
         return cell;
     }

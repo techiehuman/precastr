@@ -168,7 +168,7 @@ extension ModeratorViewController: UITableViewDelegate, UITableViewDataSource {
         print("******")
         print(String(moderatorObject.username))
         cell.profileLabel.text = String(moderatorObject.username);
-        cell.profileImageView.sd_setImage(with: URL(string: moderatorObject.profilePic), placeholderImage: UIImage(named: "profile"));
+        cell.profileImageView.sd_setImage(with: URL(string: moderatorObject.profilePic), placeholderImage: UIImage(named: "Moderate Casts"));
        
         cell.profileImageView.roundImageView();
         cell.profileImageView.clipsToBounds = true

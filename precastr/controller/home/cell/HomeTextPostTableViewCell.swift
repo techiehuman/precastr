@@ -15,7 +15,7 @@ class HomeTextPostTableViewCell: UITableViewCell,UIScrollViewDelegate {
         // Initialization code
         //self.postImageCollectionView.register(UINib.init(nibName: "PostImageCollectionViewCell", bundle: Bundle.main), forCellWithReuseIdentifier: "PostImageCollectionViewCell")
         self.imageGalleryScrollView.delegate = self
-        self.imageCounterView.layer.cornerRadius = 50
+        self.imageCounterView.layer.cornerRadius = 10
     }
 
     @IBOutlet weak var profilePicImageView: UIImageView!
@@ -48,6 +48,11 @@ class HomeTextPostTableViewCell: UITableViewCell,UIScrollViewDelegate {
     
     @IBOutlet weak var imageCounterView: UIView!
     
+    @IBOutlet weak var currentCountImageLbl : UILabel!
+    
+    @IBOutlet weak var totalCountImageLbl : UILabel!
+    
+    var currentCount : Int!
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
@@ -76,16 +81,17 @@ class HomeTextPostTableViewCell: UITableViewCell,UIScrollViewDelegate {
             
             let setupSlideScrollView = UIImageView();
             setupSlideScrollView.sd_setImage(with: URL(string: imagesArray[i]), placeholderImage: UIImage.init(named: "post-image-placeholder"));
-            setupSlideScrollView.contentMode = .scaleAspectFill;
+            setupSlideScrollView.contentMode = .scaleAspectFit;
             let xposition = self.contentView.frame.width * CGFloat(i);
             setupSlideScrollView.frame = CGRect.init(x: xposition, y: 0, width: imageGalleryScrollView.frame.width, height: imageGalleryScrollView.frame.height);
             
             imageGalleryScrollView.contentSize.width = imageGalleryScrollView.frame.width * CGFloat(i + 1);
 
             imageGalleryScrollView.addSubview(setupSlideScrollView)
+            self.currentCount = i as! Int
         }
         
-        imageGalleryScrollView.addSubview(imageCounterView);
+        //imageGalleryScrollView.addSubview(imageCounterView);
     }
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -94,7 +100,7 @@ class HomeTextPostTableViewCell: UITableViewCell,UIScrollViewDelegate {
         let pageIndex = round(scrollView.contentOffset.x/contentView.frame.width)
         pageControl.currentPage = Int(pageIndex)
         print(pageIndex)
-
+        self.currentCountImageLbl.text = "\(Int(pageIndex+1))"
         let maximumHorizontalOffset: CGFloat = scrollView.contentSize.width - scrollView.frame.width
         let currentHorizontalOffset: CGFloat = scrollView.contentOffset.x
         
