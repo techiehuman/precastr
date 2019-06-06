@@ -44,7 +44,7 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         }
         refreshControl.addTarget(self, action: #selector(refreshPostsData(_:)), for: .valueChanged);
         socialPostList.register(UINib(nibName: "HomeTextPostTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "HomeTextPostTableViewCell")
-        
+        socialPostList.register(UINib(nibName: "ModeratorCastsTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "ModeratorCastsTableViewCell")
         loggedInUser = User().loadUserDataFromUserDefaults(userDataDict : setting);
         
         
@@ -115,7 +115,12 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         let postImage = homeObject.value(forKey: "post_images") as! NSArray
         var heightToAdd = 0;
         if (loggedInUser.isCastr == 2) {
-            heightToAdd = 30;//height for name
+            
+            if (postImage != nil && postImage.count > 0) {
+                return 410
+            } else {
+                return 140
+            }
         }
         
         if (postImage != nil && postImage.count > 0) {
@@ -128,161 +133,323 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         
         let homeObject = self.homePosts[indexPath.row] as! NSDictionary ;
         
+        if (loggedInUser.isCastr == 1) { // caster
         let cell: HomeTextPostTableViewCell = tableView.dequeueReusableCell(withIdentifier: "HomeTextPostTableViewCell", for: indexPath) as! HomeTextPostTableViewCell;
-        
-        cell.postTextLabel.text = String(homeObject.value(forKey: "post_description") as! String);
-        let postImages = homeObject.value(forKey: "post_images") as! NSArray
-        if (postImages.count > 0) {
-            cell.imagesArray = [String]();
-            cell.imageGalleryScrollView.isHidden = false
-            for postImg in postImages {
-                let postImageURL = postImg as! NSDictionary;
-                let imgUrl: String = postImageURL.value(forKey: "image") as! String;
-                cell.imagesArray.append(imgUrl);
-            }
-            //  cell.sourceImageFacebook.sd_setImage(with: URL(string: imgUrl), placeholderImage: UIImage(named: "profile"));
-            //cell.sourceImageFacebook.layer.masksToBounds = false
-        } else {
-            cell.imagesArray = [String]();
-            cell.imageGalleryScrollView.isHidden = true;
-        }
-        
-        if (loggedInUser.isCastr == 1) { //If user is a caster
-            cell.profilePicImageView.isHidden = true
-            cell.socialIconsView.frame = CGRect.init(x: 15, y: 20, width: 35, height: 25)
-            cell.postTextLabel.frame = CGRect.init(x: 15, y: 45, width: (cell.frame.width - 15), height: 54)
             
-            if (postImages.count > 0) {
-                cell.imageGalleryScrollView.frame = CGRect.init(x: 0, y: 110, width: cell.frame.width, height: 218);
-                cell.imageGalleryScrollView.isHidden = false;
-            } else {
-                cell.imageGalleryScrollView.isHidden = true;
-            }
-        } else {
             
-            //If user is a moderator
-            cell.profilePicImageView.isHidden = false
-            cell.socialIconsView.frame = CGRect.init(x: 65, y: 20, width: 35, height: 25)
-            cell.postTextLabel.frame = CGRect.init(x: 15, y: 75, width: (cell.frame.width - 15), height: 54)
+            cell.postTextLabel.text = String(homeObject.value(forKey: "post_description") as! String);
+            let postImages = homeObject.value(forKey: "post_images") as! NSArray
             if (postImages.count > 0) {
-                cell.imageGalleryScrollView.frame = CGRect.init(x: 0, y: 130, width: cell.frame.width, height: 218);
-                cell.imageGalleryScrollView.isHidden = false;
+                cell.imagesArray = [String]();
+                cell.imageGalleryScrollView.isHidden = false
+                for postImg in postImages {
+                    let postImageURL = postImg as! NSDictionary;
+                    let imgUrl: String = postImageURL.value(forKey: "image") as! String;
+                    cell.imagesArray.append(imgUrl);
+                }
+                //  cell.sourceImageFacebook.sd_setImage(with: URL(string: imgUrl), placeholderImage: UIImage(named: "profile"));
+                //cell.sourceImageFacebook.layer.masksToBounds = false
             } else {
+                cell.imagesArray = [String]();
                 cell.imageGalleryScrollView.isHidden = true;
             }
             
-        }
-        
-        //cell.profileImage.roundImageView();
-        var facebookIconHidden = true;
-        var twitterIconHidden = true;
-        let sourcePlatformArray = homeObject.value(forKey: "social_media") as! NSArray
-        if (sourcePlatformArray != nil && sourcePlatformArray.count > 0) {
+            if (loggedInUser.isCastr == 1) { //If user is a caster
+                cell.profilePicImageView.isHidden = true
+                cell.socialIconsView.frame = CGRect.init(x: 15, y: 20, width: 35, height: 25)
+                cell.postTextLabel.frame = CGRect.init(x: 15, y: 45, width: (cell.frame.width - 15), height: 54)
+                
+                if (postImages.count > 0) {
+                    cell.imageGalleryScrollView.frame = CGRect.init(x: 0, y: 110, width: cell.frame.width, height: 218);
+                    cell.imageGalleryScrollView.isHidden = false;
+                } else {
+                    cell.imageGalleryScrollView.isHidden = true;
+                }
+            } else {
+                
+                //If user is a moderator
+                cell.profilePicImageView.isHidden = false
+                cell.socialIconsView.frame = CGRect.init(x: 65, y: 20, width: 35, height: 25)
+                cell.postTextLabel.frame = CGRect.init(x: 15, y: 75, width: (cell.frame.width - 15), height: 54)
+                if (postImages.count > 0) {
+                    cell.imageGalleryScrollView.frame = CGRect.init(x: 0, y: 130, width: cell.frame.width, height: 218);
+                    cell.imageGalleryScrollView.isHidden = false;
+                } else {
+                    cell.imageGalleryScrollView.isHidden = true;
+                }
+                
+            }
             
-            for sourcePlatform in sourcePlatformArray {
-                let sourcePlatformDict = sourcePlatform as! NSDictionary;
+            //cell.profileImage.roundImageView();
+            var facebookIconHidden = true;
+            var twitterIconHidden = true;
+            let sourcePlatformArray = homeObject.value(forKey: "social_media") as! NSArray
+            if (sourcePlatformArray != nil && sourcePlatformArray.count > 0) {
                 
-                let sourcePlatformId = Int(((sourcePlatformDict.value(forKey: "id") as? NSString)?.doubleValue)!)
+                for sourcePlatform in sourcePlatformArray {
+                    let sourcePlatformDict = sourcePlatform as! NSDictionary;
+                    
+                    let sourcePlatformId = Int(((sourcePlatformDict.value(forKey: "id") as? NSString)?.doubleValue)!)
+                    
+                    print("sourcePlatform")
+                    print(sourcePlatform)
+                    if(Int(sourcePlatformId) == social.socialPlatformId["Facebook"]){
+                        cell.sourceImageFacebook.image = UIImage.init(named: "facebook-group")
+                        cell.sourceImageFacebook.isHidden = false
+                        facebookIconHidden = false;
+                    }  else if(Int(sourcePlatformId) == social.socialPlatformId["Twitter"]) {
+                        // print("dsf")
+                        cell.sourceImageTwitter.image = UIImage.init(named: "twitter-group")
+                        cell.sourceImageTwitter.isHidden = false
+                        twitterIconHidden = false;
+                    }
+                }
                 
-                print("sourcePlatform")
-                print(sourcePlatform)
-                if(Int(sourcePlatformId) == social.socialPlatformId["Facebook"]){
-                    cell.sourceImageFacebook.image = UIImage.init(named: "facebook-group")
-                    cell.sourceImageFacebook.isHidden = false
-                    facebookIconHidden = false;
-                }  else if(Int(sourcePlatformId) == social.socialPlatformId["Twitter"]) {
-                    // print("dsf")
-                    cell.sourceImageTwitter.image = UIImage.init(named: "twitter-group")
-                    cell.sourceImageTwitter.isHidden = false
-                    twitterIconHidden = false;
+                cell.sourceImageTwitter.layer.masksToBounds = false
+                cell.sourceImageFacebook.layer.masksToBounds = false
+            }
+            
+            if (facebookIconHidden == true) {
+                cell.sourceImageFacebook.isHidden = true;
+            }
+            if (twitterIconHidden == true) {
+                cell.sourceImageTwitter.isHidden = true;
+            }
+            if (twitterIconHidden == true && facebookIconHidden == false) {
+                cell.sourceImageFacebook.frame = CGRect.init(x: 2, y: 3, width: 15, height: 15)
+            }
+            
+            var imageStatus = ""
+            var status = (homeObject.value(forKey: "status") as! String)
+            if(status == "Pending"){
+                imageStatus = "pending-review"
+                status = "Pending review"
+            }else if(status == "Approved by moderator"){
+                imageStatus = "approved"
+                status = "Approved"
+            }else if (status == "Rejected by moderator"){
+                imageStatus = "rejected"
+                status = "Rejected"
+            }else if(status == "Pending with caster"){
+                imageStatus = "under-review"
+                status = "Under review"
+            }
+            else if(status == "Pending with moderator"){
+                imageStatus = "under-review"
+                status = "Under review"
+            }        else if(status == ""){
+                imageStatus = ""
+            }
+            cell.statusImage.image = UIImage.init(named: imageStatus)
+            let pipe = " |"
+            cell.profileLabel.text = "\((status))\(pipe)"
+            cell.dateLabel.text = Date().ddspEEEEcmyyyy(dateStr: homeObject.value(forKey: "created_on") as! String)
+            
+            //ScrollView functionality
+            //self.slides = cell.createSlides()
+            if(homeObject["username"] != nil){
+                let profileUserName = homeObject.value(forKey: "username") as! String;
+                let profilePic = homeObject.value(forKey: "profile_pic") as! String;
+                let name =  homeObject.value(forKey: "name") as! String;
+                
+                if (name != "") {
+                    cell.usernameLabel.text = String(profileUserName)
+                    cell.usernameLabel.isHidden = false
+                } else if(profileUserName != ""){
+                    cell.usernameLabel.text = String(profileUserName)
+                    cell.usernameLabel.isHidden = false
+                }
+                
+                if(profilePic != "") {
+                    cell.profilePicImageView.sd_setImage(with: URL(string: profilePic), placeholderImage: UIImage.init(named: "Moderate Casts"));
+                    cell.profilePicImageView.isHidden = false
+                    cell.profilePicImageView.roundImageView()
                 }
             }
-            
-            cell.sourceImageTwitter.layer.masksToBounds = false
-            cell.sourceImageFacebook.layer.masksToBounds = false
-        }
-        
-        if (facebookIconHidden == true) {
-            cell.sourceImageFacebook.isHidden = true;
-        }
-        if (twitterIconHidden == true) {
-            cell.sourceImageTwitter.isHidden = true;
-        }
-        if (twitterIconHidden == true && facebookIconHidden == false) {
-            cell.sourceImageFacebook.frame = CGRect.init(x: 2, y: 3, width: 15, height: 15)
-        }
-        
-        var imageStatus = ""
-        var status = (homeObject.value(forKey: "status") as! String)
-        if(status == "Pending"){
-            imageStatus = "pending-review"
-            status = "Pending review"
-        }else if(status == "Approved by moderator"){
-            imageStatus = "approved"
-            status = "Approved"
-        }else if (status == "Rejected by moderator"){
-            imageStatus = "rejected"
-            status = "Rejected"
-        }else if(status == ""){
-            imageStatus = ""
-        }
-        cell.statusImage.image = UIImage.init(named: imageStatus)
-        let pipe = " |"
-        cell.profileLabel.text = "\((status))\(pipe)"
-        cell.dateLabel.text = Date().ddspEEEEcmyyyy(dateStr: homeObject.value(forKey: "created_on") as! String)
+            cell.setupSlideScrollView()
+            print("current")
+            print(cell.pageControl.currentPage)
+            cell.pageControl.numberOfPages = cell.imagesArray.count
+            cell.pageControl.currentPage = 0
+            cell.contentView.bringSubview(toFront: cell.pageControl)
+            if(cell.imagesArray.count > 1){
+                cell.imageCounterView.isHidden = true // false
+                cell.totalCountImageLbl.text = " \(cell.imagesArray.count)";
+                cell.currentCountImageLbl.text = "1"
                 
-        //ScrollView functionality
-        //self.slides = cell.createSlides()
-        if(homeObject["username"] != nil){
-            let profileUserName = homeObject.value(forKey: "username") as! String;
-            let profilePic = homeObject.value(forKey: "profile_pic") as! String;
-            let name =  homeObject.value(forKey: "name") as! String;
-
-            if (name != "") {
-                cell.usernameLabel.text = String(profileUserName)
-                cell.usernameLabel.isHidden = false
-            } else if(profileUserName != ""){
-                cell.usernameLabel.text = String(profileUserName)
-                cell.usernameLabel.isHidden = false
+                cell.imageCounterView.isHidden = true //false
+                
+                //If logged in user is a caster
+                //70 width of counter view
+                //20 Padding from right
+                //20 from top of image scroll view
+                cell.imageCounterView.frame = CGRect.init(x: (cell.frame.width - (60 + 20) ), y: (cell.imageGalleryScrollView.frame.origin.y + 20), width: 60, height: 25)
+                
+            } else {
+                cell.imageCounterView.isHidden = true
             }
             
-            if(profilePic != "") {
-                cell.profilePicImageView.sd_setImage(with: URL(string: profilePic), placeholderImage: UIImage.init(named: "Moderate Casts"));
+            //ScrollView functionality
+            return cell;
+        }else if (loggedInUser.isCastr == 2) { // moderator
+             let cell: ModeratorCastsTableViewCell = tableView.dequeueReusableCell(withIdentifier: "ModeratorCastsTableViewCell", for: indexPath) as! ModeratorCastsTableViewCell;
+            cell.postTextLabel.text = String(homeObject.value(forKey: "post_description") as! String);
+            let postImages = homeObject.value(forKey: "post_images") as! NSArray
+            if (postImages.count > 0) {
+                cell.imagesArray = [String]();
+                cell.imageGalleryScrollView.isHidden = false
+                for postImg in postImages {
+                    let postImageURL = postImg as! NSDictionary;
+                    let imgUrl: String = postImageURL.value(forKey: "image") as! String;
+                    cell.imagesArray.append(imgUrl);
+                }
+                //  cell.sourceImageFacebook.sd_setImage(with: URL(string: imgUrl), placeholderImage: UIImage(named: "profile"));
+                //cell.sourceImageFacebook.layer.masksToBounds = false
+            } else {
+                cell.imagesArray = [String]();
+                cell.imageGalleryScrollView.isHidden = true;
+            }
+            
+            if (loggedInUser.isCastr == 1) { //If user is a caster
+                cell.profilePicImageView.isHidden = true
+                cell.socialIconsView.frame = CGRect.init(x: 15, y: 20, width: 35, height: 25)
+                cell.postTextLabel.frame = CGRect.init(x: 15, y: 45, width: (cell.frame.width - 15), height: 54)
+                
+                if (postImages.count > 0) {
+                    cell.imageGalleryScrollView.frame = CGRect.init(x: 0, y: 110, width: cell.frame.width, height: 218);
+                    cell.imageGalleryScrollView.isHidden = false;
+                } else {
+                    cell.imageGalleryScrollView.isHidden = true;
+                }
+            } else {
+                
+                //If user is a moderator
                 cell.profilePicImageView.isHidden = false
-                cell.profilePicImageView.roundImageView()
+                if (postImages.count > 0) {
+                    cell.imageGalleryScrollView.isHidden = false;
+                } else {
+                    cell.imageGalleryScrollView.isHidden = true;
+                }
+                
             }
-        }
-        cell.setupSlideScrollView()
-        print("current")
-        print(cell.pageControl.currentPage)
-        cell.pageControl.numberOfPages = cell.imagesArray.count
-        cell.pageControl.currentPage = 0
-        cell.contentView.bringSubview(toFront: cell.pageControl)
-        if(cell.imagesArray.count > 1){
-            cell.imageCounterView.isHidden = false
-            cell.totalCountImageLbl.text = " \(cell.imagesArray.count)";
-            cell.currentCountImageLbl.text = "1"
             
-            cell.imageCounterView.isHidden = false
-
-            //If logged in user is a caster
-            //70 width of counter view
-            //20 Padding from right
-            //20 from top of image scroll view
-            cell.imageCounterView.frame = CGRect.init(x: (cell.frame.width - (60 + 20) ), y: (cell.imageGalleryScrollView.frame.origin.y + 20), width: 60, height: 25)
-
-        } else {
-            cell.imageCounterView.isHidden = true
+            //cell.profileImage.roundImageView();
+            var facebookIconHidden = true;
+            var twitterIconHidden = true;
+            let sourcePlatformArray = homeObject.value(forKey: "social_media") as! NSArray
+            if (sourcePlatformArray != nil && sourcePlatformArray.count > 0) {
+                
+                for sourcePlatform in sourcePlatformArray {
+                    let sourcePlatformDict = sourcePlatform as! NSDictionary;
+                    
+                    let sourcePlatformId = Int(((sourcePlatformDict.value(forKey: "id") as? NSString)?.doubleValue)!)
+                    
+                    print("sourcePlatform")
+                    print(sourcePlatform)
+                    if(Int(sourcePlatformId) == social.socialPlatformId["Facebook"]){
+                        cell.sourceImageFacebook.image = UIImage.init(named: "facebook-group")
+                        cell.sourceImageFacebook.isHidden = false
+                        facebookIconHidden = false;
+                    }  else if(Int(sourcePlatformId) == social.socialPlatformId["Twitter"]) {
+                        // print("dsf")
+                        cell.sourceImageTwitter.image = UIImage.init(named: "twitter-group")
+                        cell.sourceImageTwitter.isHidden = false
+                        twitterIconHidden = false;
+                    }
+                }
+                
+                cell.sourceImageTwitter.layer.masksToBounds = false
+                cell.sourceImageFacebook.layer.masksToBounds = false
+            }
+            
+            if (facebookIconHidden == true) {
+                cell.sourceImageFacebook.isHidden = true;
+            }
+            if (twitterIconHidden == true) {
+                cell.sourceImageTwitter.isHidden = true;
+            }
+            if (twitterIconHidden == true && facebookIconHidden == false) {
+                cell.sourceImageFacebook.frame = CGRect.init(x: 2, y: 3, width: 15, height: 15)
+            }
+            
+            var imageStatus = ""
+            var status = (homeObject.value(forKey: "status") as! String)
+            if(status == "Pending"){
+                imageStatus = "pending-review"
+                status = "Pending review"
+            }else if(status == "Approved by moderator"){
+                imageStatus = "approved"
+                status = "Approved"
+            }else if (status == "Rejected by moderator"){
+                imageStatus = "rejected"
+                status = "Rejected"
+            }else if(status == "Pending with caster"){
+                imageStatus = "under-review"
+                status = "Under review"
+            }
+            else if(status == "Pending with moderator"){
+                imageStatus = "under-review"
+                status = "Under review"
+            }        else if(status == ""){
+                imageStatus = ""
+            }
+            cell.statusImage.image = UIImage.init(named: imageStatus)
+            let pipe = " |"
+            cell.profileLabel.text = "\((status))\(pipe)"
+            cell.dateLabel.text = Date().ddspEEEEcmyyyy(dateStr: homeObject.value(forKey: "created_on") as! String)
+            
+            //ScrollView functionality
+            //self.slides = cell.createSlides()
+            if(homeObject["username"] != nil){
+                let profileUserName = homeObject.value(forKey: "username") as! String;
+                let profilePic = homeObject.value(forKey: "profile_pic") as! String;
+                let name =  homeObject.value(forKey: "name") as! String;
+                
+                if (name != "") {
+                    cell.usernameLabel.text = String(profileUserName)
+                    cell.usernameLabel.isHidden = false
+                } else if(profileUserName != ""){
+                    cell.usernameLabel.text = String(profileUserName)
+                    cell.usernameLabel.isHidden = false
+                }
+                
+                if(profilePic != "") {
+                    cell.profilePicImageView.sd_setImage(with: URL(string: profilePic), placeholderImage: UIImage.init(named: "Moderate Casts"));
+                    cell.profilePicImageView.isHidden = false
+                    cell.profilePicImageView.roundImageView()
+                }
+            }
+            cell.setupSlideScrollView()
+            print("current")
+            print(cell.pageControl.currentPage)
+            cell.pageControl.numberOfPages = cell.imagesArray.count
+            cell.pageControl.currentPage = 0
+            cell.contentView.bringSubview(toFront: cell.pageControl)
+            if(cell.imagesArray.count > 1){
+                cell.imageCounterView.isHidden = true // false
+                cell.totalCountImageLbl.text = " \(cell.imagesArray.count)";
+                cell.currentCountImageLbl.text = "1"
+                
+                cell.imageCounterView.isHidden = true //false
+                
+                //If logged in user is a caster
+                //70 width of counter view
+                //20 Padding from right
+                //20 from top of image scroll view
+            } else {
+                cell.imageCounterView.isHidden = true
+            }
+            
+            //ScrollView functionality
+            return cell;
         }
-       
-        //ScrollView functionality
-        return cell;
+        return UITableViewCell();
     }
     @objc private func refreshPostsData(_ sender: Any) {
       //  In this methid call the home screen api
-        if (loggedInUser.isCastr == 1) {
+        if (loggedInUser.isCastr == 1) { // caster
             self.loadUserPosts();
-        } else if (loggedInUser.isCastr == 2) {
+        } else if (loggedInUser.isCastr == 2) { // moderator
             loadModeratorUserPosts();
         }
         self.refreshControl.endRefreshing()
