@@ -38,11 +38,8 @@ class VerificationModeratorViewController: UIViewController,UITextFieldDelegate 
         userProfilePic.layer.borderWidth = 2
         userProfilePic.layer.borderColor = UIColor.white.cgColor
         if(String(loggedInUser.profilePic) != ""){
-            userProfilePic.sd_setImage(with: URL(string: loggedInUser.profilePic!), placeholderImage: UIImage.init(named: "default_profile_pic"));
+            userProfilePic.sd_setImage(with: URL(string: loggedInUser.profilePic!), placeholderImage: UIImage.init(named: "Profile-1"));
             // Do any additional setup after loading the view.
-        }else{
-            let profileImage: UIImage = UIImage(named: "profile")!
-            userProfilePic.image = profileImage
         }
         // Do any additional setup after loading the view.
     }

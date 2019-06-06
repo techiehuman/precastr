@@ -15,10 +15,15 @@ import BSImagePicker
 import MobileCoreServices
 import Photos
 
+protocol PostFormCellProtocol {
+    func upadedSelectedImageCounts(counts: String);
+}
+
 class CreatePostViewController: UIViewController, UIImagePickerControllerDelegate {
 
     @IBOutlet weak var createPostTableView: UITableView!
     
+    var postFormCellProtocolDelegate: PostFormCellProtocol!;
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView();
     var loggedInUser : User!
     var social : SocialPlatform!
@@ -183,8 +188,8 @@ class CreatePostViewController: UIViewController, UIImagePickerControllerDelegat
             //self.imgView.startAnimating()
             DispatchQueue.main.async {
 
-                self.showToast(message: "\(self.SelectedAssets.count) Images Uploaded")
-                
+                //self.showToast(message: "\(self.SelectedAssets.count) Images Uploaded")
+                self.postFormCellProtocolDelegate.upadedSelectedImageCounts(counts: "\(self.SelectedAssets.count)");
             }
         }
     }
@@ -216,6 +221,7 @@ extension CreatePostViewController: UITableViewDelegate, UITableViewDataSource {
         activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.gray;
         cell.addSubview(activityIndicator);
         
+        postFormCellProtocolDelegate = cell;
         return cell;
     }
     

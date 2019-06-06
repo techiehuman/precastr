@@ -31,11 +31,8 @@ class UserTypeActionViewController: UIViewController {
         loggedInNameUser.text = String(loggedInUser.name)
         print(loggedInUser.name)
         if(String(loggedInUser.profilePic) != ""){
-        userProfilePic.sd_setImage(with: URL(string: loggedInUser.profilePic!), placeholderImage: UIImage.init(named: "profile"));
-        // Do any additional setup after loading the view.
-        }else{
-            let profileImage: UIImage = UIImage(named: "profile")!
-            userProfilePic.image = profileImage
+        userProfilePic.sd_setImage(with: URL(string: loggedInUser.profilePic!), placeholderImage: UIImage.init(named: "Profile 1"));
+            // Do any additional setup after loading the view.
         }
     }
 

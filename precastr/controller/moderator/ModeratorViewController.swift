@@ -166,8 +166,12 @@ extension ModeratorViewController: UITableViewDelegate, UITableViewDataSource {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "moderatorTableViewCell", for: indexPath) as! moderatorTableViewCell;
         print("******")
-        print(String(moderatorObject.username))
-        cell.profileLabel.text = String(moderatorObject.username);
+        print(String(moderatorObject.name))
+        if(moderatorObject.name != nil) {
+            cell.profileLabel.text = String(moderatorObject.name);
+        } else {
+            cell.profileLabel.text = String(moderatorObject.username);
+        }
         cell.profileImageView.sd_setImage(with: URL(string: moderatorObject.profilePic), placeholderImage: UIImage(named: "Moderate Casts"));
        
         cell.profileImageView.roundImageView();
@@ -192,7 +196,6 @@ extension ModeratorViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerCell = tableView.dequeueReusableCell(withIdentifier: "HeaderViewTableViewCell") as!  HeaderViewTableViewCell;
         headerCell.headerTitleLabel.text = self.moderatorDto[section].sectionKey;
-        headerCell.headerTitleLabel.font =  UIFont(name: "VisbyCF-Medium", size: 14.0)
         return headerCell;
         
     }
@@ -248,6 +251,7 @@ extension ModeratorViewController: UITableViewDelegate, UITableViewDataSource {
                 var user : User = User()
                 var modeDict = mode as! NSDictionary;
                 // self.moderators.append(String((modeDict.value(forKey: "username") as! NSString) as String)!);
+                user.name = modeDict.value(forKey: "name") as! String
                 user.username = modeDict.value(forKey: "username") as! String
                 user.profilePic = modeDict.value(forKey: "profile_pic") as! String
                 user.userId = Int32(((modeDict.value(forKey: "moderator_id") as? NSString)?.doubleValue)!)

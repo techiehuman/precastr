@@ -31,11 +31,12 @@ class LoginScreenTableViewCell: UITableViewCell, UITextFieldDelegate {
         self.passwordTextField.attributedPlaceholder = NSAttributedString(string: "Password", attributes: [NSAttributedStringKey.foregroundColor : UIColor.white ])
         self.emailTextField.layer.borderColor = UIColor.white.cgColor
         self.emailTextField.layer.borderWidth = 0.5
-        let imageView = UIImageView(frame: CGRect(x: 10, y: 0, width: 27, height: 30))
+        
+        let iconContainerView: UIView = UIView(frame:
+            CGRect(x: 20, y: 0, width: 40, height: self.emailTextField.frame.height));
+        let imageView = UIImageView(frame: CGRect(x: 10, y: (iconContainerView.frame.height/2 - 30/2), width: 27, height: 30))
         let image = UIImage(named: "email");
         imageView.image = image;
-        let iconContainerView: UIView = UIView(frame:
-            CGRect(x: 20, y: 20, width: 40, height: 40))
         iconContainerView.addSubview(imageView)
         self.emailTextField.leftView = iconContainerView
         self.emailTextField.leftViewMode = .always
@@ -51,10 +52,15 @@ class LoginScreenTableViewCell: UITableViewCell, UITextFieldDelegate {
         self.passwordTextField.layer.borderWidth = 0.5
         self.passwordTextField.leftView = UIView(frame: CGRect(x: 0, y: 0, width:35, height: self.passwordTextField.frame.height))
         
-        let imageViewP = UIImageView(frame: CGRect(x: 5, y: 0, width: 27, height: 30))
-        let imageP = UIImage(named: "password");
-        imageViewP.image = imageP;
-        self.passwordTextField.leftView = imageViewP
+        
+        let passwordContainerView: UIView = UIView(frame:
+            CGRect(x: 20, y: 0, width: 40, height: self.passwordTextField.frame.height));
+        let passwordImageView = UIImageView(frame: CGRect(x: 10, y: (passwordContainerView.frame.height/2 - 30/2), width: 27, height: 30))
+        let passwordImage = UIImage(named: "password");
+        passwordImageView.image = passwordImage;
+        passwordContainerView.addSubview(passwordImageView)
+
+        self.passwordTextField.leftView = passwordContainerView
         self.passwordTextField.leftViewMode = .always
     }
 

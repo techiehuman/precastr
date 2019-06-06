@@ -14,6 +14,7 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     @IBOutlet weak var socialPostList: UITableView!
     
     @IBOutlet weak var noPostsText: UILabel!
+    @IBOutlet weak var noPostsIcon: UIImageView!
     
     var homePosts : [Any] = [Any]()
     var loggedInUser : User!
@@ -234,7 +235,12 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         if(homeObject["username"] != nil){
             let profileUserName = homeObject.value(forKey: "username") as! String;
             let profilePic = homeObject.value(forKey: "profile_pic") as! String;
-            if(profileUserName != ""){
+            let name =  homeObject.value(forKey: "name") as! String;
+
+            if (name != "") {
+                cell.usernameLabel.text = String(profileUserName)
+                cell.usernameLabel.isHidden = false
+            } else if(profileUserName != ""){
                 cell.usernameLabel.text = String(profileUserName)
                 cell.usernameLabel.isHidden = false
             }
@@ -301,12 +307,16 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             if (modeArray.count != 0) {
                 
                 self.noPostsText.isHidden = true;
+                self.noPostsIcon.isHidden = true;
+
                 self.socialPostList.isHidden = false;
                 self.homePosts = modeArray as! [Any]
                 self.socialPostList.reloadData();
 
             } else {
                 self.noPostsText.isHidden = false;
+                self.noPostsIcon.isHidden = false;
+
                 self.socialPostList.isHidden = true;
             }
         });
@@ -327,12 +337,16 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             if (modeArray.count != 0) {
                 
                 self.noPostsText.isHidden = true;
+                self.noPostsIcon.isHidden = true;
+
                 self.socialPostList.isHidden = false;
                 self.homePosts = modeArray as! [Any]
                 self.socialPostList.reloadData();
                 
             } else {
                 self.noPostsText.isHidden = false;
+                self.noPostsIcon.isHidden = false;
+
                 self.socialPostList.isHidden = true;
             }
         });

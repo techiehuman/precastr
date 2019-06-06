@@ -38,21 +38,26 @@ class SignupScreenTableViewCell: UITableViewCell, UITextFieldDelegate, SignupCel
         
         self.nameTextField.layer.borderColor = UIColor.white.cgColor
         self.nameTextField.layer.borderWidth = 0.5
-        let imageViewN = UIImageView(frame: CGRect(x: 5, y: 0, width: 27, height: 30))
-        let imageN = UIImage(named: "profile");
-        imageViewN.image = imageN;
-        self.nameTextField.leftView = imageViewN
+        let profileIconContainerView: UIView = UIView(frame:
+            CGRect(x: 20, y: 0, width: 40, height: self.emailTextField.frame.height));
+        let profileImageView = UIImageView(frame: CGRect(x: 10, y: (profileIconContainerView.frame.height/2 - 30/2), width: 27, height: 30))
+        let profileImage = UIImage(named: "profile");
+        profileImageView.image = profileImage;
+        profileIconContainerView.addSubview(profileImageView)
+        self.nameTextField.leftView = profileIconContainerView
         self.nameTextField.leftViewMode = .always
         // self.nameTextField.leftView = UIView(frame: CGRect(x: 0, y: 0, width:35, height: self.nameTextField.frame.height))
         
         self.emailTextField.attributedPlaceholder = NSAttributedString(string: " Email Address", attributes: [NSAttributedStringKey.foregroundColor : UIColor.white ])
-        
         self.emailTextField.layer.borderColor = UIColor.white.cgColor
         self.emailTextField.layer.borderWidth = 0.5
-        let imageView = UIImageView(frame: CGRect(x: 5, y: 0, width: 27, height: 30))
-        let image = UIImage(named: "email-copy");
-        imageView.image = image;
-        self.emailTextField.leftView = imageView
+        let emailIconContainerView: UIView = UIView(frame:
+            CGRect(x: 20, y: 0, width: 40, height: self.emailTextField.frame.height));
+        let emailImageView = UIImageView(frame: CGRect(x: 10, y: (emailIconContainerView.frame.height/2 - 30/2), width: 27, height: 30))
+        let emailImage = UIImage(named: "email");
+        emailImageView.image = emailImage;
+        emailIconContainerView.addSubview(emailImageView)
+        self.emailTextField.leftView = emailIconContainerView
         self.emailTextField.leftViewMode = .always
         // self.emailTextField.leftView = UIView(frame: CGRect(x: 0, y: 0, width:15, height: self.emailTextField.frame.height))
         
@@ -61,10 +66,13 @@ class SignupScreenTableViewCell: UITableViewCell, UITextFieldDelegate, SignupCel
         self.passwordTextField.layer.borderWidth = 0.5
         self.passwordTextField.leftView = UIView(frame: CGRect(x: 0, y: 0, width:35, height: self.passwordTextField.frame.height))
         
-        let imageViewP = UIImageView(frame: CGRect(x: 5, y: 0, width: 27, height: 30))
-        let imageP = UIImage(named: "password");
-        imageViewP.image = imageP;
-        self.passwordTextField.leftView = imageViewP
+        let passwordIconContainerView: UIView = UIView(frame:
+            CGRect(x: 20, y: 0, width: 40, height: self.emailTextField.frame.height));
+        let passwordImageView = UIImageView(frame: CGRect(x: 10, y: (passwordIconContainerView.frame.height/2 - 30/2), width: 27, height: 30))
+        let passworImage = UIImage(named: "password");
+        passwordImageView.image = passworImage
+        passwordIconContainerView.addSubview(passwordImageView)
+        self.passwordTextField.leftView = passwordIconContainerView
         self.passwordTextField.leftViewMode = .always
         
         let imageTapGesture = UITapGestureRecognizer.init(target: self, action: #selector(imageUploadClicked))

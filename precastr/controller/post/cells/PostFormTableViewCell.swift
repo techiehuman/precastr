@@ -12,7 +12,8 @@ import FBSDKCoreKit
 import TwitterKit
 import TwitterCore
 
-class PostFormTableViewCell: UITableViewCell, UITextViewDelegate {
+class PostFormTableViewCell: UITableViewCell, UITextViewDelegate, PostFormCellProtocol {
+   
 
     @IBOutlet weak var postTextField: UITextView!
     @IBOutlet weak var twitterBtn: UIButton!
@@ -20,6 +21,8 @@ class PostFormTableViewCell: UITableViewCell, UITextViewDelegate {
     @IBOutlet weak var sendViewArea: UIView!
     @IBOutlet weak var inputViewArea: UIView!
 
+    @IBOutlet weak var filesUploadedtext: UILabel!
+    
     var createPostViewControllerDelegate: CreatePostViewController!;
     
     override func awakeFromNib() {
@@ -339,4 +342,10 @@ class PostFormTableViewCell: UITableViewCell, UITextViewDelegate {
             }
         
     }
+    
+    func upadedSelectedImageCounts(counts: String) {
+        filesUploadedtext.isHidden = false;
+        filesUploadedtext.text = "\(counts) files uploaded successfully"
+    }
+    
 }
