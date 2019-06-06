@@ -2,12 +2,10 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "password.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "passoword2x.png",
       "scale" : "2x"
     },
     {

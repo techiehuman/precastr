@@ -2,12 +2,10 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "eamil.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "eamil 23@2x.png",
       "scale" : "2x"
     },
     {

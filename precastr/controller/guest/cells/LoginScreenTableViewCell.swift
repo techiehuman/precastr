@@ -19,6 +19,7 @@ class LoginScreenTableViewCell: UITableViewCell, UITextFieldDelegate {
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     
+    @IBOutlet weak var signUpBtn: UIButton!
     var loginViewControllerDelegate : LoginScreenViewController!;
     
     override func awakeFromNib() {
@@ -30,11 +31,19 @@ class LoginScreenTableViewCell: UITableViewCell, UITextFieldDelegate {
         self.passwordTextField.attributedPlaceholder = NSAttributedString(string: "Password", attributes: [NSAttributedStringKey.foregroundColor : UIColor.white ])
         self.emailTextField.layer.borderColor = UIColor.white.cgColor
         self.emailTextField.layer.borderWidth = 0.5
-        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 25, height: 25))
+        let imageView = UIImageView(frame: CGRect(x: 10, y: 0, width: 27, height: 30))
         let image = UIImage(named: "email");
         imageView.image = image;
-        self.emailTextField.leftView = imageView
+        let iconContainerView: UIView = UIView(frame:
+            CGRect(x: 30, y: 0, width: 30, height: 30))
+        iconContainerView.addSubview(imageView)
+        self.emailTextField.leftView = iconContainerView
         self.emailTextField.leftViewMode = .always
+
+        let lineView = UIView(frame: CGRect(x: 0, y: self.signUpBtn.frame.size.height-6, width: self.signUpBtn.frame.size.width, height: 1))
+        lineView.backgroundColor = UIColor.white
+        self.signUpBtn.addSubview(lineView)
+      
         
         
         // self.emailTextField.leftView = UIView(frame: CGRect(x: 0, y: 0, width:15, height: self.emailTextField.frame.height))
@@ -42,7 +51,7 @@ class LoginScreenTableViewCell: UITableViewCell, UITextFieldDelegate {
         self.passwordTextField.layer.borderWidth = 0.5
         self.passwordTextField.leftView = UIView(frame: CGRect(x: 0, y: 0, width:35, height: self.passwordTextField.frame.height))
         
-        let imageViewP = UIImageView(frame: CGRect(x: 0, y: 0, width: 25, height: 25))
+        let imageViewP = UIImageView(frame: CGRect(x: 5, y: 0, width: 27, height: 30))
         let imageP = UIImage(named: "password");
         imageViewP.image = imageP;
         self.passwordTextField.leftView = imageViewP

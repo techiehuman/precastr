@@ -34,34 +34,34 @@ class SignupScreenTableViewCell: UITableViewCell, UITextFieldDelegate, SignupCel
         self.agreecheckBoxBtn.layer.borderWidth = 1
         self.agreecheckBoxBtn.layer.borderColor = UIColor.white.cgColor
         self.cameraUIView.layer.cornerRadius = self.cameraUIView.frame.height/2
-        self.nameTextField.attributedPlaceholder = NSAttributedString(string: "Name", attributes: [NSAttributedStringKey.foregroundColor : UIColor.white ])
+        self.nameTextField.attributedPlaceholder = NSAttributedString(string: " Name", attributes: [NSAttributedStringKey.foregroundColor : UIColor.white ])
         
         self.nameTextField.layer.borderColor = UIColor.white.cgColor
         self.nameTextField.layer.borderWidth = 0.5
-        let imageViewN = UIImageView(frame: CGRect(x: 0, y: 0, width: 25, height: 25))
+        let imageViewN = UIImageView(frame: CGRect(x: 5, y: 0, width: 27, height: 30))
         let imageN = UIImage(named: "profile");
         imageViewN.image = imageN;
         self.nameTextField.leftView = imageViewN
         self.nameTextField.leftViewMode = .always
         // self.nameTextField.leftView = UIView(frame: CGRect(x: 0, y: 0, width:35, height: self.nameTextField.frame.height))
         
-        self.emailTextField.attributedPlaceholder = NSAttributedString(string: "Email Address", attributes: [NSAttributedStringKey.foregroundColor : UIColor.white ])
+        self.emailTextField.attributedPlaceholder = NSAttributedString(string: " Email Address", attributes: [NSAttributedStringKey.foregroundColor : UIColor.white ])
         
         self.emailTextField.layer.borderColor = UIColor.white.cgColor
         self.emailTextField.layer.borderWidth = 0.5
-        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 25, height: 25))
-        let image = UIImage(named: "email");
+        let imageView = UIImageView(frame: CGRect(x: 5, y: 0, width: 27, height: 30))
+        let image = UIImage(named: "email-copy");
         imageView.image = image;
         self.emailTextField.leftView = imageView
         self.emailTextField.leftViewMode = .always
         // self.emailTextField.leftView = UIView(frame: CGRect(x: 0, y: 0, width:15, height: self.emailTextField.frame.height))
         
-        self.passwordTextField.attributedPlaceholder = NSAttributedString(string: "Password", attributes: [NSAttributedStringKey.foregroundColor : UIColor.white ])
+        self.passwordTextField.attributedPlaceholder = NSAttributedString(string: " Password", attributes: [NSAttributedStringKey.foregroundColor : UIColor.white ])
         self.passwordTextField.layer.borderColor = UIColor.white.cgColor
         self.passwordTextField.layer.borderWidth = 0.5
         self.passwordTextField.leftView = UIView(frame: CGRect(x: 0, y: 0, width:35, height: self.passwordTextField.frame.height))
         
-        let imageViewP = UIImageView(frame: CGRect(x: 0, y: 0, width: 25, height: 25))
+        let imageViewP = UIImageView(frame: CGRect(x: 5, y: 0, width: 27, height: 30))
         let imageP = UIImage(named: "password");
         imageViewP.image = imageP;
         self.passwordTextField.leftView = imageViewP
