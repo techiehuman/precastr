@@ -496,24 +496,33 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         
         UserService().postDataMethod(jsonURL: jsonURL, postData: postArray, complete: {(response) in
             print(response)
-            let modeArray = response.value(forKey: "data") as! NSArray;
             
-            if (modeArray.count != 0) {
-                
-                self.noPostsText.isHidden = true;
-                self.noPostsIcon.isHidden = true;
-
-                self.socialPostList.isHidden = false;
-                self.homePosts = modeArray as! [Any]
-                self.socialPostList.reloadData();
-                
+            let success = Int(response.value(forKey: "status") as! String)
+            if (success == 0) {
+                let alert = UIAlertController.init(title: "Error", message: response.value(forKey: "message") as! String, preferredStyle: .alert);
+                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil));
+                self.present(alert, animated: true)
             } else {
-                self.noPostsText.text = "You do not have any casts, please check on \"Add New\" in order to create a new Cast !";
-                self.noPostsText.isHidden = false;
-                self.noPostsIcon.isHidden = false;
-
-                self.socialPostList.isHidden = true;
+                let modeArray = response.value(forKey: "data") as! NSArray;
+                
+                if (modeArray.count != 0) {
+                    
+                    self.noPostsText.isHidden = true;
+                    self.noPostsIcon.isHidden = true;
+                    
+                    self.socialPostList.isHidden = false;
+                    self.homePosts = modeArray as! [Any]
+                    self.socialPostList.reloadData();
+                    
+                } else {
+                    self.noPostsText.text = "You do not have any casts, please check on \"Add New\" in order to create a new Cast !";
+                    self.noPostsText.isHidden = false;
+                    self.noPostsIcon.isHidden = false;
+                    
+                    self.socialPostList.isHidden = true;
+                }
             }
+            
         });
     }
 }
