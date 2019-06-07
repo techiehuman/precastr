@@ -147,7 +147,7 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             paragraphStyle.lineSpacing = 2 // Whatever line spacing you want in points
             
             // *** Apply attribute to string ***
-            attributedString.addAttribute(NSAttributedString.Key.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, attributedString.length))
+            attributedString.addAttribute(NSAttributedStringKey.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, attributedString.length))
             
             // *** Set Attributed String to your label ***
             cell.postTextLabel.attributedText = attributedString
@@ -283,7 +283,7 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             paragraphStyle.lineSpacing = 2 // Whatever line spacing you want in points
             
             // *** Apply attribute to string ***
-            attributedString.addAttribute(NSAttributedString.Key.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, attributedString.length))
+            attributedString.addAttribute(NSAttributedStringKey.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, attributedString.length))
             
             // *** Set Attributed String to your label ***
             cell.postTextLabel.attributedText = attributedString
@@ -499,9 +499,14 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             
             let success = Int(response.value(forKey: "status") as! String)
             if (success == 0) {
-                let alert = UIAlertController.init(title: "Error", message: response.value(forKey: "message") as! String, preferredStyle: .alert);
+              /*  let alert = UIAlertController.init(title: "Error", message: response.value(forKey: "message") as! String, preferredStyle: .alert);
                 alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil));
-                self.present(alert, animated: true)
+                self.present(alert, animated: true) */
+                self.noPostsText.text = "No casts available for moderating !";
+                self.noPostsText.isHidden = false;
+                self.noPostsIcon.isHidden = false;
+                
+                self.socialPostList.isHidden = true;
             } else {
                 let modeArray = response.value(forKey: "data") as! NSArray;
                 
@@ -515,7 +520,7 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                     self.socialPostList.reloadData();
                     
                 } else {
-                    self.noPostsText.text = "You do not have any casts, please check on \"Add New\" in order to create a new Cast !";
+                    self.noPostsText.text = "No casts available for moderating !";
                     self.noPostsText.isHidden = false;
                     self.noPostsIcon.isHidden = false;
                     
