@@ -243,9 +243,11 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             }        else if(status == ""){
                 imageStatus = ""
             }
+           // status = "dfsdf fdsdfs dsfsdfsdf"
             cell.statusImage.image = UIImage.init(named: imageStatus)
             let pipe = " |"
             cell.profileLabel.text = "\((status))\(pipe)"
+           print(cell.profileLabel.intrinsicContentSize.width)
             cell.dateLabel.text = Date().ddspEEEEcmyyyy(dateStr: homeObject.value(forKey: "created_on") as! String)
             
             // Lets add ui labels in width.

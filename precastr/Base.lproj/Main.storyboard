@@ -825,6 +825,7 @@
                         <outlet property="nameLabel" destination="v1D-b1-FX9" id="ohm-Uf-Ekw"/>
                         <outlet property="profilePic" destination="dFP-eO-fMe" id="82u-Ub-JRj"/>
                         <segue destination="NcG-Ea-4eO" kind="show" identifier="moderatorSegue" id="nHi-Yq-lga"/>
+                        <segue destination="uZW-Lw-sMa" kind="show" identifier="editProfileSegue" id="9cd-nP-F1L"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ad8-JU-ypg" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1055,18 +1056,32 @@
         <!--My Account-->
         <scene sceneID="AeQ-bD-2Iw">
             <objects>
-                <viewController id="akv-9G-fAB" sceneMemberID="viewController">
+                <viewController id="akv-9G-fAB" customClass="EditProfileViewController" customModule="precastr" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="AcG-tG-Ogu">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="r7e-QI-hjq">
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="akv-9G-fAB" id="Aqj-bV-6qQ"/>
+                                    <outlet property="delegate" destination="akv-9G-fAB" id="TIi-lS-BAH"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="9xC-UE-Dn7"/>
                     </view>
                     <navigationItem key="navigationItem" title="My Account" id="sGn-nS-bjy"/>
+                    <connections>
+                        <outlet property="EditProfileTableView" destination="r7e-QI-hjq" id="Sv6-DS-WmH"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hbw-GC-wgW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="700" y="3121"/>
+            <point key="canvasLocation" x="700" y="3120.9895052473767"/>
         </scene>
         <!--Notifications-->
         <scene sceneID="k5e-f0-7LY">
@@ -1293,70 +1308,6 @@
             </objects>
             <point key="canvasLocation" x="729" y="1527"/>
         </scene>
-        <!--Publish View Controller-->
-        <scene sceneID="Fcd-pv-cf7">
-            <objects>
-                <viewController id="KYw-ut-rxz" customClass="PublishViewController" customModule="precastr" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="8gj-4a-zel">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eXa-Fg-LSg">
-                                <rect key="frame" x="54" y="145" width="271" height="300"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KNK-V7-tgS">
-                                        <rect key="frame" x="25" y="71" width="34" height="21"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="D1r-gN-Skh">
-                                        <rect key="frame" x="117" y="66" width="146" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <nil key="textColor"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                    </textField>
-                                    <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="COj-xu-1yY">
-                                        <rect key="frame" x="117" y="135" width="146" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <nil key="textColor"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                    </textField>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Link" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZzY-5c-nqG">
-                                        <rect key="frame" x="21" y="140" width="32" height="21"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ib3-3N-jel">
-                                        <rect key="frame" x="73" y="211" width="94" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" title="Publish on FB"/>
-                                        <connections>
-                                            <action selector="publishOnFB:" destination="KYw-ut-rxz" eventType="touchUpInside" id="Ivd-zY-5Kb"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </view>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <viewLayoutGuide key="safeArea" id="6P8-MT-lRl"/>
-                    </view>
-                    <connections>
-                        <outlet property="sharingLink" destination="COj-xu-1yY" id="EKo-H0-5vf"/>
-                        <outlet property="sharingTitle" destination="D1r-gN-Skh" id="NbS-tw-hWy"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="rSF-q6-PSh" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2138" y="2301"/>
-        </scene>
     </scenes>
     <resources>
         <image name="HomeHeader" width="18" height="18"/>
@@ -1388,6 +1339,7 @@
         <image name="twitter-group" width="20" height="20"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="9cd-nP-F1L"/>
         <segue reference="NGY-dz-YZp"/>
     </inferredMetricsTieBreakers>
 </document>
