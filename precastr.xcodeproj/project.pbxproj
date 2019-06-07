@@ -34,7 +34,6 @@
 		FA6AB59C22531E8200C5491F /* precastrUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6AB59B22531E8200C5491F /* precastrUITests.swift */; };
 		FA72E17922624DC500A259A1 /* CastModeratorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA72E17822624DC500A259A1 /* CastModeratorViewController.swift */; };
 		FA7A3644227AD0A900689E27 /* multiExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7A3643227AD0A900689E27 /* multiExtension.swift */; };
-		FA84055A2254C4DA00BA2D55 /* PublishViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8405592254C4DA00BA2D55 /* PublishViewController.swift */; };
 		FA84F178229C5E7A007796A3 /* ModeratorsDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA84F177229C5E7A007796A3 /* ModeratorsDto.swift */; };
 		FA84F18522A03289007796A3 /* SlideUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA84F18422A03289007796A3 /* SlideUIView.swift */; };
 		FA84F18722A0329D007796A3 /* Slide.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA84F18622A0329D007796A3 /* Slide.xib */; };
@@ -47,6 +46,9 @@
 		FABF025B226DBE650067960C /* ModeratorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABF025A226DBE650067960C /* ModeratorViewController.swift */; };
 		FAD5014C22A97B0400D21F57 /* ModeratorCastsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD5014A22A97B0300D21F57 /* ModeratorCastsTableViewCell.swift */; };
 		FAD5014D22A97B0400D21F57 /* ModeratorCastsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAD5014B22A97B0300D21F57 /* ModeratorCastsTableViewCell.xib */; };
+		FAD5015022AA6B1700D21F57 /* EditProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD5014E22AA6B1700D21F57 /* EditProfileTableViewCell.swift */; };
+		FAD5015122AA6B1700D21F57 /* EditProfileTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAD5014F22AA6B1700D21F57 /* EditProfileTableViewCell.xib */; };
+		FAD5015322AA6F3100D21F57 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD5015222AA6F3100D21F57 /* EditProfileViewController.swift */; };
 		FADFEAF322A51A46006E3CD2 /* VisbyCF-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = FADFEAE322A51A46006E3CD2 /* VisbyCF-Bold.otf */; };
 		FADFEAF422A51A46006E3CD2 /* VisbyCF-BoldOblique.otf in Resources */ = {isa = PBXBuildFile; fileRef = FADFEAE422A51A46006E3CD2 /* VisbyCF-BoldOblique.otf */; };
 		FADFEAF522A51A46006E3CD2 /* VisbyCF-DemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = FADFEAE522A51A46006E3CD2 /* VisbyCF-DemiBold.otf */; };
@@ -132,7 +134,6 @@
 		FA6AB59D22531E8200C5491F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FA72E17822624DC500A259A1 /* CastModeratorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CastModeratorViewController.swift; sourceTree = "<group>"; };
 		FA7A3643227AD0A900689E27 /* multiExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = multiExtension.swift; sourceTree = "<group>"; };
-		FA8405592254C4DA00BA2D55 /* PublishViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublishViewController.swift; sourceTree = "<group>"; };
 		FA84F177229C5E7A007796A3 /* ModeratorsDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModeratorsDto.swift; sourceTree = "<group>"; };
 		FA84F18422A03289007796A3 /* SlideUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideUIView.swift; sourceTree = "<group>"; };
 		FA84F18622A0329D007796A3 /* Slide.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Slide.xib; sourceTree = "<group>"; };
@@ -145,6 +146,9 @@
 		FABF025A226DBE650067960C /* ModeratorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModeratorViewController.swift; sourceTree = "<group>"; };
 		FAD5014A22A97B0300D21F57 /* ModeratorCastsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModeratorCastsTableViewCell.swift; sourceTree = "<group>"; };
 		FAD5014B22A97B0300D21F57 /* ModeratorCastsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ModeratorCastsTableViewCell.xib; sourceTree = "<group>"; };
+		FAD5014E22AA6B1700D21F57 /* EditProfileTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileTableViewCell.swift; sourceTree = "<group>"; };
+		FAD5014F22AA6B1700D21F57 /* EditProfileTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EditProfileTableViewCell.xib; sourceTree = "<group>"; };
+		FAD5015222AA6F3100D21F57 /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
 		FADFEAE322A51A46006E3CD2 /* VisbyCF-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "VisbyCF-Bold.otf"; sourceTree = "<group>"; };
 		FADFEAE422A51A46006E3CD2 /* VisbyCF-BoldOblique.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "VisbyCF-BoldOblique.otf"; sourceTree = "<group>"; };
 		FADFEAE522A51A46006E3CD2 /* VisbyCF-DemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "VisbyCF-DemiBold.otf"; sourceTree = "<group>"; };
@@ -205,6 +209,8 @@
 				5EEC6B5A22A66EAA005B1C34 /* LoginScreenTableViewCell.xib */,
 				5EEC6B5F22A6842F005B1C34 /* SignupScreenTableViewCell.swift */,
 				5EEC6B6022A6842F005B1C34 /* SignupScreenTableViewCell.xib */,
+				FAD5014E22AA6B1700D21F57 /* EditProfileTableViewCell.swift */,
+				FAD5014F22AA6B1700D21F57 /* EditProfileTableViewCell.xib */,
 			);
 			path = cells;
 			sourceTree = "<group>";
@@ -382,7 +388,6 @@
 			isa = PBXGroup;
 			children = (
 				5EEC6B5822A66E8E005B1C34 /* cells */,
-				FA8405592254C4DA00BA2D55 /* PublishViewController.swift */,
 				FA4D544B2260F7F200E9589B /* UserTypeActionViewController.swift */,
 				FA4D544D2260F95200E9589B /* PrecastTypeSectionViewController.swift */,
 				FA72E17822624DC500A259A1 /* CastModeratorViewController.swift */,
@@ -390,6 +395,7 @@
 				FAF601CB228AAE6800B54F9B /* VerificationModeratorViewController.swift */,
 				5EEC6B5D22A67052005B1C34 /* LoginScreenViewController.swift */,
 				5EEC6B6322A68450005B1C34 /* SignupScreenViewController.swift */,
+				FAD5015222AA6F3100D21F57 /* EditProfileViewController.swift */,
 			);
 			path = guest;
 			sourceTree = "<group>";
@@ -633,6 +639,7 @@
 				FAD5014D22A97B0400D21F57 /* ModeratorCastsTableViewCell.xib in Resources */,
 				5EF623F622A588E900124C55 /* PostFormTableViewCell.xib in Resources */,
 				FADFEAF622A51A46006E3CD2 /* VisbyCF-DemiBoldOblique.otf in Resources */,
+				FAD5015122AA6B1700D21F57 /* EditProfileTableViewCell.xib in Resources */,
 				FADFEAF822A51A46006E3CD2 /* VisbyCF-ExtraBoldOblique.otf in Resources */,
 				FA84F18C22A0E511007796A3 /* moderatorTableViewCell.xib in Resources */,
 				FAFCE3CB22999F1000AB6DB5 /* HomeTextPostTableViewCell.xib in Resources */,
@@ -799,9 +806,9 @@
 				FA6AB57E22531E7300C5491F /* ViewController.swift in Sources */,
 				FA72E17922624DC500A259A1 /* CastModeratorViewController.swift in Sources */,
 				5EEC6B6422A68450005B1C34 /* SignupScreenViewController.swift in Sources */,
-				FA84055A2254C4DA00BA2D55 /* PublishViewController.swift in Sources */,
 				FABF02502265DFBB0067960C /* SideMenuTableViewController.swift in Sources */,
 				5EEC6B5E22A67052005B1C34 /* LoginScreenViewController.swift in Sources */,
+				FAD5015322AA6F3100D21F57 /* EditProfileViewController.swift in Sources */,
 				FA4D544C2260F7F200E9589B /* UserTypeActionViewController.swift in Sources */,
 				5EEC6B6122A6842F005B1C34 /* SignupScreenTableViewCell.swift in Sources */,
 				FAFCE3C3228E8F0000AB6DB5 /* SocialPlatform.swift in Sources */,
@@ -812,6 +819,7 @@
 				FA1C1CDD228400A800583E1B /* Reusable.swift in Sources */,
 				FAF601CA2286A3C700B54F9B /* SplashViewController.swift in Sources */,
 				FA0294E3227315F300465318 /* TwitterPostViewController.swift in Sources */,
+				FAD5015022AA6B1700D21F57 /* EditProfileTableViewCell.swift in Sources */,
 				5EEC6B5B22A66EAA005B1C34 /* LoginScreenTableViewCell.swift in Sources */,
 				FA7A3644227AD0A900689E27 /* multiExtension.swift in Sources */,
 				FA291B0D2253ABCD0093E6CE /* HttpService.swift in Sources */,

@@ -56,9 +56,13 @@ class SideMenuTableViewController: UITableViewController {
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let navVC = segue.destination as! ModeratorViewController
-       navVC.moderatorBool = rowTypeVar
         
+        if (segue.identifier == "moderatorSegue") {
+            let navVC = segue.destination as! ModeratorViewController
+            navVC.moderatorBool = rowTypeVar
+            
+        }
+
     }
     
     func logout() {
@@ -105,7 +109,7 @@ class SideMenuTableViewController: UITableViewController {
             UIApplication.shared.keyWindow?.rootViewController = HomeViewController.MainViewController();
             break;
         case 2://My Account
-            print("")
+            self.performSegue(withIdentifier: "editProfileSegue", sender: self);
         case 3://Membership
             print("")
 
