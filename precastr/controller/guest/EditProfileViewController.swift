@@ -11,12 +11,14 @@ import UIKit
 class EditProfileViewController: UIViewController {
 
     @IBOutlet weak var EditProfileTableView: UITableView!
+     var loggedInUser : User!
      var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView();
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        // Do any additional setup after loading the view.
+        loggedInUser = User().loadUserDataFromUserDefaults(userDataDict : setting);
+        
         EditProfileTableView.register(UINib.init(nibName: "EditProfileTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "EditProfileTableViewCell");
         self.hideKeyboadOnTapOutside();
     }
