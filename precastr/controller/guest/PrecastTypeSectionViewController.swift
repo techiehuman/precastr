@@ -28,19 +28,25 @@ class PrecastTypeSectionViewController: UIViewController {
     var cast_setting_id = 0;
     
     @IBAction func submitBtnClicked(_ sender: Any) {
-        var postData = [String : Any]()
-        postData["user_id"] = loggedInUser.userId
-        postData["cast_setting_id"] = self.cast_setting_id;
-        let jsonURL = "user/update_precast_type/format/json";
         
-        UserService().postDataMethod(jsonURL:jsonURL,postData: postData, complete:{(response) in
-            let userDict = response.value(forKey: "data") as! NSDictionary;
-            print(userDict)
-            let user = User().getUserData(userDataDict: userDict);
-            user.loadUserDefaults();
+        if (self.cast_setting_id == 0) {
+            self.showAlert(title: "Alert", message: "Please select from options.")
+        } else {
+            var postData = [String : Any]()
+            postData["user_id"] = loggedInUser.userId
+            postData["cast_setting_id"] = self.cast_setting_id;
+            let jsonURL = "user/update_precast_type/format/json";
             
-            UIApplication.shared.keyWindow?.rootViewController = HomeViewController.MainViewController();
-        });
+            UserService().postDataMethod(jsonURL:jsonURL,postData: postData, complete:{(response) in
+                let userDict = response.value(forKey: "data") as! NSDictionary;
+                print(userDict)
+                let user = User().getUserData(userDataDict: userDict);
+                user.loadUserDefaults();
+                
+                UIApplication.shared.keyWindow?.rootViewController = HomeViewController.MainViewController();
+            });
+        }
+        
     }
     var loggedInUser : User!
     

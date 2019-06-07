@@ -38,6 +38,9 @@ class SignupScreenViewController: UIViewController, UIImagePickerControllerDeleg
         self.hideKeyboadOnTapOutside();
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        SocialPlatform().fetchSocialPlatformData();
+    }
 
     func imageUploadClicked(){
         // create an actionSheet
@@ -169,9 +172,7 @@ class SignupScreenViewController: UIViewController, UIImagePickerControllerDeleg
         activityIndicator.stopAnimating();
         UIApplication.shared.endIgnoringInteractionEvents();
         
-        print(response);
-        SocialPlatform().fetchSocialPlatformData();
-        
+        print(response);        
         if (Int(response.value(forKey: "status") as! String)! == 1) {
             
             let userDict = response.value(forKey: "data") as! NSDictionary;
