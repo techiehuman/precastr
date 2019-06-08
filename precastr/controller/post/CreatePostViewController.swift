@@ -73,23 +73,30 @@ class CreatePostViewController: UIViewController, UIImagePickerControllerDelegat
             self.postArray["user_id"] = String(self.loggedInUser.userId)
             UserService().postDataMethod(jsonURL: jsonURL, postData: self.postArray, complete: {(response) in
                 print(response);
-                let modeArray = response.value(forKey: "data") as! NSDictionary;
-                let tokens  = modeArray.value(forKey: "tokens") as! NSArray
-                for mode in tokens{
-                    var modeDict = mode as! NSDictionary;
-                    // self.moderators.append(String((modeDict.value(forKey: "username") as! NSString) as String)!);
-                    print(modeDict.value(forKey: "type") as! String);
-                    if(modeDict.value(forKey: "type") as! String == "Facebook") {
-                        self.facebookExists = true
-                    }
-                    if(modeDict.value(forKey: "type") as! String == "Twitter") {
-                        self.twitterExists = true
-                    }
-                    
-                }
-                print(self.facebookExists)
-                print(self.twitterExists)
                 
+                let success = Int(response.value(forKey: "status") as! String);
+                if (success == 0) {
+                    let message = response.value(forKey: "message") as! String;
+                    self.showAlert(title: "Error", message: message);
+                    
+                } else {
+                    let modeArray = response.value(forKey: "data") as! NSDictionary;
+                    let tokens  = modeArray.value(forKey: "tokens") as! NSArray
+                    for mode in tokens{
+                        var modeDict = mode as! NSDictionary;
+                        // self.moderators.append(String((modeDict.value(forKey: "username") as! NSString) as String)!);
+                        print(modeDict.value(forKey: "type") as! String);
+                        if(modeDict.value(forKey: "type") as! String == "Facebook") {
+                            self.facebookExists = true
+                        }
+                        if(modeDict.value(forKey: "type") as! String == "Twitter") {
+                            self.twitterExists = true
+                        }
+                        
+                    }
+                    print(self.facebookExists)
+                    print(self.twitterExists)
+                }
             });
         }
     }

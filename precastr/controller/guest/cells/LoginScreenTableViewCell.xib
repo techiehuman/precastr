@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -97,7 +97,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <fontDescription key="fontDescription" name="VisbyCF-Light" family="Visby CF" pointSize="15"/>
+                                <fontDescription key="fontDescription" name="VisbyCF-Light" family="Visby CF" pointSize="16"/>
                                 <textInputTraits key="textInputTraits" returnKeyType="next"/>
                                 <connections>
                                     <outlet property="delegate" destination="KGk-i7-Jjw" id="EfG-xE-HhD"/>
@@ -114,6 +114,9 @@
                                         <state key="normal" title="Forgot Password?">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
+                                        <connections>
+                                            <action selector="forgetPasswordClicked:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="Bpj-fD-Ito"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -136,7 +139,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <fontDescription key="fontDescription" name="VisbyCF-Light" family="Visby CF" pointSize="15"/>
+                                <fontDescription key="fontDescription" name="VisbyCF-Light" family="Visby CF" pointSize="16"/>
                                 <textInputTraits key="textInputTraits" returnKeyType="next" secureTextEntry="YES"/>
                                 <connections>
                                     <outlet property="delegate" destination="KGk-i7-Jjw" id="OU6-7d-chO"/>
@@ -185,6 +188,7 @@
             <connections>
                 <outlet property="emailTextField" destination="ABP-dL-M7p" id="x7j-QW-tev"/>
                 <outlet property="facebookButton" destination="BqL-QE-EHL" id="gIp-q1-sHY"/>
+                <outlet property="forgetPassword" destination="XHz-1c-RUk" id="JsX-4s-n7L"/>
                 <outlet property="passwordTextField" destination="uRQ-0q-aaY" id="y2t-aW-Fet"/>
                 <outlet property="signUpBtn" destination="mTx-yz-BrS" id="V89-Xu-ALc"/>
                 <outlet property="twitterButton" destination="Uq9-ZQ-r2Q" id="4es-Mf-LjF"/>
@@ -193,8 +197,8 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="facebook" width="38" height="38"/>
+        <image name="facebook" width="38.5" height="38.5"/>
         <image name="logo" width="138" height="138"/>
-        <image name="twitter" width="38" height="38"/>
+        <image name="twitter" width="38.5" height="38.5"/>
     </resources>
 </document>

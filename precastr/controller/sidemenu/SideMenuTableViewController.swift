@@ -90,6 +90,17 @@ class SideMenuTableViewController: UITableViewController {
         
         let barButton = UIBarButtonItem(customView: menuButton)
         navigationItem.leftBarButtonItem = barButton;
+        
+        
+        let homeButton = UIButton();
+        homeButton.setImage(UIImage.init(named: "top-home"), for: .normal);
+        homeButton.addTarget(self, action: #selector(homeButtonPressed), for: UIControlEvents.touchUpInside)
+        homeButton.frame = CGRect.init(x: 0, y:0, width: 24, height: 24);
+        
+        let homeBarButton = UIBarButtonItem(customView: homeButton)
+        
+        navigationItem.rightBarButtonItem = homeBarButton;
+        navigationItem.rightBarButtonItem?.tintColor = UIColor(red: 12/255, green: 111/255, blue: 233/255, alpha: 1)
     }
     
     @objc func backButtonPressed() {
@@ -100,29 +111,25 @@ class SideMenuTableViewController: UITableViewController {
         UIApplication.shared.keyWindow?.rootViewController = HomeViewController.MainViewController();
     }
     
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         switch indexPath.row {
         case 0://Profile Tab
             print("")
-        case 1://Home Tab
-            UIApplication.shared.keyWindow?.rootViewController = HomeViewController.MainViewController();
-            break;
-        case 2://My Account
-            self.performSegue(withIdentifier: "editProfileSegue", sender: self);
-        case 3://Membership
+        case 1://Membership
             print("")
 
-        case 4://Moderators
+        case 2://Moderators
             self.performSegue(withIdentifier: "moderatorSegue", sender: self);
-        case 5://Moderator
+        case 3://Moderator
             print("")
             
-        case 6://FAQ
+        case 4://FAQ
             print("")
-        case 7://Terms ANd Conds
+        case 5://Terms ANd Conds
             print("")
-        case 8:
+        case 6:
             self.logout();
 
         default:
@@ -137,21 +144,19 @@ class SideMenuTableViewController: UITableViewController {
         case 1:
             return 50;
         case 2:
-            return 50;
-        case 3:
-            return 50;
-        case 4:
             if (loggedInUser.isCastr == 1) {//If Logged In User is Caster We will show Moderators Row
                 return 50
             } else {
                 return 0;//If Logged In User is Moderator We will hide Moderators Row
             }        case 5:
             return 50;
+        case 3:
+            return 50;
+        case 4:
+            return 50;
+        case 5:
+            return 50;
         case 6:
-            return 50;
-        case 7:
-            return 50;
-        case 8:
             return 50;
         default:
             return 50;
