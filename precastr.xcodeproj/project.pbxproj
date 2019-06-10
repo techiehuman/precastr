@@ -49,6 +49,9 @@
 		FAD5015022AA6B1700D21F57 /* EditProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD5014E22AA6B1700D21F57 /* EditProfileTableViewCell.swift */; };
 		FAD5015122AA6B1700D21F57 /* EditProfileTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAD5014F22AA6B1700D21F57 /* EditProfileTableViewCell.xib */; };
 		FAD5015322AA6F3100D21F57 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD5015222AA6F3100D21F57 /* EditProfileViewController.swift */; };
+		FAD5015622AE895C00D21F57 /* NotificationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD5015422AE895C00D21F57 /* NotificationTableViewCell.swift */; };
+		FAD5015722AE895C00D21F57 /* NotificationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAD5015522AE895C00D21F57 /* NotificationTableViewCell.xib */; };
+		FAD5015922AE8E4600D21F57 /* NotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD5015822AE8E4600D21F57 /* NotificationViewController.swift */; };
 		FADFEAF322A51A46006E3CD2 /* VisbyCF-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = FADFEAE322A51A46006E3CD2 /* VisbyCF-Bold.otf */; };
 		FADFEAF422A51A46006E3CD2 /* VisbyCF-BoldOblique.otf in Resources */ = {isa = PBXBuildFile; fileRef = FADFEAE422A51A46006E3CD2 /* VisbyCF-BoldOblique.otf */; };
 		FADFEAF522A51A46006E3CD2 /* VisbyCF-DemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = FADFEAE522A51A46006E3CD2 /* VisbyCF-DemiBold.otf */; };
@@ -149,6 +152,9 @@
 		FAD5014E22AA6B1700D21F57 /* EditProfileTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileTableViewCell.swift; sourceTree = "<group>"; };
 		FAD5014F22AA6B1700D21F57 /* EditProfileTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EditProfileTableViewCell.xib; sourceTree = "<group>"; };
 		FAD5015222AA6F3100D21F57 /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
+		FAD5015422AE895C00D21F57 /* NotificationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationTableViewCell.swift; sourceTree = "<group>"; };
+		FAD5015522AE895C00D21F57 /* NotificationTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NotificationTableViewCell.xib; sourceTree = "<group>"; };
+		FAD5015822AE8E4600D21F57 /* NotificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationViewController.swift; sourceTree = "<group>"; };
 		FADFEAE322A51A46006E3CD2 /* VisbyCF-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "VisbyCF-Bold.otf"; sourceTree = "<group>"; };
 		FADFEAE422A51A46006E3CD2 /* VisbyCF-BoldOblique.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "VisbyCF-BoldOblique.otf"; sourceTree = "<group>"; };
 		FADFEAE522A51A46006E3CD2 /* VisbyCF-DemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "VisbyCF-DemiBold.otf"; sourceTree = "<group>"; };
@@ -304,6 +310,8 @@
 				FAFCE3C922999F1000AB6DB5 /* HomeTextPostTableViewCell.xib */,
 				FAD5014A22A97B0300D21F57 /* ModeratorCastsTableViewCell.swift */,
 				FAD5014B22A97B0300D21F57 /* ModeratorCastsTableViewCell.xib */,
+				FAD5015422AE895C00D21F57 /* NotificationTableViewCell.swift */,
+				FAD5015522AE895C00D21F57 /* NotificationTableViewCell.xib */,
 			);
 			path = cell;
 			sourceTree = "<group>";
@@ -442,6 +450,7 @@
 			children = (
 				FABF02472264EF640067960C /* HomeViewController.swift */,
 				FA52DDCE227722AE0093FDF8 /* cell */,
+				FAD5015822AE8E4600D21F57 /* NotificationViewController.swift */,
 			);
 			path = home;
 			sourceTree = "<group>";
@@ -654,6 +663,7 @@
 				FA6AB58122531E7300C5491F /* Main.storyboard in Resources */,
 				FA84F19522A1355A007796A3 /* HeaderViewTableViewCell.xib in Resources */,
 				FADFEB0222A51A46006E3CD2 /* VisbyCF-ThinOblique.otf in Resources */,
+				FAD5015722AE895C00D21F57 /* NotificationTableViewCell.xib in Resources */,
 				FADFEAFF22A51A46006E3CD2 /* VisbyCF-Regular.otf in Resources */,
 				5EEC6B6222A6842F005B1C34 /* SignupScreenTableViewCell.xib in Resources */,
 			);
@@ -807,6 +817,7 @@
 				FA72E17922624DC500A259A1 /* CastModeratorViewController.swift in Sources */,
 				5EEC6B6422A68450005B1C34 /* SignupScreenViewController.swift in Sources */,
 				FABF02502265DFBB0067960C /* SideMenuTableViewController.swift in Sources */,
+				FAD5015922AE8E4600D21F57 /* NotificationViewController.swift in Sources */,
 				5EEC6B5E22A67052005B1C34 /* LoginScreenViewController.swift in Sources */,
 				FAD5015322AA6F3100D21F57 /* EditProfileViewController.swift in Sources */,
 				FA4D544C2260F7F200E9589B /* UserTypeActionViewController.swift in Sources */,
@@ -821,6 +832,7 @@
 				FA0294E3227315F300465318 /* TwitterPostViewController.swift in Sources */,
 				FAD5015022AA6B1700D21F57 /* EditProfileTableViewCell.swift in Sources */,
 				5EEC6B5B22A66EAA005B1C34 /* LoginScreenTableViewCell.swift in Sources */,
+				FAD5015622AE895C00D21F57 /* NotificationTableViewCell.swift in Sources */,
 				FA7A3644227AD0A900689E27 /* multiExtension.swift in Sources */,
 				FA291B0D2253ABCD0093E6CE /* HttpService.swift in Sources */,
 				FA84F178229C5E7A007796A3 /* ModeratorsDto.swift in Sources */,

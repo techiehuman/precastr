@@ -1113,18 +1113,32 @@
         <!--Notifications-->
         <scene sceneID="C4h-j3-dFo">
             <objects>
-                <viewController id="2eh-vb-lrP" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="NotificationViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="2eh-vb-lrP" customClass="NotificationViewController" customModule="precastr" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8Eq-N3-1Xl">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="fw0-gA-StE">
+                                <rect key="frame" x="0.0" y="64" width="375" height="554"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="2eh-vb-lrP" id="rPl-bg-T9v"/>
+                                    <outlet property="delegate" destination="2eh-vb-lrP" id="n54-Km-7Zk"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="G62-bH-lao"/>
                     </view>
                     <navigationItem key="navigationItem" title="Notifications" id="kUz-kA-5EB"/>
+                    <connections>
+                        <outlet property="notificationTableView" destination="fw0-gA-StE" id="cvh-no-lLF"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="p5g-pN-TbX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="550" y="3838"/>
+            <point key="canvasLocation" x="549.60000000000002" y="3837.9310344827591"/>
         </scene>
         <!--My Account-->
         <scene sceneID="3sn-ht-Eyw">
