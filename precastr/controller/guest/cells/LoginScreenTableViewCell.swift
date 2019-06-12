@@ -19,6 +19,7 @@ class LoginScreenTableViewCell: UITableViewCell, UITextFieldDelegate {
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     
+    @IBOutlet weak var forgetPassword: UIButton!
     @IBOutlet weak var signUpBtn: UIButton!
     var loginViewControllerDelegate : LoginScreenViewController!;
     
@@ -195,5 +196,10 @@ class LoginScreenTableViewCell: UITableViewCell, UITextFieldDelegate {
             textField.resignFirstResponder()
         }
         return true
+    }
+    @IBAction func forgetPasswordClicked(_ sender: Any) {
+        
+        var viewController = self.loginViewControllerDelegate.storyboard?.instantiateViewController(withIdentifier: "ForgetPasswordViewController") as! ForgetPasswordViewController;
+        self.loginViewControllerDelegate.navigationController?.pushViewController(viewController, animated: true);
     }
 }

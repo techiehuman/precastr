@@ -103,10 +103,24 @@ class ModeratorViewController: UIViewController, CNContactPickerDelegate, MFMess
         let barButton = UIBarButtonItem(customView: menuButton)
         
         navigationItem.leftBarButtonItem = barButton;
+        
+        let homeButton = UIButton();
+        homeButton.setImage(UIImage.init(named: "top-home"), for: .normal);
+        homeButton.addTarget(self, action: #selector(homeButtonPressed), for: UIControlEvents.touchUpInside)
+        homeButton.frame = CGRect.init(x: 0, y:0, width: 24, height: 24);
+        
+        let homeBarButton = UIBarButtonItem(customView: homeButton)
+        
+        navigationItem.rightBarButtonItem = homeBarButton;
+        navigationItem.rightBarButtonItem?.tintColor = UIColor(red: 12/255, green: 111/255, blue: 233/255, alpha: 1)
     }
     
     @objc func backButtonPressed() {
         self.navigationController?.popViewController(animated: true);
+    }
+    
+    @objc func homeButtonPressed() {
+        UIApplication.shared.keyWindow?.rootViewController = HomeViewController.MainViewController();
     }
     
     override func viewDidLoad() {

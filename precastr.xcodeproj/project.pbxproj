@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5EB754DC22ABE125006D636B /* ForgetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EB754DB22ABE125006D636B /* ForgetPasswordViewController.swift */; };
+		5EB754DF22ABE136006D636B /* ForgetPasswordTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EB754DD22ABE136006D636B /* ForgetPasswordTableViewCell.swift */; };
+		5EB754E022ABE136006D636B /* ForgetPasswordTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5EB754DE22ABE136006D636B /* ForgetPasswordTableViewCell.xib */; };
 		5EEC6B5B22A66EAA005B1C34 /* LoginScreenTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EEC6B5922A66EAA005B1C34 /* LoginScreenTableViewCell.swift */; };
 		5EEC6B5C22A66EAA005B1C34 /* LoginScreenTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5EEC6B5A22A66EAA005B1C34 /* LoginScreenTableViewCell.xib */; };
 		5EEC6B5E22A67052005B1C34 /* LoginScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EEC6B5D22A67052005B1C34 /* LoginScreenViewController.swift */; };
@@ -101,6 +104,9 @@
 		27A38E047A676826532D9793 /* Pods-precastrUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-precastrUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-precastrUITests/Pods-precastrUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		561E50304594AB7F3B9F4993 /* Pods_precastrUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_precastrUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5E1217CE22A28EE90075961A /* precastr.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = precastr.entitlements; sourceTree = "<group>"; };
+		5EB754DB22ABE125006D636B /* ForgetPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgetPasswordViewController.swift; sourceTree = "<group>"; };
+		5EB754DD22ABE136006D636B /* ForgetPasswordTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgetPasswordTableViewCell.swift; sourceTree = "<group>"; };
+		5EB754DE22ABE136006D636B /* ForgetPasswordTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ForgetPasswordTableViewCell.xib; sourceTree = "<group>"; };
 		5EEC6B5922A66EAA005B1C34 /* LoginScreenTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginScreenTableViewCell.swift; sourceTree = "<group>"; };
 		5EEC6B5A22A66EAA005B1C34 /* LoginScreenTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoginScreenTableViewCell.xib; sourceTree = "<group>"; };
 		5EEC6B5D22A67052005B1C34 /* LoginScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginScreenViewController.swift; sourceTree = "<group>"; };
@@ -217,6 +223,8 @@
 				5EEC6B6022A6842F005B1C34 /* SignupScreenTableViewCell.xib */,
 				FAD5014E22AA6B1700D21F57 /* EditProfileTableViewCell.swift */,
 				FAD5014F22AA6B1700D21F57 /* EditProfileTableViewCell.xib */,
+				5EB754DD22ABE136006D636B /* ForgetPasswordTableViewCell.swift */,
+				5EB754DE22ABE136006D636B /* ForgetPasswordTableViewCell.xib */,
 			);
 			path = cells;
 			sourceTree = "<group>";
@@ -404,6 +412,7 @@
 				5EEC6B5D22A67052005B1C34 /* LoginScreenViewController.swift */,
 				5EEC6B6322A68450005B1C34 /* SignupScreenViewController.swift */,
 				FAD5015222AA6F3100D21F57 /* EditProfileViewController.swift */,
+				5EB754DB22ABE125006D636B /* ForgetPasswordViewController.swift */,
 			);
 			path = guest;
 			sourceTree = "<group>";
@@ -644,6 +653,7 @@
 				FADFEAFD22A51A46006E3CD2 /* VisbyCF-Medium.otf in Resources */,
 				FA6AB58322531E8200C5491F /* Assets.xcassets in Resources */,
 				FADFEB0122A51A46006E3CD2 /* VisbyCF-Thin.otf in Resources */,
+				5EB754E022ABE136006D636B /* ForgetPasswordTableViewCell.xib in Resources */,
 				FA84F18722A0329D007796A3 /* Slide.xib in Resources */,
 				FAD5014D22A97B0400D21F57 /* ModeratorCastsTableViewCell.xib in Resources */,
 				5EF623F622A588E900124C55 /* PostFormTableViewCell.xib in Resources */,
@@ -821,6 +831,7 @@
 				5EEC6B5E22A67052005B1C34 /* LoginScreenViewController.swift in Sources */,
 				FAD5015322AA6F3100D21F57 /* EditProfileViewController.swift in Sources */,
 				FA4D544C2260F7F200E9589B /* UserTypeActionViewController.swift in Sources */,
+				5EB754DF22ABE136006D636B /* ForgetPasswordTableViewCell.swift in Sources */,
 				5EEC6B6122A6842F005B1C34 /* SignupScreenTableViewCell.swift in Sources */,
 				FAFCE3C3228E8F0000AB6DB5 /* SocialPlatform.swift in Sources */,
 				FA84F18B22A0E511007796A3 /* moderatorTableViewCell.swift in Sources */,
@@ -835,6 +846,7 @@
 				FAD5015622AE895C00D21F57 /* NotificationTableViewCell.swift in Sources */,
 				FA7A3644227AD0A900689E27 /* multiExtension.swift in Sources */,
 				FA291B0D2253ABCD0093E6CE /* HttpService.swift in Sources */,
+				5EB754DC22ABE125006D636B /* ForgetPasswordViewController.swift in Sources */,
 				FA84F178229C5E7A007796A3 /* ModeratorsDto.swift in Sources */,
 				FAF601CC228AAE6800B54F9B /* VerificationModeratorViewController.swift in Sources */,
 				FABF02482264EF650067960C /* HomeViewController.swift in Sources */,

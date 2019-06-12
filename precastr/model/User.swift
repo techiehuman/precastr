@@ -142,6 +142,16 @@ class User  {
         setting.setValue(self.casterReferalCode, forKey: "caster_referral_code");
         //setting.setValue(self.userDevice!, forKey: "device_registered_from")
         //setting.setValue(self.deviceToken, forKey: "device_token")
+    }
+    
+    func updateUserData(userData: [String: String]) {
         
+        if (userData["name"] != nil) {
+            setting.setValue(userData["name"], forKey: "name")
+        }
+        
+        if (userData["profile_pic"] != nil) {
+            setting.setValue(userData["profile_pic"], forKey: "profile_pic")
+        }
     }
 }

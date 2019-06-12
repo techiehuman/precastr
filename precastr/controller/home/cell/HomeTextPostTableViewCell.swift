@@ -38,6 +38,8 @@ class HomeTextPostTableViewCell: UITableViewCell,UIScrollViewDelegate {
     
     @IBOutlet weak var statusImage: UIImageView!
     
+    @IBOutlet weak var postStatusDateView: UIView!
+    
     var imagesArray : [String] = [String]();
     
     
@@ -76,7 +78,9 @@ class HomeTextPostTableViewCell: UITableViewCell,UIScrollViewDelegate {
     }
     func setupSlideScrollView() {
         imageGalleryScrollView.isPagingEnabled = true
-        
+        for view in imageGalleryScrollView.subviews {
+            view.removeFromSuperview();
+        }
         for i in 0 ..< imagesArray.count {
             
             let setupSlideScrollView = UIImageView();

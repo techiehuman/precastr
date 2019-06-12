@@ -33,6 +33,7 @@ class LoginScreenViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.navigationBar.isHidden = true
+        SocialPlatform().fetchSocialPlatformData();
     }
     
     func validateLoginForm(user: User) -> Bool{
@@ -77,8 +78,6 @@ class LoginScreenViewController: UIViewController {
                 let data = response.value(forKey: "data") as! NSDictionary;
                 let allStepsDone = Int32(data.value(forKey: "user_cast_setting_id") as! String)
                 let userDefaultRole = Int8((data.value(forKey: "default_role") as? String)!) ?? nil
-                print(allStepsDone)
-                SocialPlatform().fetchSocialPlatformData();
                 
                 let userDict = response.value(forKey: "data") as! NSDictionary;
                 print(userDict)

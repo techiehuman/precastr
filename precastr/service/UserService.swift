@@ -54,4 +54,14 @@ class UserService{
         });
     };
     
+    func postMultipartImageForUpdateProfile(jsonURL: String, image: UIImage, postData: [String:Any], complete: @escaping(NSDictionary)->Void) {
+        
+        let url = "\(ApiUrl)\(jsonURL)";
+        print("API Url : \(url)")
+    
+        HttpService().postMultipartImageForUpdateProfile(url: url,image: image,postData: postData, complete: { (response ) in
+            complete(response);
+        });
+    };
+    
 }

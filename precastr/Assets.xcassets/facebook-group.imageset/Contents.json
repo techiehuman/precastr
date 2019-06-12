@@ -2,17 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "facebook.png",
+      "filename" : "facebook-group.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "facebook@2x.png",
+      "filename" : "facebook-group@2x.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "Group 7@3x.png",
+      "filename" : "facebook-group@3x.png",
       "scale" : "3x"
     }
   ],

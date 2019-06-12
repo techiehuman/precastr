@@ -47,8 +47,12 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         socialPostList.register(UINib(nibName: "ModeratorCastsTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "ModeratorCastsTableViewCell")
         loggedInUser = User().loadUserDataFromUserDefaults(userDataDict : setting);
         
-        
-        
+
+        if (loggedInUser.isCastr == 1) {
+            self.loadUserPosts();
+        } else if (loggedInUser.isCastr == 2) {
+            loadModeratorUserPosts();
+        }
 
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -76,11 +80,8 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         navigationItem.rightBarButtonItem?.tintColor = UIColor(red: 12/255, green: 111/255, blue: 233/255, alpha: 1)
 
         noPostsText.text = "Loading, please wait...";
-        if (loggedInUser.isCastr == 1) {
-            self.loadUserPosts();
-        } else if (loggedInUser.isCastr == 2) {
-            loadModeratorUserPosts();
-        }
+        noPostsText.frame = CGRect.init(x: noPostsText.frame.origin.x, y: noPostsText.frame.origin.y, width: noPostsText.frame.width, height: 25)
+        noPostsText.numberOfLines = 1;
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -131,12 +132,14 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
+        
         let homeObject = self.homePosts[indexPath.row] as! NSDictionary ;
         
         if (loggedInUser.isCastr == 1) { // caster
         let cell: HomeTextPostTableViewCell = tableView.dequeueReusableCell(withIdentifier: "HomeTextPostTableViewCell", for: indexPath) as! HomeTextPostTableViewCell;
-            
-            
+            cell.sourceImageFacebook.isHidden = false;
+            cell.sourceImageTwitter.isHidden = false;
+
             //cell.postTextLabel.text = String(homeObject.value(forKey: "post_description") as! String);
             let attributedString = NSMutableAttributedString(string: String(homeObject.value(forKey: "post_description") as! String))
             
@@ -183,44 +186,41 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                     let sourcePlatformDict = sourcePlatform as! NSDictionary;
                     
                     let sourcePlatformId = Int(((sourcePlatformDict.value(forKey: "id") as? NSString)?.doubleValue)!)
-                    
-                    print("sourcePlatform")
-                    print(sourcePlatform)
+                    print("sourcePlatform", sourcePlatform)
                     if(Int(sourcePlatformId) == social.socialPlatformId["Facebook"]){
-                        cell.sourceImageFacebook.image = UIImage.init(named: "facebook-group")
-                        cell.sourceImageFacebook.isHidden = false
+                        //cell.sourceImageFacebook.image = UIImage.init(named: "facebook-group")
                         facebookIconHidden = false;
                     }  else if(Int(sourcePlatformId) == social.socialPlatformId["Twitter"]) {
                         // print("dsf")
-                        cell.sourceImageTwitter.image = UIImage.init(named: "twitter-group")
-                        cell.sourceImageTwitter.isHidden = false
+                        //cell.sourceImageTwitter.image = UIImage.init(named: "twitter-group")
                         twitterIconHidden = false;
                     }
                 }
-                
-                cell.sourceImageTwitter.layer.masksToBounds = false
-                cell.sourceImageFacebook.layer.masksToBounds = false
             }
             
-            if (facebookIconHidden == true) {
-                cell.sourceImageFacebook.isHidden = true;
-            } else {
-                cell.sourceImageFacebook.isHidden = false;
-            }
-            if (twitterIconHidden == true) {
-                cell.sourceImageTwitter.isHidden = true;
-            } else {
+            if (twitterIconHidden == false && facebookIconHidden == false) {
                 cell.sourceImageTwitter.isHidden = false;
+                cell.sourceImageFacebook.isHidden = false;
+            } else if (facebookIconHidden == false && twitterIconHidden == true) {
+                //If twitter is not present then we will replace sourceImageTwitter image with facebook
+                cell.sourceImageTwitter.isHidden = false;
+                cell.sourceImageFacebook.isHidden = true;
+                cell.sourceImageTwitter.image = UIImage.init(named: "facebook-group");
+            } else if (twitterIconHidden == false && facebookIconHidden == true) {
+                cell.sourceImageTwitter.isHidden = false;
+                cell.sourceImageFacebook.isHidden = true;
+                cell.sourceImageTwitter.image = UIImage.init(named: "twitter-group");
             }
-            if (twitterIconHidden == true && facebookIconHidden == false) {
+            
+            /*if (twitterIconHidden == true && facebookIconHidden == false) {
                 cell.sourceImageFacebook.frame = CGRect.init(x: 0, y: 5, width: 15, height: 15)
             } else if (twitterIconHidden == false && facebookIconHidden == true) {
                 cell.sourceImageTwitter.frame = CGRect.init(x: 0, y: 5, width: 15, height: 15)
 
             } else if (twitterIconHidden == true && facebookIconHidden == true) {
-                cell.sourceImageTwitter.frame = CGRect.init(x: 0, y: 3, width: 15, height: 15)
-                cell.sourceImageFacebook.frame = CGRect.init(x: 20, y: 3, width: 15, height: 15)
-            }
+                cell.sourceImageTwitter.frame = CGRect.init(x: 0, y: 5, width: 15, height: 15)
+                cell.sourceImageFacebook.frame = CGRect.init(x: 20, y: 5, width: 15, height: 15)
+            }*/
             
             var imageStatus = ""
             var status = (homeObject.value(forKey: "status") as! String)
@@ -250,6 +250,15 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
            print(cell.profileLabel.intrinsicContentSize.width)
             cell.dateLabel.text = Date().ddspEEEEcmyyyy(dateStr: homeObject.value(forKey: "created_on") as! String)
             
+            // Lets add ui labels in width.
+            let totalWidthOfUIView = cell.statusImage.frame.width + cell.profileLabel.intrinsicContentSize.width + cell.dateLabel.intrinsicContentSize.width + 10;
+            cell.postStatusDateView.frame = CGRect.init(x: cell.frame.width - (totalWidthOfUIView + 15), y: cell.postStatusDateView.frame.origin.y, width: totalWidthOfUIView, height: cell.postStatusDateView.frame.height);
+            
+            cell.statusImage.frame = CGRect.init(x: 0, y: 0, width: 20, height: 20);
+            cell.profileLabel.frame = CGRect.init(x: 25, y: 0, width: cell.profileLabel.intrinsicContentSize.width, height: 20);
+            cell.dateLabel.frame = CGRect.init(x: (cell.profileLabel.intrinsicContentSize.width + cell.profileLabel.frame.origin.x + 5), y: 0, width: cell.dateLabel.intrinsicContentSize.width, height: 20);
+
+            
             cell.setupSlideScrollView()
             cell.pageControl.numberOfPages = cell.imagesArray.count
             cell.pageControl.currentPage = 0
@@ -273,8 +282,9 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             
             //ScrollView functionality
             return cell;
-        }else if (loggedInUser.isCastr == 2) { // moderator
+        } else if (loggedInUser.isCastr == 2) { // moderator
              let cell: ModeratorCastsTableViewCell = tableView.dequeueReusableCell(withIdentifier: "ModeratorCastsTableViewCell", for: indexPath) as! ModeratorCastsTableViewCell;
+            
             //cell.postTextLabel.text = String(homeObject.value(forKey: "post_description") as! String);
             let attributedString = NSMutableAttributedString(string: String(homeObject.value(forKey: "post_description") as! String))
             
@@ -299,74 +309,83 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                     let imgUrl: String = postImageURL.value(forKey: "image") as! String;
                     cell.imagesArray.append(imgUrl);
                 }
-                //  cell.sourceImageFacebook.sd_setImage(with: URL(string: imgUrl), placeholderImage: UIImage(named: "profile"));
-                //cell.sourceImageFacebook.layer.masksToBounds = false
             } else {
                 cell.imagesArray = [String]();
                 cell.imageGalleryScrollView.isHidden = true;
             }
-            
-            if (loggedInUser.isCastr == 1) { //If user is a caster
-                cell.profilePicImageView.isHidden = true
-                cell.socialIconsView.frame = CGRect.init(x: 15, y: 20, width: 35, height: 25)
-                cell.postTextLabel.frame = CGRect.init(x: 15, y: 45, width: (cell.frame.width - 15), height: 54)
-                
-                if (postImages.count > 0) {
-                    cell.imageGalleryScrollView.frame = CGRect.init(x: 0, y: 110, width: cell.frame.width, height: 218);
-                    cell.imageGalleryScrollView.isHidden = false;
-                } else {
-                    cell.imageGalleryScrollView.isHidden = true;
-                }
+
+            //If user is a moderator
+            cell.profilePicImageView.isHidden = false
+            if (postImages.count > 0) {
+                cell.imageGalleryScrollView.isHidden = false;
             } else {
-                
-                //If user is a moderator
-                cell.profilePicImageView.isHidden = false
-                if (postImages.count > 0) {
-                    cell.imageGalleryScrollView.isHidden = false;
-                } else {
-                    cell.imageGalleryScrollView.isHidden = true;
-                }
-                
+                cell.imageGalleryScrollView.isHidden = true;
             }
-            
-            //cell.profileImage.roundImageView();
+                        
+
+            print("Going to check social Media icons for row : ", indexPath.row)
             var facebookIconHidden = true;
             var twitterIconHidden = true;
             let sourcePlatformArray = homeObject.value(forKey: "social_media") as! NSArray
-            if (sourcePlatformArray != nil && sourcePlatformArray.count > 0) {
+            if (sourcePlatformArray.count > 0) {
                 
+                print("Inside if condition for Row : ", indexPath.row)
+                print("sourcePlatformArray for Row : ", indexPath.row, "is : ",sourcePlatformArray)
                 for sourcePlatform in sourcePlatformArray {
                     let sourcePlatformDict = sourcePlatform as! NSDictionary;
                     
                     let sourcePlatformId = Int(((sourcePlatformDict.value(forKey: "id") as? NSString)?.doubleValue)!)
                     
-                    print("sourcePlatform")
-                    print(sourcePlatform)
+                    print("Platform Id for row for Row : ", indexPath.row, "is : ",sourcePlatformId)
+                    
+                    
+                    print("Platform from settings : ",social.socialPlatformId)
                     if(Int(sourcePlatformId) == social.socialPlatformId["Facebook"]){
-                        cell.sourceImageFacebook.image = UIImage.init(named: "facebook-group")
-                        cell.sourceImageFacebook.isHidden = false
+                        
+                        print("Inside Facebokk Exist condition for row : ", indexPath.row)
+
                         facebookIconHidden = false;
                     }  else if(Int(sourcePlatformId) == social.socialPlatformId["Twitter"]) {
-                        // print("dsf")
-                        cell.sourceImageTwitter.image = UIImage.init(named: "twitter-group")
-                        cell.sourceImageTwitter.isHidden = false
+                        
+                        print("Inside Twitter Exist condition for row : ", indexPath.row)
+
                         twitterIconHidden = false;
                     }
                 }
-                
-                cell.sourceImageTwitter.layer.masksToBounds = false
-                cell.sourceImageFacebook.layer.masksToBounds = false
             }
             
-            if (facebookIconHidden == true) {
+            /*if (facebookIconHidden == true) {
                 cell.sourceImageFacebook.isHidden = true;
+            } else {
+                cell.sourceImageFacebook.isHidden = false;
             }
+            
             if (twitterIconHidden == true) {
                 cell.sourceImageTwitter.isHidden = true;
+            } else {
+                cell.sourceImageTwitter.isHidden = false;
+            }*/
+            
+            if (twitterIconHidden == false && facebookIconHidden == false) {
+                cell.sourceImageTwitter.isHidden = false;
+                cell.sourceImageFacebook.isHidden = false;
+            } else if (facebookIconHidden == false && twitterIconHidden == true) {
+                cell.sourceImageTwitter.isHidden = true;
+                cell.sourceImageFacebook.isHidden = false;
+                cell.sourceImageFacebook.image = UIImage.init(named: "facebook-group");
+            } else if (twitterIconHidden == false && facebookIconHidden == true) {
+                //If facebook is not present then we will replace facebook image with twitter
+                cell.sourceImageTwitter.isHidden = true;
+                cell.sourceImageFacebook.isHidden = false;
+                cell.sourceImageFacebook.image = UIImage.init(named: "twitter-group");
             }
-            if (twitterIconHidden == true && facebookIconHidden == false) {
-                cell.sourceImageFacebook.frame = CGRect.init(x: 2, y: 3, width: 15, height: 15)
-            }
+            
+            /*if (twitterIconHidden == false && facebookIconHidden == false) {
+                cell.sourceImageTwitter.frame = CGRect.init(x: cell.socialIconsView.frame.origin.x, y: 0, width: cell.sourceImageTwitter.frame.width, height: cell.sourceImageTwitter.frame.height)
+                cell.sourceImageFacebook.frame = CGRect.init(x: (cell.sourceImageTwitter.frame.origin.x + 3), y: 0, width: cell.sourceImageFacebook.frame.width, height: cell.sourceImageFacebook.frame.height)
+            } else if (facebookIconHidden == false && twitterIconHidden == true) {
+                
+            }*/
             
             var imageStatus = ""
             var status = (homeObject.value(forKey: "status") as! String)
@@ -393,6 +412,16 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             let pipe = " |"
             cell.profileLabel.text = "\((status))\(pipe)"
             cell.dateLabel.text = Date().ddspEEEEcmyyyy(dateStr: homeObject.value(forKey: "created_on") as! String)
+            
+            
+            let totalWidthOfUIView = cell.statusImage.frame.width + cell.profileLabel.intrinsicContentSize.width + cell.dateLabel.intrinsicContentSize.width + 10;
+            cell.postStatusViewCell.frame = CGRect.init(x: cell.frame.width - (totalWidthOfUIView + 15), y: cell.postStatusViewCell.frame.origin.y, width: totalWidthOfUIView, height: cell.postStatusViewCell.frame.height);
+            
+            cell.statusImage.frame = CGRect.init(x: 0, y: 0, width: 20, height: 20);
+            cell.profileLabel.frame = CGRect.init(x: 25, y: 0, width: cell.profileLabel.intrinsicContentSize.width, height: 20);
+            cell.dateLabel.frame = CGRect.init(x: (cell.profileLabel.intrinsicContentSize.width + cell.profileLabel.frame.origin.x + 5), y: 0, width: cell.dateLabel.intrinsicContentSize.width, height: 20);
+            
+            
             
             //ScrollView functionality
             //self.slides = cell.createSlides()
@@ -427,11 +456,6 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 cell.currentCountImageLbl.text = "1"
                 
                 cell.imageCounterView.isHidden = true //false
-                
-                //If logged in user is a caster
-                //70 width of counter view
-                //20 Padding from right
-                //20 from top of image scroll view
             } else {
                 cell.imageCounterView.isHidden = true
             }
@@ -479,7 +503,9 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
 
             } else {
                 self.noPostsText.text = "You do not have any casts, please check on \"Add New\" in order to create a new Cast !";
-
+                self.noPostsText.frame = CGRect.init(x: self.noPostsText.frame.origin.x, y: self.noPostsText.frame.origin.y, width: self.noPostsText.frame.width, height: 70)
+                self.noPostsText.numberOfLines = 3;
+                
                 self.noPostsText.isHidden = false;
                 self.noPostsIcon.isHidden = false;
 
@@ -505,6 +531,9 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil));
                 self.present(alert, animated: true) */
                 self.noPostsText.text = "No casts available for moderating !";
+                self.noPostsText.frame = CGRect.init(x: self.noPostsText.frame.origin.x, y: self.noPostsText.frame.origin.y, width: self.noPostsText.frame.width, height: 25)
+                self.noPostsText.numberOfLines = 1;
+                
                 self.noPostsText.isHidden = false;
                 self.noPostsIcon.isHidden = false;
                 
@@ -523,6 +552,9 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                     
                 } else {
                     self.noPostsText.text = "No casts available for moderating !";
+                    self.noPostsText.frame = CGRect.init(x: self.noPostsText.frame.origin.x, y: self.noPostsText.frame.origin.y, width: self.noPostsText.frame.width, height: 25)
+                    self.noPostsText.numberOfLines = 1;
+                    
                     self.noPostsText.isHidden = false;
                     self.noPostsIcon.isHidden = false;
                     

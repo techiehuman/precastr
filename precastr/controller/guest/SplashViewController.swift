@@ -34,6 +34,7 @@ class SplashViewController: UIViewController {
     */
 
     @objc func navigateUser() {
+                
         if let user_id = setting.value(forKey: "user_id") {
             
             let userDefaultRole = setting.value(forKey: "default_role") as? Int8 ?? nil
