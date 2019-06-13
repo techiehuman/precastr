@@ -50,7 +50,7 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
         
         navigationItem.rightBarButtonItem = barButton;
         navigationItem.rightBarButtonItem?.tintColor = UIColor(red: 12/255, green: 111/255, blue: 233/255, alpha: 1)
-
+        self.tabBarController?.tabBar.isHidden = false;
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

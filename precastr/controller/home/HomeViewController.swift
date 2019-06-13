@@ -117,13 +117,13 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         if (loggedInUser.isCastr == 2) {
             
             if (postImage != nil && postImage.count > 0) {
-                return 420
+                return 620
             } else {
                 return 165
             }
         } else {
             if (postImage != nil && postImage.count > 0) {
-                return 390
+                return 590
             }
             return 130
         }
