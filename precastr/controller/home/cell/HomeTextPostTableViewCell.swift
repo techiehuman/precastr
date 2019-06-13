@@ -81,15 +81,21 @@ class HomeTextPostTableViewCell: UITableViewCell,UIScrollViewDelegate {
         for view in imageGalleryScrollView.subviews {
             view.removeFromSuperview();
         }
+        imageGalleryScrollView.contentSize.width = imageGalleryScrollView.frame.width * CGFloat(imagesArray.count);
+
         for i in 0 ..< imagesArray.count {
             
             let setupSlideScrollView = UIImageView();
-            setupSlideScrollView.sd_setImage(with: URL(string: imagesArray[i]), placeholderImage: UIImage.init(named: "post-image-placeholder"));
-            setupSlideScrollView.contentMode = .scaleToFill;
-            let xposition = self.contentView.frame.width * CGFloat(i);
-            setupSlideScrollView.frame = CGRect.init(x: xposition, y: 0, width: imageGalleryScrollView.frame.width, height: imageGalleryScrollView.frame.height);
             
-            imageGalleryScrollView.contentSize.width = imageGalleryScrollView.frame.width * CGFloat(i + 1);
+            let xposition = self.imageGalleryScrollView.frame.width * CGFloat(i);
+            setupSlideScrollView.frame = CGRect.init(x: xposition, y: 0, width: imageGalleryScrollView.frame.width, height: imageGalleryScrollView.frame.height);
+
+            setupSlideScrollView.sd_setImage(with: URL(string: imagesArray[i]), placeholderImage: UIImage.init(named: "post-image-placeholder"));
+            setupSlideScrollView.contentMode = .scaleAspectFill;
+            setupSlideScrollView.clipsToBounds = true
+            print("imageGalleryScrollView", imageGalleryScrollView.frame.width)
+            
+            print("X Position : ", xposition, "width", imageGalleryScrollView.frame.width * CGFloat(i + 1));
 
             imageGalleryScrollView.addSubview(setupSlideScrollView)
             self.currentCount = i as! Int
