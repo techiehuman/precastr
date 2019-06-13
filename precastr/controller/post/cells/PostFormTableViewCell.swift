@@ -23,8 +23,9 @@ class PostFormTableViewCell: UITableViewCell, UITextViewDelegate, PostFormCellPr
 
     @IBOutlet weak var filesUploadedtext: UILabel!
     
+    @IBOutlet weak var charaterCountLabel: UILabel!
     var createPostViewControllerDelegate: CreatePostViewController!;
-    
+    var descriptionMsg : String = "";
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -347,5 +348,15 @@ class PostFormTableViewCell: UITableViewCell, UITextViewDelegate, PostFormCellPr
         filesUploadedtext.isHidden = false;
         filesUploadedtext.text = "\(counts) files uploaded successfully"
     }
-    
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        let currentText = textView.text ?? ""
+        guard let stringRange = Range(range, in: currentText) else { return false }
+        
+        descriptionMsg = currentText.replacingCharacters(in: stringRange, with: text)
+        
+        //This label is for showing the number of characters allowed
+        self.charaterCountLabel.text = "\(280 - descriptionMsg.count) Characters Remain";
+        
+        return descriptionMsg.count < 280
+    }
 }

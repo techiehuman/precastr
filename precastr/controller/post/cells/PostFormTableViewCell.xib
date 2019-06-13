@@ -10,6 +10,9 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
+        <array key="VisbyCF-Light.otf">
+            <string>VisbyCF-Light</string>
+        </array>
         <array key="VisbyCF-Medium.otf">
             <string>VisbyCF-Medium</string>
         </array>
@@ -39,8 +42,8 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3sx-VK-U2i">
-                                <rect key="frame" x="0.0" y="0.0" width="343" height="175"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                <rect key="frame" x="0.0" y="0.0" width="343" height="160"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="tintColor" red="0.047058823530000002" green="0.43529411759999997" blue="0.91372549020000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" name="VisbyCF-Regular" family="Visby CF" pointSize="16"/>
@@ -50,6 +53,13 @@
                                     <outlet property="pasteDelegate" destination="KGk-i7-Jjw" id="GJW-js-71a"/>
                                 </connections>
                             </textView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="280 Characters" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="beK-LK-CcY">
+                                <rect key="frame" x="201" y="160" width="134" height="15"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                <fontDescription key="fontDescription" name="VisbyCF-Light" family="Visby CF" pointSize="12"/>
+                                <color key="textColor" red="0.5725490196078431" green="0.57647058823529407" blue="0.58431372549019611" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </view>
@@ -133,6 +143,7 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
+                <outlet property="charaterCountLabel" destination="beK-LK-CcY" id="heE-g7-3tz"/>
                 <outlet property="facebookBtn" destination="51Z-mG-oGt" id="bBe-u6-6dx"/>
                 <outlet property="filesUploadedtext" destination="8s1-1h-jeB" id="WMJ-wK-uUd"/>
                 <outlet property="inputViewArea" destination="9J3-tt-J6t" id="pTg-Vg-iMZ"/>
@@ -140,13 +151,13 @@
                 <outlet property="sendViewArea" destination="fPF-VQ-8Jh" id="eZj-LR-HFN"/>
                 <outlet property="twitterBtn" destination="k1J-A5-9pZ" id="bwZ-V8-VA2"/>
             </connections>
-            <point key="canvasLocation" x="115.2" y="116.94152923538232"/>
+            <point key="canvasLocation" x="115" y="116"/>
         </tableViewCell>
     </objects>
     <resources>
         <image name="clips" width="16" height="14"/>
-        <image name="facebook-group" width="15" height="15"/>
+        <image name="facebook-group" width="20" height="20"/>
         <image name="sent-email" width="16" height="14"/>
-        <image name="twitter-group" width="15" height="15"/>
+        <image name="twitter-group" width="20" height="20"/>
     </resources>
 </document>
