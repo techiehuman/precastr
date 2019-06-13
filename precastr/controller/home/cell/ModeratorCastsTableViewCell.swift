@@ -70,7 +70,7 @@ class ModeratorCastsTableViewCell: UITableViewCell, UIScrollViewDelegate {
         for image in imagesArray{
             
             let slideView:SlideUIView = Bundle.main.loadNibNamed("Slide", owner: self, options: nil)?.first as! SlideUIView
-            slideView.frame = CGRect.init(x: 0, y: 0, width: contentView.frame.width, height: 218);
+            slideView.frame = CGRect.init(x: 0, y: 0, width: contentView.frame.width, height: 418);
             
             slideView.imageView.sd_setImage(with: URL(string: image), placeholderImage: UIImage.init(named: "post-image-placeholder"));
             slide.append(slideView);
@@ -84,7 +84,7 @@ class ModeratorCastsTableViewCell: UITableViewCell, UIScrollViewDelegate {
             
             let setupSlideScrollView = UIImageView();
             setupSlideScrollView.sd_setImage(with: URL(string: imagesArray[i]), placeholderImage: UIImage.init(named: "post-image-placeholder"));
-            setupSlideScrollView.contentMode = .scaleAspectFit;
+            setupSlideScrollView.contentMode = .scaleToFill;
             let xposition = self.contentView.frame.width * CGFloat(i);
             setupSlideScrollView.frame = CGRect.init(x: xposition, y: 0, width: imageGalleryScrollView.frame.width, height: imageGalleryScrollView.frame.height);
             
