@@ -132,7 +132,7 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        
+        let startTimeBarTap = UITapGestureRecognizer.init(target: self, action: #selector(startTimeBarPressed));
         let homeObject = self.homePosts[indexPath.row] as! NSDictionary ;
         
         if (loggedInUser.isCastr == 1) { // caster
@@ -141,6 +141,7 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             cell.sourceImageTwitter.isHidden = false;
 
             //cell.postTextLabel.text = String(homeObject.value(forKey: "post_description") as! String);
+            cell.postTextLabel.addGestureRecognizer(startTimeBarTap);
             let attributedString = NSMutableAttributedString(string: String(homeObject.value(forKey: "post_description") as! String))
             
             // *** Create instance of `NSMutableParagraphStyle`
@@ -154,6 +155,17 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             
             // *** Set Attributed String to your label ***
             cell.postTextLabel.attributedText = attributedString
+           
+            if(cell.postTextLabel.calculateMaxLines() <= 3){
+                cell.postTextLabel.numberOfLines = Int(cell.postTextLabel.calculateMaxLines())
+                print("numberOfLines")
+                
+                let frameHeight : Int = Int(cell.postTextLabel.frame.height)
+                 print(frameHeight)
+                let numLines : Int = Int(cell.postTextLabel.numberOfLines)
+                let calcHeight :Int = Int((frameHeight*numLines)/4);
+                cell.postTextLabel.frame = CGRect.init(x: cell.postTextLabel.frame.origin.x, y: cell.postTextLabel.frame.origin.y, width: cell.postTextLabel.frame.width, height: CGFloat(calcHeight))
+            }
             let postImages = homeObject.value(forKey: "post_images") as! NSArray
             if (postImages.count > 0) {
                 cell.imagesArray = [String]();
@@ -300,6 +312,16 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             // *** Set Attributed String to your label ***
             cell.postTextLabel.attributedText = attributedString
             
+            if(cell.postTextLabel.calculateMaxLines() <= 3){
+                cell.postTextLabel.numberOfLines = Int(cell.postTextLabel.calculateMaxLines())
+                print("numberOfLines")
+                let frameHeight : Int = Int(cell.postTextLabel.frame.height)
+                print(frameHeight)
+                let numLines : Int = Int(cell.postTextLabel.numberOfLines)
+                let calcHeight :Int = Int((frameHeight*numLines)/4);
+                cell.postTextLabel.frame = CGRect.init(x: cell.postTextLabel.frame.origin.x, y: cell.postTextLabel.frame.origin.y, width: cell.postTextLabel.frame.width, height: CGFloat(calcHeight))
+                
+            }
             let postImages = homeObject.value(forKey: "post_images") as! NSArray
             if (postImages.count > 0) {
                 cell.imagesArray = [String]();
@@ -563,5 +585,8 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             }
             
         });
+    }
+    @objc func startTimeBarPressed(){
+        
     }
 }

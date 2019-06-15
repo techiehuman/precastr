@@ -73,6 +73,11 @@
 		FADFEB0222A51A46006E3CD2 /* VisbyCF-ThinOblique.otf in Resources */ = {isa = PBXBuildFile; fileRef = FADFEAF222A51A46006E3CD2 /* VisbyCF-ThinOblique.otf */; };
 		FAE4DF61225F0E94008875C3 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE4DF60225F0E94008875C3 /* UserService.swift */; };
 		FAE4DF64225F155C008875C3 /* AppUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE4DF63225F155C008875C3 /* AppUtil.swift */; };
+		FAE6173A22B3B07E00A8B2F3 /* LeftCommunicationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE6173822B3B07E00A8B2F3 /* LeftCommunicationTableViewCell.swift */; };
+		FAE6173B22B3B07E00A8B2F3 /* LeftCommunicationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAE6173922B3B07E00A8B2F3 /* LeftCommunicationTableViewCell.xib */; };
+		FAE6173E22B3B09800A8B2F3 /* RightCommunicationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE6173C22B3B09800A8B2F3 /* RightCommunicationTableViewCell.swift */; };
+		FAE6173F22B3B09800A8B2F3 /* RightCommunicationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAE6173D22B3B09800A8B2F3 /* RightCommunicationTableViewCell.xib */; };
+		FAE6174122B3B32900A8B2F3 /* CommunicationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE6174022B3B32900A8B2F3 /* CommunicationViewController.swift */; };
 		FAF601CA2286A3C700B54F9B /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF601C92286A3C700B54F9B /* SplashViewController.swift */; };
 		FAF601CC228AAE6800B54F9B /* VerificationModeratorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF601CB228AAE6800B54F9B /* VerificationModeratorViewController.swift */; };
 		FAFCE3C3228E8F0000AB6DB5 /* SocialPlatform.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFCE3C2228E8F0000AB6DB5 /* SocialPlatform.swift */; };
@@ -179,6 +184,11 @@
 		FADFEAF222A51A46006E3CD2 /* VisbyCF-ThinOblique.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "VisbyCF-ThinOblique.otf"; sourceTree = "<group>"; };
 		FAE4DF60225F0E94008875C3 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		FAE4DF63225F155C008875C3 /* AppUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUtil.swift; sourceTree = "<group>"; };
+		FAE6173822B3B07E00A8B2F3 /* LeftCommunicationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeftCommunicationTableViewCell.swift; sourceTree = "<group>"; };
+		FAE6173922B3B07E00A8B2F3 /* LeftCommunicationTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LeftCommunicationTableViewCell.xib; sourceTree = "<group>"; };
+		FAE6173C22B3B09800A8B2F3 /* RightCommunicationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RightCommunicationTableViewCell.swift; sourceTree = "<group>"; };
+		FAE6173D22B3B09800A8B2F3 /* RightCommunicationTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RightCommunicationTableViewCell.xib; sourceTree = "<group>"; };
+		FAE6174022B3B32900A8B2F3 /* CommunicationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunicationViewController.swift; sourceTree = "<group>"; };
 		FAF601C92286A3C700B54F9B /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		FAF601CB228AAE6800B54F9B /* VerificationModeratorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationModeratorViewController.swift; sourceTree = "<group>"; };
 		FAFCE3C2228E8F0000AB6DB5 /* SocialPlatform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialPlatform.swift; sourceTree = "<group>"; };
@@ -391,6 +401,7 @@
 		FA6AB5A92253355800C5491F /* controller */ = {
 			isa = PBXGroup;
 			children = (
+				FAE6173622B3B02C00A8B2F3 /* communication */,
 				5EF623F122A5889A00124C55 /* post */,
 				FA84F18822A0E4C9007796A3 /* moderator */,
 				FABF02492264FB500067960C /* sidemenu */,
@@ -517,6 +528,26 @@
 				FAE4DF63225F155C008875C3 /* AppUtil.swift */,
 			);
 			path = util;
+			sourceTree = "<group>";
+		};
+		FAE6173622B3B02C00A8B2F3 /* communication */ = {
+			isa = PBXGroup;
+			children = (
+				FAE6173722B3B03C00A8B2F3 /* cells */,
+				FAE6174022B3B32900A8B2F3 /* CommunicationViewController.swift */,
+			);
+			path = communication;
+			sourceTree = "<group>";
+		};
+		FAE6173722B3B03C00A8B2F3 /* cells */ = {
+			isa = PBXGroup;
+			children = (
+				FAE6173822B3B07E00A8B2F3 /* LeftCommunicationTableViewCell.swift */,
+				FAE6173922B3B07E00A8B2F3 /* LeftCommunicationTableViewCell.xib */,
+				FAE6173C22B3B09800A8B2F3 /* RightCommunicationTableViewCell.swift */,
+				FAE6173D22B3B09800A8B2F3 /* RightCommunicationTableViewCell.xib */,
+			);
+			path = cells;
 			sourceTree = "<group>";
 		};
 		FB892DAAB9AB4EDEB3D1A24B /* Frameworks */ = {
@@ -649,6 +680,7 @@
 				FA6AB58622531E8200C5491F /* LaunchScreen.storyboard in Resources */,
 				FADFEAFE22A51A46006E3CD2 /* VisbyCF-MediumOblique.otf in Resources */,
 				FADFEB0022A51A46006E3CD2 /* VisbyCF-RegularOblique.otf in Resources */,
+				FAE6173F22B3B09800A8B2F3 /* RightCommunicationTableViewCell.xib in Resources */,
 				5EEC6B5C22A66EAA005B1C34 /* LoginScreenTableViewCell.xib in Resources */,
 				FADFEAFD22A51A46006E3CD2 /* VisbyCF-Medium.otf in Resources */,
 				FA6AB58322531E8200C5491F /* Assets.xcassets in Resources */,
@@ -662,6 +694,7 @@
 				FADFEAF822A51A46006E3CD2 /* VisbyCF-ExtraBoldOblique.otf in Resources */,
 				FA84F18C22A0E511007796A3 /* moderatorTableViewCell.xib in Resources */,
 				FAFCE3CB22999F1000AB6DB5 /* HomeTextPostTableViewCell.xib in Resources */,
+				FAE6173B22B3B07E00A8B2F3 /* LeftCommunicationTableViewCell.xib in Resources */,
 				FADFEAF322A51A46006E3CD2 /* VisbyCF-Bold.otf in Resources */,
 				FADFEAFC22A51A46006E3CD2 /* VisbyCF-LightOblique.otf in Resources */,
 				FADFEAF922A51A46006E3CD2 /* VisbyCF-Heavy.otf in Resources */,
@@ -817,7 +850,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FAE6173E22B3B09800A8B2F3 /* RightCommunicationTableViewCell.swift in Sources */,
 				FA0372E222605A3800C3B3C9 /* UserManager.swift in Sources */,
+				FAE6173A22B3B07E00A8B2F3 /* LeftCommunicationTableViewCell.swift in Sources */,
 				FAE4DF61225F0E94008875C3 /* UserService.swift in Sources */,
 				FA291B0A225380830093E6CE /* User.swift in Sources */,
 				FA84F19422A1355A007796A3 /* HeaderViewTableViewCell.swift in Sources */,
@@ -834,6 +869,7 @@
 				5EB754DF22ABE136006D636B /* ForgetPasswordTableViewCell.swift in Sources */,
 				5EEC6B6122A6842F005B1C34 /* SignupScreenTableViewCell.swift in Sources */,
 				FAFCE3C3228E8F0000AB6DB5 /* SocialPlatform.swift in Sources */,
+				FAE6174122B3B32900A8B2F3 /* CommunicationViewController.swift in Sources */,
 				FA84F18B22A0E511007796A3 /* moderatorTableViewCell.swift in Sources */,
 				FA6AB57C22531E7300C5491F /* AppDelegate.swift in Sources */,
 				FA84F18522A03289007796A3 /* SlideUIView.swift in Sources */,

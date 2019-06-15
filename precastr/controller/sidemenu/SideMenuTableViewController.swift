@@ -86,7 +86,7 @@ class SideMenuTableViewController: UITableViewController {
         let menuButton = UIButton();
         menuButton.setImage(UIImage.init(named: "left-arrow"), for: .normal);
         menuButton.addTarget(self, action: #selector(backButtonPressed), for: UIControlEvents.touchUpInside)
-        menuButton.frame = CGRect.init(x: 0, y:0, width: 20, height: 15);
+        menuButton.frame = CGRect.init(x: 0, y:0, width: 16.73, height: 10.89);
         
         let barButton = UIBarButtonItem(customView: menuButton)
         navigationItem.leftBarButtonItem = barButton;
@@ -95,7 +95,7 @@ class SideMenuTableViewController: UITableViewController {
         let homeButton = UIButton();
         homeButton.setImage(UIImage.init(named: "top-home"), for: .normal);
         homeButton.addTarget(self, action: #selector(homeButtonPressed), for: UIControlEvents.touchUpInside)
-        homeButton.frame = CGRect.init(x: 0, y:0, width: 24, height: 24);
+        homeButton.frame = CGRect.init(x: 0, y:0, width: 20, height: 20);
         
         let homeBarButton = UIBarButtonItem(customView: homeButton)
         

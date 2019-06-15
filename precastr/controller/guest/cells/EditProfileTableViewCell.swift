@@ -43,16 +43,16 @@ class EditProfileTableViewCell: UITableViewCell,UITextFieldDelegate, EditProfile
         let cameraTap = UITapGestureRecognizer.init(target: self, action: #selector(cameraViewPressed));
         cameraUIView.addGestureRecognizer(cameraTap);
         
-        let lineView = UIView(frame: CGRect(x: 0, y: self.nameTextField.frame.height-1, width: self.nameTextField.bounds.width - 30, height: 0.5))
+        let lineView = UIView(frame: CGRect(x: 0, y: self.nameTextField.frame.height, width: self.nameTextField.bounds.width - 14, height: 0.5))
         lineView.backgroundColor = UIColor.init(red: 146/255, green: 147/255, blue: 149/255, alpha: 1)
         self.nameTextField.addSubview(lineView)
         
-        let uplineView = UIView(frame: CGRect(x: 0, y: self.currentPasswordTextField.frame.height - 1, width: self.currentPasswordTextField.bounds.width - 30, height: 0.5))
+        let uplineView = UIView(frame: CGRect(x: 0, y: self.currentPasswordTextField.frame.height, width: self.currentPasswordTextField.bounds.width - 14, height: 0.5))
         uplineView.backgroundColor = UIColor.init(red: 146/255, green: 147/255, blue: 149/255, alpha: 1)
         self.currentPasswordTextField.addSubview(uplineView)
         
         
-        let cplineView = UIView(frame: CGRect(x: 0, y: self.confirmPasswordTxtField.frame.height - 1, width: self.confirmPasswordTxtField.bounds.width - 30, height: 0.5))
+        let cplineView = UIView(frame: CGRect(x: 0, y: self.confirmPasswordTxtField.frame.height, width: self.confirmPasswordTxtField.bounds.width - 14, height: 0.5))
         cplineView.backgroundColor = UIColor.init(red: 146/255, green: 147/255, blue: 149/255, alpha: 1)
         self.confirmPasswordTxtField.addSubview(cplineView)
         
