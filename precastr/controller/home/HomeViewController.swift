@@ -132,7 +132,6 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let startTimeBarTap = UITapGestureRecognizer.init(target: self, action: #selector(startTimeBarPressed));
         let homeObject = self.homePosts[indexPath.row] as! NSDictionary ;
         
         if (loggedInUser.isCastr == 1) { // caster
@@ -141,7 +140,9 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             cell.sourceImageTwitter.isHidden = false;
 
             //cell.postTextLabel.text = String(homeObject.value(forKey: "post_description") as! String);
-            cell.postTextLabel.addGestureRecognizer(startTimeBarTap);
+            let postDescTap = UITapGestureRecognizer.init(target: self, action: #selector(postDescriptionPressed));
+            cell.postTextLabel.addGestureRecognizer(postDescTap);
+            
             let attributedString = NSMutableAttributedString(string: String(homeObject.value(forKey: "post_description") as! String))
             
             // *** Create instance of `NSMutableParagraphStyle`
@@ -586,7 +587,8 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             
         });
     }
-    @objc func startTimeBarPressed(){
-        
+    @objc func postDescriptionPressed(){
+        var viewController = self.storyboard?.instantiateViewController(withIdentifier: "CommunicationViewController") as! CommunicationViewController;
+        self.navigationController?.pushViewController(viewController, animated: true);
     }
 }
