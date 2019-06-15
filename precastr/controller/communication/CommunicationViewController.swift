@@ -10,6 +10,8 @@ import UIKit
 
 class CommunicationViewController: UIViewController {
 
+    var post: Post!;
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
