@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="a6n-jY-43O">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="a6n-jY-43O">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -1072,13 +1072,12 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yvu-ie-aef">
-                                        <rect key="frame" x="20" y="15" width="10" height="10"/>
+                                        <rect key="frame" x="20" y="15" width="12" height="12"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0m1-4W-4LX">
-                                        <rect key="frame" x="43" y="15" width="72" height="12"/>
+                                        <rect key="frame" x="43" y="15" width="80" height="12"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <attributedString key="attributedText">
                                             <fragment content="Pending review">
@@ -1091,13 +1090,12 @@
                                         <color key="highlightedColor" red="0.13333333333333333" green="0.13333333333333333" blue="0.13333333333333333" alpha="1" colorSpace="calibratedRGB"/>
                                     </label>
                                     <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RGC-c2-kyY">
-                                        <rect key="frame" x="120" y="15" width="10" height="10"/>
+                                        <rect key="frame" x="120" y="15" width="12" height="12"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PKy-g4-xZO">
-                                        <rect key="frame" x="140" y="15" width="47" height="12"/>
+                                        <rect key="frame" x="140" y="15" width="60" height="12"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <attributedString key="attributedText">
                                             <fragment content="Approved">
@@ -1110,13 +1108,12 @@
                                         <color key="highlightedColor" red="0.1333333333" green="0.1333333333" blue="0.1333333333" alpha="1" colorSpace="calibratedRGB"/>
                                     </label>
                                     <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ka5-Fu-EoE">
-                                        <rect key="frame" x="190" y="15" width="10" height="10"/>
+                                        <rect key="frame" x="190" y="15" width="12" height="12"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oBr-fu-v5B">
-                                        <rect key="frame" x="210" y="15" width="59" height="12"/>
+                                        <rect key="frame" x="210" y="15" width="80" height="12"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <attributedString key="attributedText">
                                             <fragment content="Under review">
@@ -1129,14 +1126,13 @@
                                         <color key="highlightedColor" red="0.1333333333" green="0.1333333333" blue="0.1333333333" alpha="1" colorSpace="calibratedRGB"/>
                                     </label>
                                     <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9YW-9I-wzy">
-                                        <rect key="frame" x="275" y="15" width="10" height="10"/>
+                                        <rect key="frame" x="290" y="15" width="12" height="12"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sgz-YI-5Lf">
-                                        <rect key="frame" x="290" y="15" width="40" height="12"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <rect key="frame" x="310" y="15" width="60" height="12"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                                         <attributedString key="attributedText">
                                             <fragment content="Rejected">
                                                 <attributes>
@@ -1162,7 +1158,7 @@
                     </view>
                     <connections>
                         <outlet property="approvedUIView" destination="RGC-c2-kyY" id="Ejj-l7-gsg"/>
-                        <outlet property="pendingReview" destination="yvu-ie-aef" id="sbu-7O-51b"/>
+                        <outlet property="pendingUIView" destination="yvu-ie-aef" id="EUW-jN-AKP"/>
                         <outlet property="rejectedUIView" destination="9YW-9I-wzy" id="s8M-Qu-IAt"/>
                         <outlet property="underUIView" destination="ka5-Fu-EoE" id="QkT-Lf-XJq"/>
                     </connections>
@@ -1451,11 +1447,11 @@
         <image name="add-new" width="18" height="18"/>
         <image name="add-new-black" width="20" height="20"/>
         <image name="back" width="5" height="9"/>
-        <image name="chat" width="23" height="21.5"/>
+        <image name="chat" width="23" height="21"/>
         <image name="clips" width="16" height="14"/>
         <image name="facebook-group" width="20" height="20"/>
         <image name="faq" width="18" height="18"/>
-        <image name="hold" width="16.333333969116211" height="20.333333969116211"/>
+        <image name="hold" width="16" height="20"/>
         <image name="home" width="18" height="18"/>
         <image name="home-black" width="27" height="27"/>
         <image name="logo" width="138" height="138"/>
@@ -1464,8 +1460,8 @@
         <image name="my-account" width="18" height="18"/>
         <image name="my-account-black" width="18" height="18"/>
         <image name="no-cast" width="88" height="81"/>
-        <image name="passage-of-time" width="20" height="18.666666030883789"/>
-        <image name="sent-email" width="16" height="14.5"/>
+        <image name="passage-of-time" width="20" height="18"/>
+        <image name="sent-email" width="16" height="14"/>
         <image name="twitter-group" width="20" height="20"/>
     </resources>
     <inferredMetricsTieBreakers>
