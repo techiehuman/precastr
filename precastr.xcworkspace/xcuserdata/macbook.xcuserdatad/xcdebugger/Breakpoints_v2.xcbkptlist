@@ -10,13 +10,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "precastr/controller/home/HomeViewController.swift"
-            timestampString = "582191307.151058"
+            timestampString = "582306851.392566"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "64"
             endingLineNumber = "64"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            landmarkName = "viewWillAppear(_:)"
+            landmarkType = "7">
             <Locations>
                <Location
                   shouldBeEnabled = "No"
@@ -330,13 +330,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "precastr/extension/multiExtension.swift"
-            timestampString = "582221031.776844"
+            timestampString = "582306851.393097"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "101"
             endingLineNumber = "101"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            landmarkName = "checkedBtnState()"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy

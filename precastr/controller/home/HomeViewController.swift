@@ -163,7 +163,7 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                  print(frameHeight)
                 let numLines : Int = Int(cell.postTextLabel.numberOfLines)
                 let calcHeight :Int = Int((frameHeight*numLines)/4);
-                cell.postTextLabel.frame = CGRect.init(x: cell.postTextLabel.frame.origin.x, y: cell.postTextLabel.frame.origin.y, width: cell.postTextLabel.frame.width, height: CGFloat(calcHeight))
+               // cell.postTextLabel.frame = CGRect.init(x: cell.postTextLabel.frame.origin.x, y: cell.postTextLabel.frame.origin.y, width: cell.postTextLabel.frame.width, height: CGFloat(calcHeight))
             }
             
             if (post.postImages.count > 0) {
@@ -295,7 +295,7 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 print(frameHeight)
                 let numLines : Int = Int(cell.postTextLabel.numberOfLines)
                 let calcHeight :Int = Int((frameHeight*numLines)/4);
-                cell.postTextLabel.frame = CGRect.init(x: cell.postTextLabel.frame.origin.x, y: cell.postTextLabel.frame.origin.y, width: cell.postTextLabel.frame.width, height: CGFloat(calcHeight))
+               // cell.postTextLabel.frame = CGRect.init(x: cell.postTextLabel.frame.origin.x, y: cell.postTextLabel.frame.origin.y, width: cell.postTextLabel.frame.width, height: CGFloat(calcHeight))
                 
             }
             //let postImages = homeObject.value(forKey: "post_images") as! NSArray

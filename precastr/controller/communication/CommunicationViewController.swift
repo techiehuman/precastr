@@ -20,6 +20,19 @@ class CommunicationViewController: UIViewController {
         self.approvedUIView.roundView()
         self.rejectedUIView.roundView()
         self.underUIView.roundView()
+        
+        
+        self.pendingUIView.layer.borderWidth  = 1
+        self.pendingUIView.layer.borderColor = UIColor(red: 112/255, green: 112/255, blue: 112/255, alpha: 1).cgColor
+        
+        self.approvedUIView.layer.borderWidth  = 1
+        self.approvedUIView.layer.borderColor = UIColor(red: 112/255, green: 112/255, blue: 112/255, alpha: 1).cgColor
+        
+        self.rejectedUIView.layer.borderWidth  = 1
+        self.rejectedUIView.layer.borderColor = UIColor(red: 112/255, green: 112/255, blue: 112/255, alpha: 1).cgColor
+        
+        self.underUIView.layer.borderWidth  = 1
+        self.underUIView.layer.borderColor = UIColor(red: 112/255, green: 112/255, blue: 112/255, alpha: 1).cgColor
     }
 
     @IBOutlet weak var pendingUIView : UIView!
