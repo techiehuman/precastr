@@ -153,8 +153,12 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             attributedString.addAttribute(NSAttributedStringKey.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, attributedString.length))
             
             // *** Set Attributed String to your label ***
-            cell.postTextLabel.attributedText = attributedString
+            //cell.postTextLabel.attributedText = attributedString
            
+            cell.postTextLabel.text = post.postDescription;
+            cell.postTextLabel.numberOfLines = 4;
+            cell.postTextLabel.lineBreakMode = .byWordWrapping;
+            
             if(cell.postTextLabel.calculateMaxLines() <= 3){
                 cell.postTextLabel.numberOfLines = Int(cell.postTextLabel.calculateMaxLines())
                 print("numberOfLines")
@@ -163,7 +167,7 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                  print(frameHeight)
                 let numLines : Int = Int(cell.postTextLabel.numberOfLines)
                 let calcHeight :Int = Int((frameHeight*numLines)/4);
-                cell.postTextLabel.frame = CGRect.init(x: cell.postTextLabel.frame.origin.x, y: cell.postTextLabel.frame.origin.y, width: cell.postTextLabel.frame.width, height: CGFloat(calcHeight))
+                //cell.postTextLabel.frame = CGRect.init(x: cell.postTextLabel.frame.origin.x, y: cell.postTextLabel.frame.origin.y, width: cell.postTextLabel.frame.width, height: CGFloat(calcHeight))
             }
             
             if (post.postImages.count > 0) {

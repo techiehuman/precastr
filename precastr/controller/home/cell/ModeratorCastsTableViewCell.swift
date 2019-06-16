@@ -84,7 +84,7 @@ class ModeratorCastsTableViewCell: UITableViewCell, UIScrollViewDelegate {
             
             let setupSlideScrollView = UIImageView();
             setupSlideScrollView.sd_setImage(with: URL(string: imagesArray[i]), placeholderImage: UIImage.init(named: "post-image-placeholder"));
-            setupSlideScrollView.contentMode = .scaleAspectFill;
+            setupSlideScrollView.contentMode = .scaleAspectFit;
             setupSlideScrollView.clipsToBounds = true
 
             let xposition = self.contentView.frame.width * CGFloat(i);

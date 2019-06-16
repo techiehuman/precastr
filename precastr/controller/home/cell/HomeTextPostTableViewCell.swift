@@ -17,6 +17,12 @@ class HomeTextPostTableViewCell: UITableViewCell,UIScrollViewDelegate {
         self.imageGalleryScrollView.delegate = self
         self.imageCounterView.layer.cornerRadius = 10
     }
+    
+    override func layoutSubviews() {
+        postTextLabel.frame = CGRect(x: postTextLabel.frame.origin.x, y: postTextLabel.frame.origin.y, width: bounds.width - 30, height: 0)
+        postTextLabel.sizeToFit()
+        postTextLabel.frame.size = postTextLabel.bounds.size
+    }
 
     @IBOutlet weak var profilePicImageView: UIImageView!
     
@@ -91,7 +97,7 @@ class HomeTextPostTableViewCell: UITableViewCell,UIScrollViewDelegate {
             setupSlideScrollView.frame = CGRect.init(x: xposition, y: 0, width: imageGalleryScrollView.frame.width, height: imageGalleryScrollView.frame.height);
 
             setupSlideScrollView.sd_setImage(with: URL(string: imagesArray[i]), placeholderImage: UIImage.init(named: "post-image-placeholder"));
-            setupSlideScrollView.contentMode = .scaleAspectFill;
+            setupSlideScrollView.contentMode = .scaleToFill;
             setupSlideScrollView.clipsToBounds = true
             print("imageGalleryScrollView", imageGalleryScrollView.frame.width)
             
