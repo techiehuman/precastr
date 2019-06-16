@@ -34,6 +34,22 @@ extension UIImageView{
         self.layer.cornerRadius = self.frame.height/2
         self.layer.masksToBounds = true
     }
+    
+    override open var intrinsicContentSize: CGSize {
+        
+        if let myImage = self.image {
+            let myImageWidth = myImage.size.width
+            let myImageHeight = myImage.size.height
+            let myViewWidth = self.frame.size.width
+            
+            let ratio = myViewWidth/myImageWidth
+            let scaledHeight = myImageHeight * ratio
+            
+            return CGSize(width: myViewWidth, height: scaledHeight)
+        }
+        
+        return CGSize(width: -1.0, height: -1.0)
+    }
 }
 extension UIImage{
     func compressTo(_ expectedSizeInMb:Int) -> UIImage? {

@@ -133,7 +133,10 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         let post = self.posts[indexPath.row];
         
         if (loggedInUser.isCastr == 1) { // caster
-        let cell: HomeTextPostTableViewCell = tableView.dequeueReusableCell(withIdentifier: "HomeTextPostTableViewCell", for: indexPath) as! HomeTextPostTableViewCell;
+            
+            var postTextDescHeight: CGFloat = 0;
+            
+            let cell: HomeTextPostTableViewCell = tableView.dequeueReusableCell(withIdentifier: "HomeTextPostTableViewCell", for: indexPath) as! HomeTextPostTableViewCell;
             cell.sourceImageFacebook.isHidden = false;
             cell.sourceImageTwitter.isHidden = false;
 
@@ -154,10 +157,20 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             
             // *** Set Attributed String to your label ***
             //cell.postTextLabel.attributedText = attributedString
-           
+            postTextDescHeight = cell.heightForView(text: post.postDescription);
+            if (postTextDescHeight > 80) {
+                postTextDescHeight = 80;
+                cell.postTextLabel.numberOfLines = 4;
+                cell.postTextLabel.lineBreakMode = .byTruncatingTail
+            } else {
+                cell.postTextLabel.numberOfLines = 0;
+                cell.postTextLabel.lineBreakMode = .byWordWrapping;
+            }
             cell.postTextLabel.text = post.postDescription;
-            cell.postTextLabel.numberOfLines = 4;
-            cell.postTextLabel.lineBreakMode = .byWordWrapping;
+            cell.postTextLabel.frame = CGRect(x: cell.postTextLabel.frame.origin.x, y: cell.postTextLabel.frame.origin.y, width: cell.bounds.width - 30, height: postTextDescHeight)
+                
+                
+            print("Lebel Height : ",cell.heightForView(text: post.postDescription))
             
             if(cell.postTextLabel.calculateMaxLines() <= 3){
                 cell.postTextLabel.numberOfLines = Int(cell.postTextLabel.calculateMaxLines())
@@ -167,11 +180,7 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                  print(frameHeight)
                 let numLines : Int = Int(cell.postTextLabel.numberOfLines)
                 let calcHeight :Int = Int((frameHeight*numLines)/4);
-<<<<<<< HEAD
-                //cell.postTextLabel.frame = CGRect.init(x: cell.postTextLabel.frame.origin.x, y: cell.postTextLabel.frame.origin.y, width: cell.postTextLabel.frame.width, height: CGFloat(calcHeight))
-=======
                // cell.postTextLabel.frame = CGRect.init(x: cell.postTextLabel.frame.origin.x, y: cell.postTextLabel.frame.origin.y, width: cell.postTextLabel.frame.width, height: CGFloat(calcHeight))
->>>>>>> e301051a532116627961124dfad40c9a47b6bec7
             }
             
             if (post.postImages.count > 0) {
@@ -270,6 +279,9 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 //70 width of counter view
                 //20 Padding from right
                 //20 from top of image scroll view
+                
+                cell.imageGalleryScrollView.frame = CGRect.init(x: cell.imageGalleryScrollView.frame.origin.x, y: postTextDescHeight + 50, width: cell.imageGalleryScrollView.frame.width, height: cell.imageGalleryScrollView.frame.height)
+                
                 cell.imageCounterView.frame = CGRect.init(x: (cell.frame.width - (60 + 20) ), y: (cell.imageGalleryScrollView.frame.origin.y + 20), width: 60, height: 25)
                 
             } else {

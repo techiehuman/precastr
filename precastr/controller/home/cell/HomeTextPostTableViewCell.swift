@@ -129,5 +129,13 @@ class HomeTextPostTableViewCell: UITableViewCell,UIScrollViewDelegate {
         
     }
     
-    
+    func heightForView(text:String) -> CGFloat{
+        let label:UILabel = UILabel(frame: CGRect(x: 0, y: 0, width: bounds.width - 30, height: CGFloat.greatestFiniteMagnitude))
+        label.numberOfLines = 0
+        label.lineBreakMode = NSLineBreakMode.byWordWrapping
+        label.text = text
+        label.sizeToFit()
+        return label.frame.height
+    }
+
 }
