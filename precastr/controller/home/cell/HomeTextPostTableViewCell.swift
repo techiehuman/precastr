@@ -60,6 +60,8 @@ class HomeTextPostTableViewCell: UITableViewCell,UIScrollViewDelegate {
     
     @IBOutlet weak var totalCountImageLbl : UILabel!
     
+    @IBOutlet weak var separator: UIView!
+    
     var currentCount : Int!
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
@@ -97,7 +99,7 @@ class HomeTextPostTableViewCell: UITableViewCell,UIScrollViewDelegate {
             setupSlideScrollView.frame = CGRect.init(x: xposition, y: 0, width: imageGalleryScrollView.frame.width, height: imageGalleryScrollView.frame.height);
 
             setupSlideScrollView.sd_setImage(with: URL(string: imagesArray[i]), placeholderImage: UIImage.init(named: "post-image-placeholder"));
-            setupSlideScrollView.contentMode = .scaleToFill;
+            setupSlideScrollView.contentMode = .scaleAspectFill;
             setupSlideScrollView.clipsToBounds = true
             print("imageGalleryScrollView", imageGalleryScrollView.frame.width)
             
@@ -128,14 +130,4 @@ class HomeTextPostTableViewCell: UITableViewCell,UIScrollViewDelegate {
         let percentageVerticalOffset: CGFloat = currentVerticalOffset / maximumVerticalOffset
         
     }
-    
-    func heightForView(text:String) -> CGFloat{
-        let label:UILabel = UILabel(frame: CGRect(x: 0, y: 0, width: bounds.width - 30, height: CGFloat.greatestFiniteMagnitude))
-        label.numberOfLines = 0
-        label.lineBreakMode = NSLineBreakMode.byWordWrapping
-        label.text = text
-        label.sizeToFit()
-        return label.frame.height
-    }
-
 }

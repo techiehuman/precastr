@@ -24,7 +24,7 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     var slides:[SlideUIView] = [];
     class func MainViewController() -> UITabBarController{
         
-        var tabBarContro = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MadTabBar") as! UITabBarController
+        let tabBarContro = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MadTabBar") as! UITabBarController
         let loggedInUser = User().loadUserDataFromUserDefaults(userDataDict: setting);
         if (loggedInUser.isCastr == 2) {
             tabBarContro.viewControllers?.remove(at: 1)
@@ -120,10 +120,23 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 return 165
             }
         } else {
-            if (post.postImages.count > 0) {
-                return 590
+            
+            var postDescHeight: CGFloat = self.heightForView(text: post.postDescription);
+            print("POST Height **************  : ",postDescHeight);
+            if (postDescHeight > 80.0) {
+                postDescHeight = 80.0;
             }
-            return 130
+            if (post.postImages.count > 0) {
+                
+                if (post.postImages.count == 1) {
+                    postDescHeight = postDescHeight + 418 + 20;
+                    return postDescHeight;
+                } else {
+                    postDescHeight = postDescHeight + 418 +  40 + 40 + 20;
+                    return postDescHeight;
+                }
+            }
+            return (postDescHeight + 40 + 20);
         }
         return 0;
     }
@@ -144,20 +157,8 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             postDescTap.rowId = indexPath.row;
             cell.postTextLabel.addGestureRecognizer(postDescTap);
             
-            let attributedString = NSMutableAttributedString(string: post.postDescription)
-
-            // *** Create instance of `NSMutableParagraphStyle`
-            let paragraphStyle = NSMutableParagraphStyle()
-            
-            // *** set LineSpacing property in points ***
-            paragraphStyle.lineSpacing = 2 // Whatever line spacing you want in points
-            
-            // *** Apply attribute to string ***
-            attributedString.addAttribute(NSAttributedStringKey.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, attributedString.length))
-            
             // *** Set Attributed String to your label ***
-            //cell.postTextLabel.attributedText = attributedString
-            postTextDescHeight = cell.heightForView(text: post.postDescription);
+            postTextDescHeight = heightForView(text: post.postDescription);
             if (postTextDescHeight > 80) {
                 postTextDescHeight = 80;
                 cell.postTextLabel.numberOfLines = 4;
@@ -167,20 +168,15 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 cell.postTextLabel.lineBreakMode = .byWordWrapping;
             }
             cell.postTextLabel.text = post.postDescription;
-            cell.postTextLabel.frame = CGRect(x: cell.postTextLabel.frame.origin.x, y: cell.postTextLabel.frame.origin.y, width: cell.bounds.width - 30, height: postTextDescHeight)
-                
-                
-            print("Lebel Height : ",cell.heightForView(text: post.postDescription))
+            cell.postTextLabel.frame = CGRect(x: cell.postTextLabel.frame.origin.x, y: CGFloat(HomePostCellHeight.PostStatusViewHeight), width: cell.bounds.width - 30, height: postTextDescHeight)
             
             if(cell.postTextLabel.calculateMaxLines() <= 3){
                 cell.postTextLabel.numberOfLines = Int(cell.postTextLabel.calculateMaxLines())
-                print("numberOfLines")
                 
                 let frameHeight : Int = Int(cell.postTextLabel.frame.height)
                  print(frameHeight)
                 let numLines : Int = Int(cell.postTextLabel.numberOfLines)
                 let calcHeight :Int = Int((frameHeight*numLines)/4);
-               // cell.postTextLabel.frame = CGRect.init(x: cell.postTextLabel.frame.origin.x, y: cell.postTextLabel.frame.origin.y, width: cell.postTextLabel.frame.width, height: CGFloat(calcHeight))
             }
             
             if (post.postImages.count > 0) {
@@ -252,7 +248,7 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             cell.statusImage.image = UIImage.init(named: imageStatus)
             let pipe = " |"
             cell.profileLabel.text = "\((status))\(pipe)"
-           print(cell.profileLabel.intrinsicContentSize.width)
+            print(cell.profileLabel.intrinsicContentSize.width)
             cell.dateLabel.text = Date().ddspEEEEcmyyyy(dateStr: post.createdOn)
             
             // Lets add ui labels in width.
@@ -279,13 +275,25 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 //70 width of counter view
                 //20 Padding from right
                 //20 from top of image scroll view
-                
-                cell.imageGalleryScrollView.frame = CGRect.init(x: cell.imageGalleryScrollView.frame.origin.x, y: postTextDescHeight + 50, width: cell.imageGalleryScrollView.frame.width, height: cell.imageGalleryScrollView.frame.height)
+                cell.imageGalleryScrollView.frame = CGRect.init(x: cell.imageGalleryScrollView.frame.origin.x, y: postTextDescHeight + CGFloat(HomePostCellHeight.PostStatusViewHeight), width: cell.imageGalleryScrollView.frame.width, height: cell.imageGalleryScrollView.frame.height)
                 
                 cell.imageCounterView.frame = CGRect.init(x: (cell.frame.width - (60 + 20) ), y: (cell.imageGalleryScrollView.frame.origin.y + 20), width: 60, height: 25)
                 
+                cell.pageControl.frame = CGRect.init(x: cell.pageControl.frame.origin.x, y: cell.imageGalleryScrollView.frame.origin.y + cell.imageGalleryScrollView.frame.height + 1, width: cell.pageControl.frame.width, height: cell.pageControl.frame.height)
             } else {
                 cell.imageCounterView.isHidden = true
+            }
+            
+            if (post.postImages.count > 0) {
+                if (post.postImages.count == 1) {
+                    cell.separator.frame = CGRect.init(x: 0, y: cell.imageGalleryScrollView.frame.origin.y + cell.imageGalleryScrollView.frame.height + 20, width: cell.frame.width, height: CGFloat(HomePostCellHeight.SeparatorHeight));
+                } else {
+                    cell.separator.frame = CGRect.init(x: 0, y: cell.pageControl.frame.origin.y + cell.pageControl.frame.height + 10, width: cell.frame.width, height: CGFloat(HomePostCellHeight.SeparatorHeight));
+                }
+            } else {
+                
+                cell.separator.frame = CGRect.init(x: 0, y: cell.postTextLabel.frame.origin.y + postTextDescHeight + 20, width: cell.frame.width, height: CGFloat(HomePostCellHeight.SeparatorHeight));
+
             }
             
             //ScrollView functionality
@@ -315,7 +323,6 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 print(frameHeight)
                 let numLines : Int = Int(cell.postTextLabel.numberOfLines)
                 let calcHeight :Int = Int((frameHeight*numLines)/4);
-               // cell.postTextLabel.frame = CGRect.init(x: cell.postTextLabel.frame.origin.x, y: cell.postTextLabel.frame.origin.y, width: cell.postTextLabel.frame.width, height: CGFloat(calcHeight))
                 
             }
             //let postImages = homeObject.value(forKey: "post_images") as! NSArray
@@ -546,6 +553,16 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             
         });
     }
+    
+    func heightForView(text:String) -> CGFloat{
+        let label:UILabel = UILabel(frame: CGRect(x: 0, y: 0, width: self.view.frame.width - 30, height: CGFloat.greatestFiniteMagnitude))
+        label.numberOfLines = 0
+        label.lineBreakMode = NSLineBreakMode.byWordWrapping
+        label.text = text
+        label.sizeToFit()
+        return label.frame.height
+    }
+    
     @objc func postDescriptionPressed(sender: MyTapRecognizer){
         let viewController = self.storyboard?.instantiateViewController(withIdentifier: "CommunicationViewController") as! CommunicationViewController;
         viewController.post  = self.posts[sender.rowId];
