@@ -9,7 +9,7 @@
 import UIKit
 
 class RightCommunicationTableViewCell: UITableViewCell {
-
+ var communicationViewControllerDelegate : CommunicationViewController!;
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

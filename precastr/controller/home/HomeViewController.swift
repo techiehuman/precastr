@@ -469,7 +469,15 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         
         
         UserService().postDataMethod(jsonURL: jsonURL, postData: postArray, complete: {(response) in
+            print(response)
             
+            if(Int(response.value(forKey: "status") as! String) == 0){
+                print("hello")
+                  self.noPostsText.text = "Server Error!";
+                let alert = UIAlertController.init(title: "Error", message: response.value(forKey: "message") as! String, preferredStyle: .alert);
+                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil));
+                self.present(alert, animated: true)
+            }else{
             let modeArray = response.value(forKey: "data") as! NSArray;
             
             if (modeArray.count != 0) {
@@ -492,6 +500,7 @@ class HomeViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
 
                 self.socialPostList.isHidden = true;
             }
+        }
         });
     }
     
