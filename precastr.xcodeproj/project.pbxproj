@@ -11,6 +11,7 @@
 		5EB754DC22ABE125006D636B /* ForgetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EB754DB22ABE125006D636B /* ForgetPasswordViewController.swift */; };
 		5EB754DF22ABE136006D636B /* ForgetPasswordTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EB754DD22ABE136006D636B /* ForgetPasswordTableViewCell.swift */; };
 		5EB754E022ABE136006D636B /* ForgetPasswordTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5EB754DE22ABE136006D636B /* ForgetPasswordTableViewCell.xib */; };
+		5EE9EBFF22B803C300FD04B6 /* HomeDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EE9EBFE22B803C300FD04B6 /* HomeDto.swift */; };
 		5EEC6B5B22A66EAA005B1C34 /* LoginScreenTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EEC6B5922A66EAA005B1C34 /* LoginScreenTableViewCell.swift */; };
 		5EEC6B5C22A66EAA005B1C34 /* LoginScreenTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5EEC6B5A22A66EAA005B1C34 /* LoginScreenTableViewCell.xib */; };
 		5EEC6B5E22A67052005B1C34 /* LoginScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EEC6B5D22A67052005B1C34 /* LoginScreenViewController.swift */; };
@@ -114,6 +115,7 @@
 		5EB754DB22ABE125006D636B /* ForgetPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgetPasswordViewController.swift; sourceTree = "<group>"; };
 		5EB754DD22ABE136006D636B /* ForgetPasswordTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgetPasswordTableViewCell.swift; sourceTree = "<group>"; };
 		5EB754DE22ABE136006D636B /* ForgetPasswordTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ForgetPasswordTableViewCell.xib; sourceTree = "<group>"; };
+		5EE9EBFE22B803C300FD04B6 /* HomeDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeDto.swift; sourceTree = "<group>"; };
 		5EEC6B5922A66EAA005B1C34 /* LoginScreenTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginScreenTableViewCell.swift; sourceTree = "<group>"; };
 		5EEC6B5A22A66EAA005B1C34 /* LoginScreenTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoginScreenTableViewCell.xib; sourceTree = "<group>"; };
 		5EEC6B5D22A67052005B1C34 /* LoginScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginScreenViewController.swift; sourceTree = "<group>"; };
@@ -435,6 +437,7 @@
 			isa = PBXGroup;
 			children = (
 				FA84F177229C5E7A007796A3 /* ModeratorsDto.swift */,
+				5EE9EBFE22B803C300FD04B6 /* HomeDto.swift */,
 			);
 			path = dto;
 			sourceTree = "<group>";
@@ -881,6 +884,7 @@
 				FA1C1CDD228400A800583E1B /* Reusable.swift in Sources */,
 				FAF601CA2286A3C700B54F9B /* SplashViewController.swift in Sources */,
 				FA0294E3227315F300465318 /* TwitterPostViewController.swift in Sources */,
+				5EE9EBFF22B803C300FD04B6 /* HomeDto.swift in Sources */,
 				FAD5015022AA6B1700D21F57 /* EditProfileTableViewCell.swift in Sources */,
 				5EEC6B5B22A66EAA005B1C34 /* LoginScreenTableViewCell.swift in Sources */,
 				FAD5015622AE895C00D21F57 /* NotificationTableViewCell.swift in Sources */,
