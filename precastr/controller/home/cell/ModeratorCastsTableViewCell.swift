@@ -25,13 +25,9 @@ class ModeratorCastsTableViewCell: UITableViewCell, UIScrollViewDelegate {
     
     @IBOutlet weak var usernameLabel: UILabel!
     
-    @IBOutlet weak var postTextLabel: UILabel!
-    
     @IBOutlet weak var dateLabel: UILabel!
     
-    
     @IBOutlet weak var profileLabel: UILabel!
-    
     
     @IBOutlet weak var sourceImageTwitter: UIImageView!
     
@@ -41,11 +37,9 @@ class ModeratorCastsTableViewCell: UITableViewCell, UIScrollViewDelegate {
     
     var imagesArray : [String] = [String]();
     
-    
     @IBOutlet weak var imageGalleryScrollView: UIScrollView!
     
     @IBOutlet weak var pageControl: UIPageControl!
-    
     
     @IBOutlet weak var imageCounterView: UIView!
     
@@ -55,7 +49,10 @@ class ModeratorCastsTableViewCell: UITableViewCell, UIScrollViewDelegate {
     
     @IBOutlet weak var postStatusViewCell: UIView!
     
+    @IBOutlet weak var descriptionView: UIView!
+    
     var currentCount : Int!
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         
@@ -84,7 +81,7 @@ class ModeratorCastsTableViewCell: UITableViewCell, UIScrollViewDelegate {
             
             let setupSlideScrollView = UIImageView();
             setupSlideScrollView.sd_setImage(with: URL(string: imagesArray[i]), placeholderImage: UIImage.init(named: "post-image-placeholder"));
-            setupSlideScrollView.contentMode = .scaleAspectFit;
+            setupSlideScrollView.contentMode = .scaleAspectFill;
             setupSlideScrollView.clipsToBounds = true
 
             let xposition = self.contentView.frame.width * CGFloat(i);

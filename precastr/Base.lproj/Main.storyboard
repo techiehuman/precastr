@@ -608,7 +608,7 @@
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Mandeep Singh" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v1D-b1-FX9">
-                                                    <rect key="frame" x="67" y="15" width="280" height="21"/>
+                                                    <rect key="frame" x="67" y="13" width="280" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" name="VisbyCF-Medium" family="Visby CF" pointSize="16"/>
                                                     <color key="textColor" red="0.13333333333333333" green="0.13333333333333333" blue="0.13333333333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1211,7 +1211,7 @@
         <scene sceneID="k5e-f0-7LY">
             <objects>
                 <navigationController id="dKk-LM-Ied" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Notifications" image="Notification-1" selectedImage="Notification-1" id="fAL-Rc-ihT">
+                    <tabBarItem key="tabBarItem" title="Notifications" image="notification" selectedImage="notification" id="fAL-Rc-ihT">
                         <offsetWrapper key="titlePositionAdjustment" horizontal="0.0" vertical="-4"/>
                     </tabBarItem>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="BjU-Vn-1rk">
@@ -1418,7 +1418,7 @@
                                 <color key="textColor" red="0.13333333333333333" green="0.13333333333333333" blue="0.13333333333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" sectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="qFE-ao-mEh">
+                            <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" sectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="qFE-ao-mEh">
                                 <rect key="frame" x="0.0" y="64" width="375" height="554"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1451,7 +1451,6 @@
         <image name="Moderate Casts" width="40" height="40"/>
         <image name="Moderator" width="18" height="18"/>
         <image name="Moderators" width="18" height="18"/>
-        <image name="Notification-1" width="18" height="18"/>
         <image name="Profile-1" width="112" height="112"/>
         <image name="Terms &amp; Conditions" width="18" height="18"/>
         <image name="add-new" width="18" height="18"/>
@@ -1462,7 +1461,7 @@
         <image name="facebook-group" width="20" height="20"/>
         <image name="faq" width="18" height="18"/>
         <image name="hold" width="16.333333969116211" height="20.333333969116211"/>
-        <image name="home" width="18" height="18"/>
+        <image name="home" width="20" height="20"/>
         <image name="home-black" width="27" height="27"/>
         <image name="logo" width="138" height="138"/>
         <image name="logout" width="18" height="14"/>
@@ -1470,6 +1469,7 @@
         <image name="my-account" width="18" height="18"/>
         <image name="my-account-black" width="18" height="18"/>
         <image name="no-cast" width="88" height="81"/>
+        <image name="notification" width="18" height="18"/>
         <image name="passage-of-time" width="20" height="18.666666030883789"/>
         <image name="sent-email" width="16" height="14.5"/>
         <image name="twitter-group" width="20" height="20"/>

@@ -10,7 +10,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "precastr/controller/guest/VerificationModeratorViewController.swift"
-            timestampString = "581539005.620481"
+            timestampString = "582742667.952035"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "46"
@@ -41,13 +41,13 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "precastr/controller/home/cell/HomeTextPostTableViewCell.swift"
-            timestampString = "582485971.747696"
+            filePath = "precastr/controller/guest/cells/SignupScreenTableViewCell.swift"
+            timestampString = "581699986.189557"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "120"
-            endingLineNumber = "120"
-            landmarkName = "scrollViewDidScroll(_:)"
+            startingLineNumber = "119"
+            endingLineNumber = "119"
+            landmarkName = "agreeCheckboxBtnClicked(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -57,13 +57,29 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "precastr/controller/guest/cells/SignupScreenTableViewCell.swift"
-            timestampString = "581699986.189557"
+            filePath = "precastr/controller/home/cell/PostImageScrollTableViewCell.swift"
+            timestampString = "582696272.074571"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "119"
-            endingLineNumber = "119"
-            landmarkName = "agreeCheckboxBtnClicked(_:)"
+            startingLineNumber = "63"
+            endingLineNumber = "63"
+            landmarkName = "unknown"
+            landmarkType = "0">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "precastr/controller/home/HomeViewController.swift"
+            timestampString = "582744249.874326"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "550"
+            endingLineNumber = "550"
+            landmarkName = "tableView(_:heightForRowAt:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

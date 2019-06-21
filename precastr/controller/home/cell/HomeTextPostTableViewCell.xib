@@ -55,14 +55,11 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </view>
-                    <label opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9ga-nV-ADV">
-                        <rect key="frame" x="15" y="43" width="351" height="80"/>
+                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="h2e-jP-uD5">
+                        <rect key="frame" x="16" y="43" width="350" height="23"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                        <string key="text">Lorem Ipsum is simply dummy text of the printing and since the typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,</string>
-                        <fontDescription key="fontDescription" name="VisbyCF-Regular" family="Visby CF" pointSize="16"/>
-                        <color key="textColor" red="0.13333333333333333" green="0.13333333333333333" blue="0.13333333333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <nil key="highlightedColor"/>
-                    </label>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </view>
                     <pageControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" hidesForSinglePage="YES" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="kmg-Py-FWc">
                         <rect key="frame" x="152" y="551" width="76" height="37"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -120,24 +117,18 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </view>
-                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6xZ-3R-5QJ">
-                        <rect key="frame" x="0.0" y="590" width="382" height="0.0"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <color key="backgroundColor" red="0.13333333333333333" green="0.13333333333333333" blue="0.13333333333333333" alpha="0.29999999999999999" colorSpace="custom" customColorSpace="sRGB"/>
-                    </view>
                 </subviews>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="currentCountImageLbl" destination="C2x-7g-Slh" id="tsW-WU-fjC"/>
                 <outlet property="dateLabel" destination="Gg1-ma-dqD" id="jRG-cp-U2e"/>
+                <outlet property="descriptionView" destination="h2e-jP-uD5" id="Vvw-OD-U9o"/>
                 <outlet property="imageCounterView" destination="7xy-Fs-gCr" id="FTd-7F-iT0"/>
                 <outlet property="imageGalleryScrollView" destination="DAD-Le-9Ur" id="VZT-cB-gwl"/>
                 <outlet property="pageControl" destination="kmg-Py-FWc" id="MZP-Xw-frJ"/>
                 <outlet property="postStatusDateView" destination="DRm-aE-LGs" id="alz-IX-ImM"/>
-                <outlet property="postTextLabel" destination="9ga-nV-ADV" id="aKO-oe-Xyp"/>
                 <outlet property="profileLabel" destination="vi0-ky-EEw" id="pK9-sv-uvp"/>
-                <outlet property="separator" destination="6xZ-3R-5QJ" id="yYI-qP-71v"/>
                 <outlet property="socialIconsView" destination="y4W-yS-wtT" id="teH-7Q-0VR"/>
                 <outlet property="sourceImageFacebook" destination="TOd-OX-rkV" id="uP1-nJ-j6h"/>
                 <outlet property="sourceImageTwitter" destination="qjX-r6-ZZ2" id="3sQ-L3-2Ob"/>

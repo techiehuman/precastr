@@ -1,48 +1,19 @@
 //
-//  HomeTextPostTableViewCell.swift
+//  PostImageScrollTableViewCell.swift
 //  precastr
 //
-//  Created by Macbook on 25/05/19.
+//  Created by Cenes_Dev on 19/06/2019.
 //  Copyright © 2019 Macbook. All rights reserved.
 //
 
 import UIKit
 
-class HomeTextPostTableViewCell: UITableViewCell,UIScrollViewDelegate {
+class PostImageScrollTableViewCell: UITableViewCell, UIScrollViewDelegate {
 
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-        //self.postImageCollectionView.register(UINib.init(nibName: "PostImageCollectionViewCell", bundle: Bundle.main), forCellWithReuseIdentifier: "PostImageCollectionViewCell")
-        self.imageGalleryScrollView.delegate = self
-        self.imageCounterView.layer.cornerRadius = 10
-    }
-
-    @IBOutlet weak var profilePicImageView: UIImageView!
-    
-    @IBOutlet weak var socialIconsView: UIView!
-    
-    @IBOutlet weak var dateLabel: UILabel!
-    
-    
-    @IBOutlet weak var profileLabel: UILabel!
-    
-    
-    @IBOutlet weak var sourceImageTwitter: UIImageView!
-    
-    @IBOutlet weak var sourceImageFacebook: UIImageView!
-    
-    @IBOutlet weak var statusImage: UIImageView!
-    
-    @IBOutlet weak var postStatusDateView: UIView!
-    
-    var imagesArray : [String] = [String]();
-    
     
     @IBOutlet weak var imageGalleryScrollView: UIScrollView!
     
     @IBOutlet weak var pageControl: UIPageControl!
-    
     
     @IBOutlet weak var imageCounterView: UIView!
     
@@ -50,60 +21,51 @@ class HomeTextPostTableViewCell: UITableViewCell,UIScrollViewDelegate {
     
     @IBOutlet weak var totalCountImageLbl : UILabel!
     
-    @IBOutlet weak var descriptionView: UIView!
-    
-    @IBOutlet weak var separator: UIView!
-    
     var currentCount : Int!
+
+    var imagesArray : [String] = [String]();
+
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        // Initialization code
+    }
+
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
     }
     
-    func createSlides() -> [SlideUIView] {
-        
-        
-        var slide = [SlideUIView]();
-        
-        for image in imagesArray{
-            
-            let slideView:SlideUIView = Bundle.main.loadNibNamed("Slide", owner: self, options: nil)?.first as! SlideUIView
-            slideView.frame = CGRect.init(x: 0, y: 0, width: contentView.frame.width, height: 418);
-            
-            slideView.imageView.sd_setImage(with: URL(string: image), placeholderImage: UIImage.init(named: "post-image-placeholder"));
-            slide.append(slideView);
-        }
-        return slide;
-    }
+    
     func setupSlideScrollView() {
         imageGalleryScrollView.isPagingEnabled = true
         for view in imageGalleryScrollView.subviews {
             view.removeFromSuperview();
         }
-        imageGalleryScrollView.contentSize.width = imageGalleryScrollView.frame.width * CGFloat(imagesArray.count);
-
-        for i in 0 ..< imagesArray.count {
+        self.imageGalleryScrollView.contentSize.width = imageGalleryScrollView.frame.width * CGFloat(self.imagesArray.count);
+        
+        for i in 0 ..< self.imagesArray.count {
             
             let setupSlideScrollView = UIImageView();
             
             let xposition = self.imageGalleryScrollView.frame.width * CGFloat(i);
-            setupSlideScrollView.frame = CGRect.init(x: xposition, y: 0, width: imageGalleryScrollView.frame.width, height: imageGalleryScrollView.frame.height);
-
-            setupSlideScrollView.sd_setImage(with: URL(string: imagesArray[i]), placeholderImage: UIImage.init(named: "post-image-placeholder"));
+            setupSlideScrollView.frame = CGRect.init(x: xposition, y: 0, width: contentView.bounds.width, height: imageGalleryScrollView.frame.height);
+            
             setupSlideScrollView.contentMode = .scaleAspectFill;
             setupSlideScrollView.clipsToBounds = true
+            setupSlideScrollView.sd_setImage(with: URL(string: imagesArray[i]), placeholderImage: UIImage.init(named: "post-image-placeholder"));
+            
             print("imageGalleryScrollView", imageGalleryScrollView.frame.width)
             
             print("X Position : ", xposition, "width", imageGalleryScrollView.frame.width * CGFloat(i + 1));
-
+            
             imageGalleryScrollView.addSubview(setupSlideScrollView)
             self.currentCount = i as! Int
         }
         
         //imageGalleryScrollView.addSubview(imageCounterView);
     }
-
+    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         
         

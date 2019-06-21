@@ -34,10 +34,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let tabBarFont = UIFont(name: "VisbyCF-Medium", size: 10)!
         UITabBarItem.appearance().setTitleTextAttributes([NSAttributedStringKey.font: tabBarFont], for: .normal)
         UITabBarItem.appearance().setTitleTextAttributes([NSAttributedStringKey.font: tabBarFont], for: .selected)
-
         UITabBar.appearance().unselectedItemTintColor = UIColor.init(red: 34/255, green: 34/255, blue: 34/255, alpha: 1);
-        var size = CGSize.init(width: 50, height: 50)
-        //UITabBar.appearance().sizeThatFits(size);
         return true
 
     }

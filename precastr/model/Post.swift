@@ -9,6 +9,7 @@
 import Foundation
 class Post {
     
+    var postId: Int = 0;
     var postDescription: String = "";
     var postImages: [String] = [String]();
     var socialMediaIds: [Int] = [Int]();
@@ -22,6 +23,7 @@ class Post {
         
         let post = Post();
         
+        post.postId = Int(postDict.value(forKey: "id") as! String)!;
         post.postDescription = postDict.value(forKey: "post_description") as! String;
         
         post.postImages = [String]();

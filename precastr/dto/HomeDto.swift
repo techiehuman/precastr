@@ -13,8 +13,10 @@ class HomeDto {
 
 class HomePostCellHeight {
     
-    static let PostStatusViewHeight = 45;
-    static let ScrollViewHeight = 418;
-    static let PageControlHeight = 40;
-    static let SeparatorHeight = 0.5;
+    static let GapAboveStatus: Int = 15;
+    static let GapBelowStatus: Int = 7;
+    static let PostStatusViewHeight: Int = 45;
+    static let GapBelowLabel: Int = 10;
+    static let ScrollViewHeight: Int = 430;
+    static let PageControlHeight: Int = 40;
 }
