@@ -500,7 +500,7 @@ class HomeViewController: UIViewController {
     
     @objc func postDescriptionPressed(sender: MyTapRecognizer){
         let viewController = self.storyboard?.instantiateViewController(withIdentifier: "CommunicationViewController") as! CommunicationViewController;
-        viewController.post  = self.posts[sender.rowId];
+        viewController.posts  = [self.posts[sender.rowId]];
         self.navigationController?.pushViewController(viewController, animated: true);
     }
 }
@@ -571,9 +571,9 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             cell.sourceImageFacebook.isHidden = false;
             cell.sourceImageTwitter.isHidden = false;
             
-            //let postDescTap = MyTapRecognizer.init(target: self, action: #selector(postDescriptionPressed(sender:)));
-            //postDescTap.rowId = indexPath.row;
-            //cell.postTextLabel.addGestureRecognizer(postDescTap);
+            let postDescTap = MyTapRecognizer.init(target: self, action: #selector(postDescriptionPressed(sender:)));
+            postDescTap.rowId = indexPath.row;
+            
             
             var facebookIconHidden = true;
             var twitterIconHidden = true;
@@ -647,7 +647,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             }
             let proNameLbl = UILabel(frame: CGRect(x: 0, y: 0, width: cell.contentView.frame.width - 30, height: height))
             var lblToShow = "\(post.postDescription)"
-            
+           
             if (height > 100) {
                 proNameLbl.numberOfLines = 4
             } else {
@@ -669,7 +669,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             proNameLbl.attributedText = attrString;
             
             cell.descriptionView.addSubview(proNameLbl)
-            
+            cell.descriptionView.addGestureRecognizer(postDescTap);
             
             if (post.postImages.count > 0) {
                 cell.imagesArray = [String]();
@@ -794,7 +794,8 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             let paragraphStyle = NSMutableParagraphStyle()
             //line height size
             paragraphStyle.lineSpacing = 2
-            
+            let postDescTap = MyTapRecognizer.init(target: self, action: #selector(postDescriptionPressed(sender:)));
+            postDescTap.rowId = indexPath.row;
             let attributes = [
                 NSAttributedStringKey.font : UIFont(name: "VisbyCF-Regular", size: 16.0)!,
                 NSAttributedStringKey.foregroundColor : UIColor.init(red: 34/255, green: 34/255, blue: 34/255, alpha: 1),
@@ -805,7 +806,8 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             proNameLbl.attributedText = attrString;
             
             cell.descriptionView.addSubview(proNameLbl)
-            
+            cell.descriptionView.addGestureRecognizer(postDescTap);
+
             var imageStatus = ""
             var status = "";
             if(post.status == "Pending"){

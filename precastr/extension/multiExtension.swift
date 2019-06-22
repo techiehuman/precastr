@@ -27,16 +27,7 @@ extension UIView{
         self.layer.cornerRadius = self.frame.height/2
         self.layer.masksToBounds = true
     }
-    func radioViewDefault(){
-        
-        self.layer.borderWidth  = 1
-        self.layer.borderColor = UIColor(red: 112/255, green: 112/255, blue: 112/255, alpha: 1).cgColor
-        self.layer.backgroundColor = UIColor.clear.cgColor
-    }
-    func radioViewSelect(){
-        self.layer.backgroundColor = UIColor(red: 112/255, green: 112/255, blue: 112/255, alpha: 1).cgColor
-        self.layer.borderWidth = 0
-    }
+
 }
 
 extension UIImageView{
@@ -128,7 +119,20 @@ extension UIButton {
         self.setImage(image, for : .normal)
        // self.layer.borderWidth = 0
     }
-   
+    func roundBtn(){
+        self.layer.cornerRadius = self.frame.height/2
+        self.layer.masksToBounds = true
+    }
+    func radioBtnDefault(){
+        
+        self.layer.borderWidth  = 1
+        self.layer.borderColor = UIColor(red: 112/255, green: 112/255, blue: 112/255, alpha: 1).cgColor
+        self.layer.backgroundColor = UIColor.clear.cgColor
+    }
+    func radioBtnSelect(){
+        self.layer.backgroundColor = UIColor(red: 112/255, green: 112/255, blue: 112/255, alpha: 1).cgColor
+        self.layer.borderWidth = 0
+    }
 }
 
 extension UIViewController {
