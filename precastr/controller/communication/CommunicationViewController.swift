@@ -601,11 +601,26 @@ extension CommunicationViewController: UITableViewDelegate, UITableViewDataSourc
             
             if (post.postCommunications.count > 0) {
                 
-                let cell: LeftCommunicationTableViewCell = tableView.dequeueReusableCell(withIdentifier: "LeftCommunicationTableViewCell") as! LeftCommunicationTableViewCell;
+                let communication = post.postCommunications[indexPath.row - 1];
                 
-                cell.commentText.text = post.postCommunications[indexPath.row - 1].updatedPostDescription;
+
+                //We will show logged in user comments on right side and other users comment on
+                //left side.
+                if (communication.communicatedByUserId == loggedInUser.userId) {
+                    
+                    let cell: RightCommunicationTableViewCell = tableView.dequeueReusableCell(withIdentifier: "RightCommunicationTableViewCell") as! RightCommunicationTableViewCell;
+                    cell.commentText.text = post.postCommunications[indexPath.row - 1].updatedPostDescription;
+                    
+                    return cell;
+                    
+                } else {
+                    let cell: LeftCommunicationTableViewCell = tableView.dequeueReusableCell(withIdentifier: "LeftCommunicationTableViewCell") as! LeftCommunicationTableViewCell;
+                    cell.commentText.text = post.postCommunications[indexPath.row - 1].updatedPostDescription;
+                    
+                    return cell;
+                }
                 
-                return cell;
+                
             }
             
         }
