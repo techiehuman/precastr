@@ -106,6 +106,24 @@ extension Date {
         }
         return dateFormatter.string(from: fDate!);
     }
+    
+    func ddspEEEEcmyyyyspHHclmmclaa(dateStr: String) -> String {
+        
+        let apiDateFormatter = DateFormatter();
+        apiDateFormatter.dateFormat = "yyyy-MM-dd hh:mm:ss";
+        let fDate = apiDateFormatter.date(from: dateStr)
+        
+        let dateFormatter = DateFormatter();
+        dateFormatter.dateFormat = "dd MMMM, yyyy";
+        
+        let hourDateFormatter = DateFormatter();
+        hourDateFormatter.dateFormat = "h:mm a";
+
+        if (fDate == nil) {
+            return "\(dateFormatter.string(from: Date())) \(hourDateFormatter.string(from: Date()).uppercased())";
+        }
+        return "\(dateFormatter.string(from: fDate!)) \(hourDateFormatter.string(from: Date()).uppercased())";
+    }
 }
 extension UIButton {
     func blueBorderWrap(){

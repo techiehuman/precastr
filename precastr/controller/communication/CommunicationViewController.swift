@@ -50,6 +50,7 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.loggedInUser = User().loadUserDataFromUserDefaults(userDataDict: setting);
         
         self.editPostBtn.semanticContentAttribute = UIApplication.shared
             .userInterfaceLayoutDirection == .rightToLeft ? .forceLeftToRight : .forceRightToLeft;
@@ -83,6 +84,9 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
         
         self.textArea.layer.borderWidth = 1
         self.textArea.layer.borderColor = UIColor(red: 112/255, green: 112/255, blue: 112/255, alpha: 1).cgColor
+        
+        
+        self.getPostCommunications();
     }
 
     @IBOutlet weak var pendingBtn : UIButton!
@@ -118,31 +122,19 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
             
             self.activityIndicator.startAnimating();
             
-            let jsonURL = "posts/add_post_communication/format/json"
+            let jsonURL = "\(ApiUrl)posts/add_post_communication/format/json"
             var postData : [String : Any] = [String : Any]()
-            postData["updated_post_description"] = self.textArea.text
+            postData["post_communication_description"] = self.textArea.text
             postData["post_id"] = self.post.postId;
             postData["user_id"] = self.loggedInUser.userId;
             HttpService().postMethod(url: jsonURL, postData: postData, complete: {(response) in
-               
-                let status = Int(response.value(forKey: "status") as! String);
-                let message = response.value(forKey: "message") as! String;
-                if (status == 0) {
-                    
-                    self.showAlert(title: "Error", message: message);
-                } else {
-                    
-                    let getComUrl = "posts/get_post_communication/format/json";
-                    var postData : [String : Any] = [String : Any]()
-                    postData["post_id"] = self.post.postId;
-                    
-                    HttpService().postMethod(url: jsonURL, postData: postData, complete: {(response) in
-                        
-                        //Load latest Communications
-                        self.getPostCommunications();
-                    });
-                }
                 
+                print(response);
+                
+                self.activityIndicator.stopAnimating();
+                    //Load latest Communications
+                self.getPostCommunications();
+                self.textArea.text = "";
             });
             
             //let joiner = ","
@@ -366,9 +358,6 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
                 
                 if (modeArray.count != 0) {
                     
-                    
-                    
-                   
                     //self.homePosts = modeArray as! [Any]
                     self.posts = Post().loadPostsFromNSArray(postsArr: modeArray);
                     self.communicationTableView.reloadData();
@@ -407,7 +396,7 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
     
     func getPostCommunications() {
         
-        let getComUrl = "posts/get_post_communication/format/json";
+        let getComUrl = "\(ApiUrl)posts/get_post_communication/format/json";
         var postData : [String : Any] = [String : Any]()
         postData["post_id"] = self.post.postId;
         
@@ -415,10 +404,12 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
             
             let status = Int(response.value(forKey: "status") as! String);
             let message = response.value(forKey: "message") as! String;
-            if (status == 0) {
+            //let status =  response.value(forKey: "status") as? Bool ?? false
+            if status == 0 {
                 self.showAlert(title: "Error", message: message);
             } else {
-                
+                print("sala bhen da")
+                print(response)
                 let data = response.value(forKey: "data") as! NSDictionary;
                 let postCommArr = data.value(forKey: "postcommunication") as! NSArray;
                 
@@ -436,7 +427,7 @@ extension CommunicationViewController: UITableViewDelegate, UITableViewDataSourc
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1;
+        return self.post.postCommunications.count + 1;
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -599,29 +590,59 @@ extension CommunicationViewController: UITableViewDelegate, UITableViewDataSourc
             
         } else {
             
-            if (post.postCommunications.count > 0) {
+            //if (post.postCommunications.count > 0) {
                 
                 let communication = post.postCommunications[indexPath.row - 1];
-                
 
                 //We will show logged in user comments on right side and other users comment on
                 //left side.
                 if (communication.communicatedByUserId == loggedInUser.userId) {
                     
-                    let cell: RightCommunicationTableViewCell = tableView.dequeueReusableCell(withIdentifier: "RightCommunicationTableViewCell") as! RightCommunicationTableViewCell;
-                    cell.commentText.text = post.postCommunications[indexPath.row - 1].updatedPostDescription;
+                    let cell: LeftCommunicationTableViewCell = tableView.dequeueReusableCell(withIdentifier: "LeftCommunicationTableViewCell") as! LeftCommunicationTableViewCell;
+                    
+                    //cell.commentedDate.text = Date().ddspEEEEcmyyyyspHHclmmclaa(dateStr: communication.commentedOn);
+                    cell.commentorPic.sd_setImage(with: URL.init(string: communication.communicatedProfilePic), placeholderImage: UIImage.init(named: "Profile-1"));
+                    
+                    
+                    //Call this function
+                    let height = heightForView(text: post.postDescription, font: UIFont.init(name: "VisbyCF-Regular", size: 16.0)!, width: cell.descriptionView.frame.width - 10)
+                    
+                    //This is your label
+                    for view in cell.descriptionView.subviews {
+                        view.removeFromSuperview();
+                    }
+                    let proNameLbl = UILabel(frame: CGRect(x: 0, y: 10, width: cell.descriptionView.frame.width - 10, height: height))
+                    var lblToShow = "\(communication.postCommunicationDescription)"
+                    proNameLbl.numberOfLines = 0
+                    proNameLbl.lineBreakMode = .byWordWrapping
+                    let paragraphStyle = NSMutableParagraphStyle()
+                    //line height size
+                    paragraphStyle.lineSpacing = 2
+                    
+                    let attributes = [
+                        NSAttributedStringKey.font : UIFont(name: "VisbyCF-Regular", size: 16.0)!,
+                        NSAttributedStringKey.foregroundColor : UIColor.init(red: 34/255, green: 34/255, blue: 34/255, alpha: 1),
+                        NSAttributedStringKey.paragraphStyle: paragraphStyle]
+                    
+                    let attrString = NSMutableAttributedString(string: lblToShow)
+                    attrString.addAttributes(attributes, range: NSMakeRange(0, attrString.length));
+                    proNameLbl.attributedText = attrString;
+                    
+                    cell.descriptionView.addSubview(proNameLbl)
                     
                     return cell;
                     
                 } else {
-                    let cell: LeftCommunicationTableViewCell = tableView.dequeueReusableCell(withIdentifier: "LeftCommunicationTableViewCell") as! LeftCommunicationTableViewCell;
-                    cell.commentText.text = post.postCommunications[indexPath.row - 1].updatedPostDescription;
                     
+                    
+                    let cell: RightCommunicationTableViewCell = tableView.dequeueReusableCell(withIdentifier: "RightCommunicationTableViewCell") as! RightCommunicationTableViewCell;
+                    cell.commentedDate.text = Date().ddspEEEEcmyyyyspHHclmmclaa(dateStr: communication.commentedOn);
+
                     return cell;
                 }
                 
                 
-            }
+            //}
             
         }
         
@@ -629,7 +650,15 @@ extension CommunicationViewController: UITableViewDelegate, UITableViewDataSourc
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return (self.view.frame.height + 120);
+        
+        if (indexPath.row == 0) {
+            return 300;
+        } else {
+            
+            let height = heightForView(text: post.postDescription, font: UIFont.init(name: "VisbyCF-Regular", size: 16.0)!, width: tableView.frame.width - 60)
+            
+            return height + 40;
+        }
     }
 }
 

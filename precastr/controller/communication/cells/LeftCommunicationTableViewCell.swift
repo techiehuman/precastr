@@ -13,14 +13,15 @@ class LeftCommunicationTableViewCell: UITableViewCell {
     
     
     @IBOutlet weak var commentedDate: UILabel!
-    
-    @IBOutlet weak var commentText: UILabel!
-    
+        
     @IBOutlet weak var commentorPic: UIImageView!
     
+    @IBOutlet weak var descriptionView: UIView!
+
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        self.commentorPic.roundImageView();
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

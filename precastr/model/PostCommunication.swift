@@ -13,7 +13,7 @@ class PostCommunication {
     var postId: Int = 0;
     var communicatedByUserId: Int = 0;
     var commentedOn: String = "";
-    var updatedPostDescription: String = "";
+    var postCommunicationDescription: String = "";
     var postStatusId: Int = 0;
     var commentStatus: String = "";
     var communicatedUsername: String = "";
@@ -27,12 +27,12 @@ class PostCommunication {
         postCommunication.postCommunicationId = Int(commDict.value(forKey: "id") as! String)!;
         postCommunication.postId = Int(commDict.value(forKey: "post_id") as! String)!;
         postCommunication.communicatedByUserId = Int(commDict.value(forKey: "communicated_by_user_id") as! String)!;
-        postCommunication.updatedPostDescription = commDict.value(forKey: "updated_post_description") as! String;
-        postCommunication.postStatusId = Int(commDict.value(forKey: "post_status_id") as! String)!;
-        postCommunication.commentStatus = commDict.value(forKey: "status") as! String;
+        postCommunication.postCommunicationDescription = commDict.value(forKey: "post_communication_description") as! String;
+        //postCommunication.commentStatus = commDict.value(forKey: "status") as! String;
         postCommunication.communicatedUsername = commDict.value(forKey: "communicated_username") as! String;
         postCommunication.communicatedProfilePic = commDict.value(forKey: "communicated_profile_pic") as! String;
         postCommunication.communicatedName = commDict.value(forKey: "communicated_name") as! String;
+        postCommunication.commentedOn = commDict.value(forKey: "created_on") as! String;
         postCommunication.attachments = loadCommunicationAttachmentsFromNSArray(attachmentsArr: commDict.value(forKey: "attachments") as!NSArray)
         
         return postCommunication;

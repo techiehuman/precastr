@@ -393,7 +393,7 @@ class HomeViewController: UIViewController {
         UserService().postDataMethod(jsonURL: jsonURL, postData: postArray, complete: {(response) in
             print(response)
             
-            let status = response.value(forKey: "status") as! Int;
+            let status = Int(response.value(forKey: "status") as! String);
             if(status == 0){
                 print("hello")
                   self.noPostsText.text = "Server Error!";
