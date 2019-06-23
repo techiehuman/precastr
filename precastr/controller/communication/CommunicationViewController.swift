@@ -29,6 +29,8 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
     @IBOutlet weak var textAreaBtnBottomView: UIView!
     @IBOutlet weak var textArea: UITextView!
         
+    @IBOutlet weak var changeStatusBtn: UIButton!
+    
     @IBOutlet weak var editPostBtn: UIButton!
     var loggedInUser : User!
     var social : SocialPlatform!
@@ -47,6 +49,7 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
     var postStatus : Int = 0
     var postArray : [String:Any] = [String:Any]()
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView();
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -77,14 +80,25 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
         self.approvedBtn.radioBtnDefault();
         self.rejectedBtn.radioBtnDefault();
         self.underReviewBtn.radioBtnDefault();*/
-        self.twitterBtn.layer.borderWidth = 1
+        /*self.twitterBtn.layer.borderWidth = 1
         self.facebookBtn.layer.borderWidth = 1
         self.twitterBtn.layer.borderColor = UIColor(red: 12/255, green: 111/255, blue: 233/255, alpha: 1).cgColor
         self.facebookBtn.layer.borderColor = UIColor(red: 12/255, green: 111/255, blue: 233/255, alpha: 1).cgColor
+        */
+        self.textArea.layer.cornerRadius = 4;
+        self.textArea.layer.borderWidth = 1;
+        self.textArea.layer.borderColor = UIColor(red: 112/255, green: 112/255, blue: 112/255, alpha: 1).cgColor;
+        self.textArea.text = "Type a message..."
+        self.textArea.textColor = UIColor.lightGray
+
+        self.changeStatusBtn.layer.cornerRadius = 4;
+        self.changeStatusBtn.layer.borderWidth = 1;
+        self.changeStatusBtn.layer.borderColor = UIColor(red: 34/255, green: 34/255, blue: 34/255, alpha: 1).cgColor;
         
-        self.textArea.layer.borderWidth = 1
-        self.textArea.layer.borderColor = UIColor(red: 112/255, green: 112/255, blue: 112/255, alpha: 1).cgColor
-        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+
+        self.hideKeyboadOnTapOutside();
         
         self.getPostCommunications();
     }
@@ -100,8 +114,6 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-   
-    
 
     /*
     // MARK: - Navigation
@@ -118,8 +130,6 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
     @IBAction func submitBtnClicked(_ sender: Any) {
         
         if(textArea.text != ""){
-            
-            
             self.activityIndicator.startAnimating();
             
             let jsonURL = "\(ApiUrl)posts/add_post_communication/format/json"
@@ -127,15 +137,29 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
             postData["post_communication_description"] = self.textArea.text
             postData["post_id"] = self.post.postId;
             postData["user_id"] = self.loggedInUser.userId;
-            HttpService().postMethod(url: jsonURL, postData: postData, complete: {(response) in
-                
-                print(response);
-                
-                self.activityIndicator.stopAnimating();
+            
+            if (PhotoArray.count > 0) {
+            
+                HttpService().postMultipartImageForPostCommunication(url: jsonURL, image: PhotoArray, postData: postData, complete: {(response) in
+                    
+                    print(response);
+                    
+                    self.activityIndicator.stopAnimating();
                     //Load latest Communications
-                self.getPostCommunications();
-                self.textArea.text = "";
-            });
+                    self.getPostCommunications();
+                    self.textArea.text = "";
+                });
+            } else {
+                HttpService().postMethod(url: jsonURL, postData: postData, complete: {(response) in
+                    print(response);
+                    
+                    self.activityIndicator.stopAnimating();
+                    //Load latest Communications
+                    self.getPostCommunications();
+                    self.textArea.text = "";
+                });
+            }
+            
             
             //let joiner = ","
             
@@ -200,6 +224,43 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
         // present an actionSheet...
         present(actionSheetController, animated: true, completion: nil)
     }
+    
+    
+    @IBAction func changeStatusButtonClicked(_ sender: Any) {
+        
+        // create an actionSheet
+        let actionSheetController: UIAlertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        // create an action
+        let pendingReviewAction: UIAlertAction = UIAlertAction(title: "Pending review", style: .default) { action -> Void in
+            self.updatePostStatus(status: "Pending");
+        }
+        let approvedAction: UIAlertAction = UIAlertAction(title: "Approved", style: .default) { action -> Void in
+            self.updatePostStatus(status: "Approved");
+
+        }
+        let rejectedAction: UIAlertAction = UIAlertAction(title: "Rejected", style: .default) { action -> Void in
+            self.updatePostStatus(status: "Rejected");
+
+        }
+        let underReviewAction: UIAlertAction = UIAlertAction(title: "Under review", style: .default) { action -> Void in
+            self.updatePostStatus(status: "UnderReview");
+
+        }
+
+        let cancelAction: UIAlertAction = UIAlertAction(title: "Cancel", style: .cancel) { action -> Void in }
+        cancelAction.setValue(UIColor.black, forKey: "titleTextColor")
+        
+        actionSheetController.addAction(pendingReviewAction)
+        actionSheetController.addAction(approvedAction)
+        actionSheetController.addAction(rejectedAction)
+        actionSheetController.addAction(underReviewAction)
+        actionSheetController.addAction(cancelAction)
+        
+        // present an actionSheet...
+        present(actionSheetController, animated: true, completion: nil)
+    }
+    
     /*@IBAction func multipleButtonClicked(_ sender: AnyObject) {
         
         switch sender.tag {
@@ -331,6 +392,20 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
         // present an actionSheet...
         present(actionSheetController, animated: true, completion: nil)
     }
+    
+    
+    @objc func keyboardWillShow(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+            self.textAreaBtnBottomView.frame.origin.y = (self.textAreaBtnBottomView.frame.origin.y + self.textAreaBtnBottomView.frame.height - self.tabBarController!.tabBar.frame.height - 10) - (keyboardSize.height);
+        }
+    }
+    
+    @objc func keyboardWillHide(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+            self.textAreaBtnBottomView.frame.origin.y = (self.view.frame.height - (self.textAreaBtnBottomView.frame.height + self.tabBarController!.tabBar.frame.height));
+        }
+    }
+    
     func loadModeratorCasterUserPosts() {
         social = SocialPlatform().loadSocialDataFromUserDefaults();
         // Do any additional setup after loading the view.
@@ -347,11 +422,6 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
                 /*  let alert = UIAlertController.init(title: "Error", message: response.value(forKey: "message") as! String, preferredStyle: .alert);
                  alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil));
                  self.present(alert, animated: true) */
-               
-            
-                
-               
-                
                 //self.socialPostList.isHidden = true;
             } else {
                 let modeArray = response.value(forKey: "data") as! NSArray;
@@ -363,11 +433,7 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
                     self.communicationTableView.reloadData();
                     
                 } else {
-                  
-                    
-                   
-                    
-                   
+
                 }
             }
             
@@ -402,13 +468,12 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
         
         HttpService().postMethod(url: getComUrl, postData: postData, complete: {(response) in
             
-            let status = Int(response.value(forKey: "status") as! String);
+            let status = Int((response.value(forKey: "status") as! NSObject) as! String);
             let message = response.value(forKey: "message") as! String;
             //let status =  response.value(forKey: "status") as? Bool ?? false
             if status == 0 {
                 self.showAlert(title: "Error", message: message);
             } else {
-                print("sala bhen da")
                 print(response)
                 let data = response.value(forKey: "data") as! NSDictionary;
                 let postCommArr = data.value(forKey: "postcommunication") as! NSArray;
@@ -418,6 +483,35 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
             }
         });
     }
+    
+    func updatePostStatus(status: String) {
+        
+        if (status == "Pending") {
+            
+        } else if (status == "Approved") {
+            
+        } else if (status == "Rejected") {
+            
+        } else if (status == "UnderReview") {
+            
+        }
+    }
+    
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        if self.textArea.textColor == UIColor.lightGray {
+            self.textArea.text = nil
+            self.textArea.textColor = UIColor(red: 34/255, green: 34/255, blue: 34/255, alpha: 1);
+        }
+    }
+
+    func textViewDidEndEditing(_ textView: UITextView) {
+        if self.textArea.text.isEmpty {
+            self.textArea.text = "Type a message..."
+            self.textArea.textColor = UIColor.lightGray
+        }
+    }
+
+    
 }
 
 extension CommunicationViewController: UITableViewDelegate, UITableViewDataSource {
@@ -600,18 +694,18 @@ extension CommunicationViewController: UITableViewDelegate, UITableViewDataSourc
                     
                     let cell: LeftCommunicationTableViewCell = tableView.dequeueReusableCell(withIdentifier: "LeftCommunicationTableViewCell") as! LeftCommunicationTableViewCell;
                     
-                    //cell.commentedDate.text = Date().ddspEEEEcmyyyyspHHclmmclaa(dateStr: communication.commentedOn);
+                    cell.commentedDate.text = Date().ddspEEEEcmyyyyspHHclmmclaa(dateStr: communication.commentedOn);
+                    
                     cell.commentorPic.sd_setImage(with: URL.init(string: communication.communicatedProfilePic), placeholderImage: UIImage.init(named: "Profile-1"));
                     
-                    
                     //Call this function
-                    let height = heightForView(text: post.postDescription, font: UIFont.init(name: "VisbyCF-Regular", size: 16.0)!, width: cell.descriptionView.frame.width - 10)
+                    let height = heightForView(text: communication.postCommunicationDescription, font: UIFont.init(name: "VisbyCF-Regular", size: 16.0)!, width: cell.descriptionView.frame.width - 20)
                     
                     //This is your label
                     for view in cell.descriptionView.subviews {
                         view.removeFromSuperview();
                     }
-                    let proNameLbl = UILabel(frame: CGRect(x: 0, y: 10, width: cell.descriptionView.frame.width - 10, height: height))
+                    let proNameLbl = UILabel(frame: CGRect(x: 10, y: 35, width: cell.descriptionView.frame.width - 10, height: height))
                     var lblToShow = "\(communication.postCommunicationDescription)"
                     proNameLbl.numberOfLines = 0
                     proNameLbl.lineBreakMode = .byWordWrapping
@@ -629,19 +723,68 @@ extension CommunicationViewController: UITableViewDelegate, UITableViewDataSourc
                     proNameLbl.attributedText = attrString;
                     
                     cell.descriptionView.addSubview(proNameLbl)
+                    cell.descriptionView.frame = CGRect.init(x: cell.descriptionView.frame.origin.x, y: cell.descriptionView.frame.origin.y, width: cell.descriptionView.frame.width, height: 50 + height);
                     
+                    if (communication.attachments.count > 0) {
+                        
+                        cell.imageScrollView.isHidden = false;
+                        
+                        for attachment in communication.attachments {
+                            cell.imagesArray.append(attachment.image);
+                        }
+                        cell.setupSlideScrollView();
+                        cell.imageScrollView.frame = CGRect.init(x: cell.imageScrollView.frame.origin.x, y: cell.descriptionView.frame.origin.y + cell.descriptionView.frame.height, width: cell.imageScrollView.frame.width, height: cell.imageScrollView.frame.height);
+                        
+                        if (communication.attachments.count == 1) {
+                            cell.pageControl.isHidden = true;
+                        } else {
+                            cell.pageControl.isHidden = false;
+                            cell.pageControl.frame = CGRect.init(x: cell.imageScrollView.frame.width/2 - cell.imageScrollView.frame.origin.x, y: cell.imageScrollView.frame.origin.y + cell.imageScrollView.frame.height - 10, width: cell.pageControl.frame.width, height: cell.pageControl.frame.height)
+                        }
+                    } else {
+                        cell.imageScrollView.isHidden = true;
+                        cell.pageControl.isHidden = true;
+                    }
                     return cell;
                     
                 } else {
                     
                     
                     let cell: RightCommunicationTableViewCell = tableView.dequeueReusableCell(withIdentifier: "RightCommunicationTableViewCell") as! RightCommunicationTableViewCell;
-                    cell.commentedDate.text = Date().ddspEEEEcmyyyyspHHclmmclaa(dateStr: communication.commentedOn);
 
+                    cell.commentedDate.text = Date().ddspEEEEcmyyyyspHHclmmclaa(dateStr: communication.commentedOn);
+                    
+                    cell.commentorPic.sd_setImage(with: URL.init(string: communication.communicatedProfilePic), placeholderImage: UIImage.init(named: "Profile-1"));
+                    
+                    //Call this function
+                    let height = heightForView(text: communication.postCommunicationDescription, font: UIFont.init(name: "VisbyCF-Regular", size: 16.0)!, width: cell.descriptionView.frame.width - 20)
+                    
+                    //This is your label
+                    for view in cell.descriptionView.subviews {
+                        view.removeFromSuperview();
+                    }
+                    let proNameLbl = UILabel(frame: CGRect(x: 10, y: 35, width: cell.descriptionView.frame.width - 10, height: height))
+                    var lblToShow = "\(communication.postCommunicationDescription)"
+                    proNameLbl.numberOfLines = 0
+                    proNameLbl.lineBreakMode = .byWordWrapping
+                    let paragraphStyle = NSMutableParagraphStyle()
+                    //line height size
+                    paragraphStyle.lineSpacing = 2
+                    
+                    let attributes = [
+                        NSAttributedStringKey.font : UIFont(name: "VisbyCF-Regular", size: 16.0)!,
+                        NSAttributedStringKey.foregroundColor : UIColor.init(red: 34/255, green: 34/255, blue: 34/255, alpha: 1),
+                        NSAttributedStringKey.paragraphStyle: paragraphStyle]
+                    
+                    let attrString = NSMutableAttributedString(string: lblToShow)
+                    attrString.addAttributes(attributes, range: NSMakeRange(0, attrString.length));
+                    proNameLbl.attributedText = attrString;
+                    
+                    cell.descriptionView.addSubview(proNameLbl)
+                    cell.descriptionView.frame = CGRect.init(x: cell.descriptionView.frame.origin.x, y: cell.descriptionView.frame.origin.y, width: cell.descriptionView.frame.width, height: 50 + height)
+                    
                     return cell;
                 }
-                
-                
             //}
             
         }
@@ -652,12 +795,35 @@ extension CommunicationViewController: UITableViewDelegate, UITableViewDataSourc
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
         if (indexPath.row == 0) {
-            return 300;
+            
+            var height = heightForView(text: post.postDescription, font: UIFont.init(name: "VisbyCF-Regular", size: 16.0)!, width: tableView.frame.width - 30);
+            
+            if (height > 100) {
+                height = 100;
+            }
+            if (post.postImages.count > 0) {
+                
+                if (post.postImages.count == 1) {
+                    
+                    return (CGFloat(HomePostCellHeight.GapAboveStatus) + CGFloat(HomePostCellHeight.PostStatusViewHeight) + CGFloat(HomePostCellHeight.GapBelowStatus) + height + CGFloat(HomePostCellHeight.GapBelowLabel) + 420);
+                }
+                return (CGFloat(HomePostCellHeight.GapAboveStatus) + CGFloat(HomePostCellHeight.PostStatusViewHeight) + CGFloat(HomePostCellHeight.GapBelowStatus) + height + CGFloat(HomePostCellHeight.GapBelowLabel) + 420 +  30);
+            }
+            return (CGFloat(HomePostCellHeight.GapAboveStatus + HomePostCellHeight.PostStatusViewHeight) + height);
         } else {
+            let communication = post.postCommunications[indexPath.row - 1];
             
-            let height = heightForView(text: post.postDescription, font: UIFont.init(name: "VisbyCF-Regular", size: 16.0)!, width: tableView.frame.width - 60)
+            let height = heightForView(text: communication.postCommunicationDescription, font: UIFont.init(name: "VisbyCF-Regular", size: 16.0)!, width: tableView.frame.width - 60)
             
-            return height + 40;
+            if (communication.attachments.count > 0) {
+                if (communication.attachments.count == 1) {
+                    return height + 60 + 200;
+                } else {
+                    return height + 60 + 200 + 40;
+                }
+            } else {
+                return height + 60;
+            }
         }
     }
 }

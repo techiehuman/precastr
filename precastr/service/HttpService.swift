@@ -108,14 +108,64 @@ class HttpService {
       
         Alamofire.upload(multipartFormData: { (MultipartFormData) in
             for img in image{
-                  let imgData = UIImageJPEGRepresentation(img, 0.2)!
-             MultipartFormData.append(imgData, withName: "post_imgs[]", fileName: "file\(key).jpg", mimeType: "image/jpg")
+                let imgData = UIImageJPEGRepresentation(img, 0.2)!
+                MultipartFormData.append(imgData, withName: "post_imgs[]", fileName: "file\(key).jpg", mimeType: "image/jpg")
                 key = key + 1 ;
             }
-           
+            
             MultipartFormData.append( "\(String(describing: postData["post_description"]!))".data(using: .utf8)!, withName: "post_description")
             MultipartFormData.append( "\(String(describing: postData["social_media_id"]!))".data(using: .utf8)!, withName: "social_media_id")
-          MultipartFormData.append( "\(String(describing: postData["user_id"]!))".data(using: .utf8)!, withName: "user_id")
+            MultipartFormData.append( "\(String(describing: postData["user_id"]!))".data(using: .utf8)!, withName: "user_id")
+            
+            
+        }, usingThreshold: UInt64.init(), to: "\(url)", method: .post, headers:Auth_header ) { (result) in
+            
+            var returnDict = NSDictionary();
+            
+            switch result {
+            case .success(let upload,_,_):
+                
+                upload.uploadProgress(closure: { (progress) in
+                    print("Upload Progress: \(progress.fractionCompleted)")
+                })
+                
+                upload.responseJSON { response in
+                    
+                    print("Suceess:\(String(describing: response.result.value ))")
+                    /////let json = response.result.value as! NSDictionary
+                    returnDict = response.result.value as! NSDictionary;
+                    //returnDict.setValue(true, forKey: "success");
+                    //returnDict.setValue(response.result.value, forKey: "resp");
+                    complete(returnDict)
+                    
+                }
+            case .failure(let encodingError):
+                print(encodingError)
+                var responseDict: [String: Any] = [:]
+                responseDict["status"] = false;
+                responseDict["message"] = encodingError.localizedDescription;
+                returnDict = responseDict as NSDictionary;
+                complete(returnDict)
+                
+            }
+        }
+    }
+    
+    func postMultipartImageForPostCommunication(url: String, image: [UIImage], postData: [String:Any], complete: @escaping(NSDictionary)->Void) {
+
+        let Auth_header =  [ "X-API-KEY" : ApiToken ]
+        var key = 0
+        
+        Alamofire.upload(multipartFormData: { (MultipartFormData) in
+            for img in image{
+                let imgData = UIImageJPEGRepresentation(img, 0.2)!
+                MultipartFormData.append(imgData, withName: "attachment[]", fileName: "file\(key).jpg", mimeType: "image/jpg")
+                key = key + 1 ;
+            }
+            
+            MultipartFormData.append( "\(String(describing: postData["post_communication_description"]!))".data(using: .utf8)!, withName: "post_communication_description")
+            MultipartFormData.append( "\(String(describing: postData["post_id"]!))".data(using: .utf8)!, withName: "post_id")
+            MultipartFormData.append( "\(String(describing: postData["user_id"]!))".data(using: .utf8)!, withName: "user_id")
             
             
         }, usingThreshold: UInt64.init(), to: "\(url)", method: .post, headers:Auth_header ) { (result) in
