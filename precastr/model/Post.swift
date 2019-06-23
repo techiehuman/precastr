@@ -18,6 +18,7 @@ class Post {
     var username: String = "";
     var profilePic: String = "";
     var name: String = "";
+    var postCommunications = [PostCommunication]();
     
     func loadPostFromDict(postDict: NSDictionary) -> Post {
         

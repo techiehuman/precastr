@@ -20,7 +20,7 @@ class HomeViewController: UIViewController {
     var loggedInUser : User!
     var social : SocialPlatform!
     var postArray : [String:Any] = [String:Any]()
-     private let refreshControl = UIRefreshControl()
+    private let refreshControl = UIRefreshControl()
     var slides:[SlideUIView] = [];
     class func MainViewController() -> UITabBarController{
         
@@ -393,13 +393,14 @@ class HomeViewController: UIViewController {
         UserService().postDataMethod(jsonURL: jsonURL, postData: postArray, complete: {(response) in
             print(response)
             
-            if(Int(response.value(forKey: "status") as! String) == 0){
+            let status = response.value(forKey: "status") as! Int;
+            if(status == 0){
                 print("hello")
                   self.noPostsText.text = "Server Error!";
                 let alert = UIAlertController.init(title: "Error", message: response.value(forKey: "message") as! String, preferredStyle: .alert);
                 alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil));
                 self.present(alert, animated: true)
-            }else{
+            } else {
             let modeArray = response.value(forKey: "data") as! NSArray;
             print(modeArray)
             if (modeArray.count != 0) {
@@ -500,7 +501,7 @@ class HomeViewController: UIViewController {
     
     @objc func postDescriptionPressed(sender: MyTapRecognizer){
         let viewController = self.storyboard?.instantiateViewController(withIdentifier: "CommunicationViewController") as! CommunicationViewController;
-        viewController.posts  = [self.posts[sender.rowId]];
+        viewController.post = self.posts[sender.rowId];
         self.navigationController?.pushViewController(viewController, animated: true);
     }
 }

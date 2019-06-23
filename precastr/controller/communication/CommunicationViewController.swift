@@ -22,9 +22,13 @@ protocol ImageLibProtocolC {
 class CommunicationViewController: UIViewController,UITextViewDelegate, UIImagePickerControllerDelegate {
 
     var posts = [Post]();
+    var post = Post();
     @IBOutlet weak var communicationTableView: UITableView!
-    @IBOutlet weak var postTextField: UITextView!
+    //@IBOutlet weak var postTextField: UITextView!
     
+    @IBOutlet weak var textAreaBtnBottomView: UIView!
+    @IBOutlet weak var textArea: UITextView!
+        
     @IBOutlet weak var editPostBtn: UIButton!
     var loggedInUser : User!
     var social : SocialPlatform!
@@ -48,26 +52,37 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
 
         
         self.editPostBtn.semanticContentAttribute = UIApplication.shared
-            .userInterfaceLayoutDirection == .rightToLeft ? .forceLeftToRight : .forceRightToLeft; communicationTableView.register(UINib.init(nibName: "LeftCommunicationTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "LeftCommunicationTableViewCell");
+            .userInterfaceLayoutDirection == .rightToLeft ? .forceLeftToRight : .forceRightToLeft;
+        
+        communicationTableView.register(UINib(nibName: "HomeTextPostTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "HomeTextPostTableViewCell")
+        communicationTableView.register(UINib.init(nibName: "LeftCommunicationTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "LeftCommunicationTableViewCell");
           communicationTableView.register(UINib.init(nibName: "RightCommunicationTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "RightCommunicationTableViewCell");
          communicationTableView.register(UINib.init(nibName: "HomeTextPostTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "HomeTextPostTableViewCell");
+        
+        
+        activityIndicator.center = view.center;
+        activityIndicator.hidesWhenStopped = true;
+        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.gray;
+        view.addSubview(activityIndicator);
+        
         // Do any additional setup after loading the view.
-        self.pendingBtn.roundBtn()
+        /*self.pendingBtn.roundBtn()
         self.approvedBtn.roundBtn()
         self.rejectedBtn.roundBtn()
         self.underReviewBtn.roundBtn()
         
         
-        self.pendingBtn.radioBtnDefault();
+        self.pendingBtn.radioBtnx`Default();
         self.approvedBtn.radioBtnDefault();
         self.rejectedBtn.radioBtnDefault();
-        self.underReviewBtn.radioBtnDefault();
+        self.underReviewBtn.radioBtnDefault();*/
         self.twitterBtn.layer.borderWidth = 1
         self.facebookBtn.layer.borderWidth = 1
         self.twitterBtn.layer.borderColor = UIColor(red: 12/255, green: 111/255, blue: 233/255, alpha: 1).cgColor
         self.facebookBtn.layer.borderColor = UIColor(red: 12/255, green: 111/255, blue: 233/255, alpha: 1).cgColor
-        self.postTextField.layer.borderWidth = 1
-        self.postTextField.layer.borderColor = UIColor(red: 112/255, green: 112/255, blue: 112/255, alpha: 1).cgColor
+        
+        self.textArea.layer.borderWidth = 1
+        self.textArea.layer.borderColor = UIColor(red: 112/255, green: 112/255, blue: 112/255, alpha: 1).cgColor
     }
 
     @IBOutlet weak var pendingBtn : UIButton!
@@ -98,6 +113,74 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
     
     @IBAction func submitBtnClicked(_ sender: Any) {
         
+        if(textArea.text != ""){
+            
+            
+            self.activityIndicator.startAnimating();
+            
+            let jsonURL = "posts/add_post_communication/format/json"
+            var postData : [String : Any] = [String : Any]()
+            postData["updated_post_description"] = self.textArea.text
+            postData["post_id"] = self.post.postId;
+            postData["user_id"] = self.loggedInUser.userId;
+            HttpService().postMethod(url: jsonURL, postData: postData, complete: {(response) in
+               
+                let status = Int(response.value(forKey: "status") as! String);
+                let message = response.value(forKey: "message") as! String;
+                if (status == 0) {
+                    
+                    self.showAlert(title: "Error", message: message);
+                } else {
+                    
+                    let getComUrl = "posts/get_post_communication/format/json";
+                    var postData : [String : Any] = [String : Any]()
+                    postData["post_id"] = self.post.postId;
+                    
+                    HttpService().postMethod(url: jsonURL, postData: postData, complete: {(response) in
+                        
+                        //Load latest Communications
+                        self.getPostCommunications();
+                    });
+                }
+                
+            });
+            
+            //let joiner = ","
+            
+            /*var joinedStrings = "";
+            for obj in social.socialPlatformId {
+                if (obj.key == "Facebook" && self.createPostViewControllerDelegate.facebookStatus == true) {//If user selcts facebook
+                    joinedStrings = joinedStrings + "\(obj.value),";
+                } else if (obj.key == "Twitter" && self.createPostViewControllerDelegate.twitterStatus == true) {//If user selcts twiiter
+                    joinedStrings = joinedStrings + "\(obj.value),";
+                }
+            }
+            
+            let elements = (self.socialMediaPlatform);
+            
+                        for elementItem in elements! {
+             joinedStrings = joinedStrings + "\(elementItem),";
+             }
+            joinedStrings = String(joinedStrings.dropLast())
+            print(joinedStrings)
+            postData["social_media"] = String(joinedStrings.suffix(joinedStrings.count-1));
+            postData["social_media_id"] = joinedStrings
+            
+            //  let size = CGSize(width: 0, height: 0)
+            if(self.createPostViewControllerDelegate.PhotoArray.count > 0){
+                UserService().postMultipartImageDataSocialMethod(jsonURL: jsonURL,image : self.createPostViewControllerDelegate.PhotoArray, postData:postData,complete:{(response) in
+                    print(response);
+                    self.createPostViewControllerDelegate.activityIndicator.stopAnimating();
+                    UIApplication.shared.keyWindow?.rootViewController = HomeViewController.MainViewController();
+                })
+            }else{
+                UserService().postDataMethod(jsonURL: jsonURL, postData: postData, complete: { (response) in
+                    print(response);
+                    self.createPostViewControllerDelegate.activityIndicator.stopAnimating();
+                    UIApplication.shared.keyWindow?.rootViewController = HomeViewController.MainViewController();
+                })
+            }*/
+        }
     }
     
     @IBAction func mediaAttachmentBtnClicked(_ sender: Any) {
@@ -125,7 +208,7 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
         // present an actionSheet...
         present(actionSheetController, animated: true, completion: nil)
     }
-    @IBAction func multipleButtonClicked(_ sender: AnyObject) {
+    /*@IBAction func multipleButtonClicked(_ sender: AnyObject) {
         
         switch sender.tag {
         case 1: self.postStatus = 1 //button1
@@ -171,7 +254,7 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
             self.postTextField.text = "Type a Message...."
             self.postTextField.textColor = UIColor.lightGray
         }
-    }
+    }*/
     func selectMultipleImages(){
         
         // create an instance
@@ -301,6 +384,49 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
             
         });
     }
+    
+    //To calculate height for label based on text size and width
+    func heightForView(text:String, font:UIFont, width:CGFloat) -> CGFloat {
+        let label:UILabel = UILabel(frame: CGRect(x: 0, y: 0, width: width, height: CGFloat.greatestFiniteMagnitude))
+        label.numberOfLines = 0
+        label.lineBreakMode = NSLineBreakMode.byWordWrapping
+        let paragraphStyle = NSMutableParagraphStyle()
+        //line height size
+        paragraphStyle.lineSpacing = 2
+        let attributes = [
+            NSAttributedStringKey.font : UIFont(name: "VisbyCF-Regular", size: 16.0)!,
+            NSAttributedStringKey.paragraphStyle: paragraphStyle]
+        
+        let attrString = NSMutableAttributedString(string: text)
+        attrString.addAttributes(attributes, range: NSMakeRange(0, attrString.length));
+        label.attributedText = attrString;
+        label.sizeToFit()
+        
+        return (label.frame.height)
+    }
+    
+    func getPostCommunications() {
+        
+        let getComUrl = "posts/get_post_communication/format/json";
+        var postData : [String : Any] = [String : Any]()
+        postData["post_id"] = self.post.postId;
+        
+        HttpService().postMethod(url: getComUrl, postData: postData, complete: {(response) in
+            
+            let status = Int(response.value(forKey: "status") as! String);
+            let message = response.value(forKey: "message") as! String;
+            if (status == 0) {
+                self.showAlert(title: "Error", message: message);
+            } else {
+                
+                let data = response.value(forKey: "data") as! NSDictionary;
+                let postCommArr = data.value(forKey: "postcommunication") as! NSArray;
+                
+                self.post.postCommunications = PostCommunication().loadCommunicationsFromNsArray(commArray: postCommArr);
+                self.communicationTableView.reloadData();
+            }
+        });
+    }
 }
 
 extension CommunicationViewController: UITableViewDelegate, UITableViewDataSource {
@@ -315,16 +441,176 @@ extension CommunicationViewController: UITableViewDelegate, UITableViewDataSourc
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         //let cell : RightCommunicationTableViewCell = tableView.dequeueReusableCell(withIdentifier: "RightCommunicationTableViewCell") as! RightCommunicationTableViewCell;
-        let cell: LeftCommunicationTableViewCell = tableView.dequeueReusableCell(withIdentifier: "LeftCommunicationTableViewCell") as! LeftCommunicationTableViewCell;
         
-        cell.communicationViewControllerDelegate = self;
+        if (indexPath.row == 0) {
+            let cell: HomeTextPostTableViewCell = tableView.dequeueReusableCell(withIdentifier: "HomeTextPostTableViewCell") as! HomeTextPostTableViewCell;
+            
+            cell.sourceImageFacebook.isHidden = false;
+            cell.sourceImageTwitter.isHidden = false;
+            
+            var facebookIconHidden = true;
+            var twitterIconHidden = true;
+            if (post.socialMediaIds.count > 0) {
+                
+                /*for sourcePlatformId in post.socialMediaIds {
+                    if(Int(sourcePlatformId) == social.socialPlatformId["Facebook"]){
+                        facebookIconHidden = false;
+                    }  else if(Int(sourcePlatformId) == social.socialPlatformId["Twitter"]) {
+                        twitterIconHidden = false;
+                    }
+                }*/
+            }
+            
+            if (twitterIconHidden == false && facebookIconHidden == false) {
+                cell.sourceImageTwitter.isHidden = false;
+                cell.sourceImageFacebook.isHidden = false;
+            } else if (facebookIconHidden == false && twitterIconHidden == true) {
+                //If twitter is not present then we will replace sourceImageTwitter image with facebook
+                cell.sourceImageTwitter.isHidden = false;
+                cell.sourceImageFacebook.isHidden = true;
+                cell.sourceImageTwitter.image = UIImage.init(named: "facebook-group");
+            } else if (twitterIconHidden == false && facebookIconHidden == true) {
+                cell.sourceImageTwitter.isHidden = false;
+                cell.sourceImageFacebook.isHidden = true;
+                cell.sourceImageTwitter.image = UIImage.init(named: "twitter-group");
+            }
+            
+            var imageStatus = ""
+            var status = "";
+            if(post.status == "Pending"){
+                imageStatus = "pending-review"
+                status = "Pending review"
+            }else if(post.status == "Approved by moderator"){
+                imageStatus = "approved"
+                status = "Approved"
+            }else if (post.status == "Rejected by moderator"){
+                imageStatus = "rejected"
+                status = "Rejected"
+            }else if(post.status == "Pending with caster"){
+                imageStatus = "under-review"
+                status = "Under review"
+            }
+            else if(post.status == "Pending with moderator"){
+                imageStatus = "under-review"
+                status = "Under review"
+            }        else if(status == ""){
+                imageStatus = ""
+            }
+            // status = "dfsdf fdsdfs dsfsdfsdf"
+            cell.statusImage.image = UIImage.init(named: imageStatus)
+            let pipe = " |"
+            cell.profileLabel.text = "\((status))\(pipe)"
+            print(cell.profileLabel.intrinsicContentSize.width)
+            cell.dateLabel.text = Date().ddspEEEEcmyyyy(dateStr: post.createdOn)
+            
+            // Lets add ui labels in width.
+            let totalWidthOfUIView = cell.statusImage.frame.width + cell.profileLabel.intrinsicContentSize.width + cell.dateLabel.intrinsicContentSize.width + 10;
+            cell.postStatusDateView.frame = CGRect.init(x: cell.frame.width - (totalWidthOfUIView + 15), y: cell.postStatusDateView.frame.origin.y, width: totalWidthOfUIView, height: cell.postStatusDateView.frame.height);
+            
+            cell.statusImage.frame = CGRect.init(x: 0, y: 0, width: 20, height: 20);
+            cell.profileLabel.frame = CGRect.init(x: 25, y: 0, width: cell.profileLabel.intrinsicContentSize.width, height: 20);
+            cell.dateLabel.frame = CGRect.init(x: (cell.profileLabel.intrinsicContentSize.width + cell.profileLabel.frame.origin.x + 5), y: 0, width: cell.dateLabel.intrinsicContentSize.width, height: 20);
+            
+            //Call this function
+            let height = heightForView(text: post.postDescription, font: UIFont.init(name: "VisbyCF-Regular", size: 16.0)!, width: cell.contentView.frame.width - 30)
+            
+            //This is your label
+            for view in cell.descriptionView.subviews {
+                view.removeFromSuperview();
+            }
+            let proNameLbl = UILabel(frame: CGRect(x: 0, y: 0, width: cell.contentView.frame.width - 30, height: height))
+            var lblToShow = "\(post.postDescription)"
+            
+            if (height > 100) {
+                proNameLbl.numberOfLines = 4
+            } else {
+                proNameLbl.numberOfLines = 0
+            }
+            
+            proNameLbl.lineBreakMode = .byTruncatingTail
+            let paragraphStyle = NSMutableParagraphStyle()
+            //line height size
+            paragraphStyle.lineSpacing = 2
+            
+            let attributes = [
+                NSAttributedStringKey.font : UIFont(name: "VisbyCF-Regular", size: 16.0)!,
+                NSAttributedStringKey.foregroundColor : UIColor.init(red: 34/255, green: 34/255, blue: 34/255, alpha: 1),
+                NSAttributedStringKey.paragraphStyle: paragraphStyle]
+            
+            let attrString = NSMutableAttributedString(string: lblToShow)
+            attrString.addAttributes(attributes, range: NSMakeRange(0, attrString.length));
+            proNameLbl.attributedText = attrString;
+            
+            cell.descriptionView.addSubview(proNameLbl)
+            
+            if (post.postImages.count > 0) {
+                cell.imagesArray = [String]();
+                cell.imageGalleryScrollView.isHidden = false
+                for postImg in post.postImages {
+                    cell.imagesArray.append(postImg);
+                }
+                
+                var heightOfDesc = 0;
+                if (height > 100) {
+                    heightOfDesc = 100;
+                } else {
+                    heightOfDesc = Int(height);
+                }
+                let y = Int(cell.descriptionView.frame.origin.y) + heightOfDesc + 10;
+                cell.imageGalleryScrollView.frame = CGRect.init(x: 0, y: y, width: Int(cell.imageGalleryScrollView.frame.width), height: HomePostCellHeight.ScrollViewHeight)
+                
+                cell.setupSlideScrollView()
+                if(cell.imagesArray.count > 1){
+                    
+                    cell.pageControl.numberOfPages = cell.imagesArray.count
+                    cell.pageControl.currentPage = 0
+                    cell.contentView.bringSubview(toFront: cell.pageControl)
+                    
+                    cell.pageControl.isHidden = false;
+                    cell.imageCounterView.isHidden = true // false
+                    cell.totalCountImageLbl.text = " \(cell.imagesArray.count)";
+                    cell.currentCountImageLbl.text = "1"
+                    
+                    cell.imageCounterView.isHidden = true //false
+                    
+                    //If logged in user is a caster
+                    //70 width of counter view
+                    //20 Padding from right
+                    //20 from top of image scroll view
+                    //cell.imageGalleryScrollView.frame = CGRect.init(x: cell.imageGalleryScrollView.frame.origin.x, y: postTextDescHeight + CGFloat(HomePostCellHeight.PostStatusViewHeight), width: cell.imageGalleryScrollView.frame.width, height: cell.imageGalleryScrollView.frame.height)
+                    
+                    cell.imageCounterView.frame = CGRect.init(x: (cell.frame.width - (60 + 20) ), y: (cell.imageGalleryScrollView.frame.origin.y + 20), width: 60, height: 25)
+                    
+                    cell.pageControl.frame = CGRect.init(x: cell.pageControl.frame.origin.x, y: cell.imageGalleryScrollView.frame.origin.y + cell.imageGalleryScrollView.frame.height + 1, width: cell.pageControl.frame.width, height: cell.pageControl.frame.height)
+                } else {
+                    cell.imageCounterView.isHidden = true
+                    cell.pageControl.isHidden = true;
+                }
+                
+                
+            } else {
+                cell.imagesArray = [String]();
+                cell.imageGalleryScrollView.isHidden = true;
+                cell.pageControl.isHidden = true;
+            }
+            //ScrollView functionality
+            return cell;
+            
+            
+        } else {
+            
+            if (post.postCommunications.count > 0) {
+                
+                let cell: LeftCommunicationTableViewCell = tableView.dequeueReusableCell(withIdentifier: "LeftCommunicationTableViewCell") as! LeftCommunicationTableViewCell;
+                
+                cell.commentText.text = post.postCommunications[indexPath.row - 1].updatedPostDescription;
+                
+                return cell;
+            }
+            
+        }
         
-        activityIndicator.center = cell.center;
-        activityIndicator.hidesWhenStopped = true;
-        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.whiteLarge;
-        cell.addSubview(activityIndicator);
-        
-        return cell;
+        return UITableViewCell();
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

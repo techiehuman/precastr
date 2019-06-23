@@ -27,6 +27,7 @@
 		5EBE64C422BA22D000D97089 /* ThreeLineTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5EBE64C222BA22D000D97089 /* ThreeLineTableViewCell.xib */; };
 		5EBE64C722BA234800D97089 /* FourLineTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EBE64C522BA234800D97089 /* FourLineTableViewCell.swift */; };
 		5EBE64C822BA234800D97089 /* FourLineTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5EBE64C622BA234800D97089 /* FourLineTableViewCell.xib */; };
+		5ED3A32A22BF3EE400F65CF2 /* PostCommunication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED3A32922BF3EE400F65CF2 /* PostCommunication.swift */; };
 		5EE9EBFF22B803C300FD04B6 /* HomeDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EE9EBFE22B803C300FD04B6 /* HomeDto.swift */; };
 		5EEC6B5B22A66EAA005B1C34 /* LoginScreenTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EEC6B5922A66EAA005B1C34 /* LoginScreenTableViewCell.swift */; };
 		5EEC6B5C22A66EAA005B1C34 /* LoginScreenTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5EEC6B5A22A66EAA005B1C34 /* LoginScreenTableViewCell.xib */; };
@@ -147,6 +148,7 @@
 		5EBE64C222BA22D000D97089 /* ThreeLineTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ThreeLineTableViewCell.xib; sourceTree = "<group>"; };
 		5EBE64C522BA234800D97089 /* FourLineTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FourLineTableViewCell.swift; sourceTree = "<group>"; };
 		5EBE64C622BA234800D97089 /* FourLineTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FourLineTableViewCell.xib; sourceTree = "<group>"; };
+		5ED3A32922BF3EE400F65CF2 /* PostCommunication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCommunication.swift; sourceTree = "<group>"; };
 		5EE9EBFE22B803C300FD04B6 /* HomeDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeDto.swift; sourceTree = "<group>"; };
 		5EEC6B5922A66EAA005B1C34 /* LoginScreenTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginScreenTableViewCell.swift; sourceTree = "<group>"; };
 		5EEC6B5A22A66EAA005B1C34 /* LoginScreenTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoginScreenTableViewCell.xib; sourceTree = "<group>"; };
@@ -344,6 +346,7 @@
 				FA291B09225380830093E6CE /* User.swift */,
 				FAFCE3C2228E8F0000AB6DB5 /* SocialPlatform.swift */,
 				5E6BB7B122B530F500D92681 /* Post.swift */,
+				5ED3A32922BF3EE400F65CF2 /* PostCommunication.swift */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -938,6 +941,7 @@
 				5EB754DF22ABE136006D636B /* ForgetPasswordTableViewCell.swift in Sources */,
 				5EEC6B6122A6842F005B1C34 /* SignupScreenTableViewCell.swift in Sources */,
 				FAFCE3C3228E8F0000AB6DB5 /* SocialPlatform.swift in Sources */,
+				5ED3A32A22BF3EE400F65CF2 /* PostCommunication.swift in Sources */,
 				FAE6174122B3B32900A8B2F3 /* CommunicationViewController.swift in Sources */,
 				FA84F18B22A0E511007796A3 /* moderatorTableViewCell.swift in Sources */,
 				FA6AB57C22531E7300C5491F /* AppDelegate.swift in Sources */,

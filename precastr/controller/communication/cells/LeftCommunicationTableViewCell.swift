@@ -10,6 +10,14 @@ import UIKit
 
 class LeftCommunicationTableViewCell: UITableViewCell {
  var communicationViewControllerDelegate : CommunicationViewController!;
+    
+    
+    @IBOutlet weak var commentedDate: UILabel!
+    
+    @IBOutlet weak var commentText: UILabel!
+    
+    @IBOutlet weak var commentorPic: UIImageView!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
