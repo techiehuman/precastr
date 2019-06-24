@@ -218,7 +218,7 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
         cancelAction.setValue(UIColor.black, forKey: "titleTextColor")
         
         actionSheetController.addAction(uploadPhotoAction)
-        actionSheetController.addAction(takePhotoAction)
+       // actionSheetController.addAction(takePhotoAction)
         actionSheetController.addAction(cancelAction)
         
         // present an actionSheet...
@@ -394,7 +394,7 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
         cancelAction.setValue(UIColor.black, forKey: "titleTextColor")
         
         actionSheetController.addAction(uploadPhotoAction)
-        actionSheetController.addAction(takePhotoAction)
+      //  actionSheetController.addAction(takePhotoAction)
         actionSheetController.addAction(cancelAction)
         
         // present an actionSheet...

@@ -56,6 +56,27 @@ class HomeViewController: UIViewController {
         } else if (loggedInUser.isCastr == 2) {
             loadModeratorUserPosts();
         }
+        let jsonURL = "posts/get_notifications_count/format/json"
+         self.postArray["user_id"] = String(loggedInUser.userId)
+        UserService().postDataMethod(jsonURL: jsonURL, postData: self.postArray, complete: {(response) in
+            print(response)
+           let dataArray = response.value(forKey: "data") as! NSDictionary;
+            let success = Int(response.value(forKey: "status") as! String)!
+            if (success == 1) {
+                if let tabItems = self.tabBarController?.tabBar.items {
+                    // In this case we want to modify the badge number of the third tab:
+                    let tabItem = tabItems[3]
+                    let badgeCount = dataArray.value(forKey: "total") as! String
+                    print(badgeCount)
+                    if(badgeCount != "nil" && badgeCount != "0"){
+                        tabItem.badgeValue =  dataArray.value(forKey: "total") as? String;
+                    }else{
+                        tabItem.badgeValue =  nil;
+                    }
+                    
+                }
+            }
+        });
 
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -396,7 +417,7 @@ class HomeViewController: UIViewController {
             let status = Int(response.value(forKey: "status") as! String);
             if(status == 0){
                 print("hello")
-                  self.noPostsText.text = "Server Error!";
+                self.noPostsText.text = response.value(forKey: "message") as! String;
                 let alert = UIAlertController.init(title: "Error", message: response.value(forKey: "message") as! String, preferredStyle: .alert);
                 alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil));
                 self.present(alert, animated: true)

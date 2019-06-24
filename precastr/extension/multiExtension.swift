@@ -122,7 +122,7 @@ extension Date {
         if (fDate == nil) {
             return "\(dateFormatter.string(from: Date())) \(hourDateFormatter.string(from: Date()).uppercased())";
         }
-        return "\(dateFormatter.string(from: fDate!)) \(hourDateFormatter.string(from: Date()).uppercased())";
+        return "\(dateFormatter.string(from: fDate!)) \(hourDateFormatter.string(from: fDate!).uppercased())";
     }
 }
 extension UIButton {
