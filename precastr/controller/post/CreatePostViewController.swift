@@ -26,6 +26,7 @@ class CreatePostViewController: UIViewController, UIImagePickerControllerDelegat
     var postFormCellProtocolDelegate: PostFormCellProtocol!;
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView();
     var loggedInUser : User!
+    var post: Post!;
     var social : SocialPlatform!
     var uploadImage : [UIImage] = [UIImage]()
     var imageDelegate : ImageLibProtocolT!

@@ -261,6 +261,14 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
         present(actionSheetController, animated: true, completion: nil)
     }
     
+    @IBAction func editPostBtnClicked(_ sender: Any) {
+        
+        let viewController = self.storyboard?.instantiateViewController(withIdentifier: "CreatePostViewController") as! CreatePostViewController;
+        viewController.post = self.post;
+        self.navigationController?.pushViewController(viewController, animated: true);
+        
+        
+    }
     /*@IBAction func multipleButtonClicked(_ sender: AnyObject) {
         
         switch sender.tag {
