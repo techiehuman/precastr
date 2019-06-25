@@ -38,7 +38,13 @@ class NotificationViewController: UIViewController {
             if (success == 1) {
                 if let tabItems = self.tabBarController?.tabBar.items {
                     // In this case we want to modify the badge number of the third tab:
-                    let tabItem = tabItems[3]
+                    var index = 0;
+                    if (self.loggedInUser.isCastr == 1) {
+                        index =  3;
+                    } else {
+                        index = 2;
+                    }
+                    let tabItem = tabItems[index]
                     tabItem.badgeValue = nil
                 }
             }

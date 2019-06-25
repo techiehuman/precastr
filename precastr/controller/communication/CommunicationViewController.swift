@@ -922,9 +922,9 @@ extension CommunicationViewController: UITableViewDelegate, UITableViewDataSourc
             
             var height = heightForView(text: post.postDescription, font: UIFont.init(name: "VisbyCF-Regular", size: 16.0)!, width: tableView.frame.width - 30);
             
-            if (height > 100) {
+            /*if (height > 100) {
                 height = 100;
-            }
+            }*/
             if (post.postImages.count > 0) {
                 
                 if (post.postImages.count == 1) {

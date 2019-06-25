@@ -66,7 +66,13 @@ class HomeViewController: UIViewController {
             if (success == 1) {
                 if let tabItems = self.tabBarController?.tabBar.items {
                     // In this case we want to modify the badge number of the third tab:
-                    let tabItem = tabItems[3]
+                    var index = 0;
+                    if (self.loggedInUser.isCastr == 1) {
+                        index =  3;
+                    } else {
+                        index = 2;
+                    }
+                    let tabItem = tabItems[index]
                     let badgeCount = dataArray.value(forKey: "total") as! String
                     print(badgeCount)
                     if(badgeCount != "nil" && badgeCount != "0"){
@@ -607,14 +613,12 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
         if (loggedInUser.isCastr == 1) { // caster
             
             //var postTextDescHeight: CGFloat = 0;
-            
             let cell: HomeTextPostTableViewCell = tableView.dequeueReusableCell(withIdentifier: "HomeTextPostTableViewCell", for: indexPath) as! HomeTextPostTableViewCell;
             cell.sourceImageFacebook.isHidden = false;
             cell.sourceImageTwitter.isHidden = false;
             
             let postDescTap = MyTapRecognizer.init(target: self, action: #selector(postDescriptionPressed(sender:)));
             postDescTap.rowId = indexPath.row;
-            
             
             var facebookIconHidden = true;
             var twitterIconHidden = true;
@@ -696,8 +700,11 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             cell.dateLabel.frame = CGRect.init(x: (cell.profileLabel.intrinsicContentSize.width + cell.profileLabel.frame.origin.x + 5), y: 0, width: cell.dateLabel.intrinsicContentSize.width, height: 20);
             
             //Call this function
-            let height = heightForView(text: post.postDescription, font: UIFont.init(name: "VisbyCF-Regular", size: 16.0)!, width: cell.contentView.frame.width - 30)
-            
+            var height = heightForView(text: post.postDescription, font: UIFont.init(name: "VisbyCF-Regular", size: 16.0)!, width: cell.contentView.frame.width - 30)
+            if (height > 100) {
+                height = 100;
+            }
+
             //This is your label
             for view in cell.descriptionView.subviews {
                 view.removeFromSuperview();
@@ -705,12 +712,6 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             let proNameLbl = UILabel(frame: CGRect(x: 0, y: 0, width: cell.contentView.frame.width - 30, height: height))
             var lblToShow = "\(post.postDescription)"
            
-            if (height > 100) {
-                proNameLbl.numberOfLines = 4
-            } else {
-                proNameLbl.numberOfLines = 0
-            }
-            
             proNameLbl.lineBreakMode = .byTruncatingTail
             let paragraphStyle = NSMutableParagraphStyle()
             //line height size
@@ -724,9 +725,15 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             let attrString = NSMutableAttributedString(string: lblToShow)
             attrString.addAttributes(attributes, range: NSMakeRange(0, attrString.length));
             proNameLbl.attributedText = attrString;
-            
+            proNameLbl.isUserInteractionEnabled = true;
+            //proNameLbl.addGestureRecognizer(postDescTap);
+            if (height > 100) {
+                proNameLbl.numberOfLines = 4
+            } else {
+                proNameLbl.numberOfLines = 0
+            }
             cell.descriptionView.addSubview(proNameLbl)
-            cell.descriptionView.addGestureRecognizer(postDescTap);
+            //cell.descriptionView.addGestureRecognizer(postDescTap);
             
             if (post.postImages.count > 0) {
                 cell.imagesArray = [String]();
@@ -779,6 +786,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
                 cell.pageControl.isHidden = true;
             }
             //ScrollView functionality
+            cell.addGestureRecognizer(postDescTap)
             return cell;
         } else if (loggedInUser.isCastr == 2) { // moderator
             let cell: ModeratorCastsTableViewCell = tableView.dequeueReusableCell(withIdentifier: "ModeratorCastsTableViewCell", for: indexPath) as! ModeratorCastsTableViewCell;
@@ -832,8 +840,11 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             }
             
             //Call this function
-            let height = heightForView(text: post.postDescription, font: UIFont.init(name: "VisbyCF-Regular", size: 16.0)!, width: cell.contentView.frame.width - 30)
-            
+            var height = heightForView(text: post.postDescription, font: UIFont.init(name: "VisbyCF-Regular", size: 16.0)!, width: cell.contentView.frame.width - 30)
+            if (height > 100) {
+                height = 100;
+            }
+
             //This is your label
             for view in cell.descriptionView.subviews {
                 view.removeFromSuperview();
@@ -863,7 +874,6 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             proNameLbl.attributedText = attrString;
             
             cell.descriptionView.addSubview(proNameLbl)
-            cell.descriptionView.addGestureRecognizer(postDescTap);
 
             var imageStatus = ""
             var status = "";
@@ -956,7 +966,8 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
                 cell.imageGalleryScrollView.isHidden = true;
                 cell.pageControl.isHidden = true;
             }
-            
+            cell.addGestureRecognizer(postDescTap);
+
             return cell;
         }
         return UITableViewCell();
