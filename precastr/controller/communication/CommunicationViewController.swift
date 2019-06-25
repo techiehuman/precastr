@@ -111,6 +111,7 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
         
         self.getPostCommunications();
         
+        self.getAllPostStatuses();
    //  postStatusList = loadPostStatus()
     }
 
@@ -135,7 +136,23 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
         // Pass the selected object to the new view controller.
     }
     */
-
+    
+    func getAllPostStatuses() {
+        
+        let jsonURL = "home/get_all_post_status/format/json"
+        UserService().getDataMethod(jsonURL: jsonURL, complete: {(response) in
+            print(response)
+            let modeArray = response.value(forKey: "data") as! NSArray
+            let postStatusList = PostStatus().loadPostStatusFromNSArray(postStatusArr: modeArray);
+            
+            for postStatus in postStatusList {
+                if (postStatus.postStatusId == self.post.postStatusId) {
+                    self.changeStatusBtn.setTitle(postStatus.title, for: .normal);
+                    break;
+                }
+            }
+        });
+    }
     
     func setUpNavigationBarItems() {
         

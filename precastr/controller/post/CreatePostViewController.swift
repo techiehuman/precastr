@@ -80,8 +80,8 @@ class CreatePostViewController: UIViewController, UIImagePickerControllerDelegat
             UserService().postDataMethod(jsonURL: jsonURL, postData: self.postArray, complete: {(response) in
                 print(response);
                 
-                let success = Int(response.value(forKey: "status") as! String);
-                if (success == 0) {
+                let status = Int((response.value(forKey: "status") as! NSObject) as! String);
+                if (status == 0) {
                     let message = response.value(forKey: "message") as! String;
                     self.showAlert(title: "Error", message: message);
                     
@@ -242,20 +242,26 @@ extension CreatePostViewController: UITableViewDelegate, UITableViewDataSource {
                 for sourcePlatformId in post.socialMediaIds {
                     if(Int(sourcePlatformId) == social.socialPlatformId["Facebook"]){
                         facebookIconHidden = false;
-                        facebookStatus = true;
                     }  else if(Int(sourcePlatformId) == social.socialPlatformId["Twitter"]) {
                         twitterIconHidden = false;
-                        twitterStatus = true;
                     }
                 }
             }
             
             if (facebookIconHidden == false && twitterIconHidden == true) {
                 //If twitter is not present then we will replace sourceImageTwitter image with facebook
-                cell.activeFacebookIcon()
+                cell.activeFacebookIcon();
+                cell.charaterCountLabel.isHidden = true;
                 
             } else if (twitterIconHidden == false && facebookIconHidden == true) {
-                cell.activeTwitterIcon()
+                cell.activeTwitterIcon();
+                cell.charaterCountLabel.isHidden = false;
+
+            } else if (facebookIconHidden == false  && twitterIconHidden == false) {
+                cell.activeFacebookIcon();
+                cell.activeTwitterIcon();
+                cell.charaterCountLabel.isHidden = false;
+
             }
         }
             

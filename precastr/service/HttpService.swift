@@ -117,6 +117,10 @@ class HttpService {
             MultipartFormData.append( "\(String(describing: postData["social_media_id"]!))".data(using: .utf8)!, withName: "social_media_id")
             MultipartFormData.append( "\(String(describing: postData["user_id"]!))".data(using: .utf8)!, withName: "user_id")
             
+            if (postData["post_id"] != nil) {
+                MultipartFormData.append( "\(String(describing: postData["post_id"]!))".data(using: .utf8)!, withName: "post_id")
+
+            }
             
         }, usingThreshold: UInt64.init(), to: "\(url)", method: .post, headers:Auth_header ) { (result) in
             

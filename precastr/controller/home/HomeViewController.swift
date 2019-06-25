@@ -414,7 +414,7 @@ class HomeViewController: UIViewController {
         UserService().postDataMethod(jsonURL: jsonURL, postData: postArray, complete: {(response) in
             print(response)
             
-            let status = Int(response.value(forKey: "status") as! String);
+            let status = Int((response.value(forKey: "status") as! NSObject) as! String);
             if(status == 0){
                 print("hello")
                 self.noPostsText.text = response.value(forKey: "message") as! String;

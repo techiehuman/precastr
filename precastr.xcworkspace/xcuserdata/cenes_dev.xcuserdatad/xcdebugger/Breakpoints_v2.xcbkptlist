@@ -70,16 +70,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "precastr/service/HttpService.swift"
-            timestampString = "583089529.497329"
+            timestampString = "583166063.346156"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "22"
-            endingLineNumber = "22"
-            landmarkName = "getMethod(url:complete:)"
+            startingLineNumber = "138"
+            endingLineNumber = "138"
+            landmarkName = "postMultipartImageSocial(url:image:postData:complete:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

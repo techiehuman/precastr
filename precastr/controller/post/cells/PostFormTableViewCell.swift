@@ -86,7 +86,6 @@ class PostFormTableViewCell: UITableViewCell, UITextViewDelegate, PostFormCellPr
                 self.activeFacebookIcon();                                     //Active the icon
             } else {
                 self.facebookSocialSync();//if facebook not synced. We will sync it
-
             }
         }else{
             //If facebook is already clicked. That means it is synced. Then we have to unsync it.
@@ -129,17 +128,20 @@ class PostFormTableViewCell: UITableViewCell, UITextViewDelegate, PostFormCellPr
         
         if(createPostViewControllerDelegate.twitterStatus==false) {//Twitter is not clicked yet.
             
-            //If user clicked twitter
-            //Lets check if user is already linked.
-            if (createPostViewControllerDelegate.twitterExists == true) {//If user already linked to twotter
-                                                                        //hight light twitter icon
-                activeTwitterIcon();
+            
+            if (self.descriptionMsg.count > 280) {
+                createPostViewControllerDelegate.showAlert(title: "Alert", message: "Description count for Twitter\ncannot be more than 280.")
             } else {
-                //Else sync with twitter
-                self.twitterSocialSync();
+                //If user clicked twitter
+                //Lets check if user is already linked.
+                if (createPostViewControllerDelegate.twitterExists == true) {//If user already linked to twotter
+                    //hight light twitter icon
+                    activeTwitterIcon();
+                } else {
+                    //Else sync with twitter
+                    self.twitterSocialSync();
+                }
             }
-            
-            
         }else{ //If icon is already clicked. User wnant to uncheck, then deactive it.
             createPostViewControllerDelegate.twitterStatus = false //setting to initial state
             
@@ -406,8 +408,17 @@ class PostFormTableViewCell: UITableViewCell, UITextViewDelegate, PostFormCellPr
         descriptionMsg = currentText.replacingCharacters(in: stringRange, with: text)
         
         //This label is for showing the number of characters allowed
-        self.charaterCountLabel.text = "\(280 - descriptionMsg.count) Characters Remain";
+        self.charaterCountLabel.text = "\(descriptionMsg.count) Characters Remain";
         
-        return descriptionMsg.count < 280
+        if (createPostViewControllerDelegate.twitterStatus && createPostViewControllerDelegate.facebookStatus) {
+            return descriptionMsg.count < 280
+        } else if (createPostViewControllerDelegate.twitterStatus == true) {
+            return descriptionMsg.count < 280
+        } else if (createPostViewControllerDelegate.facebookStatus == true) {
+            return true;
+        }
+        
+        return true;
+        
     }
 }
