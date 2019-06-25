@@ -49,7 +49,7 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
     var postStatus : Int = 0
     var postArray : [String:Any] = [String:Any]()
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView();
-    
+    var postStatusList = [PostStatus]()
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -95,8 +95,13 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
         
         self.changeStatusBtn.layer.cornerRadius = 4;
         self.changeStatusBtn.layer.borderWidth = 1;
-        self.changeStatusBtn.layer.borderColor = UIColor(red: 34/255, green: 34/255, blue: 34/255, alpha: 1).cgColor;
-        
+        self.changeStatusBtn.layer.borderColor = UIColor(red: 112/255, green: 112/255, blue: 112/255, alpha: 1).cgColor;
+        print(loggedInUser.userCastSettingId)
+        if(loggedInUser.userCastSettingId == 1){
+            self.changeStatusBtn.isUserInteractionEnabled = false
+           // self.changeStatusBtn.isEnabled = false
+            self.changeStatusBtn.alpha = 0.5;
+        }
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
 
@@ -105,6 +110,8 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
         self.hideKeyboadOnTapOutside();
         
         self.getPostCommunications();
+        
+   //  postStatusList = loadPostStatus()
     }
 
     @IBOutlet weak var pendingBtn : UIButton!
@@ -142,8 +149,8 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
         navigationItem.leftBarButtonItem = barButton;
         
         let homeButton = UIButton();
-        homeButton.setImage(UIImage.init(named: "top-home"), for: .normal);
-        homeButton.addTarget(self, action: #selector(homeButtonPressed), for: UIControlEvents.touchUpInside)
+        homeButton.setImage(UIImage.init(named: "menu"), for: .normal);
+        homeButton.addTarget(self, action: #selector(menuButtonClicked), for: UIControlEvents.touchUpInside)
         homeButton.frame = CGRect.init(x: 0, y:0, width: 24, height: 24);
         
         let homeBarButton = UIBarButtonItem(customView: homeButton)
@@ -156,9 +163,12 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
         self.navigationController?.popViewController(animated: true);
     }
     
-    @objc func homeButtonPressed() {
-        UIApplication.shared.keyWindow?.rootViewController = HomeViewController.MainViewController();
+    
+    @objc func menuButtonClicked() {
+        let viewController: SideMenuTableViewController = self.storyboard?.instantiateViewController(withIdentifier: "SideMenuTableViewController") as! SideMenuTableViewController;
+        self.navigationController?.pushViewController(viewController, animated: true);
     }
+
 
     
     @IBAction func submitBtnClicked(_ sender: Any) {

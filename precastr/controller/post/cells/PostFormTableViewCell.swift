@@ -219,7 +219,7 @@ class PostFormTableViewCell: UITableViewCell, UITextViewDelegate, PostFormCellPr
                     })
                 }
             }
-            } else {
+            else {
                 self.createPostViewControllerDelegate.activityIndicator.startAnimating();
                 
                 let jsonURL = "posts/create_new_caster_posts/format/json"
@@ -261,6 +261,7 @@ class PostFormTableViewCell: UITableViewCell, UITextViewDelegate, PostFormCellPr
                         UIApplication.shared.keyWindow?.rootViewController = HomeViewController.MainViewController();
                     })
                 }
+            }
             }
         
             
