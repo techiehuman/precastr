@@ -730,11 +730,11 @@ extension CommunicationViewController: UITableViewDelegate, UITableViewDataSourc
             let proNameLbl = UILabel(frame: CGRect(x: 0, y: 0, width: cell.contentView.frame.width - 30, height: height))
             var lblToShow = "\(post.postDescription)"
             
-            if (height > 100) {
+            /*if (height > 100) {
                 proNameLbl.numberOfLines = 4
-            } else {
+            } else {*/
                 proNameLbl.numberOfLines = 0
-            }
+            //}
             
             proNameLbl.lineBreakMode = .byTruncatingTail
             let paragraphStyle = NSMutableParagraphStyle()
@@ -759,12 +759,14 @@ extension CommunicationViewController: UITableViewDelegate, UITableViewDataSourc
                     cell.imagesArray.append(postImg);
                 }
                 
-                var heightOfDesc = 0;
+                /*var heightOfDesc = 0;
                 if (height > 100) {
                     heightOfDesc = 100;
                 } else {
                     heightOfDesc = Int(height);
-                }
+                }*/
+                var heightOfDesc = 0;
+                heightOfDesc = Int(height);
                 let y = Int(cell.descriptionView.frame.origin.y) + heightOfDesc + 10;
                 cell.imageGalleryScrollView.frame = CGRect.init(x: 0, y: y, width: Int(cell.imageGalleryScrollView.frame.width), height: HomePostCellHeight.ScrollViewHeight)
                 

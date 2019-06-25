@@ -69,10 +69,18 @@ class CreatePostViewController: UIViewController, UIImagePickerControllerDelegat
         navigationItem.rightBarButtonItem = barButton;
         navigationItem.rightBarButtonItem?.tintColor = UIColor(red: 12/255, green: 111/255, blue: 233/255, alpha: 1);
         
-        navigationItem.leftBarButtonItem = nil;
+        
+        let leftButton = UIButton();
+        leftButton.frame = CGRect.init(x: 0, y:0, width: 24, height: 24);
+        let leftbarButton = UIBarButtonItem(customView: leftButton)
+        navigationItem.leftBarButtonItem = leftbarButton;
 
         self.tabBarController?.tabBar.isHidden = false;
         
+        if (post != nil) {
+            self.navigationItem.title = "Post Detail";
+        }
+
         
         DispatchQueue.global(qos: .background).async {
             let jsonURL = "user/get_user_details/format/json";
