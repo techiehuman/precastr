@@ -169,51 +169,101 @@ class PostFormTableViewCell: UITableViewCell, UITextViewDelegate, PostFormCellPr
     @IBAction func postOnSocialPlatform(_ sender: Any) {
         
         let isValid = self.validateSocialPlatform();
-        if(isValid == true){
+        if(isValid == true) {
            
-            
-            self.createPostViewControllerDelegate.activityIndicator.startAnimating();
-            
-            let jsonURL = "posts/create_new_caster_posts/format/json"
-            var postData : [String : Any] = [String : Any]()
-            postData["post_description"] = self.postTextField.text
-            postData["user_id"] = self.createPostViewControllerDelegate.loggedInUser.userId
-            //let joiner = ","
-            
-            var joinedStrings = "";
-            for obj in createPostViewControllerDelegate.social.socialPlatformId {
-                if (obj.key == "Facebook" && self.createPostViewControllerDelegate.facebookStatus == true) {//If user selcts facebook
-                    joinedStrings = joinedStrings + "\(obj.value),";
-                } else if (obj.key == "Twitter" && self.createPostViewControllerDelegate.twitterStatus == true) {//If user selcts twiiter
-                    joinedStrings = joinedStrings + "\(obj.value),";
+            //If its an edit post request
+            if (self.createPostViewControllerDelegate.post != nil) {
+                
+                self.createPostViewControllerDelegate.activityIndicator.startAnimating();
+                
+                let jsonURL = "posts/post_update/format/json"
+                var postData : [String : Any] = [String : Any]()
+                postData["post_description"] = self.postTextField.text
+                postData["user_id"] = self.createPostViewControllerDelegate.loggedInUser.userId
+                postData["post_id"] = self.createPostViewControllerDelegate.post.postId
+                postData["post_status_id"] = 1
+
+                //let joiner = ","
+                
+                var joinedStrings = "";
+                for obj in createPostViewControllerDelegate.social.socialPlatformId {
+                    if (obj.key == "Facebook" && self.createPostViewControllerDelegate.facebookStatus == true) {//If user selcts facebook
+                        joinedStrings = joinedStrings + "\(obj.value),";
+                    } else if (obj.key == "Twitter" && self.createPostViewControllerDelegate.twitterStatus == true) {//If user selcts twiiter
+                        joinedStrings = joinedStrings + "\(obj.value),";
+                    }
+                }
+                
+                let elements = (self.createPostViewControllerDelegate.socialMediaPlatform);
+                
+                /*            for elementItem in elements! {
+                 joinedStrings = joinedStrings + "\(elementItem),";
+                 }*/
+                joinedStrings = String(joinedStrings.dropLast())
+                print(joinedStrings)
+                postData["social_media"] = String(joinedStrings.suffix(joinedStrings.count-1));
+                postData["social_media_id"] = joinedStrings
+                //  let size = CGSize(width: 0, height: 0)
+                print(self.createPostViewControllerDelegate.PhotoArray.count)
+                if(self.createPostViewControllerDelegate.PhotoArray.count > 0){
+                    UserService().postMultipartImageDataSocialMethod(jsonURL: jsonURL,image : self.createPostViewControllerDelegate.PhotoArray, postData:postData,complete:{(response) in
+                        print(response);
+                        self.createPostViewControllerDelegate.activityIndicator.stopAnimating();
+                        UIApplication.shared.keyWindow?.rootViewController = HomeViewController.MainViewController();
+                    })
+                }else{
+                    UserService().postDataMethod(jsonURL: jsonURL, postData: postData, complete: { (response) in
+                        print(response);
+                        self.createPostViewControllerDelegate.activityIndicator.stopAnimating();
+                        UIApplication.shared.keyWindow?.rootViewController = HomeViewController.MainViewController();
+                    })
                 }
             }
-            
-            let elements = (self.createPostViewControllerDelegate.socialMediaPlatform);
-            
-            /*            for elementItem in elements! {
-                joinedStrings = joinedStrings + "\(elementItem),";
-            }*/
-            joinedStrings = String(joinedStrings.dropLast())
-            print(joinedStrings)
-            postData["social_media"] = String(joinedStrings.suffix(joinedStrings.count-1));
-            postData["social_media_id"] = joinedStrings
-            //  let size = CGSize(width: 0, height: 0)
-            print(self.createPostViewControllerDelegate.PhotoArray.count)
-            if(self.createPostViewControllerDelegate.PhotoArray.count > 0){
-                UserService().postMultipartImageDataSocialMethod(jsonURL: jsonURL,image : self.createPostViewControllerDelegate.PhotoArray, postData:postData,complete:{(response) in
-                    print(response);
-                    self.createPostViewControllerDelegate.activityIndicator.stopAnimating();
-                    UIApplication.shared.keyWindow?.rootViewController = HomeViewController.MainViewController();
-                })
-            }else{
-                UserService().postDataMethod(jsonURL: jsonURL, postData: postData, complete: { (response) in
-                    print(response);
-                    self.createPostViewControllerDelegate.activityIndicator.stopAnimating();
-                    UIApplication.shared.keyWindow?.rootViewController = HomeViewController.MainViewController();
-                })
+            } else {
+                self.createPostViewControllerDelegate.activityIndicator.startAnimating();
+                
+                let jsonURL = "posts/create_new_caster_posts/format/json"
+                var postData : [String : Any] = [String : Any]()
+                postData["post_description"] = self.postTextField.text
+                postData["user_id"] = self.createPostViewControllerDelegate.loggedInUser.userId
+                //let joiner = ","
+                
+                var joinedStrings = "";
+                for obj in createPostViewControllerDelegate.social.socialPlatformId {
+                    if (obj.key == "Facebook" && self.createPostViewControllerDelegate.facebookStatus == true) {//If user selcts facebook
+                        joinedStrings = joinedStrings + "\(obj.value),";
+                    } else if (obj.key == "Twitter" && self.createPostViewControllerDelegate.twitterStatus == true) {//If user selcts twiiter
+                        joinedStrings = joinedStrings + "\(obj.value),";
+                    }
+                }
+                
+                let elements = (self.createPostViewControllerDelegate.socialMediaPlatform);
+                
+                /*            for elementItem in elements! {
+                 joinedStrings = joinedStrings + "\(elementItem),";
+                 }*/
+                joinedStrings = String(joinedStrings.dropLast())
+                print(joinedStrings)
+                postData["social_media"] = String(joinedStrings.suffix(joinedStrings.count-1));
+                postData["social_media_id"] = joinedStrings
+                //  let size = CGSize(width: 0, height: 0)
+                print(self.createPostViewControllerDelegate.PhotoArray.count)
+                if(self.createPostViewControllerDelegate.PhotoArray.count > 0){
+                    UserService().postMultipartImageDataSocialMethod(jsonURL: jsonURL,image : self.createPostViewControllerDelegate.PhotoArray, postData:postData,complete:{(response) in
+                        print(response);
+                        self.createPostViewControllerDelegate.activityIndicator.stopAnimating();
+                        UIApplication.shared.keyWindow?.rootViewController = HomeViewController.MainViewController();
+                    })
+                }else{
+                    UserService().postDataMethod(jsonURL: jsonURL, postData: postData, complete: { (response) in
+                        print(response);
+                        self.createPostViewControllerDelegate.activityIndicator.stopAnimating();
+                        UIApplication.shared.keyWindow?.rootViewController = HomeViewController.MainViewController();
+                    })
+                }
             }
-        }
+        
+            
     }
     
     func validateSocialPlatform()->Bool{

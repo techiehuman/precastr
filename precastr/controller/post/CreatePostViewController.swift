@@ -52,6 +52,8 @@ class CreatePostViewController: UIViewController, UIImagePickerControllerDelegat
         //imageDelegate = Reusable()
         // Do any additional setup after loading the view.
         self.socialMediaPlatform = [Int]();
+        social = SocialPlatform().loadSocialDataFromUserDefaults();
+
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -65,7 +67,10 @@ class CreatePostViewController: UIViewController, UIImagePickerControllerDelegat
         let barButton = UIBarButtonItem(customView: menuButton)
         
         navigationItem.rightBarButtonItem = barButton;
-        navigationItem.rightBarButtonItem?.tintColor = UIColor(red: 12/255, green: 111/255, blue: 233/255, alpha: 1)
+        navigationItem.rightBarButtonItem?.tintColor = UIColor(red: 12/255, green: 111/255, blue: 233/255, alpha: 1);
+        
+        navigationItem.leftBarButtonItem = nil;
+
         self.tabBarController?.tabBar.isHidden = false;
         
         
@@ -223,7 +228,37 @@ extension CreatePostViewController: UITableViewDelegate, UITableViewDataSource {
         let cell: PostFormTableViewCell = tableView.dequeueReusableCell(withIdentifier: "PostFormTableViewCell") as! PostFormTableViewCell;
         cell.createPostViewControllerDelegate = self;
         
-        
+        if (post != nil) {
+            cell.postTextField.text = post.postDescription
+            if (post.postImages.count > 0) {
+                cell.filesUploadedtext.isHidden = false;
+                cell.filesUploadedtext.text = "\(post.postImages.count) files uploaded successfully."
+            }
+            
+            var facebookIconHidden = true;
+            var twitterIconHidden = true;
+            if (post.socialMediaIds.count > 0) {
+                
+                for sourcePlatformId in post.socialMediaIds {
+                    if(Int(sourcePlatformId) == social.socialPlatformId["Facebook"]){
+                        facebookIconHidden = false;
+                        facebookStatus = true;
+                    }  else if(Int(sourcePlatformId) == social.socialPlatformId["Twitter"]) {
+                        twitterIconHidden = false;
+                        twitterStatus = true;
+                    }
+                }
+            }
+            
+            if (facebookIconHidden == false && twitterIconHidden == true) {
+                //If twitter is not present then we will replace sourceImageTwitter image with facebook
+                cell.activeFacebookIcon()
+                
+            } else if (twitterIconHidden == false && facebookIconHidden == true) {
+                cell.activeTwitterIcon()
+            }
+        }
+            
         activityIndicator.center = cell.center;
         activityIndicator.hidesWhenStopped = true;
         activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.gray;

@@ -91,6 +91,8 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
         self.textArea.text = "Type a message..."
         self.textArea.textColor = UIColor.lightGray
 
+        self.editPostBtn.layer.cornerRadius = 4;
+        
         self.changeStatusBtn.layer.cornerRadius = 4;
         self.changeStatusBtn.layer.borderWidth = 1;
         self.changeStatusBtn.layer.borderColor = UIColor(red: 34/255, green: 34/255, blue: 34/255, alpha: 1).cgColor;
@@ -98,6 +100,8 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
 
+        self.setUpNavigationBarItems();
+        
         self.hideKeyboadOnTapOutside();
         
         self.getPostCommunications();
@@ -126,6 +130,36 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
     */
 
     
+    func setUpNavigationBarItems() {
+        
+        let menuButton = UIButton();
+        menuButton.setImage(UIImage.init(named: "left-arrow"), for: .normal);
+        menuButton.addTarget(self, action: #selector(backButtonPressed), for: UIControlEvents.touchUpInside)
+        menuButton.frame = CGRect.init(x: 0, y:0, width: 20, height: 15);
+        
+        let barButton = UIBarButtonItem(customView: menuButton)
+        
+        navigationItem.leftBarButtonItem = barButton;
+        
+        let homeButton = UIButton();
+        homeButton.setImage(UIImage.init(named: "top-home"), for: .normal);
+        homeButton.addTarget(self, action: #selector(homeButtonPressed), for: UIControlEvents.touchUpInside)
+        homeButton.frame = CGRect.init(x: 0, y:0, width: 24, height: 24);
+        
+        let homeBarButton = UIBarButtonItem(customView: homeButton)
+        
+        navigationItem.rightBarButtonItem = homeBarButton;
+        navigationItem.rightBarButtonItem?.tintColor = UIColor(red: 12/255, green: 111/255, blue: 233/255, alpha: 1)
+    }
+    
+    @objc func backButtonPressed() {
+        self.navigationController?.popViewController(animated: true);
+    }
+    
+    @objc func homeButtonPressed() {
+        UIApplication.shared.keyWindow?.rootViewController = HomeViewController.MainViewController();
+    }
+
     
     @IBAction func submitBtnClicked(_ sender: Any) {
         
