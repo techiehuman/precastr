@@ -230,6 +230,7 @@ extension CreatePostViewController: UITableViewDelegate, UITableViewDataSource {
         
         if (post != nil) {
             cell.postTextField.text = post.postDescription
+            cell.charaterCountLabel.text = "\(post.postDescription.count) Characters";
             if (post.postImages.count > 0) {
                 cell.filesUploadedtext.isHidden = false;
                 cell.filesUploadedtext.text = "\(post.postImages.count) files uploaded successfully."

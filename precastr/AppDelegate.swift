@@ -11,6 +11,9 @@ import TwitterKit
 import TwitterCore
 
 let setting = UserDefaults.standard
+var postStatusList = [PostStatus]();
+var social : SocialPlatform!
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 

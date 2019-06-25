@@ -1028,10 +1028,10 @@
             </objects>
             <point key="canvasLocation" x="729" y="2311"/>
         </scene>
-        <!--Communication View Controller-->
+        <!--Cast Detail-->
         <scene sceneID="n8f-Ul-c9d">
             <objects>
-                <viewController storyboardIdentifier="CommunicationViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="isS-Sv-T1f" customClass="CommunicationViewController" customModule="precastr" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CommunicationViewController" title="Cast Detail" useStoryboardIdentifierAsRestorationIdentifier="YES" id="isS-Sv-T1f" customClass="CommunicationViewController" customModule="precastr" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="U1z-Qa-lav">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

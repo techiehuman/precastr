@@ -50,6 +50,7 @@ class HomeViewController: UIViewController {
         
         loggedInUser = User().loadUserDataFromUserDefaults(userDataDict : setting);
         
+        self.getAllPostStatuses();
 
         if (loggedInUser.isCastr == 1) {
             self.loadUserPosts();
@@ -106,6 +107,12 @@ class HomeViewController: UIViewController {
         noPostsText.text = "Loading, please wait...";
         noPostsText.frame = CGRect.init(x: noPostsText.frame.origin.x, y: noPostsText.frame.origin.y, width: noPostsText.frame.width, height: 25)
         noPostsText.numberOfLines = 1;
+        
+        if (loggedInUser.isCastr == 1) {
+            self.loadUserPosts();
+        } else if (loggedInUser.isCastr == 2) {
+            loadModeratorUserPosts();
+        }
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -500,6 +507,18 @@ class HomeViewController: UIViewController {
         });
     }
     
+    func getAllPostStatuses() {
+        
+        let jsonURL = "home/get_all_post_status/format/json"
+        UserService().getDataMethod(jsonURL: jsonURL, complete: {(response) in
+            print(response)
+            let modeArray = response.value(forKey: "data") as! NSArray
+            postStatusList = PostStatus().loadPostStatusFromNSArray(postStatusArr: modeArray);
+            self.socialPostList.reloadData();
+        });
+    }
+    
+    
     //To calculate height for label based on text size and width
     func heightForView(text:String, font:UIFont, width:CGFloat) -> CGFloat {
         let label:UILabel = UILabel(frame: CGRect(x: 0, y: 0, width: width, height: CGFloat.greatestFiniteMagnitude))
@@ -626,25 +645,41 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             
             var imageStatus = ""
             var status = "";
-            if(post.status == "Pending"){
+
+            for postStatus in postStatusList {
+                if (postStatus.postStatusId == post.postStatusId) {
+                    status = postStatus.title;
+                }
+            }
+            
+            if (status == "Pending") {
                 imageStatus = "pending-review"
                 status = "Pending review"
-            }else if(post.status == "Approved by moderator"){
+            } else if (status == "Approved") {
                 imageStatus = "approved"
                 status = "Approved"
-            }else if (post.status == "Rejected by moderator"){
+            } else if (status == "Rejected by moderator") {
                 imageStatus = "rejected"
                 status = "Rejected"
-            }else if(post.status == "Pending with caster"){
+            } else if(status == "Pending with caster") {
                 imageStatus = "under-review"
                 status = "Under review"
-            }
-            else if(post.status == "Pending with moderator"){
+            } else if(status == "Unread by moderator") {
+                imageStatus = "under-review"
+                status = "Unread by moderator"
+            } else if(status == "Pending with moderator") {
                 imageStatus = "under-review"
                 status = "Under review"
-            }        else if(status == ""){
+            } else if(status == "Deleted") {
+                imageStatus = "under-review"
+                status = "Deleted"
+            } else if(status == "Published") {
+                imageStatus = "approved"
+                status = "Deleted"
+            } else if(status == ""){
                 imageStatus = ""
             }
+            
             // status = "dfsdf fdsdfs dsfsdfsdf"
             cell.statusImage.image = UIImage.init(named: imageStatus)
             let pipe = " |"
@@ -832,25 +867,40 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
 
             var imageStatus = ""
             var status = "";
-            if(post.status == "Pending"){
+            for postStatus in postStatusList {
+                if (postStatus.postStatusId == post.postStatusId) {
+                    status = postStatus.title;
+                }
+            }
+            
+            if (status == "Pending") {
                 imageStatus = "pending-review"
                 status = "Pending review"
-            }else if(post.status == "Approved by moderator"){
+            } else if (status == "Approved") {
                 imageStatus = "approved"
                 status = "Approved"
-            }else if (post.status == "Rejected by moderator"){
+            } else if (status == "Rejected by moderator") {
                 imageStatus = "rejected"
                 status = "Rejected"
-            }else if(post.status == "Pending with caster"){
+            } else if(status == "Pending with caster") {
                 imageStatus = "under-review"
                 status = "Under review"
-            }
-            else if(post.status == "Pending with moderator"){
+            } else if(status == "Unread by moderator") {
+                imageStatus = "under-review"
+                status = "Unread by moderator"
+            } else if(status == "Pending with moderator") {
                 imageStatus = "under-review"
                 status = "Under review"
-            }        else if(status == ""){
+            } else if(status == "Deleted") {
+                imageStatus = "under-review"
+                status = "Deleted"
+            } else if(status == "Published") {
+                imageStatus = "approved"
+                status = "Deleted"
+            } else if(status == ""){
                 imageStatus = ""
             }
+            
             cell.statusImage.image = UIImage.init(named: imageStatus)
             let pipe = " |"
             cell.profileLabel.text = "\((status))\(pipe)"

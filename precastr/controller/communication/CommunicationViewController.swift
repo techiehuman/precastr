@@ -33,7 +33,6 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
     
     @IBOutlet weak var editPostBtn: UIButton!
     var loggedInUser : User!
-    var social : SocialPlatform!
     var uploadImage : [UIImage] = [UIImage]()
     var imageDelegate : ImageLibProtocolT!
     var socialMediaPlatform : [Int]!
@@ -49,12 +48,12 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
     var postStatus : Int = 0
     var postArray : [String:Any] = [String:Any]()
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView();
-    var postStatusList = [PostStatus]()
     override func viewDidLoad() {
         super.viewDidLoad()
 
         self.loggedInUser = User().loadUserDataFromUserDefaults(userDataDict: setting);
-        
+        social = SocialPlatform().loadSocialDataFromUserDefaults();
+
         self.editPostBtn.semanticContentAttribute = UIApplication.shared
             .userInterfaceLayoutDirection == .rightToLeft ? .forceLeftToRight : .forceRightToLeft;
         
@@ -138,20 +137,16 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
     */
     
     func getAllPostStatuses() {
-        
-        let jsonURL = "home/get_all_post_status/format/json"
-        UserService().getDataMethod(jsonURL: jsonURL, complete: {(response) in
-            print(response)
-            let modeArray = response.value(forKey: "data") as! NSArray
-            let postStatusList = PostStatus().loadPostStatusFromNSArray(postStatusArr: modeArray);
-            
-            for postStatus in postStatusList {
-                if (postStatus.postStatusId == self.post.postStatusId) {
-                    self.changeStatusBtn.setTitle(postStatus.title, for: .normal);
-                    break;
-                }
+        for postStatus in postStatusList {
+            if (postStatus.postStatusId == self.post.postStatusId) {
+                self.changeStatusBtn.setTitle(postStatus.title, for: .normal);
+                
+                // Lets add ui labels in width.
+                let totalWidthOfUIView = self.changeStatusBtn.intrinsicContentSize.width + 20;
+                self.changeStatusBtn.frame = CGRect.init(x: (self.view.frame.width - totalWidthOfUIView - 15), y: self.changeStatusBtn.frame.origin.y, width: totalWidthOfUIView, height: self.changeStatusBtn.frame.height);
+                break;
             }
-        });
+        }
     }
     
     func setUpNavigationBarItems() {
@@ -293,29 +288,62 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
         let actionSheetController: UIAlertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
         // create an action
-        let pendingReviewAction: UIAlertAction = UIAlertAction(title: "Pending review", style: .default) { action -> Void in
-            self.updatePostStatus(status: "Pending");
+        for postStatus in postStatusList {
+            
+            if (postStatus.title == "Pending") {
+                let pendingReviewAction: UIAlertAction = UIAlertAction(title: "Pending review", style: .default) { action -> Void in
+                    self.updatePostStatus(postStatusId: postStatus.postStatusId);
+                }
+                actionSheetController.addAction(pendingReviewAction)
+            }
+            if (postStatus.title == "Unread by moderator") {
+                let pendingReviewAction: UIAlertAction = UIAlertAction(title: "Unread by moderator", style: .default) { action -> Void in
+                    self.updatePostStatus(postStatusId: postStatus.postStatusId);
+                }
+                actionSheetController.addAction(pendingReviewAction)
+            }
+            if (postStatus.title == "Pending with moderator") {
+                let pendingReviewAction: UIAlertAction = UIAlertAction(title: "Pending with moderator", style: .default) { action -> Void in
+                    self.updatePostStatus(postStatusId: postStatus.postStatusId);
+                }
+                actionSheetController.addAction(pendingReviewAction)
+            }
+            if (postStatus.title == "Pending with caster") {
+                let pendingReviewAction: UIAlertAction = UIAlertAction(title: "Pending with caster", style: .default) { action -> Void in
+                    self.updatePostStatus(postStatusId: postStatus.postStatusId);
+                }
+                actionSheetController.addAction(pendingReviewAction)
+            }
+            if (postStatus.title == "Approved") {
+                let pendingReviewAction: UIAlertAction = UIAlertAction(title: "Approved", style: .default) { action -> Void in
+                    self.updatePostStatus(postStatusId: postStatus.postStatusId);
+                }
+                actionSheetController.addAction(pendingReviewAction)
+            }
+            if (postStatus.title == "Rejected by moderator") {
+                let pendingReviewAction: UIAlertAction = UIAlertAction(title: "Rejected by moderator", style: .default) { action -> Void in
+                    self.updatePostStatus(postStatusId: postStatus.postStatusId);
+                }
+                actionSheetController.addAction(pendingReviewAction)
+            }
+            if (postStatus.title == "Published") {
+                let pendingReviewAction: UIAlertAction = UIAlertAction(title: "Published", style: .default) { action -> Void in
+                    self.updatePostStatus(postStatusId: postStatus.postStatusId);
+                }
+                actionSheetController.addAction(pendingReviewAction)
+            }
+            if (postStatus.title == "Deleted") {
+                let pendingReviewAction: UIAlertAction = UIAlertAction(title: "Deleted", style: .default) { action -> Void in
+                    self.updatePostStatus(postStatusId: postStatus.postStatusId);
+                }
+                actionSheetController.addAction(pendingReviewAction)
+            }
         }
-        let approvedAction: UIAlertAction = UIAlertAction(title: "Approved", style: .default) { action -> Void in
-            self.updatePostStatus(status: "Approved");
-
-        }
-        let rejectedAction: UIAlertAction = UIAlertAction(title: "Rejected", style: .default) { action -> Void in
-            self.updatePostStatus(status: "Rejected");
-
-        }
-        let underReviewAction: UIAlertAction = UIAlertAction(title: "Under review", style: .default) { action -> Void in
-            self.updatePostStatus(status: "UnderReview");
-
-        }
+        
 
         let cancelAction: UIAlertAction = UIAlertAction(title: "Cancel", style: .cancel) { action -> Void in }
         cancelAction.setValue(UIColor.black, forKey: "titleTextColor")
         
-        actionSheetController.addAction(pendingReviewAction)
-        actionSheetController.addAction(approvedAction)
-        actionSheetController.addAction(rejectedAction)
-        actionSheetController.addAction(underReviewAction)
         actionSheetController.addAction(cancelAction)
         
         // present an actionSheet...
@@ -476,7 +504,6 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
     }
     
     func loadModeratorCasterUserPosts() {
-        social = SocialPlatform().loadSocialDataFromUserDefaults();
         // Do any additional setup after loading the view.
         let jsonURL = "posts/get_post_communication/format/json";
         
@@ -503,6 +530,38 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
                     
                 } else {
 
+                }
+            }
+            
+        });
+    }
+    
+    func updatePostStatus(postStatusId: Int) {
+        
+        let jsonURL = "posts/update_post_status/format/json";
+
+        var postData = [String: Any]();
+        postData["post_id"] = self.post.postId;
+        postData["user_id"] = self.loggedInUser.userId;
+        postData["post_status_id"] = postStatusId;
+        PostService().postDataMethod(jsonURL: jsonURL, postData: postData, complete: {(response) in
+            
+            print(response);
+            
+            for postStatus in postStatusList {
+                if (postStatus.postStatusId == postStatusId) {
+                    
+                    self.post.postStatusId = postStatusId;
+                    self.post.status = postStatus.title;
+                    self.communicationTableView.reloadData();
+                    self.changeStatusBtn.setTitle(postStatus.title, for: .normal);
+                    
+                    // Lets add ui labels in width.
+                    let totalWidthOfUIView = self.changeStatusBtn.intrinsicContentSize.width + 20;
+                    self.changeStatusBtn.frame = CGRect.init(x: (self.view.frame.width - totalWidthOfUIView - 15), y: self.changeStatusBtn.frame.origin.y, width: totalWidthOfUIView, height: self.changeStatusBtn.frame.height);
+                    break;
+                    
+                    
                 }
             }
             
@@ -553,19 +612,6 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
         });
     }
     
-    func updatePostStatus(status: String) {
-        
-        if (status == "Pending") {
-            
-        } else if (status == "Approved") {
-            
-        } else if (status == "Rejected") {
-            
-        } else if (status == "UnderReview") {
-            
-        }
-    }
-    
     func textViewDidBeginEditing(_ textView: UITextView) {
         if self.textArea.textColor == UIColor.lightGray {
             self.textArea.text = nil
@@ -606,13 +652,13 @@ extension CommunicationViewController: UITableViewDelegate, UITableViewDataSourc
             var twitterIconHidden = true;
             if (post.socialMediaIds.count > 0) {
                 
-                /*for sourcePlatformId in post.socialMediaIds {
+                for sourcePlatformId in post.socialMediaIds {
                     if(Int(sourcePlatformId) == social.socialPlatformId["Facebook"]){
                         facebookIconHidden = false;
                     }  else if(Int(sourcePlatformId) == social.socialPlatformId["Twitter"]) {
                         twitterIconHidden = false;
                     }
-                }*/
+                }
             }
             
             if (twitterIconHidden == false && facebookIconHidden == false) {
@@ -631,25 +677,34 @@ extension CommunicationViewController: UITableViewDelegate, UITableViewDataSourc
             
             var imageStatus = ""
             var status = "";
-            if(post.status == "Pending"){
+            if (post.status == "Pending") {
                 imageStatus = "pending-review"
                 status = "Pending review"
-            }else if(post.status == "Approved by moderator"){
+            } else if (post.status == "Approved") {
                 imageStatus = "approved"
                 status = "Approved"
-            }else if (post.status == "Rejected by moderator"){
+            } else if (post.status == "Rejected by moderator") {
                 imageStatus = "rejected"
                 status = "Rejected"
-            }else if(post.status == "Pending with caster"){
+            } else if(post.status == "Pending with caster") {
                 imageStatus = "under-review"
                 status = "Under review"
-            }
-            else if(post.status == "Pending with moderator"){
+            } else if(post.status == "Unread by moderator") {
+                imageStatus = "under-review"
+                status = "Unread by moderator"
+            } else if(post.status == "Pending with moderator") {
                 imageStatus = "under-review"
                 status = "Under review"
-            }        else if(status == ""){
+            } else if(post.status == "Deleted") {
+                imageStatus = "under-review"
+                status = "Deleted"
+            } else if(post.status == "Published") {
+                imageStatus = "approved"
+                status = "Deleted"
+            } else if(post.status == ""){
                 imageStatus = ""
             }
+            
             // status = "dfsdf fdsdfs dsfsdfsdf"
             cell.statusImage.image = UIImage.init(named: imageStatus)
             let pipe = " |"

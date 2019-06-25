@@ -130,7 +130,7 @@ class PostFormTableViewCell: UITableViewCell, UITextViewDelegate, PostFormCellPr
             
             
             if (self.descriptionMsg.count > 280) {
-                createPostViewControllerDelegate.showAlert(title: "Alert", message: "Description count for Twitter\ncannot be more than 280.")
+                createPostViewControllerDelegate.showAlert(title: "Alert", message: "Description for Twitter cannot\nbe more than 280 characters.")
             } else {
                 //If user clicked twitter
                 //Lets check if user is already linked.
@@ -408,7 +408,7 @@ class PostFormTableViewCell: UITableViewCell, UITextViewDelegate, PostFormCellPr
         descriptionMsg = currentText.replacingCharacters(in: stringRange, with: text)
         
         //This label is for showing the number of characters allowed
-        self.charaterCountLabel.text = "\(descriptionMsg.count) Characters Remain";
+        self.charaterCountLabel.text = "\(descriptionMsg.count) Characters";
         
         if (createPostViewControllerDelegate.twitterStatus && createPostViewControllerDelegate.facebookStatus) {
             return descriptionMsg.count < 280
