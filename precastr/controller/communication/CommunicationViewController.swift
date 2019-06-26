@@ -219,6 +219,7 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
                     //Load latest Communications
                     self.getPostCommunications();
                     self.textArea.text = "";
+                    self.communicationTableView.reloadData();
                 });
             }
             
@@ -822,7 +823,7 @@ extension CommunicationViewController: UITableViewDelegate, UITableViewDataSourc
 
                 //We will show logged in user comments on right side and other users comment on
                 //left side.
-                if (communication.communicatedByUserId == loggedInUser.userId) {
+                if (communication.communicatedByUserId == loggedInUser.userId) { //left side
                     
                     let cell: LeftCommunicationTableViewCell = tableView.dequeueReusableCell(withIdentifier: "LeftCommunicationTableViewCell") as! LeftCommunicationTableViewCell;
                     
@@ -881,7 +882,7 @@ extension CommunicationViewController: UITableViewDelegate, UITableViewDataSourc
                     }
                     return cell;
                     
-                } else {
+                } else { //right side
                     
                     
                     let cell: RightCommunicationTableViewCell = tableView.dequeueReusableCell(withIdentifier: "RightCommunicationTableViewCell") as! RightCommunicationTableViewCell;
@@ -891,13 +892,13 @@ extension CommunicationViewController: UITableViewDelegate, UITableViewDataSourc
                     cell.commentorPic.sd_setImage(with: URL.init(string: communication.communicatedProfilePic), placeholderImage: UIImage.init(named: "Profile-1"));
                     
                     //Call this function
-                    let height = heightForView(text: communication.postCommunicationDescription, font: UIFont.init(name: "VisbyCF-Regular", size: 16.0)!, width: cell.descriptionView.frame.width - 20)
+                    let height = heightForView(text: communication.postCommunicationDescription, font: UIFont.init(name: "VisbyCF-Regular", size: 16.0)!, width: cell.descriptionView.frame.width - 100)
                     
                     //This is your label
                     for view in cell.descriptionView.subviews {
                         view.removeFromSuperview();
                     }
-                    let proNameLbl = UILabel(frame: CGRect(x: 10, y: 35, width: cell.descriptionView.frame.width - 10, height: height))
+                    let proNameLbl = UILabel(frame: CGRect(x: 10, y: 35, width: cell.descriptionView.frame.width - 100, height: height))
                     var lblToShow = "\(communication.postCommunicationDescription)"
                     proNameLbl.numberOfLines = 0
                     proNameLbl.lineBreakMode = .byWordWrapping
@@ -917,6 +918,27 @@ extension CommunicationViewController: UITableViewDelegate, UITableViewDataSourc
                     cell.descriptionView.addSubview(proNameLbl)
                     cell.descriptionView.frame = CGRect.init(x: cell.descriptionView.frame.origin.x, y: cell.descriptionView.frame.origin.y, width: cell.descriptionView.frame.width, height: 50 + height)
                     
+                    
+                    if (communication.attachments.count > 0) {
+                        
+                        cell.imageScrollView.isHidden = false;
+                        
+                        for attachment in communication.attachments {
+                            cell.imagesArray.append(attachment.image);
+                        }
+                        cell.setupSlideScrollView();
+                        cell.imageScrollView.frame = CGRect.init(x: cell.imageScrollView.frame.origin.x, y: cell.descriptionView.frame.origin.y + cell.descriptionView.frame.height, width: cell.imageScrollView.frame.width, height: cell.imageScrollView.frame.height);
+                        
+                        if (communication.attachments.count == 1) {
+                            cell.pageControl.isHidden = true;
+                        } else {
+                            cell.pageControl.isHidden = false;
+                            cell.pageControl.frame = CGRect.init(x: cell.imageScrollView.frame.width/2 - cell.imageScrollView.frame.origin.x, y: cell.imageScrollView.frame.origin.y + cell.imageScrollView.frame.height - 10, width: cell.pageControl.frame.width, height: cell.pageControl.frame.height)
+                        }
+                    } else {
+                        cell.imageScrollView.isHidden = true;
+                        cell.pageControl.isHidden = true;
+                    }
                     return cell;
                 }
             //}
