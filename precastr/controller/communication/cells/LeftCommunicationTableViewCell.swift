@@ -81,5 +81,6 @@ class LeftCommunicationTableViewCell: UITableViewCell {
         let percentageHorizontalOffset: CGFloat = currentHorizontalOffset / maximumHorizontalOffset
         let percentageVerticalOffset: CGFloat = currentVerticalOffset / maximumVerticalOffset
     }
+   
 
 }
