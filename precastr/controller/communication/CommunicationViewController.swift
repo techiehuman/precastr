@@ -86,8 +86,6 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
        
         if(loggedInUser.isCastr == 1){
             self.changeStatusBtn.isHidden = true
-           // self.changeStatusBtn.isEnabled = false
-            self.changeStatusBtn.alpha = 0.5;
         }
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
@@ -512,6 +510,24 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
                     // Lets add ui labels in width.
                     let totalWidthOfUIView = self.changeStatusBtn.intrinsicContentSize.width + 20;
                     self.changeStatusBtn.frame = CGRect.init(x: (self.view.frame.width - totalWidthOfUIView - 15), y: self.changeStatusBtn.frame.origin.y, width: totalWidthOfUIView, height: self.changeStatusBtn.frame.height);
+                    if(self.post.status == "Published"){
+                       
+                        
+                            for sourcePlatformId in self.post.socialMediaIds {
+                                 if(Int(sourcePlatformId) == social.socialPlatformId["Twitter"]) {
+                                    var postDataTwitter = [String: Any]();
+                                    postDataTwitter["post_id"] = self.post.postId;
+                                    postDataTwitter["user_id"] = self.post.postUserId;
+                                     let jsonPostURL = "posts/publish_post_on_twitter/format/json";
+                                    PostService().postDataMethod(jsonURL: jsonPostURL, postData: postDataTwitter, complete: {(response) in
+                                        
+                                        
+                                         });
+                                    
+                                }
+                            }
+                       
+                    }
                     break;
                     
                     
@@ -652,6 +668,9 @@ extension CommunicationViewController: UITableViewDelegate, UITableViewDataSourc
                 imageStatus = "under-review"
                // status = "Deleted"
             } else if(post.status == "Published") {
+                if(post.status == "Published"){
+                    self.changeStatusBtn.isHidden = true
+                }
                 imageStatus = "approved"
               //  status = "Deleted"
             } else if(post.status == ""){
