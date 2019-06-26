@@ -20,6 +20,7 @@ class Post {
     var name: String = "";
     var postStatusId: Int = 0;
     var postCommunications = [PostCommunication]();
+    var postUserId : Int = 0;
     
     func loadPostFromDict(postDict: NSDictionary) -> Post {
         
@@ -55,7 +56,7 @@ class Post {
         post.profilePic = postDict.value(forKey: "profile_pic") as? String ?? "";
         post.name = postDict.value(forKey: "name") as? String ?? "";
         post.postStatusId = Int(postDict.value(forKey: "post_status_id") as! String)!;
-
+        post.postUserId = Int(postDict.value(forKey: "caster_user_id") as! String)!;
         return post;
     }
     

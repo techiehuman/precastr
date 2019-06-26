@@ -88,8 +88,6 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
        
         if(loggedInUser.isCastr == 1){
             self.changeStatusBtn.isHidden = true
-           // self.changeStatusBtn.isEnabled = false
-            self.changeStatusBtn.alpha = 0.5;
         }
         
         
@@ -302,8 +300,6 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
                     self.updatePostStatus(postStatusId: postStatus.postStatusId);
                 }
                 actionSheetController.addAction(pendingReviewAction)
-           
-           
         }
         
 
@@ -314,6 +310,7 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
         
         // present an actionSheet...
         present(actionSheetController, animated: true, completion: nil)
+    
     }
     
     @IBAction func editPostBtnClicked(_ sender: Any) {
@@ -515,34 +512,72 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
     
     func updatePostStatus(postStatusId: Int) {
         
-        let jsonURL = "posts/update_post_status/format/json";
-
-        var postData = [String: Any]();
-        postData["post_id"] = self.post.postId;
-        postData["user_id"] = self.loggedInUser.userId;
-        postData["post_status_id"] = postStatusId;
-        PostService().postDataMethod(jsonURL: jsonURL, postData: postData, complete: {(response) in
+        if (post.status != "Approved" && postStatusId == 7) { // going to publish
             
-            print(response);
+            let alert = UIAlertController.init(title: "Error", message: "Post not Approved yet", preferredStyle: .alert);
+            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil));
+            self.present(alert, animated: true);
             
-            for postStatus in postStatusList {
-                if (postStatus.postStatusId == postStatusId) {
-                    
-                    self.post.postStatusId = postStatusId;
-                    self.post.status = postStatus.title;
-                    self.communicationTableView.reloadData();
-                    self.changeStatusBtn.setTitle(postStatus.title, for: .normal);
-                    
-                    // Lets add ui labels in width.
-                    let totalWidthOfUIView = self.changeStatusBtn.intrinsicContentSize.width + 20;
-                    self.changeStatusBtn.frame = CGRect.init(x: (self.view.frame.width - totalWidthOfUIView - 15), y: self.changeStatusBtn.frame.origin.y, width: totalWidthOfUIView, height: self.changeStatusBtn.frame.height);
-                    break;
-                    
-                    
+        } else {
+            
+            let jsonURL = "posts/update_post_status/format/json";
+            
+            var postData = [String: Any]();
+            postData["post_id"] = self.post.postId;
+            postData["user_id"] = self.loggedInUser.userId;
+            postData["post_status_id"] = postStatusId;
+            PostService().postDataMethod(jsonURL: jsonURL, postData: postData, complete: {(response) in
+                
+                print(response);
+                let statusResponse = Int((response.value(forKey: "status") as! NSObject) as! String);
+                for postStatus in postStatusList {
+                    if( statusResponse == 0){
+                        let alert = UIAlertController.init(title: "Error", message: response.value(forKey: "message") as! String, preferredStyle: .alert);
+                        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil));
+                        self.present(alert, animated: true);
+                        break;
+                    }
+                    else if (postStatus.postStatusId == postStatusId) {
+                        
+                        self.post.postStatusId = postStatusId;
+                        self.post.status = postStatus.title;
+                        self.communicationTableView.reloadData();
+                        self.changeStatusBtn.setTitle(postStatus.title, for: .normal);
+                        
+                        // Lets add ui labels in width.
+                        let totalWidthOfUIView = self.changeStatusBtn.intrinsicContentSize.width + 20;
+                        self.changeStatusBtn.frame = CGRect.init(x: (self.view.frame.width - totalWidthOfUIView - 15), y: self.changeStatusBtn.frame.origin.y, width: totalWidthOfUIView, height: self.changeStatusBtn.frame.height);
+                        if(self.post.status == "Published"){
+                            
+                            
+                            for sourcePlatformId in self.post.socialMediaIds {
+                                if(Int(sourcePlatformId) == social.socialPlatformId["Twitter"]) {
+                                    var postDataTwitter = [String: Any]();
+                                    postDataTwitter["post_id"] = self.post.postId;
+                                    postDataTwitter["user_id"] = self.post.postUserId;
+                                    let jsonPostURL = "posts/publish_post_on_twitter/format/json";
+                                    PostService().postDataMethod(jsonURL: jsonPostURL, postData: postDataTwitter, complete: {(response) in
+                                        
+                                        print(response)
+                                        
+                                    });
+                                    
+                                }
+                            }
+                            
+                        }
+                        break;
+                        
+                        
+                    }
                 }
-            }
+                
+            });
             
-        });
+        }
+        
+        
+   
     }
     
     //To calculate height for label based on text size and width
@@ -676,6 +711,7 @@ extension CommunicationViewController: UITableViewDelegate, UITableViewDataSourc
                 imageStatus = "under-review"
                // status = "Deleted"
             } else if(post.status == "Published") {
+                    self.changeStatusBtn.isHidden = true
                 imageStatus = "approved"
               //  status = "Deleted"
             } else if(post.status == ""){
