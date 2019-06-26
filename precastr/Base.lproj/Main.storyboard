@@ -1040,7 +1040,7 @@
                                 <rect key="frame" x="0.0" y="90" width="375" height="30"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1iz-7M-8Pz">
+                                    <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1iz-7M-8Pz">
                                         <rect key="frame" x="12" y="10" width="87" height="24"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" red="0.39215686274509803" green="0.65098039215686276" blue="0.96862745098039216" alpha="1" colorSpace="calibratedRGB"/>
@@ -1077,7 +1077,7 @@
                                 </connections>
                             </tableView>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="31B-Qx-a1r">
-                                <rect key="frame" x="0.0" y="480" width="375" height="110"/>
+                                <rect key="frame" x="0.0" y="490" width="375" height="110"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <subviews>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="Type a message..." translatesAutoresizingMaskIntoConstraints="NO" id="Gff-aO-1Sx">
@@ -1117,9 +1117,11 @@
                         <viewLayoutGuide key="safeArea" id="vGW-Nj-zIG"/>
                     </view>
                     <connections>
+                        <outlet property="attachmentBtn" destination="i3A-O3-yWF" id="qWk-d7-Cr8"/>
                         <outlet property="changeStatusBtn" destination="34X-Ta-IVH" id="PBz-t7-sTX"/>
                         <outlet property="communicationTableView" destination="Kk3-st-DCF" id="trn-UE-VFG"/>
                         <outlet property="editPostBtn" destination="1iz-7M-8Pz" id="xKP-JG-F0Y"/>
+                        <outlet property="submitBtn" destination="SeF-yk-w9f" id="GRq-XM-vRM"/>
                         <outlet property="textArea" destination="Gff-aO-1Sx" id="p4w-BT-wl5"/>
                         <outlet property="textAreaBtnBottomView" destination="31B-Qx-a1r" id="faf-oD-gi7"/>
                     </connections>

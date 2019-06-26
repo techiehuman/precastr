@@ -70,15 +70,19 @@ class CreatePostViewController: UIViewController, UIImagePickerControllerDelegat
         navigationItem.rightBarButtonItem?.tintColor = UIColor(red: 12/255, green: 111/255, blue: 233/255, alpha: 1);
         
         
-        let leftButton = UIButton();
-        leftButton.frame = CGRect.init(x: 0, y:0, width: 24, height: 24);
-        let leftbarButton = UIBarButtonItem(customView: leftButton)
-        navigationItem.leftBarButtonItem = leftbarButton;
+        let backButton = UIButton();
+        backButton.setImage(UIImage.init(named: "left-arrow"), for: .normal);
+        backButton.addTarget(self, action: #selector(backButtonPressed), for: UIControlEvents.touchUpInside)
+        backButton.frame = CGRect.init(x: 0, y:0, width: 20, height: 15);
+        
+        let barBackButton = UIBarButtonItem(customView: backButton)
+        
+        navigationItem.leftBarButtonItem = barBackButton;
 
         self.tabBarController?.tabBar.isHidden = false;
         
         if (post != nil) {
-            self.navigationItem.title = "Post Detail";
+            self.navigationItem.title = "Update Cast";
         }
 
         
@@ -215,6 +219,9 @@ class CreatePostViewController: UIViewController, UIImagePickerControllerDelegat
         }
     }
     
+    @objc func backButtonPressed() {
+        self.navigationController?.popViewController(animated: true);
+    }
     @objc func menuButtonClicked() {
         let viewController: SideMenuTableViewController = self.storyboard?.instantiateViewController(withIdentifier: "SideMenuTableViewController") as! SideMenuTableViewController;
         self.navigationController?.pushViewController(viewController, animated: true);

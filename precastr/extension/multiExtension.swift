@@ -141,6 +141,22 @@ extension UIButton {
         self.layer.cornerRadius = self.frame.height/2
         self.layer.masksToBounds = true
     }
+    func roundEdgesBtn(){
+        self.layer.cornerRadius = 4
+        self.clipsToBounds = true
+    }
+    func roundEdgesLeftBtn(){
+        let maskPath = UIBezierPath(roundedRect: self.bounds, byRoundingCorners: [.bottomLeft, .topLeft], cornerRadii: CGSize(width: 4.0, height: 4.0))
+        let shape = CAShapeLayer()
+        shape.path = maskPath.cgPath
+        self.layer.mask = shape
+    }
+    func roundEdgesRightBtn(){
+        let maskPath = UIBezierPath(roundedRect: self.bounds, byRoundingCorners: [.bottomRight, .topRight], cornerRadii: CGSize(width: 4.0, height: 4.0))
+        let shape = CAShapeLayer()
+        shape.path = maskPath.cgPath
+        self.layer.mask = shape
+    }
     func radioBtnDefault(){
         
         self.layer.borderWidth  = 1
@@ -255,3 +271,4 @@ extension UITabBar {
         return sizeThatFits
     }
 }
+

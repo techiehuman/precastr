@@ -32,6 +32,8 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
     @IBOutlet weak var changeStatusBtn: UIButton!
     
     @IBOutlet weak var editPostBtn: UIButton!
+    @IBOutlet weak var attachmentBtn: UIButton!
+    @IBOutlet weak var submitBtn : UIButton!
     var loggedInUser : User!
     var uploadImage : [UIImage] = [UIImage]()
     var imageDelegate : ImageLibProtocolT!
@@ -68,22 +70,8 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
         activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.gray;
         view.addSubview(activityIndicator);
         
-        // Do any additional setup after loading the view.
-        /*self.pendingBtn.roundBtn()
-        self.approvedBtn.roundBtn()
-        self.rejectedBtn.roundBtn()
-        self.underReviewBtn.roundBtn()
-        
-        
-        self.pendingBtn.radioBtnx`Default();
-        self.approvedBtn.radioBtnDefault();
-        self.rejectedBtn.radioBtnDefault();
-        self.underReviewBtn.radioBtnDefault();*/
-        /*self.twitterBtn.layer.borderWidth = 1
-        self.facebookBtn.layer.borderWidth = 1
-        self.twitterBtn.layer.borderColor = UIColor(red: 12/255, green: 111/255, blue: 233/255, alpha: 1).cgColor
-        self.facebookBtn.layer.borderColor = UIColor(red: 12/255, green: 111/255, blue: 233/255, alpha: 1).cgColor
-        */
+        self.attachmentBtn.roundEdgesLeftBtn();
+        self.submitBtn.roundEdgesRightBtn();
         self.textArea.layer.cornerRadius = 4;
         self.textArea.layer.borderWidth = 1;
         self.textArea.layer.borderColor = UIColor(red: 112/255, green: 112/255, blue: 112/255, alpha: 1).cgColor;
@@ -97,7 +85,7 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
         self.changeStatusBtn.layer.borderColor = UIColor(red: 112/255, green: 112/255, blue: 112/255, alpha: 1).cgColor;
        
         if(loggedInUser.isCastr == 1){
-            self.changeStatusBtn.isUserInteractionEnabled = false
+            self.changeStatusBtn.isHidden = true
            // self.changeStatusBtn.isEnabled = false
             self.changeStatusBtn.alpha = 0.5;
         }
@@ -157,12 +145,12 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
     
     func setUpNavigationBarItems() {
         
-        let menuButton = UIButton();
-        menuButton.setImage(UIImage.init(named: "left-arrow"), for: .normal);
-        menuButton.addTarget(self, action: #selector(backButtonPressed), for: UIControlEvents.touchUpInside)
-        menuButton.frame = CGRect.init(x: 0, y:0, width: 20, height: 15);
+        let backButton = UIButton();
+        backButton.setImage(UIImage.init(named: "left-arrow"), for: .normal);
+        backButton.addTarget(self, action: #selector(backButtonPressed), for: UIControlEvents.touchUpInside)
+        backButton.frame = CGRect.init(x: 0, y:0, width: 20, height: 15);
         
-        let barButton = UIBarButtonItem(customView: menuButton)
+        let barButton = UIBarButtonItem(customView: backButton)
         
         navigationItem.leftBarButtonItem = barButton;
         
@@ -296,55 +284,13 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
         
         // create an action
         for postStatus in postStatusList {
-            
-            if (postStatus.title == "Pending") {
-                let pendingReviewAction: UIAlertAction = UIAlertAction(title: "Pending review", style: .default) { action -> Void in
+          
+                let pendingReviewAction: UIAlertAction = UIAlertAction(title: postStatus.title, style: .default) { action -> Void in
                     self.updatePostStatus(postStatusId: postStatus.postStatusId);
                 }
                 actionSheetController.addAction(pendingReviewAction)
-            }
-            if (postStatus.title == "Unread by moderator") {
-                let pendingReviewAction: UIAlertAction = UIAlertAction(title: "Unread by moderator", style: .default) { action -> Void in
-                    self.updatePostStatus(postStatusId: postStatus.postStatusId);
-                }
-                actionSheetController.addAction(pendingReviewAction)
-            }
-            if (postStatus.title == "Pending with moderator") {
-                let pendingReviewAction: UIAlertAction = UIAlertAction(title: "Pending with moderator", style: .default) { action -> Void in
-                    self.updatePostStatus(postStatusId: postStatus.postStatusId);
-                }
-                actionSheetController.addAction(pendingReviewAction)
-            }
-            if (postStatus.title == "Pending with caster") {
-                let pendingReviewAction: UIAlertAction = UIAlertAction(title: "Pending with caster", style: .default) { action -> Void in
-                    self.updatePostStatus(postStatusId: postStatus.postStatusId);
-                }
-                actionSheetController.addAction(pendingReviewAction)
-            }
-            if (postStatus.title == "Approved") {
-                let pendingReviewAction: UIAlertAction = UIAlertAction(title: "Approved", style: .default) { action -> Void in
-                    self.updatePostStatus(postStatusId: postStatus.postStatusId);
-                }
-                actionSheetController.addAction(pendingReviewAction)
-            }
-            if (postStatus.title == "Rejected by moderator") {
-                let pendingReviewAction: UIAlertAction = UIAlertAction(title: "Rejected by moderator", style: .default) { action -> Void in
-                    self.updatePostStatus(postStatusId: postStatus.postStatusId);
-                }
-                actionSheetController.addAction(pendingReviewAction)
-            }
-            if (postStatus.title == "Published") {
-                let pendingReviewAction: UIAlertAction = UIAlertAction(title: "Published", style: .default) { action -> Void in
-                    self.updatePostStatus(postStatusId: postStatus.postStatusId);
-                }
-                actionSheetController.addAction(pendingReviewAction)
-            }
-            if (postStatus.title == "Deleted") {
-                let pendingReviewAction: UIAlertAction = UIAlertAction(title: "Deleted", style: .default) { action -> Void in
-                    self.updatePostStatus(postStatusId: postStatus.postStatusId);
-                }
-                actionSheetController.addAction(pendingReviewAction)
-            }
+           
+           
         }
         
 
@@ -686,28 +632,28 @@ extension CommunicationViewController: UITableViewDelegate, UITableViewDataSourc
             var status = "";
             if (post.status == "Pending") {
                 imageStatus = "pending-review"
-                status = "Pending review"
+               // status = "Pending review"
             } else if (post.status == "Approved") {
                 imageStatus = "approved"
-                status = "Approved"
+               // status = "Approved"
             } else if (post.status == "Rejected by moderator") {
                 imageStatus = "rejected"
-                status = "Rejected"
+               // status = "Rejected"
             } else if(post.status == "Pending with caster") {
                 imageStatus = "under-review"
-                status = "Under review"
+               // status = "Under review"
             } else if(post.status == "Unread by moderator") {
                 imageStatus = "under-review"
-                status = "Unread by moderator"
+               // status = "Unread by moderator"
             } else if(post.status == "Pending with moderator") {
                 imageStatus = "under-review"
-                status = "Under review"
+               // status = "Under review"
             } else if(post.status == "Deleted") {
                 imageStatus = "under-review"
-                status = "Deleted"
+               // status = "Deleted"
             } else if(post.status == "Published") {
                 imageStatus = "approved"
-                status = "Deleted"
+              //  status = "Deleted"
             } else if(post.status == ""){
                 imageStatus = ""
             }
@@ -715,9 +661,9 @@ extension CommunicationViewController: UITableViewDelegate, UITableViewDataSourc
             // status = "dfsdf fdsdfs dsfsdfsdf"
             cell.statusImage.image = UIImage.init(named: imageStatus)
             let pipe = " |"
-            cell.profileLabel.text = "\((status))\(pipe)"
+            cell.profileLabel.text = "\((post.status))\(pipe)"
             print(cell.profileLabel.intrinsicContentSize.width)
-            cell.dateLabel.text = Date().ddspEEEEcmyyyy(dateStr: post.createdOn)
+            cell.dateLabel.text = Date().ddspEEEEcmyyyyspHHclmmclaa(dateStr: post.createdOn)
             
             // Lets add ui labels in width.
             let totalWidthOfUIView = cell.statusImage.frame.width + cell.profileLabel.intrinsicContentSize.width + cell.dateLabel.intrinsicContentSize.width + 10;

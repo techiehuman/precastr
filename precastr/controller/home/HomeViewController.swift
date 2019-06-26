@@ -658,28 +658,28 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             
             if (status == "Pending") {
                 imageStatus = "pending-review"
-                status = "Pending review"
+               // status = "Pending review"
             } else if (status == "Approved") {
                 imageStatus = "approved"
-                status = "Approved"
+              //  status = "Approved"
             } else if (status == "Rejected by moderator") {
                 imageStatus = "rejected"
-                status = "Rejected"
+              //  status = "Rejected"
             } else if(status == "Pending with caster") {
                 imageStatus = "under-review"
-                status = "Under review"
+               // status = "Under review"
             } else if(status == "Unread by moderator") {
                 imageStatus = "under-review"
-                status = "Unread by moderator"
+               // status = "Unread by moderator"
             } else if(status == "Pending with moderator") {
                 imageStatus = "under-review"
-                status = "Under review"
+               // status = "Under review"
             } else if(status == "Deleted") {
                 imageStatus = "under-review"
-                status = "Deleted"
+               // status = "Deleted"
             } else if(status == "Published") {
                 imageStatus = "approved"
-                status = "Deleted"
+               // status = "Deleted"
             } else if(status == ""){
                 imageStatus = ""
             }
@@ -712,11 +712,11 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             let proNameLbl = UILabel(frame: CGRect(x: 0, y: 0, width: cell.contentView.frame.width - 30, height: height))
             var lblToShow = "\(post.postDescription)"
            
-            proNameLbl.lineBreakMode = .byTruncatingTail
+           // proNameLbl.lineBreakMode = .byTruncatingTail
             let paragraphStyle = NSMutableParagraphStyle()
             //line height size
             paragraphStyle.lineSpacing = 2
-            
+            paragraphStyle.lineBreakMode = .byTruncatingTail
             let attributes = [
                 NSAttributedStringKey.font : UIFont(name: "VisbyCF-Regular", size: 16.0)!,
                 NSAttributedStringKey.foregroundColor : UIColor.init(red: 34/255, green: 34/255, blue: 34/255, alpha: 1),
@@ -858,8 +858,9 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
                 proNameLbl.numberOfLines = 0
             }
             
-            proNameLbl.lineBreakMode = .byTruncatingTail
+         //   proNameLbl.lineBreakMode = .byTruncatingTail
             let paragraphStyle = NSMutableParagraphStyle()
+            paragraphStyle.lineBreakMode = .byTruncatingTail
             //line height size
             paragraphStyle.lineSpacing = 2
             let postDescTap = MyTapRecognizer.init(target: self, action: #selector(postDescriptionPressed(sender:)));
@@ -885,28 +886,28 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             
             if (status == "Pending") {
                 imageStatus = "pending-review"
-                status = "Pending review"
+               // status = "Pending review"
             } else if (status == "Approved") {
                 imageStatus = "approved"
-                status = "Approved"
+               // status = "Approved"
             } else if (status == "Rejected by moderator") {
                 imageStatus = "rejected"
-                status = "Rejected"
+               // status = "Rejected"
             } else if(status == "Pending with caster") {
                 imageStatus = "under-review"
-                status = "Under review"
+               // status = "Under review"
             } else if(status == "Unread by moderator") {
                 imageStatus = "under-review"
-                status = "Unread by moderator"
+               // status = "Unread by moderator"
             } else if(status == "Pending with moderator") {
                 imageStatus = "under-review"
-                status = "Under review"
+               // status = "Under review"
             } else if(status == "Deleted") {
                 imageStatus = "under-review"
-                status = "Deleted"
+              //  status = "Deleted"
             } else if(status == "Published") {
                 imageStatus = "approved"
-                status = "Deleted"
+              //  status = "Deleted"
             } else if(status == ""){
                 imageStatus = ""
             }

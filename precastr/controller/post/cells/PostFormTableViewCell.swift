@@ -24,6 +24,9 @@ class PostFormTableViewCell: UITableViewCell, UITextViewDelegate, PostFormCellPr
     @IBOutlet weak var filesUploadedtext: UILabel!
     
     @IBOutlet weak var charaterCountLabel: UILabel!
+    @IBOutlet weak var attachmentBtn : UIButton!
+    @IBOutlet weak var submitBtn : UIButton!
+    
     var createPostViewControllerDelegate: CreatePostViewController!;
     var descriptionMsg : String = "";
     override func awakeFromNib() {
@@ -39,6 +42,8 @@ class PostFormTableViewCell: UITableViewCell, UITextViewDelegate, PostFormCellPr
         self.postTextField.layer.borderColor =  UIColor(red: 146/255, green: 147/255, blue: 149/255, alpha: 1).cgColor;
         self.postTextField.layer.borderWidth = 0.5
         self.postTextField.textColor = UIColor(red: 34/255, green: 34/255, blue: 34/255, alpha: 1);
+        self.attachmentBtn.roundEdgesLeftBtn();
+        self.submitBtn.roundEdgesRightBtn();
 
     }
 

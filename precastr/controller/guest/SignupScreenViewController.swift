@@ -211,7 +211,7 @@ extension SignupScreenViewController: UITableViewDataSource, UITableViewDelegate
         
         cell.signupScreenViewDelegate = self;
         
-        activityIndicator.center = cell.center;
+        activityIndicator.center = view.center;
         activityIndicator.hidesWhenStopped = true;
         activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.whiteLarge;
         cell.addSubview(activityIndicator);
