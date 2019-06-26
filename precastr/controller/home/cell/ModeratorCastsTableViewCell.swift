@@ -17,6 +17,8 @@ class ModeratorCastsTableViewCell: UITableViewCell, UIScrollViewDelegate {
         self.imageGalleryScrollView.delegate = self
         self.imageCounterView.layer.cornerRadius = 10
         
+        self.descriptionView.backgroundColor = UIColor.white;
+        
     }
     
     @IBOutlet weak var profilePicImageView: UIImageView!

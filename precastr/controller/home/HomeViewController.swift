@@ -140,266 +140,6 @@ class HomeViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
-    /* func numberOfSections(in tableView: UITableView) -> Int {
-        return 1;
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.posts.count;
-    }
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        let post = self.posts[indexPath.row];
-        if (loggedInUser.isCastr == 2) {
-            
-            if (post.postImages.count > 0) {
-                return 620
-            } else {
-                return 165
-            }
-        } else {
-            
-            if (post.postImages.count > 0) {
-                return 590;
-            }
-            return 130;
-        }
-        return 0;
-    }
-    
-   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        let post = self.posts[indexPath.row];
-        
-        if (loggedInUser.isCastr == 1) { // caster
-            
-            //var postTextDescHeight: CGFloat = 0;
-            
-            let cell: HomeTextPostTableViewCell = tableView.dequeueReusableCell(withIdentifier: "HomeTextPostTableViewCell", for: indexPath) as! HomeTextPostTableViewCell;
-            cell.sourceImageFacebook.isHidden = false;
-            cell.sourceImageTwitter.isHidden = false;
-
-            let postDescTap = MyTapRecognizer.init(target: self, action: #selector(postDescriptionPressed(sender:)));
-            postDescTap.rowId = indexPath.row;
-            cell.postTextLabel.addGestureRecognizer(postDescTap);
-            
-            // *** Set Attributed String to your label ***
-            /*postTextDescHeight = heightForView(text: post.postDescription);
-            if (postTextDescHeight > 80) {
-                postTextDescHeight = 80;
-                cell.postTextLabel.numberOfLines = 4;
-                cell.postTextLabel.lineBreakMode = .byTruncatingTail
-            } else {
-                cell.postTextLabel.numberOfLines = 0;
-                cell.postTextLabel.lineBreakMode = .byWordWrapping;
-            }*/
-            cell.postTextLabel.text = post.postDescription;
-            //cell.postTextLabel.frame = CGRect(x: cell.postTextLabel.frame.origin.x, y: CGFloat(HomePostCellHeight.PostStatusViewHeight), width: cell.bounds.width - 30, height: postTextDescHeight)
-            
-            if(cell.postTextLabel.calculateMaxLines() <= 3){
-                cell.postTextLabel.numberOfLines = Int(cell.postTextLabel.calculateMaxLines())
-                
-                let frameHeight : Int = Int(cell.postTextLabel.frame.height)
-                 print(frameHeight)
-                let numLines : Int = Int(cell.postTextLabel.numberOfLines)
-                let calcHeight :Int = Int((frameHeight*numLines)/4);
-            }
-            
-            if (post.postImages.count > 0) {
-                cell.imagesArray = [String]();
-                cell.imageGalleryScrollView.isHidden = false
-                for postImg in post.postImages {
-                    cell.imagesArray.append(postImg);
-                }
-            } else {
-                cell.imagesArray = [String]();
-                cell.imageGalleryScrollView.isHidden = true;
-            }
-            
-            if (post.postImages.count > 0) {
-                cell.imageGalleryScrollView.isHidden = false;
-            } else {
-                cell.imageGalleryScrollView.isHidden = true;
-            }
-            
-            var facebookIconHidden = true;
-            var twitterIconHidden = true;
-            if (post.socialMediaIds.count > 0) {
-                
-                for sourcePlatformId in post.socialMediaIds {
-                    if(Int(sourcePlatformId) == social.socialPlatformId["Facebook"]){
-                        facebookIconHidden = false;
-                    }  else if(Int(sourcePlatformId) == social.socialPlatformId["Twitter"]) {
-                        twitterIconHidden = false;
-                    }
-                }
-            }
-            
-            if (twitterIconHidden == false && facebookIconHidden == false) {
-                cell.sourceImageTwitter.isHidden = false;
-                cell.sourceImageFacebook.isHidden = false;
-            } else if (facebookIconHidden == false && twitterIconHidden == true) {
-                //If twitter is not present then we will replace sourceImageTwitter image with facebook
-                cell.sourceImageTwitter.isHidden = false;
-                cell.sourceImageFacebook.isHidden = true;
-                cell.sourceImageTwitter.image = UIImage.init(named: "facebook-group");
-            } else if (twitterIconHidden == false && facebookIconHidden == true) {
-                cell.sourceImageTwitter.isHidden = false;
-                cell.sourceImageFacebook.isHidden = true;
-                cell.sourceImageTwitter.image = UIImage.init(named: "twitter-group");
-            }
-            
-            var imageStatus = ""
-            var status = "";
-            if(post.status == "Pending"){
-                imageStatus = "pending-review"
-                status = "Pending review"
-            }else if(post.status == "Approved by moderator"){
-                imageStatus = "approved"
-                status = "Approved"
-            }else if (post.status == "Rejected by moderator"){
-                imageStatus = "rejected"
-                status = "Rejected"
-            }else if(post.status == "Pending with caster"){
-                imageStatus = "under-review"
-                status = "Under review"
-            }
-            else if(post.status == "Pending with moderator"){
-                imageStatus = "under-review"
-                status = "Under review"
-            }        else if(status == ""){
-                imageStatus = ""
-            }
-           // status = "dfsdf fdsdfs dsfsdfsdf"
-            cell.statusImage.image = UIImage.init(named: imageStatus)
-            let pipe = " |"
-            cell.profileLabel.text = "\((status))\(pipe)"
-            print(cell.profileLabel.intrinsicContentSize.width)
-            cell.dateLabel.text = Date().ddspEEEEcmyyyy(dateStr: post.createdOn)
-            
-            // Lets add ui labels in width.
-            let totalWidthOfUIView = cell.statusImage.frame.width + cell.profileLabel.intrinsicContentSize.width + cell.dateLabel.intrinsicContentSize.width + 10;
-            cell.postStatusDateView.frame = CGRect.init(x: cell.frame.width - (totalWidthOfUIView + 15), y: cell.postStatusDateView.frame.origin.y, width: totalWidthOfUIView, height: cell.postStatusDateView.frame.height);
-            
-            cell.statusImage.frame = CGRect.init(x: 0, y: 0, width: 20, height: 20);
-            cell.profileLabel.frame = CGRect.init(x: 25, y: 0, width: cell.profileLabel.intrinsicContentSize.width, height: 20);
-            cell.dateLabel.frame = CGRect.init(x: (cell.profileLabel.intrinsicContentSize.width + cell.profileLabel.frame.origin.x + 5), y: 0, width: cell.dateLabel.intrinsicContentSize.width, height: 20);
-
-            
-            cell.setupSlideScrollView()
-            cell.pageControl.numberOfPages = cell.imagesArray.count
-            cell.pageControl.currentPage = 0
-            cell.contentView.bringSubview(toFront: cell.pageControl)
-            if(cell.imagesArray.count > 1){
-                cell.imageCounterView.isHidden = true // false
-                cell.totalCountImageLbl.text = " \(cell.imagesArray.count)";
-                cell.currentCountImageLbl.text = "1"
-                
-                cell.imageCounterView.isHidden = true //false
-                
-                //If logged in user is a caster
-                //70 width of counter view
-                //20 Padding from right
-                //20 from top of image scroll view
-                //cell.imageGalleryScrollView.frame = CGRect.init(x: cell.imageGalleryScrollView.frame.origin.x, y: postTextDescHeight + CGFloat(HomePostCellHeight.PostStatusViewHeight), width: cell.imageGalleryScrollView.frame.width, height: cell.imageGalleryScrollView.frame.height)
-                
-                cell.imageCounterView.frame = CGRect.init(x: (cell.frame.width - (60 + 20) ), y: (cell.imageGalleryScrollView.frame.origin.y + 20), width: 60, height: 25)
-                
-                cell.pageControl.frame = CGRect.init(x: cell.pageControl.frame.origin.x, y: cell.imageGalleryScrollView.frame.origin.y + cell.imageGalleryScrollView.frame.height + 1, width: cell.pageControl.frame.width, height: cell.pageControl.frame.height)
-            } else {
-                cell.imageCounterView.isHidden = true
-            }
-            
-            if (post.postImages.count > 0) {
-                if (post.postImages.count == 1) {
-                    cell.separator.frame = CGRect.init(x: 0, y: cell.imageGalleryScrollView.frame.origin.y + cell.imageGalleryScrollView.frame.height + 20, width: cell.frame.width, height: CGFloat(HomePostCellHeight.SeparatorHeight));
-                } else {
-                    cell.separator.frame = CGRect.init(x: 0, y: cell.pageControl.frame.origin.y + cell.pageControl.frame.height + 10, width: cell.frame.width, height: CGFloat(HomePostCellHeight.SeparatorHeight));
-                }
-            } else {
-                
-                //cell.separator.frame = CGRect.init(x: 0, y: cell.postTextLabel.frame.origin.y + postTextDescHeight + 20, width: cell.frame.width, height: CGFloat(HomePostCellHeight.SeparatorHeight));
-
-            }
-            
-            //ScrollView functionality
-            return cell;
-        } else if (loggedInUser.isCastr == 2) { // moderator
-             let cell: ModeratorCastsTableViewCell = tableView.dequeueReusableCell(withIdentifier: "ModeratorCastsTableViewCell", for: indexPath) as! ModeratorCastsTableViewCell;
-            
-            //cell.postTextLabel.text = String(homeObject.value(forKey: "post_description") as! String);
-            let attributedString = NSMutableAttributedString(string: post.postDescription);
-            
-            // *** Create instance of `NSMutableParagraphStyle`
-            let paragraphStyle = NSMutableParagraphStyle()
-            
-            // *** set LineSpacing property in points ***
-            paragraphStyle.lineSpacing = 2 // Whatever line spacing you want in points
-            
-            // *** Apply attribute to string ***
-            attributedString.addAttribute(NSAttributedStringKey.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, attributedString.length))
-            
-            // *** Set Attributed String to your label ***
-            cell.postTextLabel.attributedText = attributedString
-            
-            if(cell.postTextLabel.calculateMaxLines() <= 3){
-                cell.postTextLabel.numberOfLines = Int(cell.postTextLabel.calculateMaxLines())
-                print("numberOfLines")
-                let frameHeight : Int = Int(cell.postTextLabel.frame.height)
-                print(frameHeight)
-                let numLines : Int = Int(cell.postTextLabel.numberOfLines)
-                let calcHeight :Int = Int((frameHeight*numLines)/4);
-                
-            }
-            //let postImages = homeObject.value(forKey: "post_images") as! NSArray
-            if (post.postImages.count > 0) {
-                cell.imagesArray = [String]();
-                cell.imageGalleryScrollView.isHidden = false
-                for postImg in post.postImages {
-                    //let postImageURL = postImg as! NSDictionary;
-                    //let imgUrl: String = postImageURL.value(forKey: "image") as! String;
-                    cell.imagesArray.append(postImg);
-                }
-            } else {
-                cell.imagesArray = [String]();
-                cell.imageGalleryScrollView.isHidden = true;
-            }
-
-            //If user is a moderator
-            cell.profilePicImageView.isHidden = false
-            if (post.postImages.count > 0) {
-                cell.imageGalleryScrollView.isHidden = false;
-            } else {
-                cell.imageGalleryScrollView.isHidden = true;
-            }
-                        
-
-            print("Going to check social Media icons for row : ", indexPath.row)
-            
-     
-     
-                        cell.setupSlideScrollView()
-            print("current")
-            print(cell.pageControl.currentPage)
-            cell.pageControl.numberOfPages = cell.imagesArray.count
-            cell.pageControl.currentPage = 0
-            cell.contentView.bringSubview(toFront: cell.pageControl)
-            if(cell.imagesArray.count > 1){
-                cell.imageCounterView.isHidden = true // false
-                cell.totalCountImageLbl.text = " \(cell.imagesArray.count)";
-                cell.currentCountImageLbl.text = "1"
-                
-                cell.imageCounterView.isHidden = true //false
-            } else {
-                cell.imageCounterView.isHidden = true
-            }
-            
-            //ScrollView functionality
-            return cell;
-        }
-        return UITableViewCell();
-    }*/
-    
-    
     
     @objc private func refreshPostsData(_ sender: Any) {
       //  In this methid call the home screen api
@@ -788,7 +528,10 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             //ScrollView functionality
             cell.addGestureRecognizer(postDescTap)
             return cell;
+            
         } else if (loggedInUser.isCastr == 2) { // moderator
+            
+            
             let cell: ModeratorCastsTableViewCell = tableView.dequeueReusableCell(withIdentifier: "ModeratorCastsTableViewCell", for: indexPath) as! ModeratorCastsTableViewCell;
 
             if (post.name != "") {
@@ -805,6 +548,8 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
                 cell.profilePicImageView.roundImageView()
             }
             
+            
+            //********************  CODE TO SHOW HIDE SOCIAL MEDIA ICON STARTS   *********************//
             var facebookIconHidden = true;
             var twitterIconHidden = true;
             if (post.socialMediaIds.count > 0) {
@@ -829,18 +574,73 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
                 cell.sourceImageTwitter.isHidden = false;
                 cell.sourceImageFacebook.isHidden = false;
             } else if (facebookIconHidden == false && twitterIconHidden == true) {
-                cell.sourceImageTwitter.isHidden = true;
-                cell.sourceImageFacebook.isHidden = false;
-                cell.sourceImageFacebook.image = UIImage.init(named: "facebook-group");
+                cell.sourceImageTwitter.isHidden = false;
+                cell.sourceImageFacebook.isHidden = true;
+                cell.sourceImageTwitter.image = UIImage.init(named: "facebook-group");
             } else if (twitterIconHidden == false && facebookIconHidden == true) {
                 //If facebook is not present then we will replace facebook image with twitter
                 cell.sourceImageTwitter.isHidden = true;
                 cell.sourceImageFacebook.isHidden = false;
                 cell.sourceImageFacebook.image = UIImage.init(named: "twitter-group");
             }
+            //********************  CODE TO SHOW HIDE SOCIAL MEDIA ICON ENDS   *********************//
+
+            //********************  CODE TO ADJUST POST STATUS STARTS   *********************//
+            var imageStatus = ""
+            var status = "";
+            for postStatus in postStatusList {
+                if (postStatus.postStatusId == post.postStatusId) {
+                    status = postStatus.title;
+                }
+            }
+            if (status == "Pending") {
+                imageStatus = "pending-review"
+                // status = "Pending review"
+            } else if (status == "Approved") {
+                imageStatus = "approved"
+                // status = "Approved"
+            } else if (status == "Rejected by moderator") {
+                imageStatus = "rejected"
+                // status = "Rejected"
+            } else if(status == "Pending with caster") {
+                imageStatus = "under-review"
+                // status = "Under review"
+            } else if(status == "Unread by moderator") {
+                imageStatus = "under-review"
+                // status = "Unread by moderator"
+            } else if(status == "Pending with moderator") {
+                imageStatus = "under-review"
+                // status = "Under review"
+            } else if(status == "Deleted") {
+                imageStatus = "under-review"
+                //  status = "Deleted"
+            } else if(status == "Published") {
+                imageStatus = "approved"
+                //  status = "Deleted"
+            } else if(status == ""){
+                imageStatus = ""
+            }
             
+            cell.statusImage.image = UIImage.init(named: imageStatus)
+            cell.statusImage.frame = CGRect.init(x: 0, y: 0, width: 20, height: 20);
+            
+            let pipe = " |"
+            cell.profileLabel.text = "\((status))\(pipe)"
+            cell.profileLabel.frame = CGRect.init(x: 25, y: 0, width: cell.profileLabel.intrinsicContentSize.width, height: 20);
+            
+            cell.dateLabel.text = Date().ddspEEEEcmyyyy(dateStr: post.createdOn)
+            
+            let totalWidthOfUIView = cell.statusImage.frame.width + cell.profileLabel.intrinsicContentSize.width + cell.dateLabel.intrinsicContentSize.width + 10;
+            cell.dateLabel.frame = CGRect.init(x: (cell.profileLabel.intrinsicContentSize.width + cell.profileLabel.frame.origin.x + 5), y: 0, width: cell.dateLabel.intrinsicContentSize.width, height: 20);
+            
+            cell.postStatusViewCell.frame = CGRect.init(x: cell.postStatusViewCell.frame.origin.x, y: cell.postStatusViewCell.frame.origin.y, width: totalWidthOfUIView, height: cell.postStatusViewCell.frame.height);
+            //********************  CODE TO ADJUST POST STATUS ENDS   *********************//
+
+            
+            
+            //********************  CODE TO SHOW POST DESCRIPTION STARTS   *********************//
             //Call this function
-            var height = heightForView(text: post.postDescription, font: UIFont.init(name: "VisbyCF-Regular", size: 16.0)!, width: cell.contentView.frame.width - 30)
+            var height = heightForView(text: post.postDescription, font: UIFont.init(name: "VisbyCF-Regular", size: 16.0)!, width: self.view.frame.width - 30)
             if (height > 100) {
                 height = 100;
             }
@@ -849,7 +649,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             for view in cell.descriptionView.subviews {
                 view.removeFromSuperview();
             }
-            let proNameLbl = UILabel(frame: CGRect(x: 0, y: 0, width: cell.contentView.frame.width - 30, height: height))
+            let proNameLbl = UILabel(frame: CGRect(x: 0, y: 0, width: self.view.frame.width - 30, height: height))
             var lblToShow = "\(post.postDescription)"
             
             if (height > 100) {
@@ -873,58 +673,13 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             let attrString = NSMutableAttributedString(string: lblToShow)
             attrString.addAttributes(attributes, range: NSMakeRange(0, attrString.length));
             proNameLbl.attributedText = attrString;
-            
             cell.descriptionView.addSubview(proNameLbl)
 
-            var imageStatus = ""
-            var status = "";
-            for postStatus in postStatusList {
-                if (postStatus.postStatusId == post.postStatusId) {
-                    status = postStatus.title;
-                }
-            }
-            
-            if (status == "Pending") {
-                imageStatus = "pending-review"
-               // status = "Pending review"
-            } else if (status == "Approved") {
-                imageStatus = "approved"
-               // status = "Approved"
-            } else if (status == "Rejected by moderator") {
-                imageStatus = "rejected"
-               // status = "Rejected"
-            } else if(status == "Pending with caster") {
-                imageStatus = "under-review"
-               // status = "Under review"
-            } else if(status == "Unread by moderator") {
-                imageStatus = "under-review"
-               // status = "Unread by moderator"
-            } else if(status == "Pending with moderator") {
-                imageStatus = "under-review"
-               // status = "Under review"
-            } else if(status == "Deleted") {
-                imageStatus = "under-review"
-              //  status = "Deleted"
-            } else if(status == "Published") {
-                imageStatus = "approved"
-              //  status = "Deleted"
-            } else if(status == ""){
-                imageStatus = ""
-            }
-            
-            cell.statusImage.image = UIImage.init(named: imageStatus)
-            let pipe = " |"
-            cell.profileLabel.text = "\((status))\(pipe)"
-            cell.dateLabel.text = Date().ddspEEEEcmyyyy(dateStr: post.createdOn)
-            
-            let totalWidthOfUIView = cell.statusImage.frame.width + cell.profileLabel.intrinsicContentSize.width + cell.dateLabel.intrinsicContentSize.width + 10;
-            cell.postStatusViewCell.frame = CGRect.init(x: cell.frame.width - (totalWidthOfUIView + 15), y: cell.descriptionView.frame.origin.y + height + 10, width: totalWidthOfUIView, height: cell.postStatusViewCell.frame.height);
-            
-            cell.statusImage.frame = CGRect.init(x: 0, y: 0, width: 20, height: 20);
-            cell.profileLabel.frame = CGRect.init(x: 25, y: 0, width: cell.profileLabel.intrinsicContentSize.width, height: 20);
-            cell.dateLabel.frame = CGRect.init(x: (cell.profileLabel.intrinsicContentSize.width + cell.profileLabel.frame.origin.x + 5), y: 0, width: cell.dateLabel.intrinsicContentSize.width, height: 20);
+           
+            //********************  CODE TO SHOW POST DESCRIPTION ENDS   *********************//
             
             
+            //********************  CODE TO ADJUST IMAGE SCROLL VIEW STARTS   *********************//
             if (post.postImages.count > 0) {
                 cell.imagesArray = [String]();
                 cell.imageGalleryScrollView.isHidden = false
@@ -932,7 +687,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
                     cell.imagesArray.append(postImg);
                 }
                 
-                let y = Int(cell.postStatusViewCell.frame.origin.y) + 20 + 10;
+                let y = Int(cell.descriptionView.frame.origin.y) + Int(height) + 20;
                 cell.imageGalleryScrollView.frame = CGRect.init(x: 0, y: y, width: Int(cell.imageGalleryScrollView.frame.width), height: HomePostCellHeight.ScrollViewHeight)
                 
                 cell.setupSlideScrollView()
@@ -967,8 +722,10 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
                 cell.imageGalleryScrollView.isHidden = true;
                 cell.pageControl.isHidden = true;
             }
-            cell.addGestureRecognizer(postDescTap);
+            //********************  CODE TO ADJUST IMAGE SCROLL VIEW ENDS   *********************//
 
+            
+            cell.addGestureRecognizer(postDescTap);
             return cell;
         }
         return UITableViewCell();

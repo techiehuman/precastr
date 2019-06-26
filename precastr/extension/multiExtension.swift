@@ -265,10 +265,10 @@ extension UILabel {
 }
 extension UITabBar {
     
-    override open func sizeThatFits(_ size: CGSize) -> CGSize {
+    /*override open func sizeThatFits(_ size: CGSize) -> CGSize {
         var sizeThatFits = super.sizeThatFits(size)
         sizeThatFits.height = 50// adjust your size here
         return sizeThatFits
-    }
+    }*/
 }
 

@@ -34,6 +34,8 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
     @IBOutlet weak var editPostBtn: UIButton!
     @IBOutlet weak var attachmentBtn: UIButton!
     @IBOutlet weak var submitBtn : UIButton!
+    @IBOutlet weak var topButtonBars: UIView!
+    
     var loggedInUser : User!
     var uploadImage : [UIImage] = [UIImage]()
     var imageDelegate : ImageLibProtocolT!
@@ -89,6 +91,17 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
            // self.changeStatusBtn.isEnabled = false
             self.changeStatusBtn.alpha = 0.5;
         }
+        
+        
+        self.topButtonBars.frame = CGRect.init(x: 0, y: (UIApplication.shared.statusBarFrame.size.height + (self.navigationController?.navigationBar.frame.height)!) + 10, width: self.view.frame.width, height: self.topButtonBars.frame.height);
+        
+        
+        let positionOfBottomView = self.view.frame.height - (self.textAreaBtnBottomView.frame.height + ((self.tabBarController?.tabBar.frame.height)!) + 5);
+        self.textAreaBtnBottomView.frame = CGRect.init(x: 0, y: positionOfBottomView, width: self.view.frame.width, height: self.textAreaBtnBottomView.frame.height);
+        
+        self.communicationTableView.frame = CGRect.init(x: 0, y: self.topButtonBars.frame.origin.y + 40, width: self.view.frame.width, height: self.textAreaBtnBottomView.frame.origin.y -  (self.topButtonBars.frame.origin.y + 40 + 10));
+
+        
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
 
@@ -445,14 +458,25 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
     
     
     @objc func keyboardWillShow(notification: NSNotification) {
-        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
-            self.textAreaBtnBottomView.frame.origin.y = (self.textAreaBtnBottomView.frame.origin.y + self.textAreaBtnBottomView.frame.height - self.tabBarController!.tabBar.frame.height - 10) - (keyboardSize.height);
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            
+            let bottomAreaViewPosition = self.view.frame.height - (self.textAreaBtnBottomView.frame.height + 5 + keyboardSize.height);
+            self.textAreaBtnBottomView.frame.origin.y = bottomAreaViewPosition;
+            
+            
+            var keyboardHeight = self.view.frame.height - (keyboardSize.height + self.textAreaBtnBottomView.frame.height + 5 + self.communicationTableView.frame.origin.y);
+            self.communicationTableView.frame = CGRect.init(x: 0, y: self.communicationTableView.frame.origin.y, width: self.view.frame.width, height: keyboardHeight)
         }
     }
     
     @objc func keyboardWillHide(notification: NSNotification) {
-        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
-            self.textAreaBtnBottomView.frame.origin.y = (self.view.frame.height - (self.textAreaBtnBottomView.frame.height + self.tabBarController!.tabBar.frame.height));
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            
+            let positionOfBottomView = self.view.frame.height - (self.textAreaBtnBottomView.frame.height + ((self.tabBarController?.tabBar.frame.height)!) + 5);
+
+            self.textAreaBtnBottomView.frame.origin.y = positionOfBottomView;
+            
+            self.communicationTableView.frame = CGRect.init(x: 0, y: self.communicationTableView.frame.origin.y, width: self.view.frame.width, height: self.textAreaBtnBottomView.frame.origin.y - self.communicationTableView.frame.origin.y)
         }
     }
     
