@@ -10,27 +10,27 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "precastr/controller/post/cells/PostFormTableViewCell.swift"
-            timestampString = "583158684.7638119"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "270"
-            endingLineNumber = "270"
-            landmarkName = "validateSocialPlatform()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "precastr/controller/post/cells/PostFormTableViewCell.swift"
-            timestampString = "583158684.763873"
+            timestampString = "583253695.491094"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "275"
             endingLineNumber = "275"
+            landmarkName = "postOnSocialPlatform(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "precastr/controller/post/cells/PostFormTableViewCell.swift"
+            timestampString = "583253695.491152"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "280"
+            endingLineNumber = "280"
             landmarkName = "validateSocialPlatform()"
             landmarkType = "7">
          </BreakpointContent>
@@ -42,11 +42,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "precastr/controller/post/cells/PostFormTableViewCell.swift"
-            timestampString = "583158684.763937"
+            timestampString = "583253695.491196"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "171"
-            endingLineNumber = "171"
+            startingLineNumber = "176"
+            endingLineNumber = "176"
             landmarkName = "postOnSocialPlatform(_:)"
             landmarkType = "7">
          </BreakpointContent>

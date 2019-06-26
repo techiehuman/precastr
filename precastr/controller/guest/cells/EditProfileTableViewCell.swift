@@ -56,8 +56,9 @@ class EditProfileTableViewCell: UITableViewCell,UITextFieldDelegate, EditProfile
         cplineView.backgroundColor = UIColor.init(red: 146/255, green: 147/255, blue: 149/255, alpha: 1)
         self.confirmPasswordTxtField.addSubview(cplineView)
         
-        updateNameButton.layer.cornerRadius = 4;
-        updatePasswordBtn.layer.cornerRadius = 4;
+    
+        updateNameButton.roundEdgesBtn();
+        updatePasswordBtn.roundEdgesBtn();
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
