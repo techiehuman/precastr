@@ -505,9 +505,15 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
             PostService().postDataMethod(jsonURL: jsonURL, postData: postData, complete: {(response) in
                 
                 print(response);
-                
+                let statusResponse = Int((response.value(forKey: "status") as! NSObject) as! String);
                 for postStatus in postStatusList {
-                    if (postStatus.postStatusId == postStatusId) {
+                    if( statusResponse == 0){
+                        let alert = UIAlertController.init(title: "Error", message: response.value(forKey: "message") as! String, preferredStyle: .alert);
+                        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil));
+                        self.present(alert, animated: true);
+                        break;
+                    }
+                    else if (postStatus.postStatusId == postStatusId) {
                         
                         self.post.postStatusId = postStatusId;
                         self.post.status = postStatus.title;
