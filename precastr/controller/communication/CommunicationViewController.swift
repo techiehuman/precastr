@@ -95,8 +95,8 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
         self.changeStatusBtn.layer.cornerRadius = 4;
         self.changeStatusBtn.layer.borderWidth = 1;
         self.changeStatusBtn.layer.borderColor = UIColor(red: 112/255, green: 112/255, blue: 112/255, alpha: 1).cgColor;
-        print(loggedInUser.userCastSettingId)
-        if(loggedInUser.userCastSettingId == 1){
+       
+        if(loggedInUser.isCastr == 1){
             self.changeStatusBtn.isUserInteractionEnabled = false
            // self.changeStatusBtn.isEnabled = false
             self.changeStatusBtn.alpha = 0.5;
@@ -837,6 +837,7 @@ extension CommunicationViewController: UITableViewDelegate, UITableViewDataSourc
                     for view in cell.descriptionView.subviews {
                         view.removeFromSuperview();
                     }
+
                     let proNameLbl = UILabel(frame: CGRect(x: 10, y: 35, width: self.view.frame.width - 100, height: height))
                     var lblToShow = "\(communication.postCommunicationDescription)"
                     proNameLbl.numberOfLines = 0
@@ -856,6 +857,7 @@ extension CommunicationViewController: UITableViewDelegate, UITableViewDataSourc
                     
                     cell.descriptionView.addSubview(proNameLbl)
                     cell.descriptionView.frame = CGRect.init(x: 15, y: 10, width: self.view.frame.width - 70, height: 50 + height);
+
                     
                     if (communication.attachments.count > 0) {
                         
@@ -946,7 +948,6 @@ extension CommunicationViewController: UITableViewDelegate, UITableViewDataSourc
             let communication = post.postCommunications[indexPath.row - 1];
             
             let height = heightForView(text: communication.postCommunicationDescription, font: UIFont.init(name: "VisbyCF-Regular", size: 16.0)!, width: self.view.frame.width - 100)
-            
             if (communication.attachments.count > 0) {
                 if (communication.attachments.count == 1) {
                     return height + 60 + 200;
@@ -954,7 +955,7 @@ extension CommunicationViewController: UITableViewDelegate, UITableViewDataSourc
                     return height + 60 + 200 + 40;
                 }
             } else {
-                return height + 60;
+                return height + 80;
             }
         }
     }

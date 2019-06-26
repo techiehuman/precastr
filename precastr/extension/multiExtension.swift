@@ -220,7 +220,7 @@ extension UIView {
     }
 }
 
-extension UITabBar {
+/*extension UITabBar {
     
     override open func sizeThatFits(_ size: CGSize) -> CGSize {
         super.sizeThatFits(size)
@@ -235,7 +235,7 @@ extension UITabBar {
         }
         return sizeThatFits
     }
-}
+} */
 
 extension UILabel {
     func calculateMaxLines() -> Int {
@@ -245,5 +245,13 @@ extension UILabel {
         let textSize = text.boundingRect(with: maxSize, options: .usesLineFragmentOrigin, attributes: [NSAttributedStringKey.font: font], context: nil)
         let linesRoundedUp = Int(ceil(textSize.height/charSize))
         return linesRoundedUp
+    }
+}
+extension UITabBar {
+    
+    override open func sizeThatFits(_ size: CGSize) -> CGSize {
+        var sizeThatFits = super.sizeThatFits(size)
+        sizeThatFits.height = 60 // adjust your size here
+        return sizeThatFits
     }
 }
