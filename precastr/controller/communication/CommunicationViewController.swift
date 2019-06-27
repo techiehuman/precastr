@@ -628,7 +628,10 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
                 let postCommArr = data.value(forKey: "postcommunication") as! NSArray;
                 
                 self.post.postCommunications = PostCommunication().loadCommunicationsFromNsArray(commArray: postCommArr);
-                self.communicationTableView.reloadData();
+                
+                DispatchQueue.main.async {
+                    self.communicationTableView.reloadData();
+                }
             }
         });
     }
@@ -704,7 +707,7 @@ extension CommunicationViewController: UITableViewDelegate, UITableViewDataSourc
             } else if (post.status == "Approved") {
                 imageStatus = "approved"
                // status = "Approved"
-            } else if (post.status == "Rejected by moderator") {
+            } else if (post.status == "Rejected") {
                 imageStatus = "rejected"
                // status = "Rejected"
             } else if(post.status == "Pending with caster") {
@@ -877,7 +880,10 @@ extension CommunicationViewController: UITableViewDelegate, UITableViewDataSourc
                     
                     cell.descriptionView.addSubview(proNameLbl)
                     cell.descriptionView.frame = CGRect.init(x: 15, y: 10, width: self.view.frame.width - 70, height: 50 + height);
+                    cell.descriptionView.backgroundColor = UIColor(red: 245/255, green: 245/255, blue: 245/255, alpha: 1);
 
+                    print("width")
+                    print(cell.descriptionView.frame.width)
                     
                     if (communication.attachments.count > 0) {
                         
@@ -935,8 +941,9 @@ extension CommunicationViewController: UITableViewDelegate, UITableViewDataSourc
                     proNameLbl.attributedText = attrString;
                     
                     cell.descriptionView.addSubview(proNameLbl)
-                    cell.descriptionView.frame = CGRect.init(x: cell.descriptionView.frame.origin.x, y: cell.descriptionView.frame.origin.y, width: cell.descriptionView.frame.width, height: 50 + height)
-                    
+                    cell.descriptionView.frame = CGRect.init(x: cell.descriptionView.frame.origin.x, y: cell.descriptionView.frame.origin.y, width: self.view.frame.width - 70, height: 50 + height)
+                    cell.descriptionView.backgroundColor = UIColor(red: 245/255, green: 245/255, blue: 245/255, alpha: 1);
+
                     
                     if (communication.attachments.count > 0) {
                         

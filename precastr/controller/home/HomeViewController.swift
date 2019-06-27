@@ -413,7 +413,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             } else if (status == "Approved") {
                 imageStatus = "approved"
               //  status = "Approved"
-            } else if (status == "Rejected by moderator") {
+            } else if (status == "Rejected") {
                 imageStatus = "rejected"
               //  status = "Rejected"
             } else if(status == "Pending with caster") {
@@ -614,7 +614,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             } else if (status == "Approved") {
                 imageStatus = "approved"
                 // status = "Approved"
-            } else if (status == "Rejected by moderator") {
+            } else if (status == "Rejected") {
                 imageStatus = "rejected"
                 // status = "Rejected"
             } else if(status == "Pending with caster") {

@@ -78,6 +78,9 @@ class RightCommunicationTableViewCell: UITableViewCell {
         let percentageVerticalOffset: CGFloat = currentVerticalOffset / maximumVerticalOffset
     }
     
-    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        descriptionView.backgroundColor = UIColor(red: 245/255, green: 245/255, blue: 245/255, alpha: 1);
+    }
     
 }
