@@ -175,8 +175,28 @@ extension UIViewController {
         //Looks for single or multiple taps.
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
         tap.cancelsTouchesInView = false
-        view.addGestureRecognizer(tap)
+        view.addGestureRecognizer(tap);
     }
+    //To calculate height for label based on text size and width
+    func heightForView(text:String, font:UIFont, width:CGFloat) -> CGFloat {
+        let label:UILabel = UILabel(frame: CGRect(x: 0, y: 0, width: width, height: CGFloat.greatestFiniteMagnitude))
+        label.numberOfLines = 0
+        label.lineBreakMode = NSLineBreakMode.byWordWrapping
+        let paragraphStyle = NSMutableParagraphStyle()
+        //line height size
+        paragraphStyle.lineSpacing = 2
+        let attributes = [
+            NSAttributedStringKey.font : UIFont(name: "VisbyCF-Regular", size: 16.0)!,
+            NSAttributedStringKey.paragraphStyle: paragraphStyle]
+        
+        let attrString = NSMutableAttributedString(string: text)
+        attrString.addAttributes(attributes, range: NSMakeRange(0, attrString.length));
+        label.attributedText = attrString;
+        label.sizeToFit()
+        
+        return (label.frame.height)
+    }
+    
     
     //Calls this function when the tap is recognized.
     @objc func dismissKeyboard() {

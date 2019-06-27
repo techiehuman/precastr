@@ -275,27 +275,6 @@ class HomeViewController: UIViewController {
         });
     }
     
-    
-    //To calculate height for label based on text size and width
-    func heightForView(text:String, font:UIFont, width:CGFloat) -> CGFloat {
-        let label:UILabel = UILabel(frame: CGRect(x: 0, y: 0, width: width, height: CGFloat.greatestFiniteMagnitude))
-        label.numberOfLines = 0
-        label.lineBreakMode = NSLineBreakMode.byWordWrapping
-        let paragraphStyle = NSMutableParagraphStyle()
-        //line height size
-        paragraphStyle.lineSpacing = 2
-        let attributes = [
-            NSAttributedStringKey.font : UIFont(name: "VisbyCF-Regular", size: 16.0)!,
-            NSAttributedStringKey.paragraphStyle: paragraphStyle]
-
-        let attrString = NSMutableAttributedString(string: text)
-        attrString.addAttributes(attributes, range: NSMakeRange(0, attrString.length));
-        label.attributedText = attrString;
-        label.sizeToFit()
-
-        return (label.frame.height)
-    }
-    
     @objc func postDescriptionPressed(sender: MyTapRecognizer){
         let viewController = self.storyboard?.instantiateViewController(withIdentifier: "CommunicationViewController") as! CommunicationViewController;
         viewController.post = self.posts[sender.rowId];
@@ -320,7 +299,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
         if (loggedInUser.isCastr == 2) {
             
             //Call this function
-            var height = heightForView(text: post.postDescription, font: UIFont.init(name: "VisbyCF-Regular", size: 16.0)!, width: tableView.frame.width - 30)
+            var height = self.heightForView(text: post.postDescription, font: UIFont.init(name: "VisbyCF-Regular", size: 16.0)!, width: tableView.frame.width - 30)
             
             if (height > 100) {
                 height = 100;
@@ -339,7 +318,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             
         } else if (loggedInUser.isCastr == 1) {
             //Call this function
-            var height = heightForView(text: post.postDescription, font: UIFont.init(name: "VisbyCF-Regular", size: 16.0)!, width: tableView.frame.width - 30)
+            var height = self.heightForView(text: post.postDescription, font: UIFont.init(name: "VisbyCF-Regular", size: 16.0)!, width: tableView.frame.width - 30)
             
             if (height > 100) {
                 height = 100;
@@ -451,7 +430,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             cell.dateLabel.frame = CGRect.init(x: (cell.profileLabel.intrinsicContentSize.width + cell.profileLabel.frame.origin.x + 5), y: 0, width: cell.dateLabel.intrinsicContentSize.width, height: 20);
             
             //Call this function
-            var height = heightForView(text: post.postDescription, font: UIFont.init(name: "VisbyCF-Regular", size: 16.0)!, width: cell.contentView.frame.width - 30)
+            var height = self.heightForView(text: post.postDescription, font: UIFont.init(name: "VisbyCF-Regular", size: 16.0)!, width: cell.contentView.frame.width - 30)
             if (height > 100) {
                 height = 100;
             }
@@ -655,7 +634,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             
             //********************  CODE TO SHOW POST DESCRIPTION STARTS   *********************//
             //Call this function
-            var height = heightForView(text: post.postDescription, font: UIFont.init(name: "VisbyCF-Regular", size: 16.0)!, width: self.view.frame.width - 30)
+            var height = self.heightForView(text: post.postDescription, font: UIFont.init(name: "VisbyCF-Regular", size: 16.0)!, width: self.view.frame.width - 30)
             if (height > 100) {
                 height = 100;
             }

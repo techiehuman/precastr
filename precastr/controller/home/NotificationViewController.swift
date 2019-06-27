@@ -107,25 +107,46 @@ extension NotificationViewController: UITableViewDelegate, UITableViewDataSource
         
         let cell: NotificationTableViewCell = tableView.dequeueReusableCell(withIdentifier: "NotificationTableViewCell") as! NotificationTableViewCell;
         
+        
+        //Call this function
+        let height = self.heightForView(text: (notification.value(forKey: "notification_message") as? String)!, font: UIFont.init(name: "VisbyCF-Regular", size: 16.0)!, width: self.view.frame.width - 100);
+        
+        cell.profileTextView.frame = CGRect(x: cell.profileTextView.frame.origin.x, y: 12, width: self.view.frame.width - 85, height: height);
+        let lblToShow = "\(notification.value(forKey: "notification_message") as! String)"
+        cell.profileTextView.numberOfLines = 0
+        cell.profileTextView.lineBreakMode = .byWordWrapping
+        let paragraphStyle = NSMutableParagraphStyle()
+        //line height size
+        paragraphStyle.lineSpacing = 2
+        
+        let attributes = [
+            NSAttributedStringKey.font : UIFont(name: "VisbyCF-Regular", size: 16.0)!,
+            NSAttributedStringKey.foregroundColor : UIColor.init(red: 34/255, green: 34/255, blue: 34/255, alpha: 1),
+            NSAttributedStringKey.paragraphStyle: paragraphStyle]
+        
+        let attrString = NSMutableAttributedString(string: lblToShow)
+        attrString.addAttributes(attributes, range: NSMakeRange(0, attrString.length));
+        cell.profileTextView.attributedText = attrString;
                 
-        cell.profileTextView.text = notification.value(forKey: "notification_message") as? String;
-        print(notification.value(forKey: "created_on") as! String)
+        //cell.profileTextView.text = notification.value(forKey: "notification_message") as? String;
+        //print(notification.value(forKey: "created_on") as! String)
         cell.dateTextView.text = Date().ddspEEEEcmyyyyspHHclmmclaa(dateStr: notification.value(forKey: "created_on") as! String)
+        cell.dateTextView.frame = CGRect.init(x: cell.dateTextView.frame.origin.x, y: 12 + height + 15, width: cell.dateTextView.intrinsicContentSize.width, height: 20);
+
         cell.profileImageView.sd_setImage(with: URL(string: notification.value(forKey: "profile_pic") as! String), placeholderImage: UIImage.init(named: "Moderate Casts"));
 
-        
         cell.notificationViewControllerDelegate = self;
-        
-        activityIndicator.center = cell.center;
-        activityIndicator.hidesWhenStopped = true;
-        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.whiteLarge;
-        //cell.addSubview(activityIndicator);
         
         return cell;
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 80;
+        
+        let notification = modeArray[indexPath.row] as AnyObject;
+
+        let height = self.heightForView(text: (notification.value(forKey: "notification_message") as? String)!, font: UIFont.init(name: "VisbyCF-Regular", size: 16.0)!, width: self.view.frame.width - 100);
+
+        return height + 20 + 20;
     }
 
 }

@@ -589,26 +589,6 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
    
     }
     
-    //To calculate height for label based on text size and width
-    func heightForView(text:String, font:UIFont, width:CGFloat) -> CGFloat {
-        let label:UILabel = UILabel(frame: CGRect(x: 0, y: 0, width: width, height: CGFloat.greatestFiniteMagnitude))
-        label.numberOfLines = 0
-        label.lineBreakMode = NSLineBreakMode.byWordWrapping
-        let paragraphStyle = NSMutableParagraphStyle()
-        //line height size
-        paragraphStyle.lineSpacing = 2
-        let attributes = [
-            NSAttributedStringKey.font : UIFont(name: "VisbyCF-Regular", size: 16.0)!,
-            NSAttributedStringKey.paragraphStyle: paragraphStyle]
-        
-        let attrString = NSMutableAttributedString(string: text)
-        attrString.addAttributes(attributes, range: NSMakeRange(0, attrString.length));
-        label.attributedText = attrString;
-        label.sizeToFit()
-        
-        return (label.frame.height)
-    }
-    
     func getPostCommunications() {
         
         let getComUrl = "\(ApiUrl)posts/get_post_communication/format/json";
@@ -750,7 +730,7 @@ extension CommunicationViewController: UITableViewDelegate, UITableViewDataSourc
             cell.dateLabel.frame = CGRect.init(x: (cell.profileLabel.intrinsicContentSize.width + cell.profileLabel.frame.origin.x + 5), y: 0, width: cell.dateLabel.intrinsicContentSize.width, height: 20);
             
             //Call this function
-            let height = heightForView(text: post.postDescription, font: UIFont.init(name: "VisbyCF-Regular", size: 16.0)!, width: cell.contentView.frame.width - 30)
+            let height = self.heightForView(text: post.postDescription, font: UIFont.init(name: "VisbyCF-Regular", size: 16.0)!, width: cell.contentView.frame.width - 30)
             
             //This is your label
             for view in cell.descriptionView.subviews {
@@ -854,7 +834,7 @@ extension CommunicationViewController: UITableViewDelegate, UITableViewDataSourc
                     cell.commentorPic.sd_setImage(with: URL.init(string: communication.communicatedProfilePic), placeholderImage: UIImage.init(named: "Profile-1"));
                     
                     //Call this function
-                    let height = heightForView(text: communication.postCommunicationDescription, font: UIFont.init(name: "VisbyCF-Regular", size: 16.0)!, width: self.view.frame.width - 100)
+                    let height = self.heightForView(text: communication.postCommunicationDescription, font: UIFont.init(name: "VisbyCF-Regular", size: 16.0)!, width: self.view.frame.width - 100)
                     
                     //This is your label
                     for view in cell.descriptionView.subviews {
@@ -917,7 +897,7 @@ extension CommunicationViewController: UITableViewDelegate, UITableViewDataSourc
                     cell.commentorPic.sd_setImage(with: URL.init(string: communication.communicatedProfilePic), placeholderImage: UIImage.init(named: "Profile-1"));
                     
                     //Call this function
-                    let height = heightForView(text: communication.postCommunicationDescription, font: UIFont.init(name: "VisbyCF-Regular", size: 16.0)!, width: self.view.frame.width - 100)
+                    let height = self.heightForView(text: communication.postCommunicationDescription, font: UIFont.init(name: "VisbyCF-Regular", size: 16.0)!, width: self.view.frame.width - 100)
                     
                     //This is your label
                     for view in cell.descriptionView.subviews {
@@ -978,7 +958,7 @@ extension CommunicationViewController: UITableViewDelegate, UITableViewDataSourc
         
         if (indexPath.row == 0) {
             
-            var height = heightForView(text: post.postDescription, font: UIFont.init(name: "VisbyCF-Regular", size: 16.0)!, width: tableView.frame.width - 30);
+            var height = self.heightForView(text: post.postDescription, font: UIFont.init(name: "VisbyCF-Regular", size: 16.0)!, width: tableView.frame.width - 30);
             
             /*if (height > 100) {
                 height = 100;
@@ -995,7 +975,7 @@ extension CommunicationViewController: UITableViewDelegate, UITableViewDataSourc
         } else {
             let communication = post.postCommunications[indexPath.row - 1];
             
-            let height = heightForView(text: communication.postCommunicationDescription, font: UIFont.init(name: "VisbyCF-Regular", size: 16.0)!, width: self.view.frame.width - 100)
+            let height = self.heightForView(text: communication.postCommunicationDescription, font: UIFont.init(name: "VisbyCF-Regular", size: 16.0)!, width: self.view.frame.width - 100)
             if (communication.attachments.count > 0) {
                 if (communication.attachments.count == 1) {
                     return height + 60 + 200;
