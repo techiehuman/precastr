@@ -70,18 +70,19 @@ class CreatePostViewController: UIViewController, UIImagePickerControllerDelegat
         navigationItem.rightBarButtonItem?.tintColor = UIColor(red: 12/255, green: 111/255, blue: 233/255, alpha: 1);
         
         
-        let backButton = UIButton();
-        backButton.setImage(UIImage.init(named: "left-arrow"), for: .normal);
-        backButton.addTarget(self, action: #selector(backButtonPressed), for: UIControlEvents.touchUpInside)
-        backButton.frame = CGRect.init(x: 0, y:0, width: 20, height: 15);
-        
-        let barBackButton = UIBarButtonItem(customView: backButton)
-        
-        navigationItem.leftBarButtonItem = barBackButton;
+       
 
         self.tabBarController?.tabBar.isHidden = false;
         
         if (post != nil) {
+            let backButton = UIButton();
+            backButton.setImage(UIImage.init(named: "left-arrow"), for: .normal);
+            backButton.addTarget(self, action: #selector(backButtonPressed), for: UIControlEvents.touchUpInside)
+            backButton.frame = CGRect.init(x: 0, y:0, width: 20, height: 15);
+            
+            let barBackButton = UIBarButtonItem(customView: backButton)
+            
+            navigationItem.leftBarButtonItem = barBackButton;
             self.navigationItem.title = "Update Cast";
         }
 
@@ -92,7 +93,7 @@ class CreatePostViewController: UIViewController, UIImagePickerControllerDelegat
             UserService().postDataMethod(jsonURL: jsonURL, postData: self.postArray, complete: {(response) in
                 print(response);
                 
-                let status = Int((response.value(forKey: "status") as! NSObject) as! String);
+                let status = Int(response.value(forKey: "status") as! String)!
                 if (status == 0) {
                     let message = response.value(forKey: "message") as! String;
                     self.showAlert(title: "Error", message: message);
@@ -281,7 +282,7 @@ extension CreatePostViewController: UITableViewDelegate, UITableViewDataSource {
             }
         }
             
-        activityIndicator.center = cell.center;
+        activityIndicator.center = view.center;
         activityIndicator.hidesWhenStopped = true;
         activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.gray;
         cell.addSubview(activityIndicator);

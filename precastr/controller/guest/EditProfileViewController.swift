@@ -83,7 +83,7 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
                 
                 self.activityIndicator.stopAnimating();
                 
-                let success = Int(response.value(forKey: "status") as! String)
+                let success = Int(response.value(forKey: "status") as! String)!
                 let message = response.value(forKey: "message") as! String;
 
                 if (success == 0) {
@@ -105,7 +105,7 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
                 
                 self.activityIndicator.stopAnimating();
 
-                let success = Int(response.value(forKey: "status") as! String)
+                let success = Int(response.value(forKey: "status") as! String)!
                 let message = response.value(forKey: "message") as! String;
 
                 if (success == 0) {
@@ -134,7 +134,7 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
             
             self.activityIndicator.stopAnimating();
             
-            let success = Int(response.value(forKey: "status") as! String)
+            let success = Int(response.value(forKey: "status") as! String)!
             let message = response.value(forKey: "message") as! String;
 
             if (success == 0) {

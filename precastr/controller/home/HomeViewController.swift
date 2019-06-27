@@ -61,9 +61,10 @@ class HomeViewController: UIViewController {
          self.postArray["user_id"] = String(loggedInUser.userId)
         UserService().postDataMethod(jsonURL: jsonURL, postData: self.postArray, complete: {(response) in
             print(response)
-           let dataArray = response.value(forKey: "data") as! NSDictionary;
+          
             let success = Int(response.value(forKey: "status") as! String)!
             if (success == 1) {
+                 let dataArray = response.value(forKey: "data") as! NSDictionary;
                 if let tabItems = self.tabBarController?.tabBar.items {
                     // In this case we want to modify the badge number of the third tab:
                     var index = 0;
@@ -82,6 +83,9 @@ class HomeViewController: UIViewController {
                     }
                     
                 }
+            }else{
+                let message = response.value(forKey: "message") as! String;
+                self.showAlert(title: "Error", message: message);
             }
         });
 
@@ -167,7 +171,7 @@ class HomeViewController: UIViewController {
         UserService().postDataMethod(jsonURL: jsonURL, postData: postArray, complete: {(response) in
             print(response)
             
-            let status = Int((response.value(forKey: "status") as! NSObject) as! String);
+            let status = Int(response.value(forKey: "status") as! String)!
             if(status == 0){
                 print("hello")
                 self.noPostsText.text = response.value(forKey: "message") as! String;
@@ -212,7 +216,7 @@ class HomeViewController: UIViewController {
         UserService().postDataMethod(jsonURL: jsonURL, postData: postArray, complete: {(response) in
             print(response)
             
-            let success = Int(response.value(forKey: "status") as! String)
+            let success = Int(response.value(forKey: "status") as! String)!
             if (success == 0) {
               /*  let alert = UIAlertController.init(title: "Error", message: response.value(forKey: "message") as! String, preferredStyle: .alert);
                 alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil));
@@ -258,9 +262,16 @@ class HomeViewController: UIViewController {
         let jsonURL = "home/get_all_post_status/format/json"
         UserService().getDataMethod(jsonURL: jsonURL, complete: {(response) in
             print(response)
+            let status = Int(response.value(forKey: "status") as! String)!
+            if (status == 0) {
+                let message = response.value(forKey: "message") as! String;
+                self.showAlert(title: "Error", message: message);
+                
+            } else {
             let modeArray = response.value(forKey: "data") as! NSArray
             postStatusList = PostStatus().loadPostStatusFromNSArray(postStatusArr: modeArray);
             self.socialPostList.reloadData();
+        }
         });
     }
     
@@ -573,15 +584,19 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             if (twitterIconHidden == false && facebookIconHidden == false) {
                 cell.sourceImageTwitter.isHidden = false;
                 cell.sourceImageFacebook.isHidden = false;
+                cell.sourceImageTwitter.image = UIImage.init(named: "twitter-group");
+                cell.sourceImageFacebook.image = UIImage.init(named: "facebook-group");
+
+                
             } else if (facebookIconHidden == false && twitterIconHidden == true) {
                 cell.sourceImageTwitter.isHidden = false;
                 cell.sourceImageFacebook.isHidden = true;
                 cell.sourceImageTwitter.image = UIImage.init(named: "facebook-group");
             } else if (twitterIconHidden == false && facebookIconHidden == true) {
                 //If facebook is not present then we will replace facebook image with twitter
-                cell.sourceImageTwitter.isHidden = true;
-                cell.sourceImageFacebook.isHidden = false;
-                cell.sourceImageFacebook.image = UIImage.init(named: "twitter-group");
+                cell.sourceImageTwitter.isHidden = false;
+                cell.sourceImageFacebook.isHidden = true;
+                cell.sourceImageTwitter.image = UIImage.init(named: "twitter-group");
             }
             //********************  CODE TO SHOW HIDE SOCIAL MEDIA ICON ENDS   *********************//
 

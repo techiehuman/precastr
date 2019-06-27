@@ -50,7 +50,7 @@ class ForgetPasswordViewController: UIViewController {
             print(response);
             let message = response.value(forKey: "message") as! String;
 
-            let success = Int(response.value(forKey: "status") as! String)
+            let success = Int(response.value(forKey: "status") as! String)!
             
             if (success == 0) {
                 self.showAlert(title: "Error", message: message);

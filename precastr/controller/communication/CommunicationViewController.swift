@@ -97,8 +97,8 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
         let positionOfBottomView = self.view.frame.height - (self.textAreaBtnBottomView.frame.height + ((self.tabBarController?.tabBar.frame.height)!) + 5);
         self.textAreaBtnBottomView.frame = CGRect.init(x: 0, y: positionOfBottomView, width: self.view.frame.width, height: self.textAreaBtnBottomView.frame.height);
         
-        self.communicationTableView.frame = CGRect.init(x: 0, y: self.topButtonBars.frame.origin.y + 40, width: self.view.frame.width, height: self.textAreaBtnBottomView.frame.origin.y -  (self.topButtonBars.frame.origin.y + 40 + 10));
-
+        self.communicationTableView.frame = CGRect.init(x: 0, y: self.topButtonBars.frame.origin.y + 30, width: self.view.frame.width, height: self.textAreaBtnBottomView.frame.origin.y -  (self.topButtonBars.frame.origin.y + 30 + 10));
+        
         
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
@@ -487,7 +487,7 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
         UserService().postDataMethod(jsonURL: jsonURL, postData: postArray, complete: {(response) in
             print(response)
             
-            let success = Int(response.value(forKey: "status") as! String)
+            let success = Int(response.value(forKey: "status") as! String)!
             if (success == 0) {
                 /*  let alert = UIAlertController.init(title: "Error", message: response.value(forKey: "message") as! String, preferredStyle: .alert);
                  alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil));
@@ -512,14 +512,15 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
     
     func updatePostStatus(postStatusId: Int) {
         
-        if (post.status != "Approved" && postStatusId == 7) { // going to publish
+        if (self.post.status != "Approved" && postStatusId == 7) { // going to publish
             
             let alert = UIAlertController.init(title: "Error", message: "Post not Approved yet", preferredStyle: .alert);
             alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil));
             self.present(alert, animated: true);
             
         } else {
-            
+            let tempPostTitle = self.post.status;
+            let tempPostStatusId = postStatusId;
             let jsonURL = "posts/update_post_status/format/json";
             
             var postData = [String: Any]();
@@ -529,7 +530,7 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
             PostService().postDataMethod(jsonURL: jsonURL, postData: postData, complete: {(response) in
                 
                 print(response);
-                let statusResponse = Int((response.value(forKey: "status") as! NSObject) as! String);
+                let statusResponse = Int(response.value(forKey: "status") as! String)!
                 for postStatus in postStatusList {
                     if( statusResponse == 0){
                         let alert = UIAlertController.init(title: "Error", message: response.value(forKey: "message") as! String, preferredStyle: .alert);
@@ -557,8 +558,16 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
                                     postDataTwitter["user_id"] = self.post.postUserId;
                                     let jsonPostURL = "posts/publish_post_on_twitter/format/json";
                                     PostService().postDataMethod(jsonURL: jsonPostURL, postData: postDataTwitter, complete: {(response) in
-                                        
                                         print(response)
+                                      let statusCode = Int(response.value(forKey: "status") as! String)!
+                                        if(statusCode == 0){
+                                            self.post.postStatusId = tempPostStatusId;
+                                            self.post.status = tempPostTitle;
+                                            postData["post_status_id"] = tempPostStatusId
+                                            PostService().postDataMethod(jsonURL: jsonURL, postData: postData, complete: {(response) in
+                                                
+                                            });
+                                        }
                                         
                                     });
                                     
@@ -608,7 +617,7 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
         
         HttpService().postMethod(url: getComUrl, postData: postData, complete: {(response) in
             
-            let status = Int((response.value(forKey: "status") as! NSObject) as! String);
+            let status = Int(response.value(forKey: "status") as! String)!
             let message = response.value(forKey: "message") as! String;
             //let status =  response.value(forKey: "status") as? Bool ?? false
             if status == 0 {
@@ -711,7 +720,11 @@ extension CommunicationViewController: UITableViewDelegate, UITableViewDataSourc
                 imageStatus = "under-review"
                // status = "Deleted"
             } else if(post.status == "Published") {
+               
+                    self.communicationTableView.frame = CGRect.init(x: 0, y: self.topButtonBars.frame.origin.y, width: self.view.frame.width, height: self.textAreaBtnBottomView.frame.origin.y -  (self.topButtonBars.frame.origin.y + 10));
+               
                     self.changeStatusBtn.isHidden = true
+                    self.editPostBtn.isHidden = true
                 imageStatus = "approved"
               //  status = "Deleted"
             } else if(post.status == ""){
@@ -898,13 +911,13 @@ extension CommunicationViewController: UITableViewDelegate, UITableViewDataSourc
                     cell.commentorPic.sd_setImage(with: URL.init(string: communication.communicatedProfilePic), placeholderImage: UIImage.init(named: "Profile-1"));
                     
                     //Call this function
-                    let height = heightForView(text: communication.postCommunicationDescription, font: UIFont.init(name: "VisbyCF-Regular", size: 16.0)!, width: cell.descriptionView.frame.width - 100)
+                    let height = heightForView(text: communication.postCommunicationDescription, font: UIFont.init(name: "VisbyCF-Regular", size: 16.0)!, width: self.view.frame.width - 100)
                     
                     //This is your label
                     for view in cell.descriptionView.subviews {
                         view.removeFromSuperview();
                     }
-                    let proNameLbl = UILabel(frame: CGRect(x: 10, y: 35, width: cell.descriptionView.frame.width - 100, height: height))
+                    let proNameLbl = UILabel(frame: CGRect(x: 10, y: 35, width: self.view.frame.width - 100, height: height))
                     var lblToShow = "\(communication.postCommunicationDescription)"
                     proNameLbl.numberOfLines = 0
                     proNameLbl.lineBreakMode = .byWordWrapping

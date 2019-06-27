@@ -257,6 +257,11 @@ extension ModeratorViewController: UITableViewDelegate, UITableViewDataSource {
         }
         UserService().getDataMethod(jsonURL: jsonURL,complete:{(response) in
             print(response);
+            let status = Int(response.value(forKey: "status") as! String)!
+            if(status == 0){
+                let message = response.value(forKey: "message") as! String;
+                self.showAlert(title: "Error", message: message);
+            }else{
             let modeArray = response.value(forKey: "data") as! NSArray;
             var moderatorDtoPending : ModeratorsDto = ModeratorsDto()
             var moderatorDtoApproved : ModeratorsDto = ModeratorsDto()
@@ -289,6 +294,7 @@ extension ModeratorViewController: UITableViewDelegate, UITableViewDataSource {
                 self.moderatorDto.append(moderatorDtoApproved)
             }
             self.moderatorList.reloadData();
+        }
         });
     }
 }

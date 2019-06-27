@@ -65,11 +65,14 @@ class NotificationViewController: UIViewController {
        
         UserService().postDataMethod(jsonURL: jsonURL, postData: self.postData, complete: {(response) in
             print(response)
-            self.modeArray = response.value(forKey: "data") as! NSArray;
+           
             let success = Int(response.value(forKey: "status") as! String)!
             if (success == 0) {
                 self.notificationTableView.isHidden =  true;
+                let message = response.value(forKey: "message") as! String;
+                self.showAlert(title: "Error", message: message);
             }else{
+                 self.modeArray = response.value(forKey: "data") as! NSArray;
                 self.notificationTableView.isHidden =  false;
                 self.notificationTableView.reloadData()
             }

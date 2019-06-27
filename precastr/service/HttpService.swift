@@ -21,11 +21,18 @@ class HttpService {
             
             switch response.result {
             case .success:
-                returnDict = response.result.value as! NSDictionary;
+                if (response.result.value == nil) {
+                    var responseDict: [String: Any] = [:]
+                    responseDict["status"] = "0";
+                    responseDict["message"] = "Connection timeout";
+                    returnDict = responseDict as NSDictionary;
+                } else {
+                    returnDict = response.result.value as! NSDictionary;
+                }
             case .failure(let error):
                 print(error.localizedDescription)
                 var responseDict: [String: Any] = [:]
-                responseDict["status"] = false;
+                responseDict["status"] = "0";
                 responseDict["message"] = error.localizedDescription;
                 returnDict = responseDict as NSDictionary;
             }
@@ -42,11 +49,18 @@ class HttpService {
             
             switch response.result {
             case .success:
-                returnDict = response.result.value as! NSDictionary;
+                if (response.result.value == nil) {
+                    var responseDict: [String: Any] = [:]
+                    responseDict["status"] = "0";
+                    responseDict["message"] = "Connection timeout";
+                    returnDict = responseDict as NSDictionary;
+                } else {
+                    returnDict = response.result.value as! NSDictionary;
+                }
             case .failure(let error):
                 print(error.localizedDescription)
                 var responseDict: [String: Any] = [:]
-                responseDict["status"] = false;
+                responseDict["status"] = "0";
                 responseDict["message"] = error.localizedDescription;
                 returnDict = responseDict as NSDictionary;
             }
@@ -82,7 +96,14 @@ class HttpService {
                     
                     print("Suceess:\(String(describing: response.result.value ))")
                     /////let json = response.result.value as! NSDictionary
-                    returnDict = response.result.value as! NSDictionary;
+                    if (response.result.value == nil) {
+                        var responseDict: [String: Any] = [:]
+                        responseDict["status"] = "0";
+                        responseDict["message"] = "Connection timeout";
+                        returnDict = responseDict as NSDictionary;
+                    } else {
+                        returnDict = response.result.value as! NSDictionary;
+                    }
                     //returnDict.setValue(true, forKey: "success");
                     //returnDict.setValue(response.result.value, forKey: "resp");
                     complete(returnDict)
@@ -91,7 +112,7 @@ class HttpService {
             case .failure(let encodingError):
                 print(encodingError)
                 var responseDict: [String: Any] = [:]
-                responseDict["status"] = false;
+                responseDict["status"] = "0";
                 responseDict["message"] = encodingError.localizedDescription;
                 returnDict = responseDict as NSDictionary;
                 complete(returnDict)
@@ -137,7 +158,14 @@ class HttpService {
                     
                     print("Suceess:\(String(describing: response.result.value ))")
                     /////let json = response.result.value as! NSDictionary
-                    returnDict = response.result.value as! NSDictionary;
+                    if (response.result.value == nil) {
+                        var responseDict: [String: Any] = [:]
+                        responseDict["status"] = "0";
+                        responseDict["message"] = "Connection timeout";
+                        returnDict = responseDict as NSDictionary;
+                    } else {
+                        returnDict = response.result.value as! NSDictionary;
+                    }
                     //returnDict.setValue(true, forKey: "success");
                     //returnDict.setValue(response.result.value, forKey: "resp");
                     complete(returnDict)
@@ -146,7 +174,7 @@ class HttpService {
             case .failure(let encodingError):
                 print(encodingError)
                 var responseDict: [String: Any] = [:]
-                responseDict["status"] = false;
+                responseDict["status"] = "0";
                 responseDict["message"] = encodingError.localizedDescription;
                 returnDict = responseDict as NSDictionary;
                 complete(returnDict)
@@ -187,7 +215,14 @@ class HttpService {
                     
                     print("Suceess:\(String(describing: response.result.value ))")
                     /////let json = response.result.value as! NSDictionary
-                    returnDict = response.result.value as! NSDictionary;
+                    if (response.result.value == nil) {
+                        var responseDict: [String: Any] = [:]
+                        responseDict["status"] = "0";
+                        responseDict["message"] = "Connection timeout";
+                        returnDict = responseDict as NSDictionary;
+                    } else {
+                        returnDict = response.result.value as! NSDictionary;
+                    }
                     //returnDict.setValue(true, forKey: "success");
                     //returnDict.setValue(response.result.value, forKey: "resp");
                     complete(returnDict)
@@ -196,7 +231,7 @@ class HttpService {
             case .failure(let encodingError):
                 print(encodingError)
                 var responseDict: [String: Any] = [:]
-                responseDict["status"] = false;
+                responseDict["status"] = "0";
                 responseDict["message"] = encodingError.localizedDescription;
                 returnDict = responseDict as NSDictionary;
                 complete(returnDict)
@@ -231,7 +266,14 @@ class HttpService {
                     
                     print("Suceess:\(String(describing: response.result.value ))")
                     /////let json = response.result.value as! NSDictionary
-                    returnDict = response.result.value as! NSDictionary;
+                    if (response.result.value == nil) {
+                        var responseDict: [String: Any] = [:]
+                        responseDict["status"] = "0";
+                        responseDict["message"] = "Connection timeout";
+                        returnDict = responseDict as NSDictionary;
+                    } else {
+                        returnDict = response.result.value as! NSDictionary;
+                    }
                     //returnDict.setValue(true, forKey: "success");
                     //returnDict.setValue(response.result.value, forKey: "resp");
                     complete(returnDict)
@@ -240,7 +282,7 @@ class HttpService {
             case .failure(let encodingError):
                 print(encodingError)
                 var responseDict: [String: Any] = [:]
-                responseDict["status"] = false;
+                responseDict["status"] = "0";
                 responseDict["message"] = encodingError.localizedDescription;
                 returnDict = responseDict as NSDictionary;
                 complete(returnDict)

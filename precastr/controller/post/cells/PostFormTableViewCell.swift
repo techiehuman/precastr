@@ -258,14 +258,34 @@ class PostFormTableViewCell: UITableViewCell, UITextViewDelegate, PostFormCellPr
                 if(self.createPostViewControllerDelegate.PhotoArray.count > 0){
                     UserService().postMultipartImageDataSocialMethod(jsonURL: jsonURL,image : self.createPostViewControllerDelegate.PhotoArray, postData:postData,complete:{(response) in
                         print(response);
+                        let status = Int(response.value(forKey: "status") as! String)!
+                        if (status == 0) {
+                            let message = response.value(forKey: "message") as! String;
+                            let alert = UIAlertController.init(title: "Error", message: message, preferredStyle: .alert);
+                            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil));
+                            self.createPostViewControllerDelegate.present(alert, animated: true)
+                            self.createPostViewControllerDelegate.activityIndicator.stopAnimating();
+                        } else {
+                           
                         self.createPostViewControllerDelegate.activityIndicator.stopAnimating();
                         UIApplication.shared.keyWindow?.rootViewController = HomeViewController.MainViewController();
+                    }
                     })
                 }else{
                     UserService().postDataMethod(jsonURL: jsonURL, postData: postData, complete: { (response) in
                         print(response);
+                        let status = Int(response.value(forKey: "status") as! String)!
+                        if (status == 0) {
+                            let message = response.value(forKey: "message") as! String;
+                            let alert = UIAlertController.init(title: "Error", message: message, preferredStyle: .alert);
+                            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil));
+                            self.createPostViewControllerDelegate.present(alert, animated: true)
+                            self.createPostViewControllerDelegate.activityIndicator.stopAnimating();
+                        } else {
+                           
                         self.createPostViewControllerDelegate.activityIndicator.stopAnimating();
                         UIApplication.shared.keyWindow?.rootViewController = HomeViewController.MainViewController();
+                    }
                     })
                 }
             }
