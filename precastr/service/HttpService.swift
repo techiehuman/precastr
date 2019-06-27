@@ -13,10 +13,12 @@ class HttpService {
     
     func getMethod(url: String,complete: @escaping(NSDictionary)->Void) {
         
-       
+        let manager = Alamofire.SessionManager.default
+        manager.session.configuration.timeoutIntervalForRequest = 500;
+
         let Auth_header    = ["X-API-KEY" : ApiToken]
 
-        Alamofire.request("\(url)", method: .get , parameters: nil, encoding: JSONEncoding.default,headers: Auth_header).validate(statusCode: 200..<300).responseJSON { (response ) in
+        manager.request("\(url)", method: .get , parameters: nil, encoding: JSONEncoding.default,headers: Auth_header).validate(statusCode: 200..<300).responseJSON { (response ) in
             var returnDict = NSDictionary();
             
             switch response.result {
@@ -42,8 +44,10 @@ class HttpService {
     func postMethod(url: String, postData: [String: Any], complete: @escaping(NSDictionary)->Void) {
         
         let Auth_header = [ "X-API-KEY" : ApiToken ]
-        
-        Alamofire.request("\(url)", method: .post , parameters: postData, encoding: JSONEncoding.default,headers: Auth_header).validate(statusCode: 200..<300).responseJSON { (response ) in
+        let manager = Alamofire.SessionManager.default
+        manager.session.configuration.timeoutIntervalForRequest = 500
+
+        manager.request("\(url)", method: .post , parameters: postData, encoding: JSONEncoding.default,headers: Auth_header).validate(statusCode: 200..<300).responseJSON { (response ) in
             
             var returnDict = NSDictionary();
             
@@ -72,8 +76,10 @@ class HttpService {
         let imgData = UIImageJPEGRepresentation(image, 0.2)!
         
         let Auth_header =  [ "X-API-KEY" : ApiToken ]
-        
-        Alamofire.upload(multipartFormData: { (MultipartFormData) in
+        let manager = Alamofire.SessionManager.default
+        manager.session.configuration.timeoutIntervalForRequest = 500
+
+        manager.upload(multipartFormData: { (MultipartFormData) in
             MultipartFormData.append(imgData, withName: "profile_pic", fileName: "file.jpg", mimeType: "image/jpg")
             MultipartFormData.append( "\(String(describing: postData["name"]!))".data(using: .utf8)!, withName: "name")
             MultipartFormData.append( "\(String(describing: postData["username"]!))".data(using: .utf8)!, withName: "username")
@@ -127,7 +133,10 @@ class HttpService {
         let Auth_header =  [ "X-API-KEY" : ApiToken ]
         var key = 0
       
-        Alamofire.upload(multipartFormData: { (MultipartFormData) in
+        let manager = Alamofire.SessionManager.default
+        manager.session.configuration.timeoutIntervalForRequest = 500
+
+        manager.upload(multipartFormData: { (MultipartFormData) in
             for img in image{
                 let imgData = UIImageJPEGRepresentation(img, 0.2)!
                 MultipartFormData.append(imgData, withName: "post_imgs[]", fileName: "file\(key).jpg", mimeType: "image/jpg")
@@ -188,7 +197,10 @@ class HttpService {
         let Auth_header =  [ "X-API-KEY" : ApiToken ]
         var key = 0
         
-        Alamofire.upload(multipartFormData: { (MultipartFormData) in
+        let manager = Alamofire.SessionManager.default
+        manager.session.configuration.timeoutIntervalForRequest = 500
+
+        manager.upload(multipartFormData: { (MultipartFormData) in
             for img in image{
                 let imgData = UIImageJPEGRepresentation(img, 0.2)!
                 MultipartFormData.append(imgData, withName: "attachment[]", fileName: "file\(key).jpg", mimeType: "image/jpg")
@@ -246,7 +258,10 @@ class HttpService {
         
         let Auth_header =  [ "X-API-KEY" : ApiToken ]
         
-        Alamofire.upload(multipartFormData: { (MultipartFormData) in
+        let manager = Alamofire.SessionManager.default
+        manager.session.configuration.timeoutIntervalForRequest = 500
+
+        manager.upload(multipartFormData: { (MultipartFormData) in
             MultipartFormData.append(imgData, withName: "profile_pic", fileName: "file.jpg", mimeType: "image/jpg")
             MultipartFormData.append( "\(String(describing: postData["name"]!))".data(using: .utf8)!, withName: "name")
             MultipartFormData.append( "\(String(describing: postData["user_id"]!))".data(using: .utf8)!, withName: "user_id")

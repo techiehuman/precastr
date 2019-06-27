@@ -108,13 +108,17 @@ extension NotificationViewController: UITableViewDelegate, UITableViewDataSource
         let cell: NotificationTableViewCell = tableView.dequeueReusableCell(withIdentifier: "NotificationTableViewCell") as! NotificationTableViewCell;
         
         
+        //This is your label
+        for view in cell.notificationTextView.subviews {
+            view.removeFromSuperview();
+        }
         //Call this function
-        let height = self.heightForView(text: (notification.value(forKey: "notification_message") as? String)!, font: UIFont.init(name: "VisbyCF-Regular", size: 16.0)!, width: self.view.frame.width - 100);
+        let height = self.heightForView(text: (notification.value(forKey: "notification_message") as? String)!, font: UIFont.init(name: "VisbyCF-Regular", size: 16.0)!, width: self.view.frame.width - 85);
         
-        cell.profileTextView.frame = CGRect(x: cell.profileTextView.frame.origin.x, y: 12, width: self.view.frame.width - 85, height: height);
+        let notificationLabel  = UILabel.init(frame: CGRect(x: 0, y: 0, width: self.view.frame.width - 85, height: height));
         let lblToShow = "\(notification.value(forKey: "notification_message") as! String)"
-        cell.profileTextView.numberOfLines = 0
-        cell.profileTextView.lineBreakMode = .byWordWrapping
+        notificationLabel.numberOfLines = 0
+        notificationLabel.lineBreakMode = .byWordWrapping
         let paragraphStyle = NSMutableParagraphStyle()
         //line height size
         paragraphStyle.lineSpacing = 2
@@ -126,12 +130,15 @@ extension NotificationViewController: UITableViewDelegate, UITableViewDataSource
         
         let attrString = NSMutableAttributedString(string: lblToShow)
         attrString.addAttributes(attributes, range: NSMakeRange(0, attrString.length));
-        cell.profileTextView.attributedText = attrString;
-                
+        notificationLabel.attributedText = attrString;
+        cell.notificationTextView.addSubview(notificationLabel);
+        
+        cell.notificationTextView.frame = CGRect.init(x: cell.notificationTextView.frame.origin.x, y: 12, width: self.view.frame.width - 85, height: height);
+        
         //cell.profileTextView.text = notification.value(forKey: "notification_message") as? String;
         //print(notification.value(forKey: "created_on") as! String)
         cell.dateTextView.text = Date().ddspEEEEcmyyyyspHHclmmclaa(dateStr: notification.value(forKey: "created_on") as! String)
-        cell.dateTextView.frame = CGRect.init(x: cell.dateTextView.frame.origin.x, y: 12 + height + 15, width: cell.dateTextView.intrinsicContentSize.width, height: 20);
+        cell.dateTextView.frame = CGRect.init(x: cell.dateTextView.frame.origin.x, y: 12 + height, width: cell.dateTextView.intrinsicContentSize.width, height: 20);
 
         cell.profileImageView.sd_setImage(with: URL(string: notification.value(forKey: "profile_pic") as! String), placeholderImage: UIImage.init(named: "Moderate Casts"));
 
@@ -144,7 +151,7 @@ extension NotificationViewController: UITableViewDelegate, UITableViewDataSource
         
         let notification = modeArray[indexPath.row] as AnyObject;
 
-        let height = self.heightForView(text: (notification.value(forKey: "notification_message") as? String)!, font: UIFont.init(name: "VisbyCF-Regular", size: 16.0)!, width: self.view.frame.width - 100);
+        let height = self.heightForView(text: (notification.value(forKey: "notification_message") as? String)!, font: UIFont.init(name: "VisbyCF-Regular", size: 16.0)!, width: self.view.frame.width - 85);
 
         return height + 20 + 20;
     }
