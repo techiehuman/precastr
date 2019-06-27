@@ -8,7 +8,7 @@
 
 import UIKit
 
-class RightCommunicationTableViewCell: UITableViewCell {
+class RightCommunicationTableViewCell: UITableViewCell, UIScrollViewDelegate {
  var communicationViewControllerDelegate : CommunicationViewController!;
     
     @IBOutlet weak var commentedDate: UILabel!
@@ -21,6 +21,7 @@ class RightCommunicationTableViewCell: UITableViewCell {
     @IBOutlet weak var pageControl: UIPageControl!
     
     var imagesArray = [String]();
+    var currentCount: Int = 0;
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -54,7 +55,7 @@ class RightCommunicationTableViewCell: UITableViewCell {
             print("X Position : ", xposition, "width", imageScrollView.frame.width * CGFloat(i + 1));
             
             imageScrollView.addSubview(setupSlideScrollView)
-            //self.currentCount = i as! Int
+            self.currentCount = i as! Int
         }
         
         //imageGalleryScrollView.addSubview(imageCounterView);

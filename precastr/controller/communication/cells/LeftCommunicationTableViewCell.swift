@@ -8,7 +8,7 @@
 
 import UIKit
 
-class LeftCommunicationTableViewCell: UITableViewCell {
+class LeftCommunicationTableViewCell: UITableViewCell, UIScrollViewDelegate {
  var communicationViewControllerDelegate : CommunicationViewController!;
     
             
@@ -23,7 +23,7 @@ class LeftCommunicationTableViewCell: UITableViewCell {
     @IBOutlet weak var pageControl: UIPageControl!
     
     var imagesArray = [String]();
-    
+    var currentCount: Int = 0;
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -58,7 +58,7 @@ class LeftCommunicationTableViewCell: UITableViewCell {
             print("X Position : ", xposition, "width", imageScrollView.frame.width * CGFloat(i + 1));
             
             imageScrollView.addSubview(setupSlideScrollView)
-            //self.currentCount = i as! Int
+            self.currentCount = i as! Int
         }
         
         //imageGalleryScrollView.addSubview(imageCounterView);
@@ -86,9 +86,5 @@ class LeftCommunicationTableViewCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         descriptionView.backgroundColor = UIColor(red: 245/255, green: 245/255, blue: 245/255, alpha: 1);
-    }
-    
-    override func layoutIfNeeded() {
-        super.layoutIfNeeded()
     }
 }
