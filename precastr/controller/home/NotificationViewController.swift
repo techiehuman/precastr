@@ -47,6 +47,8 @@ class NotificationViewController: UIViewController {
                     let tabItem = tabItems[index]
                     tabItem.badgeValue = nil
                 }
+            }else{
+                
             }
         });
 

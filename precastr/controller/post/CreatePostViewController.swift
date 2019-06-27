@@ -280,6 +280,17 @@ extension CreatePostViewController: UITableViewDelegate, UITableViewDataSource {
                 cell.charaterCountLabel.isHidden = false;
 
             }
+            for postStatus in postStatusList {
+                if (postStatus.postStatusId == self.post.postStatusId) {
+                    cell.changeStatusBtn.setTitle(postStatus.title, for: .normal);
+                    
+                    // Lets add ui labels in width.
+                  //  let totalWidthOfUIView = cell.changeStatusBtn.intrinsicContentSize.width + 20;
+                  //  cell.changeStatusBtn.frame = CGRect.init(x: (self.view.frame.width - totalWidthOfUIView - 15), y: cell.changeStatusBtn.frame.origin.y, width: totalWidthOfUIView, height: cell.changeStatusBtn.frame.height);
+                    
+                    break;
+                }
+            }
         }
             
         activityIndicator.center = view.center;

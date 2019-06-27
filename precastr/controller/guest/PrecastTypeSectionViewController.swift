@@ -38,12 +38,19 @@ class PrecastTypeSectionViewController: UIViewController {
             let jsonURL = "user/update_precast_type/format/json";
             
             UserService().postDataMethod(jsonURL:jsonURL,postData: postData, complete:{(response) in
+                let status = Int(response.value(forKey: "status") as! String)!
+                if (status == 0) {
+                    let message = response.value(forKey: "message") as! String;
+                    self.showAlert(title: "Error", message: message);
+                    
+                }else{
                 let userDict = response.value(forKey: "data") as! NSDictionary;
                 print(userDict)
                 let user = User().getUserData(userDataDict: userDict);
                 user.loadUserDefaults();
                 
                 UIApplication.shared.keyWindow?.rootViewController = HomeViewController.MainViewController();
+            }
             });
         }
         

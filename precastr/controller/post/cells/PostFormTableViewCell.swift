@@ -26,9 +26,12 @@ class PostFormTableViewCell: UITableViewCell, UITextViewDelegate, PostFormCellPr
     @IBOutlet weak var charaterCountLabel: UILabel!
     @IBOutlet weak var attachmentBtn : UIButton!
     @IBOutlet weak var submitBtn : UIButton!
+    @IBOutlet weak var changeStatusBtn: UIButton!
     
     var createPostViewControllerDelegate: CreatePostViewController!;
     var descriptionMsg : String = "";
+    var selectedPostStatusId : Int = postStatusList[0].postStatusId;
+     var loggedInUser : User!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -44,7 +47,13 @@ class PostFormTableViewCell: UITableViewCell, UITextViewDelegate, PostFormCellPr
         self.postTextField.textColor = UIColor(red: 34/255, green: 34/255, blue: 34/255, alpha: 1);
         self.attachmentBtn.roundEdgesLeftBtn();
         self.submitBtn.roundEdgesRightBtn();
-
+        self.changeStatusBtn.roundEdgesBtn();
+        self.changeStatusBtn.layer.borderWidth = 1;
+        self.changeStatusBtn.layer.borderColor = UIColor(red: 112/255, green: 112/255, blue: 112/255, alpha: 1).cgColor;
+         loggedInUser =  User().loadUserDataFromUserDefaults(userDataDict : setting);
+        if(loggedInUser.isCastr == 2){
+            self.changeStatusBtn.isHidden = false
+        }
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -189,7 +198,9 @@ class PostFormTableViewCell: UITableViewCell, UITextViewDelegate, PostFormCellPr
                 postData["user_id"] = self.createPostViewControllerDelegate.loggedInUser.userId
                 postData["post_id"] = self.createPostViewControllerDelegate.post.postId
                 postData["post_status_id"] = 1
-
+                if(loggedInUser.isCastr == 2){
+                    postData["post_status_id"] = self.selectedPostStatusId
+                }
                 //let joiner = ","
                 
                 var joinedStrings = "";
@@ -215,14 +226,26 @@ class PostFormTableViewCell: UITableViewCell, UITextViewDelegate, PostFormCellPr
                 if(self.createPostViewControllerDelegate.PhotoArray.count > 0){
                     UserService().postMultipartImageDataSocialMethod(jsonURL: jsonURL,image : self.createPostViewControllerDelegate.PhotoArray, postData:postData,complete:{(response) in
                         print(response);
+                        let status = Int(response.value(forKey: "status") as! String)!
+                        if(status == 0){
+                            let message = response.value(forKey: "message") as! String;
+                            self.createPostViewControllerDelegate.showAlert(title: "Error", message: message);
+                        }else{
                         self.createPostViewControllerDelegate.activityIndicator.stopAnimating();
                         UIApplication.shared.keyWindow?.rootViewController = HomeViewController.MainViewController();
+                    }
                     })
                 }else{
                     UserService().postDataMethod(jsonURL: jsonURL, postData: postData, complete: { (response) in
                         print(response);
+                        let status = Int(response.value(forKey: "status") as! String)!
+                        if(status == 0){
+                            let message = response.value(forKey: "message") as! String;
+                            self.createPostViewControllerDelegate.showAlert(title: "Error", message: message);
+                        }else{
                         self.createPostViewControllerDelegate.activityIndicator.stopAnimating();
                         UIApplication.shared.keyWindow?.rootViewController = HomeViewController.MainViewController();
+                    }
                     })
                 }
             }
@@ -445,5 +468,45 @@ class PostFormTableViewCell: UITableViewCell, UITextViewDelegate, PostFormCellPr
         
         return true;
         
+    }
+    @IBAction func changeStatusButtonClicked(_ sender: Any) {
+        
+       
+        // create an actionSheet
+        let actionSheetController: UIAlertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        // create an action
+        for postStatus in postStatusList {
+            
+            let pendingReviewAction: UIAlertAction = UIAlertAction(title: postStatus.title, style: .default) { action -> Void in
+                self.selectedPostStatusId = postStatus.postStatusId;
+                 self.changeStatusBtn.setTitle(postStatus.title, for: .normal);
+                self.updatePostStatus(postStatusId: self.selectedPostStatusId);
+            }
+            actionSheetController.addAction(pendingReviewAction)
+        }
+        print("selectedPostStatusId")
+        print(self.selectedPostStatusId)
+       
+        let cancelAction: UIAlertAction = UIAlertAction(title: "Cancel", style: .cancel) { action -> Void in }
+        cancelAction.setValue(UIColor.black, forKey: "titleTextColor")
+        
+        actionSheetController.addAction(cancelAction)
+        
+        // present an actionSheet...
+        createPostViewControllerDelegate.present(actionSheetController, animated: true, completion: nil)
+        print(createPostViewControllerDelegate.post.status)
+       
+    }
+    func updatePostStatus(postStatusId: Int){
+        if (createPostViewControllerDelegate.post.status != "Approved" && postStatusId == 7) { // going to publish
+            
+            let alert = UIAlertController.init(title: "Error", message: "Post not Approved yet", preferredStyle: .alert);
+            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil));
+            createPostViewControllerDelegate.present(alert, animated: true);
+            self.selectedPostStatusId = createPostViewControllerDelegate.post.postStatusId
+             self.changeStatusBtn.setTitle(createPostViewControllerDelegate.post.status, for: .normal);
+            
+        }
     }
 }

@@ -70,6 +70,7 @@ class UserTypeActionViewController: UIViewController {
         let jsonURL = "user/add_user_role/format/json";
         UserService().postDataMethod(jsonURL: jsonURL,postData:postData,complete:{(response) in
             print(response)
+            
             if (Int(response.value(forKey: "status") as! String)! == 1) {
                 self.loggedInUser.isCastr  = userRole
                 self.loggedInUser.loadUserDefaults()
