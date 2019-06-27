@@ -139,11 +139,24 @@
                         <color key="textColor" red="0.13333333333333333" green="0.13333333333333333" blue="0.13333333333333333" alpha="0.84705882352941175" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qxz-XI-f4I">
+                        <rect key="frame" x="15" y="315" width="107" height="30"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <fontDescription key="fontDescription" name="VisbyCF-Regular" family="Visby CF" pointSize="14"/>
+                        <inset key="imageEdgeInsets" minX="10" minY="3" maxX="0.0" maxY="0.0"/>
+                        <state key="normal" title="Pending" image="down_arrow">
+                            <color key="titleColor" red="0.13333333333333333" green="0.13333333333333333" blue="0.13333333333333333" alpha="1" colorSpace="calibratedRGB"/>
+                        </state>
+                        <connections>
+                            <action selector="changeStatusButtonClicked:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="5U0-Hr-Ooz"/>
+                        </connections>
+                    </button>
                 </subviews>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="attachmentBtn" destination="qeh-EM-aKZ" id="Ltq-tZ-l0J"/>
+                <outlet property="changeStatusBtn" destination="qxz-XI-f4I" id="7QR-We-wSI"/>
                 <outlet property="charaterCountLabel" destination="beK-LK-CcY" id="heE-g7-3tz"/>
                 <outlet property="facebookBtn" destination="51Z-mG-oGt" id="bBe-u6-6dx"/>
                 <outlet property="filesUploadedtext" destination="8s1-1h-jeB" id="WMJ-wK-uUd"/>
@@ -158,6 +171,7 @@
     </objects>
     <resources>
         <image name="clips" width="16" height="14"/>
+        <image name="down_arrow" width="12" height="7"/>
         <image name="facebook-group" width="20" height="20"/>
         <image name="sent-email" width="16" height="14.5"/>
         <image name="twitter-group" width="20" height="20"/>

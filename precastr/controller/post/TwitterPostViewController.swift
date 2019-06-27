@@ -72,6 +72,12 @@ class TwitterPostViewController: UIViewController,UITextViewDelegate, UIImagePic
         postArray["user_id"] = String(loggedInUser.userId)
         UserService().postDataMethod(jsonURL: jsonURL, postData: postArray, complete: {(response) in
             print(response);
+            let status = Int(response.value(forKey: "status") as! String)!
+            if (status == 0) {
+                let message = response.value(forKey: "message") as! String;
+                self.showAlert(title: "Error", message: message);
+                
+            }else{
            let modeArray = response.value(forKey: "data") as! NSDictionary;
             let tokens  = modeArray.value(forKey: "tokens") as! NSArray
             for mode in tokens{
@@ -86,6 +92,7 @@ class TwitterPostViewController: UIViewController,UITextViewDelegate, UIImagePic
                 }
                 
             }
+        }
             print(self.facebookExists)
             print(self.twitterExists)
             
@@ -197,6 +204,12 @@ class TwitterPostViewController: UIViewController,UITextViewDelegate, UIImagePic
                         let jsonURL = "user/upate_user_tokens/format/json";
                             UserService().postDataMethod(jsonURL: jsonURL,postData:postData,complete:{(response) in
                                 print(response)
+                                let status = Int(response.value(forKey: "status") as! String)!
+                                if (status == 0) {
+                                    let message = response.value(forKey: "message") as! String;
+                                    self.showAlert(title: "Error", message: message);
+                                    
+                                }
                             });
                         });
                         
@@ -296,6 +309,12 @@ class TwitterPostViewController: UIViewController,UITextViewDelegate, UIImagePic
                     print(user.toDictionary(user: user ))
                     UserService().postDataMethod(jsonURL: jsonURL,postData:postData,complete:{(response) in
                         print(response)
+                        let status = Int(response.value(forKey: "status") as! String)!
+                        if (status == 0) {
+                            let message = response.value(forKey: "message") as! String;
+                            self.showAlert(title: "Error", message: message);
+                            
+                        }
                     });
                     
                 }else {
@@ -363,16 +382,28 @@ class TwitterPostViewController: UIViewController,UITextViewDelegate, UIImagePic
         if(PhotoArray.count > 0){
             UserService().postMultipartImageDataSocialMethod(jsonURL: jsonURL,image : PhotoArray, postData:postData,complete:{(response) in
                 print(response);
-
+                let status = Int(response.value(forKey: "status") as! String)!
+                if (status == 0) {
+                    let message = response.value(forKey: "message") as! String;
+                    self.showAlert(title: "Error", message: message);
+                    
+                }else{
                 self.activityIndicator.stopAnimating();
                 UIApplication.shared.keyWindow?.rootViewController = HomeViewController.MainViewController();
+            }
             })
         }else{
             UserService().postDataMethod(jsonURL: jsonURL, postData: postData, complete: { (response) in
                   print(response);
-
+                let status = Int(response.value(forKey: "status") as! String)!
+                if (status == 0) {
+                    let message = response.value(forKey: "message") as! String;
+                    self.showAlert(title: "Error", message: message);
+                    
+                }else{
                 self.activityIndicator.stopAnimating();
                 UIApplication.shared.keyWindow?.rootViewController = HomeViewController.MainViewController();
+            }
             })
         }
     }
