@@ -609,9 +609,12 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
                 
                 self.post.postCommunications = PostCommunication().loadCommunicationsFromNsArray(commArray: postCommArr);
                 
-                DispatchQueue.main.async {
+                // Put your code which should be executed with a delay here
+                self.communicationTableView.reloadData();
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(10), execute: {
                     self.communicationTableView.reloadData();
-                }
+                })
             }
         });
     }
@@ -859,7 +862,6 @@ extension CommunicationViewController: UITableViewDelegate, UITableViewDataSourc
                     proNameLbl.attributedText = attrString;
                     
                     cell.descriptionView.addSubview(proNameLbl)
-                    cell.descriptionView.frame = CGRect.init(x: 15, y: 10, width: self.view.frame.width - 70, height: 50 + height);
                     cell.descriptionView.backgroundColor = UIColor(red: 245/255, green: 245/255, blue: 245/255, alpha: 1);
 
                     print("width")
@@ -868,22 +870,39 @@ extension CommunicationViewController: UITableViewDelegate, UITableViewDataSourc
                     if (communication.attachments.count > 0) {
                         
                         cell.imageScrollView.isHidden = false;
-                        
+                        cell.imagesArray = [String]();
                         for attachment in communication.attachments {
                             cell.imagesArray.append(attachment.image);
                         }
                         cell.setupSlideScrollView();
-                        cell.imageScrollView.frame = CGRect.init(x: cell.imageScrollView.frame.origin.x, y: cell.descriptionView.frame.origin.y + cell.descriptionView.frame.height, width: cell.imageScrollView.frame.width, height: cell.imageScrollView.frame.height);
+                        cell.imageScrollView.frame = CGRect.init(x: cell.imageScrollView.frame.origin.x, y: cell.descriptionView.frame.origin.y + 50 + height, width: cell.imageScrollView.frame.width, height: cell.imageScrollView.frame.height);
                         
                         if (communication.attachments.count == 1) {
                             cell.pageControl.isHidden = true;
+                            
+                            //50 Top Height, height: Label height, imasge scroll view height, Gap below image scroll view.
+                            let totalDescriptionHeight = 50 + height + cell.imageScrollView.frame.height + 10;
+                            cell.descriptionView.frame = CGRect.init(x: 15, y: 10, width: self.view.frame.width - 70, height: totalDescriptionHeight);
+
                         } else {
+                            
+                            cell.pageControl.numberOfPages = cell.imagesArray.count
+                            cell.pageControl.currentPage = 0
+                            cell.contentView.bringSubview(toFront: cell.pageControl)
+
                             cell.pageControl.isHidden = false;
-                            cell.pageControl.frame = CGRect.init(x: cell.imageScrollView.frame.width/2 - cell.imageScrollView.frame.origin.x, y: cell.imageScrollView.frame.origin.y + cell.imageScrollView.frame.height - 10, width: cell.pageControl.frame.width, height: cell.pageControl.frame.height)
+                            cell.pageControl.frame = CGRect.init(x: cell.imageScrollView.frame.width/2 - cell.pageControl.frame.width/4, y: cell.imageScrollView.frame.origin.y + cell.imageScrollView.frame.height - 10, width: cell.pageControl.frame.width, height: cell.pageControl.frame.height)
+                            
+                            let totalDescriptionHeight = 40 + height + cell.imageScrollView.frame.height + cell.pageControl.frame.height;
+                            cell.descriptionView.frame = CGRect.init(x: 15, y: 10, width: self.view.frame.width - 70, height: totalDescriptionHeight);
+
                         }
                     } else {
                         cell.imageScrollView.isHidden = true;
                         cell.pageControl.isHidden = true;
+                        
+                        cell.descriptionView.frame = CGRect.init(x: 15, y: 10, width: self.view.frame.width - 70, height: 50 + height);
+
                     }
                     return cell;
                     
@@ -921,34 +940,44 @@ extension CommunicationViewController: UITableViewDelegate, UITableViewDataSourc
                     proNameLbl.attributedText = attrString;
                     
                     cell.descriptionView.addSubview(proNameLbl)
-                    cell.descriptionView.frame = CGRect.init(x: cell.descriptionView.frame.origin.x, y: cell.descriptionView.frame.origin.y, width: self.view.frame.width - 70, height: 50 + height)
                     cell.descriptionView.backgroundColor = UIColor(red: 245/255, green: 245/255, blue: 245/255, alpha: 1);
 
                     
                     if (communication.attachments.count > 0) {
                         
                         cell.imageScrollView.isHidden = false;
-                        
+                        cell.imagesArray = [String]();
+
                         for attachment in communication.attachments {
                             cell.imagesArray.append(attachment.image);
                         }
                         cell.setupSlideScrollView();
-                        cell.imageScrollView.frame = CGRect.init(x: cell.imageScrollView.frame.origin.x, y: cell.descriptionView.frame.origin.y + cell.descriptionView.frame.height, width: cell.imageScrollView.frame.width, height: cell.imageScrollView.frame.height);
+                        cell.imageScrollView.frame = CGRect.init(x: cell.imageScrollView.frame.origin.x, y: cell.descriptionView.frame.origin.y + 50 + height, width: cell.imageScrollView.frame.width, height: cell.imageScrollView.frame.height);
                         
                         if (communication.attachments.count == 1) {
                             cell.pageControl.isHidden = true;
+                            
+                            let totalDescriptionHeight = 50 + height + cell.imageScrollView.frame.height + 10;
+                            
+                            cell.descriptionView.frame = CGRect.init(x: cell.descriptionView.frame.origin.x, y: cell.descriptionView.frame.origin.y, width: self.view.frame.width - 70, height: totalDescriptionHeight)
+                            
                         } else {
                             cell.pageControl.isHidden = false;
-                            cell.pageControl.frame = CGRect.init(x: cell.imageScrollView.frame.width/2 - cell.imageScrollView.frame.origin.x, y: cell.imageScrollView.frame.origin.y + cell.imageScrollView.frame.height - 10, width: cell.pageControl.frame.width, height: cell.pageControl.frame.height)
+                            cell.pageControl.frame = CGRect.init(x: cell.imageScrollView.frame.width/2 - cell.pageControl.frame.width/4, y: cell.imageScrollView.frame.origin.y + cell.imageScrollView.frame.height - 10, width: cell.pageControl.frame.width, height: cell.pageControl.frame.height);
+                            
+                            let totalDescriptionHeight = 50 + height + cell.imageScrollView.frame.height + cell.pageControl.frame.height +  10;
+                            
+                            cell.descriptionView.frame = CGRect.init(x: cell.descriptionView.frame.origin.x, y: cell.descriptionView.frame.origin.y, width: self.view.frame.width - 70, height: totalDescriptionHeight)
+
                         }
                     } else {
                         cell.imageScrollView.isHidden = true;
                         cell.pageControl.isHidden = true;
+                        
+                        cell.descriptionView.frame = CGRect.init(x: cell.descriptionView.frame.origin.x, y: 10, width: self.view.frame.width - 70, height: 50 + height)
                     }
                     return cell;
                 }
-            //}
-            
         }
         
         return UITableViewCell();
@@ -978,12 +1007,12 @@ extension CommunicationViewController: UITableViewDelegate, UITableViewDataSourc
             let height = self.heightForView(text: communication.postCommunicationDescription, font: UIFont.init(name: "VisbyCF-Regular", size: 16.0)!, width: self.view.frame.width - 100)
             if (communication.attachments.count > 0) {
                 if (communication.attachments.count == 1) {
-                    return height + 60 + 200;
+                    return height + 60 + 200 + 20;
                 } else {
                     return height + 60 + 200 + 40;
                 }
             } else {
-                return height + 80;
+                return height + 70;
             }
         }
     }
