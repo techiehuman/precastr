@@ -13,9 +13,6 @@
         <array key="VisbyCF-Medium.otf">
             <string>VisbyCF-Medium</string>
         </array>
-        <array key="VisbyCF-Regular.otf">
-            <string>VisbyCF-Regular</string>
-        </array>
     </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -34,26 +31,6 @@
                     <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="END-ah-Ikz">
                         <rect key="frame" x="63" y="31" width="270" height="20"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                        <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Approved |" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dVL-hf-Eje">
-                                <rect key="frame" x="28" y="3" width="90" height="15"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name="VisbyCF-Regular" family="Visby CF" pointSize="14"/>
-                                <color key="textColor" red="0.1333333333" green="0.1333333333" blue="0.1333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="approved" translatesAutoresizingMaskIntoConstraints="NO" id="0wp-CH-KDc">
-                                <rect key="frame" x="0.0" y="0.0" width="20" height="20"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="10 March, 2019" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="awu-zc-CvK">
-                                <rect key="frame" x="125" y="0.0" width="147" height="20"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name="VisbyCF-Regular" family="Visby CF" pointSize="14"/>
-                                <color key="textColor" red="0.3921568627" green="0.65098039220000004" blue="0.96862745100000003" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </view>
                     <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OjP-Al-hiB">
@@ -127,18 +104,15 @@
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="currentCountImageLbl" destination="agW-Wu-yzd" id="Ute-Ja-TnH"/>
-                <outlet property="dateLabel" destination="awu-zc-CvK" id="qGW-cR-OlM"/>
                 <outlet property="descriptionView" destination="OjP-Al-hiB" id="fJ9-vy-aiF"/>
                 <outlet property="imageCounterView" destination="QJg-My-suh" id="SK8-MU-NYO"/>
                 <outlet property="imageGalleryScrollView" destination="Jo5-f1-CIJ" id="dWo-cm-rjw"/>
                 <outlet property="pageControl" destination="Elz-ct-30F" id="vzu-El-abg"/>
                 <outlet property="postStatusViewCell" destination="END-ah-Ikz" id="kDQ-VW-ba9"/>
-                <outlet property="profileLabel" destination="dVL-hf-Eje" id="Dqb-rW-Gnr"/>
                 <outlet property="profilePicImageView" destination="nhQ-Gp-QQe" id="gR7-eA-9Rd"/>
                 <outlet property="socialIconsView" destination="1fy-pG-CRF" id="JM8-Ju-XR8"/>
                 <outlet property="sourceImageFacebook" destination="QYr-R2-xel" id="4yT-zn-V6U"/>
                 <outlet property="sourceImageTwitter" destination="Pc9-wX-8Zs" id="qCe-0z-dOv"/>
-                <outlet property="statusImage" destination="0wp-CH-KDc" id="Mb8-hI-h1J"/>
                 <outlet property="totalCountImageLbl" destination="7Vw-PN-bMB" id="zts-Zl-Wp0"/>
                 <outlet property="usernameLabel" destination="XNE-gT-UDR" id="BeX-bW-fOt"/>
             </connections>
@@ -147,7 +121,6 @@
     </objects>
     <resources>
         <image name="Moderate Casts" width="40" height="40"/>
-        <image name="approved" width="20" height="20"/>
         <image name="facebook-group" width="20" height="20"/>
         <image name="twitter-group" width="20" height="20"/>
     </resources>

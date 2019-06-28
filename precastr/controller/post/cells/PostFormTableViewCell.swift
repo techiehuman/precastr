@@ -198,7 +198,10 @@ class PostFormTableViewCell: UITableViewCell, UITextViewDelegate, PostFormCellPr
                 postData["post_description"] = self.postTextField.text
                 postData["user_id"] = self.createPostViewControllerDelegate.loggedInUser.userId
                 postData["post_id"] = self.createPostViewControllerDelegate.post.postId
-               // postData["post_status_id"] = 1
+                if(self.changeStatusBtn.titleLabel?.text == "Rejected" && loggedInUser.isCastr == 1){
+                     postData["post_status_id"] = 1
+                }
+               
                 if(loggedInUser.isCastr == 2){
                     postData["post_status_id"] = self.selectedPostStatusId
                 }
