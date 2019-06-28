@@ -408,7 +408,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
                 imageStatus = "under-review"
                // status = "Deleted"
             } else if(status == "Published") {
-                imageStatus = "approved"
+                imageStatus = "published"
                // status = "Deleted"
             } else if(status == ""){
                 imageStatus = ""
@@ -609,7 +609,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
                 imageStatus = "under-review"
                 //  status = "Deleted"
             } else if(status == "Published") {
-                imageStatus = "approved"
+                imageStatus = "published"
                 //  status = "Deleted"
             } else if(status == ""){
                 imageStatus = ""

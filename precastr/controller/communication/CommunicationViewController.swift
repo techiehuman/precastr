@@ -712,7 +712,7 @@ extension CommunicationViewController: UITableViewDelegate, UITableViewDataSourc
                
                     self.changeStatusBtn.isHidden = true
                     self.editPostBtn.isHidden = true
-                imageStatus = "approved"
+                imageStatus = "published"
               //  status = "Deleted"
             } else if(post.status == ""){
                 imageStatus = ""
@@ -963,6 +963,9 @@ extension CommunicationViewController: UITableViewDelegate, UITableViewDataSourc
                             cell.descriptionView.frame = CGRect.init(x: cell.descriptionView.frame.origin.x, y: cell.descriptionView.frame.origin.y, width: self.view.frame.width - 70, height: totalDescriptionHeight)
                             
                         } else {
+                            cell.pageControl.numberOfPages = cell.imagesArray.count
+                            cell.pageControl.currentPage = 0
+                            cell.contentView.bringSubview(toFront: cell.pageControl)
                             cell.pageControl.isHidden = false;
                             cell.pageControl.frame = CGRect.init(x: cell.imageScrollView.frame.width/2 - cell.pageControl.frame.width/4, y: cell.imageScrollView.frame.origin.y + cell.imageScrollView.frame.height - 10, width: cell.pageControl.frame.width, height: cell.pageControl.frame.height);
                             

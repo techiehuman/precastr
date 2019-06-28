@@ -198,7 +198,7 @@ class HttpService {
         var key = 0
         
         let manager = Alamofire.SessionManager.default
-        manager.session.configuration.timeoutIntervalForRequest = TimeInterval(7)
+        manager.session.configuration.timeoutIntervalForRequest = TimeInterval(10)
 
         manager.upload(multipartFormData: { (MultipartFormData) in
             for img in image{
