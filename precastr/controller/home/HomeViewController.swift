@@ -615,19 +615,41 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
                 imageStatus = ""
             }
             
-            cell.statusImage.image = UIImage.init(named: imageStatus)
-            cell.statusImage.frame = CGRect.init(x: 0, y: 0, width: 20, height: 20);
+            //This is your label
+            for view in cell.postStatusViewCell.subviews {
+                view.removeFromSuperview();
+            }
             
-            let pipe = " |"
-            cell.profileLabel.text = "\((status))\(pipe)"
-            cell.profileLabel.frame = CGRect.init(x: 25, y: 0, width: cell.profileLabel.intrinsicContentSize.width, height: 20);
+            let statusImage = UIImageView.init(image: UIImage.init(named: imageStatus))
+            statusImage.frame = CGRect.init(x: 0, y: 0, width: 20, height: 20);
+            cell.postStatusViewCell.addSubview(statusImage);
             
-            cell.dateLabel.text = Date().ddspEEEEcmyyyy(dateStr: post.createdOn)
+            let pipe = "  |"
+            //cell.profileLabel.text = "\((status))\(pipe)"
+            //cell.profileLabel.frame = CGRect.init(x: 25, y: 0, width: cell.profileLabel.intrinsicContentSize.width, height: 20);
             
-            let totalWidthOfUIView = cell.statusImage.frame.width + cell.profileLabel.intrinsicContentSize.width + cell.dateLabel.intrinsicContentSize.width + 10;
-            cell.dateLabel.frame = CGRect.init(x: (cell.profileLabel.intrinsicContentSize.width + cell.profileLabel.frame.origin.x + 5), y: 0, width: cell.dateLabel.intrinsicContentSize.width, height: 20);
+            let profileLabel = UILabel()
+            profileLabel.text = "\((status))\(pipe)"
+            profileLabel.frame =  CGRect(x: 25, y: 0, width: profileLabel.intrinsicContentSize.width, height: 20)
+            profileLabel.font = UIFont(name: "VisbyCF-Regular",
+                                     size: 14.0)
+            profileLabel.textColor = UIColor(red: 34/255, green: 34/255, blue: 34/255, alpha: 1)
+            cell.postStatusViewCell.addSubview(profileLabel);
             
-            cell.postStatusViewCell.frame = CGRect.init(x: cell.postStatusViewCell.frame.origin.x, y: cell.postStatusViewCell.frame.origin.y, width: totalWidthOfUIView, height: cell.postStatusViewCell.frame.height);
+            
+            //cell.dateLabel.text = Date().ddspEEEEcmyyyy(dateStr: post.createdOn)
+            let dateLabel = UILabel()
+            dateLabel.font = UIFont(name: "VisbyCF-Regular",
+                                       size: 14.0)
+            dateLabel.textColor = UIColor(red: 100/255, green: 166/255, blue: 247/255, alpha: 1)
+            dateLabel.text = Date().ddspEEEEcmyyyy(dateStr: post.createdOn)
+            dateLabel.frame =  CGRect(x: profileLabel.intrinsicContentSize.width+32, y: 0, width: dateLabel.intrinsicContentSize.width, height: 20)
+            cell.postStatusViewCell.addSubview(dateLabel)
+            
+           // let totalWidthOfUIView = cell.statusImage.frame.width + cell.profileLabel.intrinsicContentSize.width + cell.dateLabel.intrinsicContentSize.width + 10;
+           // cell.dateLabel.frame = CGRect.init(x: (cell.profileLabel.intrinsicContentSize.width + cell.profileLabel.frame.origin.x + 5), y: 0, width: cell.dateLabel.intrinsicContentSize.width, height: 20);
+           
+          //  cell.postStatusViewCell.frame = CGRect.init(x: cell.postStatusViewCell.frame.origin.x, y: cell.postStatusViewCell.frame.origin.y, width: 260, height: cell.postStatusViewCell.frame.height);
             //********************  CODE TO ADJUST POST STATUS ENDS   *********************//
 
             

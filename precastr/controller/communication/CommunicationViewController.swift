@@ -612,7 +612,7 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
                 // Put your code which should be executed with a delay here
                 self.communicationTableView.reloadData();
                 
-                DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(10), execute: {
+                DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(200), execute: {
                     self.communicationTableView.reloadData();
                 })
             }
@@ -688,6 +688,7 @@ extension CommunicationViewController: UITableViewDelegate, UITableViewDataSourc
                 imageStatus = "pending-review"
                // status = "Pending review"
             } else if (post.status == "Approved") {
+                 self.editPostBtn.isHidden = true
                 imageStatus = "approved"
                // status = "Approved"
             } else if (post.status == "Rejected") {

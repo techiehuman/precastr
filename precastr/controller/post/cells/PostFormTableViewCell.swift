@@ -30,7 +30,7 @@ class PostFormTableViewCell: UITableViewCell, UITextViewDelegate, PostFormCellPr
     
     var createPostViewControllerDelegate: CreatePostViewController!;
     var descriptionMsg : String = "";
-    var selectedPostStatusId : Int = postStatusList[0].postStatusId;
+    var selectedPostStatusId : Int = 0;
      var loggedInUser : User!
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -53,6 +53,7 @@ class PostFormTableViewCell: UITableViewCell, UITextViewDelegate, PostFormCellPr
          loggedInUser =  User().loadUserDataFromUserDefaults(userDataDict : setting);
         if(loggedInUser.isCastr == 2){
             self.changeStatusBtn.isHidden = false
+          //  self.selectedPostStatusId = self.createPostViewControllerDelegate.post.postStatusId
         }
     }
 
