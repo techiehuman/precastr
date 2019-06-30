@@ -829,7 +829,7 @@ extension CommunicationViewController: UITableViewDelegate, UITableViewDataSourc
 
                 //We will show logged in user comments on right side and other users comment on
                 //left side.
-                if (communication.communicatedByUserId == loggedInUser.userId) { //left side
+            /*    if (communication.communicatedByUserId == loggedInUser.userId) { //left side
                     
                     let cell: LeftCommunicationTableViewCell = tableView.dequeueReusableCell(withIdentifier: "LeftCommunicationTableViewCell") as! LeftCommunicationTableViewCell;
                     
@@ -907,7 +907,7 @@ extension CommunicationViewController: UITableViewDelegate, UITableViewDataSourc
                     }
                     return cell;
                     
-                } else { //right side
+               } else { //right side */
                     
                     
                     let cell: RightCommunicationTableViewCell = tableView.dequeueReusableCell(withIdentifier: "RightCommunicationTableViewCell") as! RightCommunicationTableViewCell;
@@ -967,7 +967,7 @@ extension CommunicationViewController: UITableViewDelegate, UITableViewDataSourc
                             cell.pageControl.currentPage = 0
                             cell.contentView.bringSubview(toFront: cell.pageControl)
                             cell.pageControl.isHidden = false;
-                            cell.pageControl.frame = CGRect.init(x: cell.imageScrollView.frame.width/2 - cell.pageControl.frame.width/4, y: cell.imageScrollView.frame.origin.y + cell.imageScrollView.frame.height - 10, width: cell.pageControl.frame.width, height: cell.pageControl.frame.height);
+                            cell.pageControl.frame = CGRect.init(x: cell.imageScrollView.frame.origin.x + cell.imageScrollView.frame.width/2 - cell.pageControl.frame.width/2, y: cell.imageScrollView.frame.origin.y + cell.imageScrollView.frame.height - 10, width: cell.pageControl.frame.width, height: cell.pageControl.frame.height);
                             
                             let totalDescriptionHeight = 50 + height + cell.imageScrollView.frame.height + cell.pageControl.frame.height +  10;
                             
@@ -981,7 +981,7 @@ extension CommunicationViewController: UITableViewDelegate, UITableViewDataSourc
                         cell.descriptionView.frame = CGRect.init(x: cell.descriptionView.frame.origin.x, y: 10, width: self.view.frame.width - 70, height: 50 + height)
                     }
                     return cell;
-                }
+             /*   } */
         }
         
         return UITableViewCell();
