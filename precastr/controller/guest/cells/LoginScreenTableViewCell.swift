@@ -12,6 +12,7 @@ import FBSDKCoreKit
 import TwitterKit
 import TwitterCore
 
+
 class LoginScreenTableViewCell: UITableViewCell, UITextFieldDelegate {
 
     @IBOutlet weak var facebookButton:UIButton!
@@ -111,21 +112,23 @@ class LoginScreenTableViewCell: UITableViewCell, UITextFieldDelegate {
     }
     
     @IBAction func facebookButtonClicked(_ sender: Any) {
-        let fbloginManger: FBSDKLoginManager = FBSDKLoginManager()
-        /*CODE FOR LOGOUT */
-        FBSDKAccessToken.setCurrent(nil)
-        FBSDKProfile.setCurrent(nil)
         
-        FBSDKLoginManager().logOut()
+        let fbloginManger: LoginManager = LoginManager()
+        /*CODE FOR LOGOUT */
+        AccessToken.current = nil
+        Profile.current = nil
+        
+        
+        LoginManager().logOut()
         let cookies = HTTPCookieStorage.shared
         let facebookCookies = cookies.cookies(for: URL(string: "https://facebook.com/")!)
         for cookie in facebookCookies! {
             cookies.deleteCookie(cookie )
         }
         /* CODE FOR LOGOUT */
-        fbloginManger.logIn(withReadPermissions: ["email"], from:loginViewControllerDelegate) {(result, error) -> Void in
+        fbloginManger.logIn(permissions: ["email"], from:loginViewControllerDelegate) {(result, error) -> Void in
             if(error == nil){
-                let fbLoginResult: FBSDKLoginManagerLoginResult  = result!
+                let fbLoginResult: LoginManagerLoginResult  = result!
                 
                 if( result?.isCancelled)!{
                     return }
@@ -138,8 +141,8 @@ class LoginScreenTableViewCell: UITableViewCell, UITextFieldDelegate {
             }  }
     }
     func getFbId()->Void{
-        if(FBSDKAccessToken.current() != nil){
-            FBSDKGraphRequest(graphPath: "me", parameters: ["fields": "id,name , first_name, last_name , email,picture.type(large)"]).start(completionHandler: { (connection, result, error) in
+        if(AccessToken.current != nil){
+            GraphRequest(graphPath: "me", parameters: ["fields": "id,name , first_name, last_name , email,picture.type(large)"]).start(completionHandler: { (connection, result, error) in
                 guard let Info = result as? [String: Any] else { return }
                 print("FacebookID : ")
                 print(Info["id"]!)
@@ -151,8 +154,8 @@ class LoginScreenTableViewCell: UITableViewCell, UITextFieldDelegate {
                 }
                 if(error == nil){
                     let user = User();
-                    print(FBSDKAccessToken.current().tokenString)
-                    user.facebookAccessToken = String(FBSDKAccessToken.current().tokenString as! String);
+                    print(AccessToken.current!.tokenString)
+                    user.facebookAccessToken = String(AccessToken.current!.tokenString as! String);
                     user.facebookId = String(Info["id"] as! String)
                     user.username = String(Info["email"]as! String)
                     user.name = String(Info["name"] as! String)

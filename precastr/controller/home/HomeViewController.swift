@@ -276,6 +276,7 @@ class HomeViewController: UIViewController {
     }
     
     @objc func postDescriptionPressed(sender: MyTapRecognizer){
+       
         let viewController = self.storyboard?.instantiateViewController(withIdentifier: "CommunicationViewController") as! CommunicationViewController;
         viewController.post = self.posts[sender.rowId];
         self.navigationController?.pushViewController(viewController, animated: true);

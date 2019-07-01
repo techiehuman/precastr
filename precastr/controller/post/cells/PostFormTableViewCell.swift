@@ -200,6 +200,8 @@ class PostFormTableViewCell: UITableViewCell, UITextViewDelegate, PostFormCellPr
                 postData["post_id"] = self.createPostViewControllerDelegate.post.postId
                 if(self.changeStatusBtn.titleLabel?.text == "Rejected" && loggedInUser.isCastr == 1){
                      postData["post_status_id"] = 1
+                }else{
+                    postData["post_status_id"] = self.createPostViewControllerDelegate.post.postStatusId
                 }
                
                 if(loggedInUser.isCastr == 2){
@@ -340,32 +342,32 @@ class PostFormTableViewCell: UITableViewCell, UITextViewDelegate, PostFormCellPr
     }
     func facebookSocialSync() {
             
-            let fbloginManger: FBSDKLoginManager = FBSDKLoginManager()
+        let fbloginManger: LoginManager = LoginManager()
             /*CODE FOR LOGOUT */
-            FBSDKAccessToken.setCurrent(nil)
-            FBSDKProfile.setCurrent(nil)
+            AccessToken.current = nil
+            Profile.current = nil
             
-            FBSDKLoginManager().logOut()
+            LoginManager().logOut()
             let cookies = HTTPCookieStorage.shared
             let facebookCookies = cookies.cookies(for: URL(string: "https://facebook.com/")!)
             for cookie in facebookCookies! {
                 cookies.deleteCookie(cookie )
             }
             /* CODE FOR LOGOUT */
-            fbloginManger.logIn(withReadPermissions: ["email"], from:createPostViewControllerDelegate) {(result, error) -> Void in
+        fbloginManger.logIn(permissions: ["email"], from:createPostViewControllerDelegate) {(result, error) -> Void in
                 if(error == nil){
-                    let fbLoginResult: FBSDKLoginManagerLoginResult  = result!
+                    let fbLoginResult: LoginManagerLoginResult  = result!
                     
                     if( result?.isCancelled)!{
                         return }
                     
                     
                     if(fbLoginResult .grantedPermissions.contains("email")){
-                        FBSDKGraphRequest(graphPath: "me", parameters: ["fields": "id"]).start(completionHandler: { (connection, result, error) in
+                        GraphRequest(graphPath: "me", parameters: ["fields": "id"]).start(completionHandler: { (connection, result, error) in
                             guard let Info = result as? [String: Any] else { return }
                             let user = User();
-                            print(FBSDKAccessToken.current().tokenString)
-                            user.facebookAccessToken = String(FBSDKAccessToken.current().tokenString as! String);
+                            print(AccessToken.current!.tokenString)
+                            user.facebookAccessToken = String(AccessToken.current!.tokenString as! String);
                             user.facebookId = String(Info["id"] as! String)
                             
                             user.isFacebook = 1;

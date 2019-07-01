@@ -16,6 +16,9 @@ class HomeTextPostTableViewCell: UITableViewCell,UIScrollViewDelegate {
         //self.postImageCollectionView.register(UINib.init(nibName: "PostImageCollectionViewCell", bundle: Bundle.main), forCellWithReuseIdentifier: "PostImageCollectionViewCell")
         self.imageGalleryScrollView.delegate = self
         self.imageCounterView.layer.cornerRadius = 10
+      
+            
+       
     }
 
     @IBOutlet weak var profilePicImageView: UIImageView!

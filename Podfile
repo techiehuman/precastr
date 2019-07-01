@@ -6,17 +6,18 @@ target 'precastr' do
   use_frameworks!
   
 pod 'FacebookSDK'
-pod 'FacebookSDK/LoginKit'
-pod 'FacebookSDK/ShareKit'
-pod 'FacebookSDK/PlacesKit'
-  
-pod 'FBSDKMessengerShareKit'
+pod 'FBSDKCoreKit'
+pod 'FBSDKShareKit'
+pod 'FBSDKLoginKit'
 
 pod 'TwitterKit'
 pod 'Alamofire'
 pod 'SDWebImage', '~> 4.0'
 pod 'BSImagePicker'
 
+
+pod 'Fabric'
+pod 'Crashlytics'
 
   # Pods for precastr
 

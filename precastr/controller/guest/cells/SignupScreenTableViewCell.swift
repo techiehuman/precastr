@@ -134,21 +134,21 @@ class SignupScreenTableViewCell: UITableViewCell, UITextFieldDelegate, SignupCel
         
     }
     @IBAction func facebookSignupClicked(_ sender: Any) {
-        let fbloginManger: FBSDKLoginManager = FBSDKLoginManager()
+        let fbloginManger: LoginManager = LoginManager()
         /*CODE FOR LOGOUT */
-        FBSDKAccessToken.setCurrent(nil)
-        FBSDKProfile.setCurrent(nil)
+        AccessToken.current = nil
+        Profile.current = nil
         
-        FBSDKLoginManager().logOut()
+        LoginManager().logOut()
         let cookies = HTTPCookieStorage.shared
         let facebookCookies = cookies.cookies(for: URL(string: "https://facebook.com/")!)
         for cookie in facebookCookies! {
             cookies.deleteCookie(cookie )
         }
         /* CODE FOR LOGOUT */
-        fbloginManger.logIn(withReadPermissions: ["email"], from:self.signupScreenViewDelegate) {(result, error) -> Void in
+        fbloginManger.logIn(permissions: ["email"], from:self.signupScreenViewDelegate) {(result, error) -> Void in
             if(error == nil){
-                let fbLoginResult: FBSDKLoginManagerLoginResult  = result!
+                let fbLoginResult: LoginManagerLoginResult  = result!
                 
                 if( result?.isCancelled)!{
                     return }
@@ -204,8 +204,8 @@ class SignupScreenTableViewCell: UITableViewCell, UITextFieldDelegate, SignupCel
     }
     
     func getFbId()->Void{
-        if(FBSDKAccessToken.current() != nil){
-            FBSDKGraphRequest(graphPath: "me", parameters: ["fields": "id,name , first_name, last_name , email,picture.type(large)"]).start(completionHandler: { (connection, result, error) in
+        if(AccessToken.current != nil){
+            GraphRequest(graphPath: "me", parameters: ["fields": "id,name , first_name, last_name , email,picture.type(large)"]).start(completionHandler: { (connection, result, error) in
                 guard let Info = result as? [String: Any] else { return }
                 print("FacebookID : ")
                 var profilePic :String = "";
@@ -216,8 +216,8 @@ class SignupScreenTableViewCell: UITableViewCell, UITextFieldDelegate, SignupCel
                 }
                 if(error == nil){
                     let user = User();
-                    print(FBSDKAccessToken.current().tokenString)
-                    user.facebookAccessToken = String(FBSDKAccessToken.current().tokenString as! String);
+                    print(AccessToken.current!.tokenString)
+                    user.facebookAccessToken = String(AccessToken.current!.tokenString as! String);
                     user.facebookId = String(Info["id"] as! String)
                     user.username = String(Info["email"]as! String)
                     user.name = String(Info["name"] as! String)
