@@ -16,7 +16,7 @@ class HttpService {
         let manager = Alamofire.SessionManager.default
         manager.session.configuration.timeoutIntervalForRequest = 500;
 
-        let Auth_header    = ["X-API-KEY" : ApiToken]
+        let Auth_header    = ["X-API-KEY" : ApiToken, "Connection": "Close"]
 
         manager.request("\(url)", method: .get , parameters: nil, encoding: JSONEncoding.default,headers: Auth_header).validate(statusCode: 200..<300).responseJSON { (response ) in
             var returnDict = NSDictionary();
@@ -43,7 +43,7 @@ class HttpService {
     }
     func postMethod(url: String, postData: [String: Any], complete: @escaping(NSDictionary)->Void) {
         
-        let Auth_header = [ "X-API-KEY" : ApiToken ]
+        let Auth_header = [ "X-API-KEY" : ApiToken , "Connection": "Close"]
         let manager = Alamofire.SessionManager.default
         manager.session.configuration.timeoutIntervalForRequest = 500
 
@@ -75,7 +75,7 @@ class HttpService {
         
         let imgData = UIImageJPEGRepresentation(image, 0.2)!
         
-        let Auth_header =  [ "X-API-KEY" : ApiToken ]
+        let Auth_header =  [ "X-API-KEY" : ApiToken , "Connection": "Close"]
         let manager = Alamofire.SessionManager.default
         manager.session.configuration.timeoutIntervalForRequest = 500
 
@@ -130,7 +130,7 @@ class HttpService {
         
         
         
-        let Auth_header =  [ "X-API-KEY" : ApiToken ]
+        let Auth_header =  [ "X-API-KEY" : ApiToken , "Connection": "Close"]
         var key = 0
       
         let manager = Alamofire.SessionManager.default
@@ -194,7 +194,7 @@ class HttpService {
     
     func postMultipartImageForPostCommunication(url: String, image: [UIImage], postData: [String:Any], complete: @escaping(NSDictionary)->Void) {
 
-        let Auth_header =  [ "X-API-KEY" : ApiToken ]
+        let Auth_header =  [ "X-API-KEY" : ApiToken , "Connection": "Close"]
         var key = 0
         
         let manager = Alamofire.SessionManager.default
@@ -256,7 +256,7 @@ class HttpService {
         
         let imgData = UIImageJPEGRepresentation(image, 0.2)!
         
-        let Auth_header =  [ "X-API-KEY" : ApiToken ]
+        let Auth_header =  [ "X-API-KEY" : ApiToken , "Connection": "Close"]
         
         let manager = Alamofire.SessionManager.default
         manager.session.configuration.timeoutIntervalForRequest = 500
