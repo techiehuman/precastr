@@ -24,6 +24,7 @@
 		5EF623F622A588E900124C55 /* PostFormTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5EF623F422A588E900124C55 /* PostFormTableViewCell.xib */; };
 		5EF623F822A58ADB00124C55 /* CreatePostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF623F722A58ADB00124C55 /* CreatePostViewController.swift */; };
 		5F7380ED63B94D468C59736D /* Pods_precastrTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A62D95851A596AF11E67E59A /* Pods_precastrTests.framework */; };
+		90115A8022CCD1C80035EA39 /* Tatsi in Resources */ = {isa = PBXBuildFile; fileRef = 90115A7F22CCD1C70035EA39 /* Tatsi */; };
 		908D6F3122C241F800762145 /* commonExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 908D6F3022C241F800762145 /* commonExtension.swift */; };
 		908D6F3322C243D800762145 /* PostStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 908D6F3222C243D800762145 /* PostStatus.swift */; };
 		E8228EE2367B10CD930B1123 /* Pods_precastr.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 220036CD76F7644A5FF36C62 /* Pods_precastr.framework */; };
@@ -132,6 +133,7 @@
 		5EF623F422A588E900124C55 /* PostFormTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PostFormTableViewCell.xib; sourceTree = "<group>"; };
 		5EF623F722A58ADB00124C55 /* CreatePostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePostViewController.swift; sourceTree = "<group>"; };
 		6577135BB253B3BD32B16155 /* Pods-precastrTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-precastrTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-precastrTests/Pods-precastrTests.debug.xcconfig"; sourceTree = "<group>"; };
+		90115A7F22CCD1C70035EA39 /* Tatsi */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Tatsi; sourceTree = "<group>"; };
 		908D6F3022C241F800762145 /* commonExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = commonExtension.swift; sourceTree = "<group>"; };
 		908D6F3222C243D800762145 /* PostStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostStatus.swift; sourceTree = "<group>"; };
 		9562719E26A20DC50B681220 /* Pods-precastrUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-precastrUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-precastrUITests/Pods-precastrUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -354,6 +356,7 @@
 		FA6AB56F22531E7200C5491F = {
 			isa = PBXGroup;
 			children = (
+				90115A7F22CCD1C70035EA39 /* Tatsi */,
 				FA6AB57A22531E7200C5491F /* precastr */,
 				FA6AB58F22531E8200C5491F /* precastrTests */,
 				FA6AB59A22531E8200C5491F /* precastrUITests */,
@@ -696,6 +699,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				90115A8022CCD1C80035EA39 /* Tatsi in Resources */,
 				FA6AB58622531E8200C5491F /* LaunchScreen.storyboard in Resources */,
 				FADFEAFE22A51A46006E3CD2 /* VisbyCF-MediumOblique.otf in Resources */,
 				FADFEB0022A51A46006E3CD2 /* VisbyCF-RegularOblique.otf in Resources */,
@@ -809,17 +813,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-precastr/Pods-precastr-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-precastr/Pods-precastr-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
-			outputPaths = (
-			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-precastr/Pods-precastr-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-precastr/Pods-precastr-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		BB0D93AF64E05C94D2298CE3 /* [CP] Check Pods Manifest.lock */ = {
@@ -848,17 +848,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-precastr/Pods-precastr-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-precastr/Pods-precastr-resources-${CONFIGURATION}-output-files.xcfilelist",
 			);
-			outputPaths = (
-			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-precastr/Pods-precastr-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-precastr/Pods-precastr-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */

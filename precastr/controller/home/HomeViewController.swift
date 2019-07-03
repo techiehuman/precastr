@@ -117,12 +117,6 @@ class HomeViewController: UIViewController {
         noPostsText.text = "Loading, please wait...";
         noPostsText.frame = CGRect.init(x: noPostsText.frame.origin.x, y: noPostsText.frame.origin.y, width: noPostsText.frame.width, height: 25)
         noPostsText.numberOfLines = 1;
-        
-        if (loggedInUser.isCastr == 1) {
-            self.loadUserPosts();
-        } else if (loggedInUser.isCastr == 2) {
-            loadModeratorUserPosts();
-        }
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

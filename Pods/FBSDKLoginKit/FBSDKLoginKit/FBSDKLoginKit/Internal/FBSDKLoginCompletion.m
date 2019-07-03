@@ -189,7 +189,7 @@ static void FBSDKLoginRequestMeAndPermissions(FBSDKLoginCompletionParameters *pa
   _parameters.dataAccessExpirationDate = dataAccessExpirationDate;
 
   NSError *error = nil;
-  NSDictionary<id, id> *state = [FBSDKInternalUtility objectForJSONString:parameters[@"state"] error:&error];
+  NSDictionary<id, id> *state = [FBSDKBasicUtility objectForJSONString:parameters[@"state"] error:&error];
   _parameters.challenge = [FBSDKUtility URLDecode:state[@"challenge"]];
 }
 

@@ -77,8 +77,8 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
         self.textArea.layer.cornerRadius = 4;
         self.textArea.layer.borderWidth = 1;
         self.textArea.layer.borderColor = UIColor(red: 112/255, green: 112/255, blue: 112/255, alpha: 1).cgColor;
-        self.textArea.text = "Type a message..."
-        self.textArea.textColor = UIColor.lightGray
+       /* self.textArea.text = "Type a message..."
+        self.textArea.textColor = UIColor.lightGray */
 
         self.editPostBtn.layer.cornerRadius = 4;
         
@@ -127,7 +127,7 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
 
     override func viewWillAppear(_ animated: Bool) {
         
-        self.getPostCommunications();
+       // self.getPostCommunications();
 
         self.communicationTableView.reloadData();
     }
@@ -409,16 +409,17 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
                 
                 
                 manager.requestImage(for: SelectedAssets[i], targetSize: CGSize(width: 200, height: 200), contentMode: .aspectFill, options: option, resultHandler: {(result, info)->Void in
+                    if(result != nil){
                     thumbnail = result!
-                    
+                    }
                 })
-                
+                if(thumbnail != nil){
                 let data = UIImageJPEGRepresentation(thumbnail, 0.7)
                 let newImage = UIImage(data: data!)
                 
                 
                 PhotoArray.append(newImage! as UIImage)
-                
+                }
             }
             // self.imgView.animationImages = self.PhotoArray
             //self.imgView.animationDuration = 3.0
@@ -626,12 +627,12 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
         }
     }
 
-    func textViewDidEndEditing(_ textView: UITextView) {
+    /*func textViewDidEndEditing(_ textView: UITextView) {
         if self.textArea.text.isEmpty {
             self.textArea.text = "Type a message..."
             self.textArea.textColor = UIColor.lightGray
         }
-    }
+    } */
 
     
 }

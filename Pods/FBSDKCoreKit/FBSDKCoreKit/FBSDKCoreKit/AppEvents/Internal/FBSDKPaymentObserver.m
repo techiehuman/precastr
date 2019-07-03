@@ -321,17 +321,18 @@ static NSMutableArray *g_pendingRequestors;
 #if __IPHONE_OS_VERSION_MAX_ALLOWED > __IPHONE_11_4
 #if __IPHONE_OS_VERSION_MAX_ALLOWED > __IPHONE_12_1
   // promotional offer starting from iOS 12.2
-  if (@available(iOS 12.2, *)) {
+  /*if (@available(iOS 12.2, *)) {
       SKProductDiscount *paymentDiscount = transaction.payment;
     if (paymentDiscount) {
       NSArray<SKProductDiscount *> *discounts = product;
       for (SKProductDiscount *discount in discounts) {
-        if (discount.paymentMode == SKProductDiscountPaymentModeFreeTrial) {
+        if (discount.paymentMode == SKProductDiscountPaymentModeFreeTrial &&
+            [paymentDiscount.identifier isEqualToString:discount]) {
           return YES;
         }
       }
     }
-  }
+  }*/
 #endif
 #endif
   // introductory offer starting from iOS 11.2

@@ -198,16 +198,20 @@ class CreatePostViewController: UIViewController, UIImagePickerControllerDelegat
                 
                 
                 manager.requestImage(for: SelectedAssets[i], targetSize: CGSize(width: 512, height: 512), contentMode: .aspectFill, options: option, resultHandler: {(result, info)->Void in
+                    if(result != nil){
                     thumbnail = result!
-                    
+                    }else{
+                        let message = "Error in Image loading..."
+                        self.showAlert(title: "Error", message: message);
+                    }
                 })
-                
+                if(thumbnail != nil){
                 let data = UIImageJPEGRepresentation(thumbnail, 0.7)
                 let newImage = UIImage(data: data!)
                 
                 
                 PhotoArray.append(newImage! as UIImage)
-                
+                }
             }
             // self.imgView.animationImages = self.PhotoArray
             //self.imgView.animationDuration = 3.0
