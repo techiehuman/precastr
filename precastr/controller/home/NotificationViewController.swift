@@ -20,6 +20,7 @@ class NotificationViewController: UIViewController {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
+        self.setupNavigationBar();
         // Do any additional setup after loading the view.
         notificationTableView.register(UINib.init(nibName: "NotificationTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "NotificationTableViewCell");
         self.hideKeyboadOnTapOutside();
@@ -51,7 +52,7 @@ class NotificationViewController: UIViewController {
                 
             }
         });
-
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -59,7 +60,8 @@ class NotificationViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     override func viewWillAppear(_ animated: Bool) {
-        self.loadNotifications();
+        self.setupNavigationBar();
+      //  self.loadNotifications();
     }
 
     func loadNotifications() {
@@ -75,8 +77,12 @@ class NotificationViewController: UIViewController {
                 self.showAlert(title: "Error", message: message);
             }else{
                  self.modeArray = response.value(forKey: "data") as! NSArray;
-                self.notificationTableView.isHidden =  false;
-                self.notificationTableView.reloadData()
+                if(self.modeArray.count == 0){
+                    self.notificationTableView.isHidden =  true;
+                }else{
+                    self.notificationTableView.isHidden =  false;
+                    self.notificationTableView.reloadData()
+                }
             }
         });
     }
@@ -89,7 +95,21 @@ class NotificationViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
-
+    func setupNavigationBar(){
+        let menuButton = UIButton();
+        menuButton.setImage(UIImage.init(named: "menu"), for: .normal);
+        menuButton.addTarget(self, action: #selector(menuButtonClicked), for: UIControlEvents.touchUpInside)
+        menuButton.frame = CGRect.init(x: 0, y:0, width: 24, height: 24);
+        
+        let barButton = UIBarButtonItem(customView: menuButton)
+        
+        navigationItem.rightBarButtonItem = barButton;
+        navigationItem.rightBarButtonItem?.tintColor = UIColor(red: 12/255, green: 111/255, blue: 233/255, alpha: 1);
+    }
+    @objc func menuButtonClicked() {
+        let viewController: SideMenuTableViewController = self.storyboard?.instantiateViewController(withIdentifier: "SideMenuTableViewController") as! SideMenuTableViewController;
+        self.navigationController?.pushViewController(viewController, animated: true);
+    }
 }
 extension NotificationViewController: UITableViewDelegate, UITableViewDataSource {
     
