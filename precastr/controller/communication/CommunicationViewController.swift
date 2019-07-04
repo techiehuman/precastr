@@ -412,7 +412,7 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
                 let manager = PHImageManager.default()
                 let option = PHImageRequestOptions()
                 var thumbnail = UIImage()
-                option.isSynchronous = true
+                option.isSynchronous = false
                 option.isNetworkAccessAllowed = true
                 
                 manager.requestImage(for: SelectedAssets[i], targetSize: CGSize(width: 200, height: 200), contentMode: .aspectFill, options: option, resultHandler: {(result, info)->Void in

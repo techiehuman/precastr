@@ -161,7 +161,7 @@ class CreatePostViewController: UIViewController, UIImagePickerControllerDelegat
                 
                 let manager = PHImageManager.default()
                 let option = PHImageRequestOptions()
-                option.isSynchronous = false
+                option.isSynchronous = true
                 option.isNetworkAccessAllowed = true
 
                 var thumbnail = UIImage();
