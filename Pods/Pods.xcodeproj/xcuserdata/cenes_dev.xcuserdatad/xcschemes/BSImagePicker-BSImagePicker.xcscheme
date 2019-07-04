@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0930"
+   LastUpgradeVersion = "1020"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "466C5BA684EB3E27C625FBD78F37DE7A"
+               BlueprintIdentifier = "ADFE04AD564E55DB18E4D4504948F4CA"
                BuildableName = "BSImagePicker.bundle"
                BlueprintName = "BSImagePicker-BSImagePicker"
                ReferencedContainer = "container:Pods.xcodeproj">
@@ -45,7 +45,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "466C5BA684EB3E27C625FBD78F37DE7A"
+            BlueprintIdentifier = "ADFE04AD564E55DB18E4D4504948F4CA"
             BuildableName = "BSImagePicker.bundle"
             BlueprintName = "BSImagePicker-BSImagePicker"
             ReferencedContainer = "container:Pods.xcodeproj">
