@@ -24,7 +24,8 @@ import UIKit
 import Photos
 import BSGridCollectionViewLayout
 
-final class PhotosViewController : UICollectionViewController {    
+final class PhotosViewController : UICollectionViewController {
+    
     var selectionClosure: ((_ asset: PHAsset) -> Void)?
     var deselectionClosure: ((_ asset: PHAsset) -> Void)?
     var cancelClosure: ((_ assets: [PHAsset]) -> Void)?
@@ -37,6 +38,7 @@ final class PhotosViewController : UICollectionViewController {
     
     let expandAnimator = ZoomAnimator()
     let shrinkAnimator = ZoomAnimator()
+    var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView();
     
     private var photosDataSource: PhotoCollectionViewDataSource?
     private var albumsDataSource: AlbumTableViewDataSource
@@ -88,7 +90,7 @@ final class PhotosViewController : UICollectionViewController {
         
         // Set an empty title to get < back button
         title = " "
-        
+
         // Set button actions and add them to navigation item
         doneBarButton?.target = self
         doneBarButton?.action = #selector(PhotosViewController.doneButtonPressed(_:))
@@ -116,15 +118,28 @@ final class PhotosViewController : UICollectionViewController {
         // Register cells
         photosDataSource?.registerCellIdentifiersForCollectionView(collectionView)
         cameraDataSource.registerCellIdentifiersForCollectionView(collectionView)
+        
+        activityIndicator.center = view.center;
+        activityIndicator.hidesWhenStopped = true;
+        activityIndicator.style = UIActivityIndicatorView.Style.gray;
+        self.view.addSubview(activityIndicator);
+
     }
     
     // MARK: Appear/Disappear
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        updateDoneButton()
+        updateDoneButton();
+        
     }
     
+    func showAlert(title: String, message: String) {
+        let alert = UIAlertController.init(title: title, message: message, preferredStyle: .alert);
+        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil));
+        self.present(alert, animated: true)
+    }
+
     // MARK: Button actions
     @objc func cancelButtonPressed(_ sender: UIBarButtonItem) {
         dismiss(animated: true, completion: nil)
@@ -134,6 +149,9 @@ final class PhotosViewController : UICollectionViewController {
     @objc func doneButtonPressed(_ sender: UIBarButtonItem) {
         dismiss(animated: true, completion: nil)
         finishClosure?(assetStore.assets)
+        
+        self.showAlert(title: "Alert" ,message: "Please wait, while images are being\ndownloaded form icloud");
+
     }
     
     @objc func albumButtonPressed(_ sender: UIButton) {

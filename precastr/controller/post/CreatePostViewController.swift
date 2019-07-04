@@ -87,9 +87,6 @@ class CreatePostViewController: UIViewController, UIImagePickerControllerDelegat
             navigationItem.leftBarButtonItem = barBackButton;
             self.navigationItem.title = "Update Cast";
         }
-
-        
-
     }
     /*
     // MARK: - Navigation
@@ -132,11 +129,11 @@ class CreatePostViewController: UIViewController, UIImagePickerControllerDelegat
         
         // create an instance
         let vc = BSImagePickerViewController()
-        
+
         //display picture gallery
         self.bs_presentImagePickerController(vc, animated: true,
                                              select: { (asset: PHAsset) -> Void in
-                                                
+
         }, deselect: { (asset: PHAsset) -> Void in
             // User deselected an assets.
             
@@ -160,23 +157,25 @@ class CreatePostViewController: UIViewController, UIImagePickerControllerDelegat
         
         if SelectedAssets.count != 0{
             
-            
             for i in 0..<SelectedAssets.count{
                 
                 let manager = PHImageManager.default()
                 let option = PHImageRequestOptions()
-                var thumbnail = UIImage()
-                option.isSynchronous = true
-                
+                option.isSynchronous = false
+                option.isNetworkAccessAllowed = true
+
+                var thumbnail = UIImage();
                 
                 manager.requestImage(for: SelectedAssets[i], targetSize: CGSize(width: 512, height: 512), contentMode: .aspectFill, options: option, resultHandler: {(result, info)->Void in
-                    if(result != nil){
-                    thumbnail = result!
-                        
-                    let data = UIImageJPEGRepresentation(thumbnail, 0.7)
-                    let newImage = UIImage(data: data!)
                     
-                    self.PhotoArray.append(newImage! as UIImage)
+                    
+                    if(result != nil){
+                        thumbnail = result!
+                        
+                        let data = UIImageJPEGRepresentation(thumbnail, 0.7)
+                        let newImage = UIImage(data: data!)
+                        
+                        self.PhotoArray.append(newImage! as UIImage)
                         
                     }else{
                         let message = "Error in Image loading..."
@@ -185,6 +184,8 @@ class CreatePostViewController: UIViewController, UIImagePickerControllerDelegat
                 })
                 
             }
+            
+            //activityIndicator.stopAnimating();
             // self.imgView.animationImages = self.PhotoArray
             //self.imgView.animationDuration = 3.0
             //self.imgView.startAnimating()
