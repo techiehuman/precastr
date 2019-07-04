@@ -53,6 +53,8 @@ class CreatePostViewController: UIViewController, UIImagePickerControllerDelegat
         // Do any additional setup after loading the view.
         self.socialMediaPlatform = [Int]();
         social = SocialPlatform().loadSocialDataFromUserDefaults();
+        self.getUserDetail();
+        
 
     }
     
@@ -87,37 +89,7 @@ class CreatePostViewController: UIViewController, UIImagePickerControllerDelegat
         }
 
         
-        DispatchQueue.global(qos: .background).async {
-            let jsonURL = "user/get_user_details/format/json";
-            self.postArray["user_id"] = String(self.loggedInUser.userId)
-            UserService().postDataMethod(jsonURL: jsonURL, postData: self.postArray, complete: {(response) in
-                print(response);
-                
-                let status = Int(response.value(forKey: "status") as! String)!
-                if (status == 0) {
-                    let message = response.value(forKey: "message") as! String;
-                    self.showAlert(title: "Error", message: message);
-                    
-                } else {
-                    let modeArray = response.value(forKey: "data") as! NSDictionary;
-                    let tokens  = modeArray.value(forKey: "tokens") as! NSArray
-                    for mode in tokens{
-                        var modeDict = mode as! NSDictionary;
-                        // self.moderators.append(String((modeDict.value(forKey: "username") as! NSString) as String)!);
-                        print(modeDict.value(forKey: "type") as! String);
-                        if(modeDict.value(forKey: "type") as! String == "Facebook") {
-                            self.facebookExists = true
-                        }
-                        if(modeDict.value(forKey: "type") as! String == "Twitter") {
-                            self.twitterExists = true
-                        }
-                        
-                    }
-                    print(self.facebookExists)
-                    print(self.twitterExists)
-                }
-            });
-        }
+
     }
     /*
     // MARK: - Navigation
@@ -230,6 +202,39 @@ class CreatePostViewController: UIViewController, UIImagePickerControllerDelegat
     @objc func menuButtonClicked() {
         let viewController: SideMenuTableViewController = self.storyboard?.instantiateViewController(withIdentifier: "SideMenuTableViewController") as! SideMenuTableViewController;
         self.navigationController?.pushViewController(viewController, animated: true);
+    }
+    func getUserDetail(){
+        DispatchQueue.global(qos: .background).async {
+            let jsonURL = "user/get_user_details/format/json";
+            self.postArray["user_id"] = String(self.loggedInUser.userId)
+            UserService().postDataMethod(jsonURL: jsonURL, postData: self.postArray, complete: {(response) in
+                print(response);
+                
+                let status = Int(response.value(forKey: "status") as! String)!
+                if (status == 0) {
+                    let message = response.value(forKey: "message") as! String;
+                    self.showAlert(title: "Error", message: message);
+                    
+                } else {
+                    let modeArray = response.value(forKey: "data") as! NSDictionary;
+                    let tokens  = modeArray.value(forKey: "tokens") as! NSArray
+                    for mode in tokens{
+                        var modeDict = mode as! NSDictionary;
+                        // self.moderators.append(String((modeDict.value(forKey: "username") as! NSString) as String)!);
+                        print(modeDict.value(forKey: "type") as! String);
+                        if(modeDict.value(forKey: "type") as! String == "Facebook") {
+                            self.facebookExists = true
+                        }
+                        if(modeDict.value(forKey: "type") as! String == "Twitter") {
+                            self.twitterExists = true
+                        }
+                        
+                    }
+                    print(self.facebookExists)
+                    print(self.twitterExists)
+                }
+            });
+        }
     }
 }
 
