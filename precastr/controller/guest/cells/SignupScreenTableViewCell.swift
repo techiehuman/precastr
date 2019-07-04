@@ -24,6 +24,8 @@ class SignupScreenTableViewCell: UITableViewCell, UITextFieldDelegate, SignupCel
     @IBOutlet weak var cameraImage: UIImageView!
     
     @IBOutlet weak var loginBtn: UIButton!
+    
+    @IBOutlet weak var TermsLinkLabel: UILabel!
     var signupScreenViewDelegate: SignupScreenViewController!;
     var agreeCheckBox = false
 
@@ -83,6 +85,9 @@ class SignupScreenTableViewCell: UITableViewCell, UITextFieldDelegate, SignupCel
         
         let imageTapGesture = UITapGestureRecognizer.init(target: self, action: #selector(imageUploadClicked))
         cameraUIView.addGestureRecognizer(imageTapGesture);
+        
+        let termsLink = UITapGestureRecognizer.init(target: self, action: #selector(TermsLinkClicked))
+        TermsLinkLabel.addGestureRecognizer(termsLink);
         // Do any additional setup after loading the view.
     }
 
@@ -257,5 +262,9 @@ class SignupScreenTableViewCell: UITableViewCell, UITextFieldDelegate, SignupCel
             self.uploadImage.image = selectedImage;
             self.uploadImage.setNeedsDisplay();
         }
+    }
+    @objc func TermsLinkClicked(){
+        UIApplication.shared.openURL(NSURL(string: "http://precastr.com/terms-and-conditions-mobile.html")! as URL)
+        
     }
 }
