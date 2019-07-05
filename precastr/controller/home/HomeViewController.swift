@@ -186,7 +186,7 @@ class HomeViewController: UIViewController {
                 self.socialPostList.reloadData();
 
             } else {
-                self.noPostsText.text = "You do not have any casts, please check on \"Add New\" in order to create a new Cast !";
+                self.noPostsText.text = "You do not have any casts, please click on \"Add New\" in order to create a new Cast !";
                 self.noPostsText.frame = CGRect.init(x: self.noPostsText.frame.origin.x, y: self.noPostsText.frame.origin.y, width: self.noPostsText.frame.width, height: 70)
                 self.noPostsText.numberOfLines = 3;
                 

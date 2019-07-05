@@ -264,7 +264,15 @@ class SignupScreenTableViewCell: UITableViewCell, UITextFieldDelegate, SignupCel
         }
     }
     @objc func TermsLinkClicked(){
-        UIApplication.shared.openURL(NSURL(string: "http://precastr.com/terms-and-conditions-mobile.html")! as URL)
+        
+        
+        
+       // let tabBarContro = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "terms") as! UINavigationController
+       // let viewController: TermsPageViewController = signupScreenViewDelegate.storyboard?.instantiateViewController(withIdentifier: "TermsPageViewController") as! TermsPageViewController;
+        //signupScreenViewDelegate.navigationController?.pushViewController(tabBarContro, animated: true);
+        //UIApplication.shared.keyWindow?.rootViewController = tabBarContro;
+        
+        signupScreenViewDelegate.performSegue(withIdentifier: "terms", sender: signupScreenViewDelegate)
         
     }
 }

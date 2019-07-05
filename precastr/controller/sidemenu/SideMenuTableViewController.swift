@@ -122,14 +122,18 @@ class SideMenuTableViewController: UITableViewController {
 
         case 2://Moderators
             self.performSegue(withIdentifier: "moderatorSegue", sender: self);
-        case 3://Moderator
+        case 3://Casters
+            self.performSegue(withIdentifier: "casterSegue", sender: self);
+        case 4://Moderator
             print("")
             
-        case 4://FAQ
+        case 5://FAQ
             print("")
-        case 5://Terms ANd Conds
+           
+        case 6://Terms ANd Conds
+           self.performSegue(withIdentifier: "termSetting", sender: self)
             print("")
-        case 6:
+        case 7:
             self.logout();
 
         default:
@@ -148,8 +152,7 @@ class SideMenuTableViewController: UITableViewController {
                 return 50
             } else {
                 return 0;//If Logged In User is Moderator We will hide Moderators Row
-            }        case 5:
-            return 50;
+            }
         case 3:
             return 50;
         case 4:
