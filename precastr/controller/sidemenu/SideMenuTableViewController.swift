@@ -154,7 +154,11 @@ class SideMenuTableViewController: UITableViewController {
                 return 0;//If Logged In User is Moderator We will hide Moderators Row
             }
         case 3:
-            return 50;
+            if (loggedInUser.isCastr == 2) {//If Logged In User is Caster We will show Moderators Row
+                return 50
+            } else {
+                return 0;//If Logged In User is Moderator We will hide Moderators Row
+            }
         case 4:
             return 50;
         case 5:

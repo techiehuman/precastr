@@ -92,7 +92,8 @@ class CastersViewController: UIViewController,UITextFieldDelegate {
                     self.present(alert, animated: true)
                     
                 }else{
-                    UIApplication.shared.keyWindow?.rootViewController = HomeViewController.MainViewController();
+                   // UIApplication.shared.keyWindow?.rootViewController = HomeViewController.MainViewController();
+                    self.loadCasterData();
                 }
             });
         }
@@ -177,13 +178,13 @@ extension CastersViewController: UITableViewDelegate, UITableViewDataSource {
         
         if(moderatorObject.miscStatus == 1){
             cell.acceptActionBtn.isHidden = true
-           // cell.removeActionBtn.isHidden = false
+          //  cell.removeActionBtn.isHidden = false
             cell.removeActionBtn.tag = Int(moderatorObject.userId);
             cell.removeActionBtn.addTarget(self, action: #selector(removeActionPressed), for: .touchUpInside)
             
         }else{
-            cell.acceptActionBtn.isHidden = false
-           // cell.removeActionBtn.isHidden = true
+          //  cell.acceptActionBtn.isHidden = false
+            cell.removeActionBtn.isHidden = true
             cell.acceptActionBtn.tag = Int(moderatorObject.userId)
             cell.acceptActionBtn.addTarget(self, action: #selector(acceptActionPressed), for: .touchUpInside)
         }
@@ -259,7 +260,7 @@ extension CastersViewController: UITableViewDelegate, UITableViewDataSource {
                     user.profilePic = modeDict.value(forKey: "profile_pic") as! String
                     user.userId = Int32(((modeDict.value(forKey: "caster_id") as? NSString)?.doubleValue)!)
                    // let statusModerator = Int(((modeDict.value(forKey: "is_approved")as? NSString)?.doubleValue)!)
-                    let statusCaster = 1
+                    let statusCaster = Int(((modeDict.value(forKey: "is_approved")as? NSString)?.doubleValue)!)
                     user.miscStatus = statusCaster as! Int
                     if(statusCaster == 0){
                         
@@ -268,17 +269,26 @@ extension CastersViewController: UITableViewDelegate, UITableViewDataSource {
                         self.userListApproved.append(user)
                     }
                 }
-                if(self.userListPending.count > 0 ){
-                    moderatorDtoPending.sectionKey = "Pending Approval"
-                    moderatorDtoPending.sectionObjects = self.userListPending
-                    self.moderatorDto.append(moderatorDtoPending)
-                }
                 if(self.userListApproved.count > 0 ){
                     moderatorDtoApproved.sectionKey = "Approved Casters"
                     moderatorDtoApproved.sectionObjects = self.userListApproved
                     self.moderatorDto.append(moderatorDtoApproved)
                 }
-                self.casterList.reloadData();
+                if(self.userListPending.count > 0 ){
+                    moderatorDtoPending.sectionKey = "Pending Approval"
+                    moderatorDtoPending.sectionObjects = self.userListPending
+                    self.moderatorDto.append(moderatorDtoPending)
+                }
+               
+                
+                if (self.userListPending.count == 0 && self.userListApproved.count == 0) {
+                    self.casterList.isHidden = true
+                } else {
+                    
+                    self.casterList.isHidden = false
+                    self.casterList.reloadData();
+
+                }
             }
         });
     }
