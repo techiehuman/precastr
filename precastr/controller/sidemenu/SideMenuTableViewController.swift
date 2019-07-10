@@ -40,7 +40,7 @@ class SideMenuTableViewController: UITableViewController {
         } else if (self.loggedInUser.isCastr == 2) {
             moderatorRoleSwitch.setOn(true, animated: false);
         }
-        moderatorRoleSwitch.isEnabled = false;
+        //moderatorRoleSwitch.isEnabled = false;
         profilePic.sd_setImage(with: URL(string: self.loggedInUser.profilePic), placeholderImage: UIImage.init(named: "Moderate Casts"));
         
     }
@@ -64,6 +64,18 @@ class SideMenuTableViewController: UITableViewController {
         }
 
     }
+    
+    @IBAction func moderatorSwitchChanged(_ sender: Any) {
+        if (moderatorRoleSwitch.isOn == true) {
+            self.loggedInUser.isCastr = 2;
+            
+            User().updateUserRole(roleId: 2);
+        } else {
+            self.loggedInUser.isCastr = 1;
+            User().updateUserRole(roleId: 1);
+        }
+    }
+    
     
     func logout() {
         

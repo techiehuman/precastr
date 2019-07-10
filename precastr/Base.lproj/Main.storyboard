@@ -804,6 +804,9 @@
                                                         <bool key="isElement" value="NO"/>
                                                     </accessibility>
                                                     <color key="onTintColor" red="0.047058823529411764" green="0.43529411764705883" blue="0.9137254901960784" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <connections>
+                                                        <action selector="moderatorSwitchChanged:" destination="BfN-wQ-dnv" eventType="valueChanged" id="PIz-th-lfO"/>
+                                                    </connections>
                                                 </switch>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Moderator" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jVa-n4-UJt">
                                                     <rect key="frame" x="41" y="16" width="230" height="18"/>

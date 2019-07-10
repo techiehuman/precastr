@@ -484,12 +484,22 @@ class PostFormTableViewCell: UITableViewCell, UITextViewDelegate, PostFormCellPr
         // create an action
         for postStatus in postStatusList {
             
-            let pendingReviewAction: UIAlertAction = UIAlertAction(title: postStatus.title, style: .default) { action -> Void in
-                self.selectedPostStatusId = postStatus.postStatusId;
-                 self.changeStatusBtn.setTitle(postStatus.title, for: .normal);
-                self.updatePostStatus(postStatusId: self.selectedPostStatusId);
+            
+            if (self.loggedInUser.isCastr == 2) {
+                
+                //We will not moderator to Publish post
+                if (postStatus.title == "Published") {
+                    continue;
+                }
+                
+                let pendingReviewAction: UIAlertAction = UIAlertAction(title: postStatus.title, style: .default) { action -> Void in
+                    self.selectedPostStatusId = postStatus.postStatusId;
+                    self.changeStatusBtn.setTitle(postStatus.title, for: .normal);
+                    self.updatePostStatus(postStatusId: self.selectedPostStatusId);
+                }
+                actionSheetController.addAction(pendingReviewAction)
+
             }
-            actionSheetController.addAction(pendingReviewAction)
         }
         print("selectedPostStatusId")
         print(self.selectedPostStatusId)

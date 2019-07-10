@@ -154,4 +154,8 @@ class User  {
             setting.setValue(userData["profile_pic"], forKey: "profile_pic")
         }
     }
+    
+    func updateUserRole(roleId: Int8) {
+            setting.setValue(roleId, forKey: "default_role")
+    }
 }
