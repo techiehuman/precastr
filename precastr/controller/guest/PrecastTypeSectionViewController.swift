@@ -15,7 +15,7 @@ class PrecastTypeSectionViewController: UIViewController {
     
     @IBOutlet weak var commentView: UIView!
     
-    @IBOutlet weak var timeView: UIView!
+    //@IBOutlet weak var timeView: UIView!
     
     @IBOutlet weak var profilePic: UIImageView!
     
@@ -24,7 +24,7 @@ class PrecastTypeSectionViewController: UIViewController {
     @IBOutlet weak var commentateCheckBoxBtn: UIButton!
     
     
-    @IBOutlet weak var setIntervalCheckBoxBtn: UIButton!
+    //@IBOutlet weak var setIntervalCheckBoxBtn: UIButton!
     var cast_setting_id = 0;
     
     @IBAction func submitBtnClicked(_ sender: Any) {
@@ -62,7 +62,7 @@ class PrecastTypeSectionViewController: UIViewController {
         
         handView.roundView()
         commentView.roundView();
-        timeView.roundView();
+        //timeView.roundView();
         
         profilePic.roundImageView()
         
@@ -70,7 +70,7 @@ class PrecastTypeSectionViewController: UIViewController {
         
         self.moderateCheckBoxBtn.blueBorderWrap()
         self.commentateCheckBoxBtn.blueBorderWrap()
-        self.setIntervalCheckBoxBtn.blueBorderWrap()
+        //self.setIntervalCheckBoxBtn.blueBorderWrap()
         // Do any additional setup after loading the view.
         if(String(loggedInUser.profilePic) != ""){
             profilePic.sd_setImage(with: URL(string: loggedInUser.profilePic!), placeholderImage: UIImage.init(named: "Profile-1"));
@@ -108,17 +108,17 @@ class PrecastTypeSectionViewController: UIViewController {
         case 1: self.cast_setting_id = 1 //button1
         self.moderateCheckBoxBtn.checkedBtnState()
         self.commentateCheckBoxBtn.blueBorderWrap()
-        self.setIntervalCheckBoxBtn.blueBorderWrap()
+        //self.setIntervalCheckBoxBtn.blueBorderWrap()
         break;
         case 2: self.cast_setting_id = 2 //button2
         self.moderateCheckBoxBtn.blueBorderWrap()
         self.commentateCheckBoxBtn.checkedBtnState()
-        self.setIntervalCheckBoxBtn.blueBorderWrap()
+        //self.setIntervalCheckBoxBtn.blueBorderWrap()
         break;
         case 3: self.cast_setting_id = 3 //button3
         self.moderateCheckBoxBtn.blueBorderWrap()
         self.commentateCheckBoxBtn.blueBorderWrap()
-        self.setIntervalCheckBoxBtn.checkedBtnState()
+        //self.setIntervalCheckBoxBtn.checkedBtnState()
         break;
        
         default: self.cast_setting_id = 1
