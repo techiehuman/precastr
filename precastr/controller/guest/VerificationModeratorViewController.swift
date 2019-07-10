@@ -42,6 +42,7 @@ class VerificationModeratorViewController: UIViewController,UITextFieldDelegate 
             // Do any additional setup after loading the view.
         }
         // Do any additional setup after loading the view.
+        self.hideKeyboadOnTapOutside();
     }
 
     override func didReceiveMemoryWarning() {

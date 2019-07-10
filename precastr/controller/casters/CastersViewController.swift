@@ -27,12 +27,20 @@ class CastersViewController: UIViewController,UITextFieldDelegate {
     var contactsSelected = [String]();
     override func viewDidLoad() {
         super.viewDidLoad()
+        verifyCode1.layer.borderColor = UIColor(red: 112/255, green: 112/255, blue: 112/255, alpha: 1).cgColor
+        verifyCode1.layer.borderWidth = 0.5
+        verifyCode2.layer.borderColor = UIColor(red: 112/255, green: 112/255, blue: 112/255, alpha: 1).cgColor
+        verifyCode2.layer.borderWidth = 0.5
+        verifyCode3.layer.borderColor = UIColor(red: 112/255, green: 112/255, blue: 112/255, alpha: 1).cgColor
+        verifyCode3.layer.borderWidth = 0.5
+        verifyCode4.layer.borderColor = UIColor(red: 112/255, green: 112/255, blue: 112/255, alpha: 1).cgColor
+        verifyCode4.layer.borderWidth = 0.5
         verifyCode1.addTarget(self, action: #selector(self.textFieldDidChange(textField:)), for: UIControlEvents.editingChanged);
         verifyCode2.addTarget(self, action: #selector(self.textFieldDidChange(textField:)), for: UIControlEvents.editingChanged);
         verifyCode3.addTarget(self, action: #selector(self.textFieldDidChange(textField:)), for: UIControlEvents.editingChanged);
         verifyCode4.addTarget(self, action: #selector(self.textFieldDidChange(textField:)), for: UIControlEvents.editingChanged);
         
-        verifyCode1.becomeFirstResponder();
+       // verifyCode1.becomeFirstResponder();
         loggedInUser = User().loadUserDataFromUserDefaults(userDataDict : setting);
         casterList.register(UINib(nibName: "moderatorTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "moderatorTableViewCell")
         
@@ -41,6 +49,7 @@ class CastersViewController: UIViewController,UITextFieldDelegate {
         self.inviteCodeSubmitButton.layer.cornerRadius = 4;
         self.loadCasterData();
         // Do any additional setup after loading the view.
+        self.hideKeyboadOnTapOutside();
     }
     @objc func textFieldDidChange(textField: UITextField) {
         
