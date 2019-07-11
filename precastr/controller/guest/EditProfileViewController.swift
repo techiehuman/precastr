@@ -51,6 +51,24 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
         navigationItem.rightBarButtonItem = barButton;
         navigationItem.rightBarButtonItem?.tintColor = UIColor(red: 12/255, green: 111/255, blue: 233/255, alpha: 1)
         self.tabBarController?.tabBar.isHidden = false;
+        
+        //If Logged in user is a moderator, then we will
+        self.loggedInUser = User().loadUserDataFromUserDefaults(userDataDict: setting);
+        if (loggedInUser.isCastr == 2) {
+            self.navigationItem.title = "Moderate Casts";
+            
+            if (self.tabBarController!.viewControllers?.count == 4) {
+                self.tabBarController!.viewControllers?.remove(at: 1)
+            }
+        } else {
+            self.navigationItem.title = "My Casts";
+            
+            if (self.tabBarController!.viewControllers?.count == 3) {
+                
+                var navController = self.storyboard?.instantiateViewController(withIdentifier: "CreateNewPostNavController") as! UINavigationController;
+                self.tabBarController!.viewControllers?.insert(navController, at: 1);
+            }
+        }
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		5E6BB7B222B530F500D92681 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E6BB7B122B530F500D92681 /* Post.swift */; };
+		5E93313022D70ED300980BF5 /* SideMenuDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E93312F22D70ED300980BF5 /* SideMenuDto.swift */; };
 		5E94973B22C280FE0023F30B /* PostService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E94973A22C280FE0023F30B /* PostService.swift */; };
 		5EB754DC22ABE125006D636B /* ForgetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EB754DB22ABE125006D636B /* ForgetPasswordViewController.swift */; };
 		5EB754DF22ABE136006D636B /* ForgetPasswordTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EB754DD22ABE136006D636B /* ForgetPasswordTableViewCell.swift */; };
@@ -118,6 +119,7 @@
 		561E50304594AB7F3B9F4993 /* Pods_precastrUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_precastrUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5E1217CE22A28EE90075961A /* precastr.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = precastr.entitlements; sourceTree = "<group>"; };
 		5E6BB7B122B530F500D92681 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
+		5E93312F22D70ED300980BF5 /* SideMenuDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuDto.swift; sourceTree = "<group>"; };
 		5E94973A22C280FE0023F30B /* PostService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostService.swift; sourceTree = "<group>"; };
 		5EB754DB22ABE125006D636B /* ForgetPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgetPasswordViewController.swift; sourceTree = "<group>"; };
 		5EB754DD22ABE136006D636B /* ForgetPasswordTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgetPasswordTableViewCell.swift; sourceTree = "<group>"; };
@@ -472,6 +474,7 @@
 			children = (
 				FA84F177229C5E7A007796A3 /* ModeratorsDto.swift */,
 				5EE9EBFE22B803C300FD04B6 /* HomeDto.swift */,
+				5E93312F22D70ED300980BF5 /* SideMenuDto.swift */,
 			);
 			path = dto;
 			sourceTree = "<group>";
@@ -893,6 +896,7 @@
 				FA4D544E2260F95200E9589B /* PrecastTypeSectionViewController.swift in Sources */,
 				FA6AB57E22531E7300C5491F /* ViewController.swift in Sources */,
 				9010B4AF22CF6D070083A468 /* CastersViewController.swift in Sources */,
+				5E93313022D70ED300980BF5 /* SideMenuDto.swift in Sources */,
 				FA72E17922624DC500A259A1 /* CastModeratorViewController.swift in Sources */,
 				5EEC6B6422A68450005B1C34 /* SignupScreenViewController.swift in Sources */,
 				FABF02502265DFBB0067960C /* SideMenuTableViewController.swift in Sources */,

@@ -91,15 +91,26 @@ class HomeViewController: UIViewController {
 
     }
     override func viewWillAppear(_ animated: Bool) {
-        
+        loggedInUser = User().loadUserDataFromUserDefaults(userDataDict : setting);
+
         self.tabBarController?.tabBar.isHidden = false;
         self.navigationController?.navigationBar.isHidden = false
         self.navigationController?.navigationBar.tintColor = UIColor(red: 12/255, green: 111/255, blue: 233/255, alpha: 1)
         //If Logged in user is a moderator, then we will
         if (loggedInUser.isCastr == 2) {
             self.navigationItem.title = "Moderate Casts";
+            
+            if (self.tabBarController!.viewControllers?.count == 4) {
+                self.tabBarController!.viewControllers?.remove(at: 1)
+            }
         } else {
             self.navigationItem.title = "My Casts";
+            
+            if (self.tabBarController!.viewControllers?.count == 3) {
+                
+                var navController = self.storyboard?.instantiateViewController(withIdentifier: "CreateNewPostNavController") as! UINavigationController;
+                self.tabBarController!.viewControllers?.insert(navController, at: 1);
+            }
         }
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: nil);
@@ -117,6 +128,13 @@ class HomeViewController: UIViewController {
         noPostsText.text = "Loading, please wait...";
         noPostsText.frame = CGRect.init(x: noPostsText.frame.origin.x, y: noPostsText.frame.origin.y, width: noPostsText.frame.width, height: 25)
         noPostsText.numberOfLines = 1;
+        
+        if (loggedInUser.isCastr == 1) {
+            self.loadUserPosts();
+        } else if (loggedInUser.isCastr == 2) {
+            loadModeratorUserPosts();
+        }
+
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

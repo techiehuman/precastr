@@ -86,8 +86,13 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
         self.changeStatusBtn.layer.borderWidth = 1;
         self.changeStatusBtn.layer.borderColor = UIColor(red: 112/255, green: 112/255, blue: 112/255, alpha: 1).cgColor;
        
-        if(loggedInUser.isCastr == 1){
-            self.changeStatusBtn.isHidden = true
+        if(loggedInUser.isCastr == 1) {
+            
+            if (self.post.status == "Approved") {
+                self.changeStatusBtn.isHidden = false
+            } else {
+                self.changeStatusBtn.isHidden = true
+            }
         }
         
         
@@ -128,8 +133,25 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
     override func viewWillAppear(_ animated: Bool) {
         
        // self.getPostCommunications();
-
         self.communicationTableView.reloadData();
+        
+        //If Logged in user is a moderator, then we will
+        self.loggedInUser = User().loadUserDataFromUserDefaults(userDataDict: setting);
+        if (loggedInUser.isCastr == 2) {
+            self.navigationItem.title = "Moderate Casts";
+            
+            if (self.tabBarController!.viewControllers?.count == 4) {
+                self.tabBarController!.viewControllers?.remove(at: 1)
+            }
+        } else {
+            self.navigationItem.title = "My Casts";
+            
+            if (self.tabBarController!.viewControllers?.count == 3) {
+                
+                var navController = self.storyboard?.instantiateViewController(withIdentifier: "CreateNewPostNavController") as! UINavigationController;
+                self.tabBarController!.viewControllers?.insert(navController, at: 1);
+            }
+        }
     }
     /*
     // MARK: - Navigation
@@ -303,10 +325,30 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
         // create an action
         for postStatus in postStatusList {
           
-                let pendingReviewAction: UIAlertAction = UIAlertAction(title: postStatus.title, style: .default) { action -> Void in
-                    self.updatePostStatus(postStatusId: postStatus.postStatusId);
+                //If Logged in user is a caster,
+                //Then we will allow him to publish post, cannot take any other action.
+                if (self.loggedInUser.isCastr == 1) {
+                    if (postStatus.title != "Published") {
+                        continue;
+                    }
+                    
+                    let pendingReviewAction: UIAlertAction = UIAlertAction(title: postStatus.title, style: .default) { action -> Void in
+                        self.updatePostStatus(postStatusId: postStatus.postStatusId);
+                    }
+                    actionSheetController.addAction(pendingReviewAction)
+                } else {
+                    
+                    //We will not moderator to Publish post
+                    if (postStatus.title == "Published") {
+                        continue;
+                    }
+                    
+                    let pendingReviewAction: UIAlertAction = UIAlertAction(title: postStatus.title, style: .default) { action -> Void in
+                        self.updatePostStatus(postStatusId: postStatus.postStatusId);
+                    }
+                    actionSheetController.addAction(pendingReviewAction)
                 }
-                actionSheetController.addAction(pendingReviewAction)
+            
         }
         
 
@@ -486,39 +528,6 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
             
             self.communicationTableView.frame = CGRect.init(x: 0, y: self.communicationTableView.frame.origin.y, width: self.view.frame.width, height: self.textAreaBtnBottomView.frame.origin.y - self.communicationTableView.frame.origin.y)
         }
-    }
-    
-    func loadModeratorCasterUserPosts() {
-        // Do any additional setup after loading the view.
-        let jsonURL = "posts/get_post_communication/format/json";
-        
-        postArray["post_id"] = String(loggedInUser.userId)
-        
-        
-        UserService().postDataMethod(jsonURL: jsonURL, postData: postArray, complete: {(response) in
-            print(response)
-            
-            let success = Int(response.value(forKey: "status") as! String)!
-            if (success == 0) {
-                /*  let alert = UIAlertController.init(title: "Error", message: response.value(forKey: "message") as! String, preferredStyle: .alert);
-                 alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil));
-                 self.present(alert, animated: true) */
-                //self.socialPostList.isHidden = true;
-            } else {
-                let modeArray = response.value(forKey: "data") as! NSArray;
-                
-                if (modeArray.count != 0) {
-                    
-                    //self.homePosts = modeArray as! [Any]
-                    self.posts = Post().loadPostsFromNSArray(postsArr: modeArray);
-                    self.communicationTableView.reloadData();
-                    
-                } else {
-
-                }
-            }
-            
-        });
     }
     
     func updatePostStatus(postStatusId: Int) {

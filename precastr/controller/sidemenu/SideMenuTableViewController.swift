@@ -17,7 +17,7 @@ class SideMenuTableViewController: UITableViewController {
     private var dateCellExpanded: Bool = false
     var rowTypeVar : Bool = false
     var loggedInUser: User!;
-    
+    var sideMenuOpenedFromScreen = "";
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,7 +40,7 @@ class SideMenuTableViewController: UITableViewController {
         } else if (self.loggedInUser.isCastr == 2) {
             moderatorRoleSwitch.setOn(true, animated: false);
         }
-        moderatorRoleSwitch.isEnabled = false;
+        //moderatorRoleSwitch.isEnabled = false;
         profilePic.sd_setImage(with: URL(string: self.loggedInUser.profilePic), placeholderImage: UIImage.init(named: "Moderate Casts"));
         
     }
@@ -64,6 +64,23 @@ class SideMenuTableViewController: UITableViewController {
         }
 
     }
+    
+    @IBAction func moderatorSwitchChanged(_ sender: Any) {
+        if (moderatorRoleSwitch.isOn == true) {
+            self.loggedInUser.isCastr = 2;
+            User().updateUserRole(roleId: 2);
+            //let tabBarContro = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MadTabBar") as! UITabBarController
+            //tabBarContro.viewControllers?.remove(at: 1)
+            
+            var vewContrs = UIApplication.shared.keyWindow?.rootViewController?.tabBarController?.viewControllers
+            vewContrs?.remove(at: 1);
+            UIApplication.shared.keyWindow?.rootViewController?.tabBarController?.viewControllers = vewContrs;
+        } else {
+            self.loggedInUser.isCastr = 1;
+            User().updateUserRole(roleId: 1);
+        }
+    }
+    
     
     func logout() {
         
@@ -104,7 +121,11 @@ class SideMenuTableViewController: UITableViewController {
     }
     
     @objc func backButtonPressed() {
-        self.navigationController?.popViewController(animated: true);
+        if (sideMenuOpenedFromScreen == SideMenuSource.CREATE) {
+            UIApplication.shared.keyWindow?.rootViewController = HomeViewController.MainViewController();
+        } else {
+            self.navigationController?.popViewController(animated: true);
+        }
     }
     
     @objc func homeButtonPressed() {
