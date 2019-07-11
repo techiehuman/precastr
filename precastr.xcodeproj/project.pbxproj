@@ -831,17 +831,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-precastr/Pods-precastr-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-precastr/Pods-precastr-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
-			outputPaths = (
-			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-precastr/Pods-precastr-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-precastr/Pods-precastr-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		BB0D93AF64E05C94D2298CE3 /* [CP] Check Pods Manifest.lock */ = {
@@ -870,18 +866,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-precastr/Pods-precastr-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-precastr/Pods-precastr-resources.sh",
-			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-precastr/Pods-precastr-resources-${CONFIGURATION}-output-files.xcfilelist",
 			);
-			outputPaths = (
-			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-precastr/Pods-precastr-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-precastr/Pods-precastr-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */

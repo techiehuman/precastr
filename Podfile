@@ -17,6 +17,8 @@ pod 'SDWebImage', '~> 4.0'
 pod 'Fabric'
 pod 'Crashlytics'
 pod 'BSImagePicker', '~> 2.8'
+
+pod 'Firebase/Core'
   # Pods for precastr
 
   target 'precastrTests' do
