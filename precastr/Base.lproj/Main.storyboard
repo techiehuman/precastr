@@ -970,7 +970,7 @@
         <!--Add New-->
         <scene sceneID="NSp-ml-HRb">
             <objects>
-                <navigationController id="kO2-V3-cUf" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="CreateNewPostNavController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="kO2-V3-cUf" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Add New" image="add-new-black" selectedImage="add-new-black" id="0lK-SZ-RMA">
                         <offsetWrapper key="titlePositionAdjustment" horizontal="0.0" vertical="-4"/>
                         <userDefinedRuntimeAttributes>

@@ -70,9 +70,6 @@ class CreatePostViewController: UIViewController, UIImagePickerControllerDelegat
         
         navigationItem.rightBarButtonItem = barButton;
         navigationItem.rightBarButtonItem?.tintColor = UIColor(red: 12/255, green: 111/255, blue: 233/255, alpha: 1);
-        
-        
-       
 
         self.tabBarController?.tabBar.isHidden = false;
         
@@ -202,6 +199,7 @@ class CreatePostViewController: UIViewController, UIImagePickerControllerDelegat
     }
     @objc func menuButtonClicked() {
         let viewController: SideMenuTableViewController = self.storyboard?.instantiateViewController(withIdentifier: "SideMenuTableViewController") as! SideMenuTableViewController;
+        viewController.sideMenuOpenedFromScreen = SideMenuSource.CREATE;
         self.navigationController?.pushViewController(viewController, animated: true);
     }
     func getUserDetail(){
