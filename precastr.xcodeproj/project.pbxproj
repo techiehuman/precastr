@@ -27,6 +27,7 @@
 		5F7380ED63B94D468C59736D /* Pods_precastrTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A62D95851A596AF11E67E59A /* Pods_precastrTests.framework */; };
 		9010B4AC22CF2AB70083A468 /* TermsPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9010B4AB22CF2AB70083A468 /* TermsPageViewController.swift */; };
 		9010B4AF22CF6D070083A468 /* CastersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9010B4AE22CF6D070083A468 /* CastersViewController.swift */; };
+		902FDE4122D7250F002D1601 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 902FDE4022D7250F002D1601 /* GoogleService-Info.plist */; };
 		908D6F3122C241F800762145 /* commonExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 908D6F3022C241F800762145 /* commonExtension.swift */; };
 		908D6F3322C243D800762145 /* PostStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 908D6F3222C243D800762145 /* PostStatus.swift */; };
 		E8228EE2367B10CD930B1123 /* Pods_precastr.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 220036CD76F7644A5FF36C62 /* Pods_precastr.framework */; };
@@ -138,6 +139,7 @@
 		6577135BB253B3BD32B16155 /* Pods-precastrTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-precastrTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-precastrTests/Pods-precastrTests.debug.xcconfig"; sourceTree = "<group>"; };
 		9010B4AB22CF2AB70083A468 /* TermsPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsPageViewController.swift; sourceTree = "<group>"; };
 		9010B4AE22CF6D070083A468 /* CastersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CastersViewController.swift; sourceTree = "<group>"; };
+		902FDE4022D7250F002D1601 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		908D6F3022C241F800762145 /* commonExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = commonExtension.swift; sourceTree = "<group>"; };
 		908D6F3222C243D800762145 /* PostStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostStatus.swift; sourceTree = "<group>"; };
 		9562719E26A20DC50B681220 /* Pods-precastrUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-precastrUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-precastrUITests/Pods-precastrUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -414,6 +416,7 @@
 				FA6AB57F22531E7300C5491F /* Main.storyboard */,
 				FA6AB58222531E8200C5491F /* Assets.xcassets */,
 				FA6AB58422531E8200C5491F /* LaunchScreen.storyboard */,
+				902FDE4022D7250F002D1601 /* GoogleService-Info.plist */,
 				FA6AB58722531E8200C5491F /* Info.plist */,
 			);
 			path = precastr;
@@ -729,6 +732,7 @@
 				FADFEAFD22A51A46006E3CD2 /* VisbyCF-Medium.otf in Resources */,
 				FA6AB58322531E8200C5491F /* Assets.xcassets in Resources */,
 				FADFEB0122A51A46006E3CD2 /* VisbyCF-Thin.otf in Resources */,
+				902FDE4122D7250F002D1601 /* GoogleService-Info.plist in Resources */,
 				5EB754E022ABE136006D636B /* ForgetPasswordTableViewCell.xib in Resources */,
 				FA84F18722A0329D007796A3 /* Slide.xib in Resources */,
 				FAD5014D22A97B0400D21F57 /* ModeratorCastsTableViewCell.xib in Resources */,

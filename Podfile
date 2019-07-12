@@ -19,6 +19,7 @@ pod 'Crashlytics'
 pod 'BSImagePicker', '~> 2.8'
 
 pod 'Firebase/Core'
+pod 'Firebase/Messaging'
   # Pods for precastr
 
   target 'precastrTests' do

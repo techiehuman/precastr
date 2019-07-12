@@ -37,8 +37,11 @@ class SideMenuTableViewController: UITableViewController {
     
         if (self.loggedInUser.isCastr == 1) {
             moderatorRoleSwitch.setOn(false, animated: false);
+           
+            
         } else if (self.loggedInUser.isCastr == 2) {
             moderatorRoleSwitch.setOn(true, animated: false);
+            
         }
         //moderatorRoleSwitch.isEnabled = false;
         profilePic.sd_setImage(with: URL(string: self.loggedInUser.profilePic), placeholderImage: UIImage.init(named: "Moderate Casts"));
@@ -79,6 +82,7 @@ class SideMenuTableViewController: UITableViewController {
             self.loggedInUser.isCastr = 1;
             User().updateUserRole(roleId: 1);
         }
+          self.tableView.reloadData()
     }
     
     
