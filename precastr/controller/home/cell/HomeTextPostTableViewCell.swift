@@ -27,9 +27,7 @@ class HomeTextPostTableViewCell: UITableViewCell,UIScrollViewDelegate {
     
     @IBOutlet weak var dateLabel: UILabel!
     
-    
     @IBOutlet weak var profileLabel: UILabel!
-    
     
     @IBOutlet weak var sourceImageTwitter: UIImageView!
     
@@ -39,8 +37,14 @@ class HomeTextPostTableViewCell: UITableViewCell,UIScrollViewDelegate {
     
     @IBOutlet weak var postStatusDateView: UIView!
     
-    var imagesArray : [String] = [String]();
+    @IBOutlet weak var postPrePublishView: UIView!
     
+    @IBOutlet weak var publishInfoIcon: UIView!
+    @IBOutlet weak var pushToFacebookView: UIView!
+    @IBOutlet weak var pushToTwitterView: UIView!
+    
+    
+    var imagesArray : [String] = [String]();
     
     @IBOutlet weak var imageGalleryScrollView: UIScrollView!
     

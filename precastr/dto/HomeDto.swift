@@ -14,6 +14,7 @@ class HomeDto {
 class HomePostCellHeight {
     
     static let GapAboveStatus: Int = 15;
+    static let publishPostButtonsView: Int = (10 + 25 + 10);
     static let GapBelowStatus: Int = 7;
     static let PostStatusViewHeight: Int = 45;
     static let GapBelowLabel: Int = 10;

@@ -8,8 +8,18 @@
 
 import UIKit
 import SDWebImage
+import FBSDKShareKit
+import FBSDKCoreKit
 
-class HomeViewController: UIViewController {
+class HomeViewController: UIViewController, SharingDelegate {
+    func sharer(_ sharer: Sharing, didFailWithError error: Error) {
+        print("Fail")
+    }
+    
+    func sharerDidCancel(_ sharer: Sharing) {
+        print("Cancel")
+    }
+    
 
     @IBOutlet weak var socialPostList: UITableView!
     
@@ -108,7 +118,7 @@ class HomeViewController: UIViewController {
             
             if (self.tabBarController!.viewControllers?.count == 3) {
                 
-                var navController = self.storyboard?.instantiateViewController(withIdentifier: "CreateNewPostNavController") as! UINavigationController;
+                let navController = self.storyboard?.instantiateViewController(withIdentifier: "CreateNewPostNavController") as! UINavigationController;
                 self.tabBarController!.viewControllers?.insert(navController, at: 1);
             }
         }
@@ -293,10 +303,57 @@ class HomeViewController: UIViewController {
         viewController.post = self.posts[sender.rowId];
         self.navigationController?.pushViewController(viewController, animated: true);
     }
+    
+    @objc func postToFacebookPressed(sender: PostToSocialMediaGestureRecognizer) {
+        
+        let post = sender.post!;
+        if (post.postDescription != "") {
+            
+            if (post.postImages.count == 0) {
+            
+                let content = ShareLinkContent();
+                content.quote = post.postDescription;
+                
+                let shareDialog = ShareDialog()
+                shareDialog.shareContent = content;
+                shareDialog.mode = .automatic;
+                shareDialog.fromViewController = self;
+                shareDialog.show();
+            } else {
+                
+                let sharePhotoContent = SharePhotoContent();
+                for photoStr in post.postImages {
+                    let sharePhoto = SharePhoto();
+                    sharePhoto.imageURL = URL.init(string:photoStr)!
+                    //sharePhoto.image = UIImage.init(named: "facebook-group");
+                    sharePhotoContent.photos.append(sharePhoto);
+                }
+                
+                let shareDialog = ShareDialog()
+                shareDialog.shareContent = sharePhotoContent;
+                shareDialog.mode = .native;
+                shareDialog.fromViewController = self;
+                shareDialog.show()
+            }
+        }
+    }
+    
+    @objc func postToTwitterPressed(sender: PostToSocialMediaGestureRecognizer) {
+        
+    }
+    
+    func sharer(_ sharer: Sharing, didCompleteWithResults results: [String : Any]) {
+        print("After sharing here.")
+    }
 }
 
 class MyTapRecognizer : UITapGestureRecognizer {
     var rowId: Int!;
+}
+
+class PostToSocialMediaGestureRecognizer: UITapGestureRecognizer {
+    var rowId: Int!;
+    var post: Post!;
 }
 
 extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
@@ -331,6 +388,11 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             
         } else if (loggedInUser.isCastr == 1) {
             //Call this function
+            var postPublishViewHeight = CGFloat(HomePostCellHeight.publishPostButtonsView);
+            if (post.status != "Approved") {
+                postPublishViewHeight = 0.0;
+            }
+            
             var height = self.heightForView(text: post.postDescription, font: UIFont.init(name: "VisbyCF-Regular", size: 16.0)!, width: tableView.frame.width - 30)
             
             if (height > 100) {
@@ -340,11 +402,11 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
                 
                 if (post.postImages.count == 1) {
                     
-                    return (CGFloat(HomePostCellHeight.GapAboveStatus) + CGFloat(HomePostCellHeight.PostStatusViewHeight) + CGFloat(HomePostCellHeight.GapBelowStatus) + height + CGFloat(HomePostCellHeight.GapBelowLabel) + 420);
+                    return (CGFloat(HomePostCellHeight.GapAboveStatus) + CGFloat(HomePostCellHeight.PostStatusViewHeight) + CGFloat(HomePostCellHeight.GapBelowStatus) + postPublishViewHeight + height + CGFloat(HomePostCellHeight.GapBelowLabel) + 420);
                 }
-                return (CGFloat(HomePostCellHeight.GapAboveStatus) + CGFloat(HomePostCellHeight.PostStatusViewHeight) + CGFloat(HomePostCellHeight.GapBelowStatus) + height + CGFloat(HomePostCellHeight.GapBelowLabel) + 420 +  30);
+                return (CGFloat(HomePostCellHeight.GapAboveStatus) + CGFloat(HomePostCellHeight.PostStatusViewHeight) + CGFloat(HomePostCellHeight.GapBelowStatus) + postPublishViewHeight + height + CGFloat(HomePostCellHeight.GapBelowLabel) + 420 +  30);
             }
-            return (CGFloat(HomePostCellHeight.GapAboveStatus + HomePostCellHeight.PostStatusViewHeight) + height);
+            return (CGFloat(HomePostCellHeight.GapAboveStatus + Int(postPublishViewHeight) + HomePostCellHeight.PostStatusViewHeight) + height);
         }
         return 0;
     }
@@ -362,6 +424,12 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             
             let postDescTap = MyTapRecognizer.init(target: self, action: #selector(postDescriptionPressed(sender:)));
             postDescTap.rowId = indexPath.row;
+            
+            let postToFacebookTapGesture = PostToSocialMediaGestureRecognizer.init(target: self, action: #selector(postToFacebookPressed(sender:)));
+            postToFacebookTapGesture.post = post;
+            
+            let postToTwitterTapGesture = PostToSocialMediaGestureRecognizer.init(target: self, action: #selector(postToTwitterPressed(sender:)));
+            postToTwitterTapGesture.post = post;
             
             var facebookIconHidden = true;
             var twitterIconHidden = true;
@@ -442,6 +510,14 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             cell.profileLabel.frame = CGRect.init(x: 25, y: 0, width: cell.profileLabel.intrinsicContentSize.width, height: 20);
             cell.dateLabel.frame = CGRect.init(x: (cell.profileLabel.intrinsicContentSize.width + cell.profileLabel.frame.origin.x + 5), y: 0, width: cell.dateLabel.intrinsicContentSize.width, height: 20);
             
+            if (post.status != "Approved") {
+                cell.postPrePublishView.isHidden = true;
+            } else {
+                cell.postPrePublishView.isHidden = false;
+                cell.pushToTwitterView.addGestureRecognizer(postToTwitterTapGesture);
+                cell.pushToFacebookView.addGestureRecognizer(postToFacebookTapGesture);
+            }
+            
             //Call this function
             var height = self.heightForView(text: post.postDescription, font: UIFont.init(name: "VisbyCF-Regular", size: 16.0)!, width: cell.contentView.frame.width - 30)
             if (height > 100) {
@@ -453,7 +529,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
                 view.removeFromSuperview();
             }
             let proNameLbl = UILabel(frame: CGRect(x: 0, y: 0, width: cell.contentView.frame.width - 30, height: height))
-            var lblToShow = "\(post.postDescription)"
+            var lblToShow = "\(post.postDescription)";
            
            // proNameLbl.lineBreakMode = .byTruncatingTail
             let paragraphStyle = NSMutableParagraphStyle()
@@ -477,6 +553,12 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             }
             cell.descriptionView.addSubview(proNameLbl)
             //cell.descriptionView.addGestureRecognizer(postDescTap);
+            if (post.status != "Approved") {
+                cell.descriptionView.frame = CGRect.init(x: cell.descriptionView.frame.origin.x, y: 55, width: cell.descriptionView.frame.width, height: height);
+            } else {
+                cell.descriptionView.frame = CGRect.init(x: cell.descriptionView.frame.origin.x, y: (55 + 25), width: cell.descriptionView.frame.width, height: height);
+            }
+            
             
             if (post.postImages.count > 0) {
                 cell.imagesArray = [String]();

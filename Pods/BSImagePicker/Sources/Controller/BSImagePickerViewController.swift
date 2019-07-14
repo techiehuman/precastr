@@ -65,10 +65,8 @@ open class BSImagePickerViewController : UINavigationController {
     }()
     
     @objc var albumTitleView: UIButton = {
-        let btn =  UIButton(type: .custom)
-        btn.setTitleColor(UIColor.white, for: .normal)
-        btn.setTitleColor(UIColor.white, for: .selected)
-
+        let btn =  UIButton(type: .system)
+        btn.setTitleColor(btn.tintColor, for: .normal)
         return btn
     }()
     
