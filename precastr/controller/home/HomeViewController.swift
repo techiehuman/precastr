@@ -321,11 +321,20 @@ class HomeViewController: UIViewController, SharingDelegate {
                 shareDialog.show();
             } else {
                 
+                UIPasteboard.general.string = post.postDescription;
+                self.showToast(message: "Text Copied to clipboard");
+                
                 let sharePhotoContent = SharePhotoContent();
                 for photoStr in post.postImages {
                     let sharePhoto = SharePhoto();
-                    sharePhoto.imageURL = URL.init(string:photoStr)!
-                    //sharePhoto.image = UIImage.init(named: "facebook-group");
+                    //sharePhoto.imageURL = URL.init(string:photoStr)!
+                    let url = URL(string: photoStr)
+                    let data = try? Data(contentsOf: url!)
+                    
+                    if let imageData = data {
+                        let image = UIImage(data: imageData)
+                        sharePhoto.image = image;
+                    }
                     sharePhotoContent.photos.append(sharePhoto);
                 }
                 
@@ -335,6 +344,28 @@ class HomeViewController: UIViewController, SharingDelegate {
                 shareDialog.fromViewController = self;
                 shareDialog.show()
             }
+        } else {
+            
+            //If there are only images but not text.. Then we will go for this.
+            let sharePhotoContent = SharePhotoContent();
+            for photoStr in post.postImages {
+                let sharePhoto = SharePhoto();
+                //sharePhoto.imageURL = URL.init(string:photoStr)!
+                let url = URL(string: photoStr)
+                let data = try? Data(contentsOf: url!)
+                
+                if let imageData = data {
+                    let image = UIImage(data: imageData)
+                    sharePhoto.image = image;
+                }
+                sharePhotoContent.photos.append(sharePhoto);
+            }
+            
+            let shareDialog = ShareDialog()
+            shareDialog.shareContent = sharePhotoContent;
+            shareDialog.mode = .native;
+            shareDialog.fromViewController = self;
+            shareDialog.show()
         }
     }
     
