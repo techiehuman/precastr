@@ -225,8 +225,8 @@ class PostFormTableViewCell: UITableViewCell, UITextViewDelegate, PostFormCellPr
                  }*/
                 joinedStrings = String(joinedStrings.dropLast())
                 print(joinedStrings)
-                postData["social_media"] = String(joinedStrings.suffix(joinedStrings.count-1));
-                postData["social_media_id"] = joinedStrings
+                //postData["social_media"] = String(joinedStrings.suffix(joinedStrings.count-1));
+                //postData["social_media_id"] = joinedStrings
                 //  let size = CGSize(width: 0, height: 0)
                 print(self.createPostViewControllerDelegate.PhotoArray.count)
                 if(self.createPostViewControllerDelegate.PhotoArray.count > 0){
@@ -280,8 +280,8 @@ class PostFormTableViewCell: UITableViewCell, UITextViewDelegate, PostFormCellPr
                  }*/
                 joinedStrings = String(joinedStrings.dropLast())
                 print(joinedStrings)
-                postData["social_media"] = String(joinedStrings.suffix(joinedStrings.count-1));
-                postData["social_media_id"] = joinedStrings
+                //postData["social_media"] = String(joinedStrings.suffix(joinedStrings.count-1));
+                //postData["social_media_id"] = joinedStrings
                 //  let size = CGSize(width: 0, height: 0)
                 print(self.createPostViewControllerDelegate.PhotoArray.count)
                 if(self.createPostViewControllerDelegate.PhotoArray.count > 0){
@@ -324,13 +324,13 @@ class PostFormTableViewCell: UITableViewCell, UITextViewDelegate, PostFormCellPr
     }
     
     func validateSocialPlatform()->Bool{
-        if(self.createPostViewControllerDelegate.twitterStatus == false && self.createPostViewControllerDelegate.facebookStatus == false){
+        /*if(self.createPostViewControllerDelegate.twitterStatus == false && self.createPostViewControllerDelegate.facebookStatus == false){
             let message = "Please select social media platforms"
             let alert = UIAlertController.init(title: "Error", message: message, preferredStyle: .alert);
             alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil));
             self.createPostViewControllerDelegate.present(alert, animated: true)
             return false
-        } else  if(self.postTextField.text == "" ){
+        } else*/  if(self.postTextField.text == "" ){
             let message = "Text field is empty"
             let alert = UIAlertController.init(title: "Error", message: message, preferredStyle: .alert);
             alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil));

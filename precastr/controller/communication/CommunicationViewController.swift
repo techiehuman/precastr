@@ -208,8 +208,6 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
         self.navigationController?.pushViewController(viewController, animated: true);
     }
 
-
-    
     @IBAction func submitBtnClicked(_ sender: Any) {
         
         if(textArea.text != "" && textArea.text != "Type a message..." || PhotoArray.count > 0){
@@ -245,43 +243,6 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
                     self.communicationTableView.reloadData();
                 });
             }
-            
-            
-            //let joiner = ","
-            
-            /*var joinedStrings = "";
-            for obj in social.socialPlatformId {
-                if (obj.key == "Facebook" && self.createPostViewControllerDelegate.facebookStatus == true) {//If user selcts facebook
-                    joinedStrings = joinedStrings + "\(obj.value),";
-                } else if (obj.key == "Twitter" && self.createPostViewControllerDelegate.twitterStatus == true) {//If user selcts twiiter
-                    joinedStrings = joinedStrings + "\(obj.value),";
-                }
-            }
-            
-            let elements = (self.socialMediaPlatform);
-            
-                        for elementItem in elements! {
-             joinedStrings = joinedStrings + "\(elementItem),";
-             }
-            joinedStrings = String(joinedStrings.dropLast())
-            print(joinedStrings)
-            postData["social_media"] = String(joinedStrings.suffix(joinedStrings.count-1));
-            postData["social_media_id"] = joinedStrings
-            
-            //  let size = CGSize(width: 0, height: 0)
-            if(self.createPostViewControllerDelegate.PhotoArray.count > 0){
-                UserService().postMultipartImageDataSocialMethod(jsonURL: jsonURL,image : self.createPostViewControllerDelegate.PhotoArray, postData:postData,complete:{(response) in
-                    print(response);
-                    self.createPostViewControllerDelegate.activityIndicator.stopAnimating();
-                    UIApplication.shared.keyWindow?.rootViewController = HomeViewController.MainViewController();
-                })
-            }else{
-                UserService().postDataMethod(jsonURL: jsonURL, postData: postData, complete: { (response) in
-                    print(response);
-                    self.createPostViewControllerDelegate.activityIndicator.stopAnimating();
-                    UIApplication.shared.keyWindow?.rootViewController = HomeViewController.MainViewController();
-                })
-            }*/
         }else{
             if (PhotoArray.count == 0) {
             let message = "Please enter some text or image to post!"
@@ -324,31 +285,15 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
         
         // create an action
         for postStatus in postStatusList {
-          
-                //If Logged in user is a caster,
-                //Then we will allow him to publish post, cannot take any other action.
-                if (self.loggedInUser.isCastr == 1) {
-                    if (postStatus.title != "Published") {
-                        continue;
-                    }
-                    
-                    let pendingReviewAction: UIAlertAction = UIAlertAction(title: postStatus.title, style: .default) { action -> Void in
-                        self.updatePostStatus(postStatusId: postStatus.postStatusId);
-                    }
-                    actionSheetController.addAction(pendingReviewAction)
-                } else {
-                    
-                    //We will not moderator to Publish post
-                    if (postStatus.title == "Published") {
-                        continue;
-                    }
-                    
-                    let pendingReviewAction: UIAlertAction = UIAlertAction(title: postStatus.title, style: .default) { action -> Void in
-                        self.updatePostStatus(postStatusId: postStatus.postStatusId);
-                    }
-                    actionSheetController.addAction(pendingReviewAction)
+                //We will not moderator to Publish post
+                if (postStatus.title == "Published") {
+                    continue;
                 }
             
+                let pendingReviewAction: UIAlertAction = UIAlertAction(title: postStatus.title, style: .default) { action -> Void in
+                    self.updatePostStatus(postStatusId: postStatus.postStatusId);
+                }
+                actionSheetController.addAction(pendingReviewAction)
         }
         
 
@@ -358,8 +303,10 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
         actionSheetController.addAction(cancelAction)
         
         // present an actionSheet...
-        present(actionSheetController, animated: true, completion: nil)
-    
+        //Only Moderatuor can change the status from dropdown
+        if (self.loggedInUser.isCastr == 2) {
+            present(actionSheetController, animated: true, completion: nil)
+        }
     }
     
     @IBAction func editPostBtnClicked(_ sender: Any) {
@@ -370,53 +317,7 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
         
         
     }
-    /*@IBAction func multipleButtonClicked(_ sender: AnyObject) {
-        
-        switch sender.tag {
-        case 1: self.postStatus = 1 //button1
-        self.pendingBtn.radioBtnSelect()
-        self.approvedBtn.radioBtnDefault()
-        self.underReviewBtn.radioBtnDefault()
-        self.rejectedBtn.radioBtnDefault()
-        break;
-        case 2: self.postStatus = 2 //button2
-        self.pendingBtn.radioBtnDefault()
-        self.approvedBtn.radioBtnSelect()
-        self.underReviewBtn.radioBtnDefault()
-        self.rejectedBtn.radioBtnDefault()
-        break;
-        case 3: self.postStatus = 3 //button3
-        self.pendingBtn.radioBtnDefault()
-        self.approvedBtn.radioBtnDefault()
-        self.underReviewBtn.radioBtnSelect()
-        self.rejectedBtn.radioBtnDefault()
-        break;
-       
-        case 4: self.postStatus = 4 //button4
-        self.pendingBtn.radioBtnDefault()
-        self.approvedBtn.radioBtnDefault()
-        self.underReviewBtn.radioBtnDefault()
-        self.rejectedBtn.radioBtnSelect()
-        break;
-        default: self.postStatus = 1
-        break;
-        }
-    }
-    func textViewDidBeginEditing(_ textView: UITextView) {
-        print("A")
-        if self.postTextField.textColor == UIColor.lightGray {
-            self.postTextField.text = ""
-            self.postTextField.textColor = UIColor(red: 12/255, green: 111/255, blue: 233/255, alpha: 1)
-        }
-    }
-    func textViewDidEndEditing(_ textView: UITextView) {
-        print("B")
-        if self.postTextField.text == "" {
-            
-            self.postTextField.text = "Type a Message...."
-            self.postTextField.textColor = UIColor.lightGray
-        }
-    }*/
+    
     func selectMultipleImages(){
         
         // create an instance
@@ -784,6 +685,14 @@ extension CommunicationViewController: UITableViewDelegate, UITableViewDataSourc
             proNameLbl.attributedText = attrString;
             
             cell.descriptionView.addSubview(proNameLbl)
+            if (self.loggedInUser.isCastr == 2) {
+                cell.postPrePublishView.isHidden = true;
+                cell.descriptionView.frame = CGRect.init(x: cell.descriptionView.frame.origin.x, y: 55, width: cell.descriptionView.frame.width, height: height);
+            } else {
+                cell.postPrePublishView.isHidden = false;
+                cell.descriptionView.frame = CGRect.init(x: cell.descriptionView.frame.origin.x, y: (55 + 25), width: cell.descriptionView.frame.width, height: height);
+            }
+            
             
             if (post.postImages.count > 0) {
                 cell.imagesArray = [String]();
@@ -1011,6 +920,11 @@ extension CommunicationViewController: UITableViewDelegate, UITableViewDataSourc
         
         if (indexPath.row == 0) {
             
+            var postPublishViewHeight = CGFloat(HomePostCellHeight.publishPostButtonsView);
+            if (self.loggedInUser.isCastr == 2) {
+                postPublishViewHeight = 0.0;
+            }
+
             var height = self.heightForView(text: post.postDescription, font: UIFont.init(name: "VisbyCF-Regular", size: 16.0)!, width: tableView.frame.width - 30);
             
             /*if (height > 100) {
@@ -1020,11 +934,11 @@ extension CommunicationViewController: UITableViewDelegate, UITableViewDataSourc
                 
                 if (post.postImages.count == 1) {
                     
-                    return (CGFloat(HomePostCellHeight.GapAboveStatus) + CGFloat(HomePostCellHeight.PostStatusViewHeight) + CGFloat(HomePostCellHeight.GapBelowStatus) + height + CGFloat(HomePostCellHeight.GapBelowLabel) + 420);
+                    return (CGFloat(HomePostCellHeight.GapAboveStatus) + CGFloat(HomePostCellHeight.PostStatusViewHeight) + CGFloat(HomePostCellHeight.GapBelowStatus) + postPublishViewHeight +  height + CGFloat(HomePostCellHeight.GapBelowLabel) + 420);
                 }
-                return (CGFloat(HomePostCellHeight.GapAboveStatus) + CGFloat(HomePostCellHeight.PostStatusViewHeight) + CGFloat(HomePostCellHeight.GapBelowStatus) + height + CGFloat(HomePostCellHeight.GapBelowLabel) + 420 +  30);
+                return (CGFloat(HomePostCellHeight.GapAboveStatus) + CGFloat(HomePostCellHeight.PostStatusViewHeight) + CGFloat(HomePostCellHeight.GapBelowStatus) + postPublishViewHeight + height + CGFloat(HomePostCellHeight.GapBelowLabel) + 420 +  30);
             }
-            return (CGFloat(HomePostCellHeight.GapAboveStatus + HomePostCellHeight.PostStatusViewHeight) + height);
+            return (CGFloat(HomePostCellHeight.GapAboveStatus + HomePostCellHeight.PostStatusViewHeight) + postPublishViewHeight + height);
         } else {
             let communication = post.postCommunications[indexPath.row - 1];
             
