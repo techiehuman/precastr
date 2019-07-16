@@ -623,9 +623,32 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             cell.profileLabel.frame = CGRect.init(x: 25, y: 0, width: cell.profileLabel.intrinsicContentSize.width, height: 20);
             cell.dateLabel.frame = CGRect.init(x: (cell.profileLabel.intrinsicContentSize.width + cell.profileLabel.frame.origin.x + 5), y: 0, width: cell.dateLabel.intrinsicContentSize.width, height: 20);
             
-            if (post.status != "Approved") {
+            if (post.status != "Approved" && post.status != "Published") {
                 cell.postPrePublishView.isHidden = true;
-            } else {
+            } else if(post.status == "Published"){
+                print("PUBLISHED")
+                if (post.socialMediaIds.count > 0) {
+                    
+                    for sourcePlatformId in post.socialMediaIds {
+                        print("Platform from settings : ",social.socialPlatformId)
+                        if(Int(sourcePlatformId) == social.socialPlatformId["Facebook"]){
+                            
+                           cell.pushToFacebookView.isHidden = true
+                        }else{
+                            cell.pushToFacebookView.isHidden = false
+                        }
+                         if(Int(sourcePlatformId) == social.socialPlatformId["Twitter"]) {
+                            
+                            cell.pushToTwitterView.isHidden = true
+                         }else{
+                             cell.pushToTwitterView.isHidden = false
+                        }
+                    }
+                    if(cell.pushToTwitterView.isHidden == true && cell.pushToFacebookView.isHidden == true){
+                         cell.postPrePublishView.isHidden = true;
+                    }
+                }
+            }else {
                 cell.postPrePublishView.isHidden = false;
                 cell.pushToTwitterView.addGestureRecognizer(postToTwitterTapGesture);
                 cell.pushToFacebookView.addGestureRecognizer(postToFacebookTapGesture);
@@ -666,7 +689,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             }
             cell.descriptionView.addSubview(proNameLbl)
             //cell.descriptionView.addGestureRecognizer(postDescTap);
-            if (post.status != "Approved") {
+            if (post.status != "Approved" &&  cell.postPrePublishView.isHidden == true) {
                 cell.descriptionView.frame = CGRect.init(x: cell.descriptionView.frame.origin.x, y: 55, width: cell.descriptionView.frame.width, height: height);
             } else {
                 cell.descriptionView.frame = CGRect.init(x: cell.descriptionView.frame.origin.x, y: (55 + 25), width: cell.descriptionView.frame.width, height: height);

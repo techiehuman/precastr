@@ -324,14 +324,14 @@ static NSMutableArray *g_pendingRequestors;
 #if __IPHONE_OS_VERSION_MAX_ALLOWED > __IPHONE_12_1
   // promotional offer starting from iOS 12.2
   if (@available(iOS 12.2, *)) {
-    SKPaymentDiscount *paymentDiscount = transaction.payment.paymentDiscount;
+      SKProductDiscount *paymentDiscount = transaction.payment;
     if (paymentDiscount) {
-      NSArray<SKProductDiscount *> *discounts = product.discounts;
+      NSArray<SKProductDiscount *> *discounts = product;
       for (SKProductDiscount *discount in discounts) {
-        if (discount.paymentMode == SKProductDiscountPaymentModeFreeTrial &&
+       /* if (discount.paymentMode == SKProductDiscountPaymentModeFreeTrial &&
             [paymentDiscount.identifier isEqualToString:discount.identifier]) {
           return YES;
-        }
+        } */
       }
     }
   }
@@ -361,7 +361,7 @@ static NSMutableArray *g_pendingRequestors;
 #if __IPHONE_OS_VERSION_MAX_ALLOWED > __IPHONE_12_1
   // promotional offer starting from iOS 12.2
   if (@available(iOS 12.2, *)) {
-    NSArray<SKProductDiscount *> *discounts = product.discounts;
+    NSArray<SKProductDiscount *> *discounts = product;
     for (SKProductDiscount *discount in discounts) {
       if (discount.paymentMode == SKProductDiscountPaymentModeFreeTrial) {
         return YES;
