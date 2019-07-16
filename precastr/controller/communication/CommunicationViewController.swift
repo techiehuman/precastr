@@ -603,6 +603,59 @@ extension CommunicationViewController: UITableViewDelegate, UITableViewDataSourc
                 cell.sourceImageTwitter.image = UIImage.init(named: "twitter-group");
             }
             
+            //Lets handle the logic of Hiding and Shwoing Publish Buttons.
+            //First lets check if post status is Approved/ Published.
+            //If post status is approved, then we would have to show both buttons.
+            //Publish to Twitter and Publish to Facebook
+            if (post.postStatusId == HomePostPublishStatusId.APPROVEDSTATUSID) {
+                cell.postPrePublishView.isHidden = false;
+                
+                //If post status is Published, Then we have to check
+                //If user posted on both platforms or not
+            } else if (post.postStatusId == HomePostPublishStatusId.PUBLISHSTATUSID) {
+                
+                var facebookPublished = false;
+                for socialMediaId in post.socialMediaIds {
+                    if (socialMediaId == social.socialPlatformId["Facebook"]) {
+                        facebookPublished = true;
+                        break;
+                    }
+                }
+                
+                var twitterPublished = false;
+                for socialMediaId in post.socialMediaIds {
+                    if (socialMediaId == social.socialPlatformId["Twitter"]) {
+                        twitterPublished = true;
+                        break;
+                    }
+                }
+                
+                if (facebookPublished == true && twitterPublished == true) {
+                    cell.postPrePublishView.isHidden = true;
+                } else {
+                    cell.postPrePublishView.isHidden = false;
+                    
+                    if (facebookPublished == true) {
+                        cell.pushToFacebookView.isHidden = true;
+                    } else {
+                        cell.pushToFacebookView.isHidden = false;
+                    }
+                    
+                    
+                    if (twitterPublished == true) {
+                        cell.pushToTwitterView.isHidden = true;
+                    } else {
+                        cell.pushToTwitterView.isHidden = false;
+                    }
+                }
+                
+                //If Post status is neither approved nor publised
+                //Then we will hide the Publish Post Bar
+            } else {
+                cell.postPrePublishView.isHidden = true;
+            }
+            
+            
             var imageStatus = ""
             var status = "";
             if (post.status == "Pending") {
@@ -689,8 +742,12 @@ extension CommunicationViewController: UITableViewDelegate, UITableViewDataSourc
                 cell.postPrePublishView.isHidden = true;
                 cell.descriptionView.frame = CGRect.init(x: cell.descriptionView.frame.origin.x, y: 55, width: cell.descriptionView.frame.width, height: height);
             } else {
-                cell.postPrePublishView.isHidden = false;
-                cell.descriptionView.frame = CGRect.init(x: cell.descriptionView.frame.origin.x, y: (55 + 25), width: cell.descriptionView.frame.width, height: height);
+                
+                if (cell.postPrePublishView.isHidden == true) {
+                    cell.descriptionView.frame = CGRect.init(x: cell.descriptionView.frame.origin.x, y: 55, width: cell.descriptionView.frame.width, height: height);
+                } else {
+                    cell.descriptionView.frame = CGRect.init(x: cell.descriptionView.frame.origin.x, y: (55 + 25), width: cell.descriptionView.frame.width, height: height);
+                }
             }
             
             
@@ -923,6 +980,45 @@ extension CommunicationViewController: UITableViewDelegate, UITableViewDataSourc
             var postPublishViewHeight = CGFloat(HomePostCellHeight.publishPostButtonsView);
             if (self.loggedInUser.isCastr == 2) {
                 postPublishViewHeight = 0.0;
+            } else {
+                //Lets handle the logic of Hiding and Shwoing Publish Buttons.
+                //First lets check if post status is Approved/ Published.
+                //If post status is approved, then we would have to show both buttons.
+                //Publish to Twitter and Publish to Facebook
+                if (post.postStatusId == HomePostPublishStatusId.APPROVEDSTATUSID) {
+                    postPublishViewHeight = CGFloat(HomePostCellHeight.publishPostButtonsView);
+                    
+                    //If post status is Published, Then we have to check
+                    //If user posted on both platforms or not
+                } else if (post.postStatusId == HomePostPublishStatusId.PUBLISHSTATUSID) {
+                    
+                    var facebookPublished = false;
+                    for socialMediaId in post.socialMediaIds {
+                        if (socialMediaId == social.socialPlatformId["Facebook"]) {
+                            facebookPublished = true;
+                            break;
+                        }
+                    }
+                    
+                    var twitterPublished = false;
+                    for socialMediaId in post.socialMediaIds {
+                        if (socialMediaId == social.socialPlatformId["Twitter"]) {
+                            twitterPublished = true;
+                            break;
+                        }
+                    }
+                    
+                    if (facebookPublished == true && twitterPublished == true) {
+                        postPublishViewHeight = 0;
+                    } else {
+                        postPublishViewHeight = CGFloat(HomePostCellHeight.publishPostButtonsView);
+                    }
+                    
+                    //If Post status is neither approved nor publised
+                    //Then we will hide the Publish Post Bar
+                } else {
+                    postPublishViewHeight = 0
+                }                
             }
 
             var height = self.heightForView(text: post.postDescription, font: UIFont.init(name: "VisbyCF-Regular", size: 16.0)!, width: tableView.frame.width - 30);

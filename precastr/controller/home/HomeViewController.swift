@@ -426,23 +426,7 @@ class HomeViewController: UIViewController, EasyTipViewDelegate, SharingDelegate
     func sharerDidCancel(_ sharer: Sharing) {
         print("Cancel")
     }
-    
-    @objc func showPostToolTip(sender: FacebookPublishInfoGestureRecognizer) {
-        var preferences = EasyTipView.Preferences()
-        preferences.drawing.font = UIFont(name: "VisbyCF-Regular", size: 14)!
-        preferences.drawing.foregroundColor = UIColor.white
-        preferences.drawing.backgroundColor = UIColor.init(red: 12, green: 111, blue: 233, alpha: 1);
-        preferences.drawing.arrowPosition = EasyTipView.ArrowPosition.top;
-        preferences.drawing.cornerRadius = 4;
-        
-        EasyTipView.show(forView: sender.publishInfoIcon,
-                         withinSuperview: sender.cell.contentView,
-                         text: "Tip view inside the navigation controller's view. Tap to dismiss!",
-                         preferences: preferences,
-                         delegate: self)
-        
-        
-    }
+
     func easyTipViewDidDismiss(_ tipView: EasyTipView) {
         tipView.dismiss();
     }
@@ -460,7 +444,7 @@ class PostToSocialMediaGestureRecognizer: UITapGestureRecognizer {
 
 class FacebookPublishInfoGestureRecognizer: UIGestureRecognizer {
     var cell: HomeTextPostTableViewCell!;
-    var publishInfoIcon: UIView!;
+    var publishInfoIcon: UIButton!;
 }
 
 extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
@@ -495,9 +479,41 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             
         } else if (loggedInUser.isCastr == 1) {
             //Call this function
-            var postPublishViewHeight = CGFloat(HomePostCellHeight.publishPostButtonsView);
-            if (post.status != "Approved") {
-                postPublishViewHeight = 0.0;
+            var postPublishViewHeight = 0
+            //Lets handle the logic of Hiding and Shwoing Publish Buttons.
+            //First lets check if post status is Approved/ Published.
+            //If post status is approved, then we would have to show both buttons.
+            //Publish to Twitter and Publish to Facebook
+            if (post.postStatusId == HomePostPublishStatusId.APPROVEDSTATUSID) {
+                postPublishViewHeight = HomePostCellHeight.publishPostButtonsView;
+                
+                //If post status is Published, Then we have to check
+                //If user posted on both platforms or not
+            } else if (post.postStatusId == HomePostPublishStatusId.PUBLISHSTATUSID) {
+                
+                var facebookPublished = false;
+                for socialMediaId in post.socialMediaIds {
+                    if (socialMediaId == social.socialPlatformId["Facebook"]) {
+                        facebookPublished = true;
+                        break;
+                    }
+                }
+                
+                var twitterPublished = false;
+                for socialMediaId in post.socialMediaIds {
+                    if (socialMediaId == social.socialPlatformId["Twitter"]) {
+                        twitterPublished = true;
+                        break;
+                    }
+                }
+                
+                if (facebookPublished == true && twitterPublished == true) {
+                    postPublishViewHeight = 0;
+                } else {
+                    postPublishViewHeight = HomePostCellHeight.publishPostButtonsView;
+                }
+                //If Post status is neither approved nor publised
+                //Then we will hide the Publish Post Bar
             }
             
             var height = self.heightForView(text: post.postDescription, font: UIFont.init(name: "VisbyCF-Regular", size: 16.0)!, width: tableView.frame.width - 30)
@@ -509,9 +525,9 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
                 
                 if (post.postImages.count == 1) {
                     
-                    return (CGFloat(HomePostCellHeight.GapAboveStatus) + CGFloat(HomePostCellHeight.PostStatusViewHeight) + CGFloat(HomePostCellHeight.GapBelowStatus) + postPublishViewHeight + height + CGFloat(HomePostCellHeight.GapBelowLabel) + 420);
+                    return (CGFloat(HomePostCellHeight.GapAboveStatus) + CGFloat(HomePostCellHeight.PostStatusViewHeight) + CGFloat(HomePostCellHeight.GapBelowStatus) + CGFloat(postPublishViewHeight) + height + CGFloat(HomePostCellHeight.GapBelowLabel) + 420);
                 }
-                return (CGFloat(HomePostCellHeight.GapAboveStatus) + CGFloat(HomePostCellHeight.PostStatusViewHeight) + CGFloat(HomePostCellHeight.GapBelowStatus) + postPublishViewHeight + height + CGFloat(HomePostCellHeight.GapBelowLabel) + 420 +  30);
+                return (CGFloat(HomePostCellHeight.GapAboveStatus) + CGFloat(HomePostCellHeight.PostStatusViewHeight) + CGFloat(HomePostCellHeight.GapBelowStatus) + CGFloat(postPublishViewHeight) + height + CGFloat(HomePostCellHeight.GapBelowLabel) + 420 +  30);
             }
             return (CGFloat(HomePostCellHeight.GapAboveStatus + Int(postPublishViewHeight) + HomePostCellHeight.PostStatusViewHeight) + height);
         }
@@ -538,12 +554,6 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             let postToTwitterTapGesture = PostToSocialMediaGestureRecognizer.init(target: self, action: #selector(postToTwitterPressed(sender:)));
             postToTwitterTapGesture.post = post;
             
-            let publishInfoTapGesture = FacebookPublishInfoGestureRecognizer.init(target: self, action: #selector(showPostToolTip(sender:)));
-            publishInfoTapGesture.cell = cell;
-            publishInfoTapGesture.publishInfoIcon = cell.publishInfoIcon;
-            cell.publishInfoIcon.addGestureRecognizer(publishInfoTapGesture);
-            
-            
             var facebookIconHidden = true;
             var twitterIconHidden = true;
             if (post.socialMediaIds.count > 0) {
@@ -569,6 +579,58 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
                 cell.sourceImageTwitter.isHidden = false;
                 cell.sourceImageFacebook.isHidden = true;
                 cell.sourceImageTwitter.image = UIImage.init(named: "twitter-group");
+            }
+            
+            //Lets handle the logic of Hiding and Shwoing Publish Buttons.
+            //First lets check if post status is Approved/ Published.
+            //If post status is approved, then we would have to show both buttons.
+            //Publish to Twitter and Publish to Facebook
+            if (post.postStatusId == HomePostPublishStatusId.APPROVEDSTATUSID) {
+                cell.postPrePublishView.isHidden = false;
+                
+                //If post status is Published, Then we have to check
+                //If user posted on both platforms or not
+            } else if (post.postStatusId == HomePostPublishStatusId.PUBLISHSTATUSID) {
+                
+                var facebookPublished = false;
+                for socialMediaId in post.socialMediaIds {
+                    if (socialMediaId == social.socialPlatformId["Facebook"]) {
+                        facebookPublished = true;
+                        break;
+                    }
+                }
+                
+                var twitterPublished = false;
+                for socialMediaId in post.socialMediaIds {
+                    if (socialMediaId == social.socialPlatformId["Twitter"]) {
+                        twitterPublished = true;
+                        break;
+                    }
+                }
+                
+                if (facebookPublished == true && twitterPublished == true) {
+                    cell.postPrePublishView.isHidden = true;
+                } else {
+                    cell.postPrePublishView.isHidden = false;
+                    
+                    if (facebookPublished == true) {
+                        cell.pushToFacebookView.isHidden = true;
+                    } else {
+                        cell.pushToFacebookView.isHidden = false;
+                    }
+                    
+                    
+                    if (twitterPublished == true) {
+                        cell.pushToTwitterView.isHidden = true;
+                    } else {
+                        cell.pushToTwitterView.isHidden = false;
+                    }
+                }
+                
+                //If Post status is neither approved nor publised
+                //Then we will hide the Publish Post Bar
+            } else {
+                cell.postPrePublishView.isHidden = true;
             }
             
             var imageStatus = ""
@@ -623,10 +685,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             cell.profileLabel.frame = CGRect.init(x: 25, y: 0, width: cell.profileLabel.intrinsicContentSize.width, height: 20);
             cell.dateLabel.frame = CGRect.init(x: (cell.profileLabel.intrinsicContentSize.width + cell.profileLabel.frame.origin.x + 5), y: 0, width: cell.dateLabel.intrinsicContentSize.width, height: 20);
             
-            if (post.status != "Approved") {
-                cell.postPrePublishView.isHidden = true;
-            } else {
-                cell.postPrePublishView.isHidden = false;
+            if (cell.postPrePublishView.isHidden == false) {
                 cell.pushToTwitterView.addGestureRecognizer(postToTwitterTapGesture);
                 cell.pushToFacebookView.addGestureRecognizer(postToFacebookTapGesture);
             }
@@ -666,7 +725,8 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             }
             cell.descriptionView.addSubview(proNameLbl)
             //cell.descriptionView.addGestureRecognizer(postDescTap);
-            if (post.status != "Approved") {
+            
+            if (cell.postPrePublishView.isHidden == true) {
                 cell.descriptionView.frame = CGRect.init(x: cell.descriptionView.frame.origin.x, y: 55, width: cell.descriptionView.frame.width, height: height);
             } else {
                 cell.descriptionView.frame = CGRect.init(x: cell.descriptionView.frame.origin.x, y: (55 + 25), width: cell.descriptionView.frame.width, height: height);
@@ -724,7 +784,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
                 cell.pageControl.isHidden = true;
             }
             //ScrollView functionality
-            cell.addGestureRecognizer(postDescTap)
+            //cell.addGestureRecognizer(postDescTap)
             return cell;
             
         } else if (loggedInUser.isCastr == 2) { // moderator
@@ -773,8 +833,6 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
                 cell.sourceImageFacebook.isHidden = false;
                 cell.sourceImageTwitter.image = UIImage.init(named: "twitter-group");
                 cell.sourceImageFacebook.image = UIImage.init(named: "facebook-group");
-
-                
             } else if (facebookIconHidden == false && twitterIconHidden == true) {
                 cell.sourceImageTwitter.isHidden = false;
                 cell.sourceImageFacebook.isHidden = true;
@@ -785,6 +843,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
                 cell.sourceImageFacebook.isHidden = true;
                 cell.sourceImageTwitter.image = UIImage.init(named: "twitter-group");
             }
+            
             //********************  CODE TO SHOW HIDE SOCIAL MEDIA ICON ENDS   *********************//
 
             //********************  CODE TO ADJUST POST STATUS STARTS   *********************//
@@ -804,18 +863,6 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             } else if (status == "Rejected") {
                 imageStatus = "rejected"
                 // status = "Rejected"
-            } else if(status == "Pending with caster") {
-                imageStatus = "under-review"
-                // status = "Under review"
-            } else if(status == "Unread by moderator") {
-                imageStatus = "under-review"
-                // status = "Unread by moderator"
-            } else if(status == "Pending with moderator") {
-                imageStatus = "under-review"
-                // status = "Under review"
-            } else if(status == "Deleted") {
-                imageStatus = "under-review"
-                //  status = "Deleted"
             } else if(status == "Published") {
                 imageStatus = "published"
                 //  status = "Deleted"

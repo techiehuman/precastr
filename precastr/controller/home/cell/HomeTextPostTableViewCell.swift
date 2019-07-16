@@ -11,14 +11,6 @@ import EasyTipView
 
 class HomeTextPostTableViewCell: UITableViewCell,UIScrollViewDelegate {
 
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-        //self.postImageCollectionView.register(UINib.init(nibName: "PostImageCollectionViewCell", bundle: Bundle.main), forCellWithReuseIdentifier: "PostImageCollectionViewCell")
-        self.imageGalleryScrollView.delegate = self
-        self.imageCounterView.layer.cornerRadius = 10
-    }
-
     @IBOutlet weak var profilePicImageView: UIImageView!
     
     @IBOutlet weak var socialIconsView: UIView!
@@ -37,7 +29,7 @@ class HomeTextPostTableViewCell: UITableViewCell,UIScrollViewDelegate {
     
     @IBOutlet weak var postPrePublishView: UIView!
     
-    @IBOutlet weak var publishInfoIcon: UIView!
+    @IBOutlet weak var publishInfoButton: UIButton!
     @IBOutlet weak var pushToFacebookView: UIView!
     @IBOutlet weak var pushToTwitterView: UIView!
     
@@ -61,6 +53,16 @@ class HomeTextPostTableViewCell: UITableViewCell,UIScrollViewDelegate {
     
     var currentCount : Int!
     var homeViewControllerDelegate: HomeViewController!;
+
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        // Initialization code
+        //self.postImageCollectionView.register(UINib.init(nibName: "PostImageCollectionViewCell", bundle: Bundle.main), forCellWithReuseIdentifier: "PostImageCollectionViewCell")
+        self.imageGalleryScrollView.delegate = self
+        self.imageCounterView.layer.cornerRadius = 10
+        
+        var predictiveIconTapGesture = UITapGestureRecognizer.init(target: self, action: #selector(publishInfoIconPressed))
+    }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
@@ -130,4 +132,25 @@ class HomeTextPostTableViewCell: UITableViewCell,UIScrollViewDelegate {
         
     }
     
+    
+    
+    @IBAction func publishInfoButtonPressed(_ sender: Any) {
+        
+        var preferences = EasyTipView.Preferences()
+        preferences.drawing.font = UIFont(name: "VisbyCF-Regular", size: 14)!
+        preferences.drawing.foregroundColor = UIColor.white
+        preferences.drawing.backgroundColor = UIColor.black;
+        
+        preferences.drawing.arrowPosition = EasyTipView.ArrowPosition.top;
+        preferences.drawing.cornerRadius = 4;
+        
+        EasyTipView.show(forView: publishInfoButton,
+                         withinSuperview: self.contentView,
+                         text: "Tip view inside the navigation controller's view. Tap to dismiss!",
+                         preferences: preferences,
+                         delegate: homeViewControllerDelegate.self)
+    }
+    @objc func publishInfoIconPressed() {
+        print("clicked");
+    }
 }
