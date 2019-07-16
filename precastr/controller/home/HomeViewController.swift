@@ -784,7 +784,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
                 cell.pageControl.isHidden = true;
             }
             //ScrollView functionality
-            //cell.addGestureRecognizer(postDescTap)
+            cell.addGestureRecognizer(postDescTap)
             return cell;
             
         } else if (loggedInUser.isCastr == 2) { // moderator
