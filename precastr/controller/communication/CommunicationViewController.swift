@@ -469,7 +469,7 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
                         // Lets add ui labels in width.
                         let totalWidthOfUIView = self.changeStatusBtn.intrinsicContentSize.width + 20;
                         self.changeStatusBtn.frame = CGRect.init(x: (self.view.frame.width - totalWidthOfUIView - 15), y: self.changeStatusBtn.frame.origin.y, width: totalWidthOfUIView, height: self.changeStatusBtn.frame.height);
-                        if(self.post.status == "Published"){
+                        /*if(self.post.status == "Published"){
                             
                             
                             for sourcePlatformId in self.post.socialMediaIds {
@@ -495,7 +495,7 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
                                 }
                             }
                             
-                        }
+                        }*/
                         break;
                         
                         

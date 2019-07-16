@@ -17,7 +17,8 @@ target 'precastr' do
   pod 'Fabric'
   pod 'Crashlytics'
   pod 'BSImagePicker', '~> 2.8'
-  
+  pod 'EasyTipView', '~> 2.0.4'
+
   pod 'Firebase/Core'
   pod 'Firebase/Messaging'
   # Pods for precastr

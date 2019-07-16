@@ -13,6 +13,7 @@ PODS:
   - BSImageView (1.0.3)
   - Crashlytics (3.13.4):
     - Fabric (~> 1.10.2)
+  - EasyTipView (2.0.4)
   - Fabric (1.10.2)
   - FacebookSDK (4.44.1):
     - Bolts (~> 1.9)
@@ -114,6 +115,7 @@ DEPENDENCIES:
   - Alamofire
   - BSImagePicker (~> 2.8)
   - Crashlytics
+  - EasyTipView (~> 2.0.4)
   - Fabric
   - FacebookSDK
   - FBSDKCoreKit
@@ -133,6 +135,7 @@ SPEC REPOS:
     - BSImagePicker
     - BSImageView
     - Crashlytics
+    - EasyTipView
     - Fabric
     - FacebookSDK
     - FBSDKCoreKit
@@ -161,6 +164,7 @@ SPEC CHECKSUMS:
   BSImagePicker: fa0c15b6740e8aa7a7b7f0fe38a71ad4cfa0ec4a
   BSImageView: a149459433a2687157d034c78e059d30ac7f2544
   Crashlytics: 2dfd686bcb918dc10ee0e76f7f853fe42c7bd552
+  EasyTipView: 4f8beae0a82db2ca4a9b5fd658785fc5f61d296b
   Fabric: 706c8b8098fff96c33c0db69cbf81f9c551d0d74
   FacebookSDK: 98dd798abb2fe8148d010d30f5d9b4b47bc30922
   FBSDKCoreKit: e1ab8d86f5eea2d7aa6ab12acca3e1d2dcb11983
@@ -182,6 +186,6 @@ SPEC CHECKSUMS:
   TwitterCore: 8cbc9ad34d91c63a0035ea05bfbfc0d7ca72a28c
   TwitterKit: 5e4f41d70b9abdb41df5467f52d7aa2c0fd26ebb
 
-PODFILE CHECKSUM: ecab9e34d83c4a32df71a9e19a644f248cfdbac4
+PODFILE CHECKSUM: 9a760de0249f55cbe56fc51128f57793167c95d0
 
 COCOAPODS: 1.5.3

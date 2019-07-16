@@ -13,6 +13,7 @@
 		5EB754DC22ABE125006D636B /* ForgetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EB754DB22ABE125006D636B /* ForgetPasswordViewController.swift */; };
 		5EB754DF22ABE136006D636B /* ForgetPasswordTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EB754DD22ABE136006D636B /* ForgetPasswordTableViewCell.swift */; };
 		5EB754E022ABE136006D636B /* ForgetPasswordTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5EB754DE22ABE136006D636B /* ForgetPasswordTableViewCell.xib */; };
+		5EC919A822DCA002002E9A3A /* PostManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EC919A722DCA002002E9A3A /* PostManager.swift */; };
 		5ED3A32A22BF3EE400F65CF2 /* PostCommunication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED3A32922BF3EE400F65CF2 /* PostCommunication.swift */; };
 		5EE9EBFF22B803C300FD04B6 /* HomeDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EE9EBFE22B803C300FD04B6 /* HomeDto.swift */; };
 		5EEC6B5B22A66EAA005B1C34 /* LoginScreenTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EEC6B5922A66EAA005B1C34 /* LoginScreenTableViewCell.swift */; };
@@ -128,6 +129,7 @@
 		5EB754DB22ABE125006D636B /* ForgetPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgetPasswordViewController.swift; sourceTree = "<group>"; };
 		5EB754DD22ABE136006D636B /* ForgetPasswordTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgetPasswordTableViewCell.swift; sourceTree = "<group>"; };
 		5EB754DE22ABE136006D636B /* ForgetPasswordTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ForgetPasswordTableViewCell.xib; sourceTree = "<group>"; };
+		5EC919A722DCA002002E9A3A /* PostManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostManager.swift; sourceTree = "<group>"; };
 		5ED3A32922BF3EE400F65CF2 /* PostCommunication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCommunication.swift; sourceTree = "<group>"; };
 		5EE9EBFE22B803C300FD04B6 /* HomeDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeDto.swift; sourceTree = "<group>"; };
 		5EEC6B5922A66EAA005B1C34 /* LoginScreenTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginScreenTableViewCell.swift; sourceTree = "<group>"; };
@@ -321,6 +323,7 @@
 			isa = PBXGroup;
 			children = (
 				FA0372E122605A3700C3B3C9 /* UserManager.swift */,
+				5EC919A722DCA002002E9A3A /* PostManager.swift */,
 			);
 			path = manager;
 			sourceTree = "<group>";
@@ -837,6 +840,7 @@
 				"${BUILT_PRODUCTS_DIR}/BSImagePicker/BSImagePicker.framework",
 				"${BUILT_PRODUCTS_DIR}/BSImageView/BSImageView.framework",
 				"${BUILT_PRODUCTS_DIR}/Bolts/Bolts.framework",
+				"${BUILT_PRODUCTS_DIR}/EasyTipView/EasyTipView.framework",
 				"${BUILT_PRODUCTS_DIR}/FBSDKCoreKit/FBSDKCoreKit.framework",
 				"${BUILT_PRODUCTS_DIR}/FBSDKLoginKit/FBSDKLoginKit.framework",
 				"${BUILT_PRODUCTS_DIR}/FBSDKPlacesKit/FBSDKPlacesKit.framework",
@@ -857,6 +861,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BSImagePicker.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BSImageView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Bolts.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EasyTipView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKCoreKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKLoginKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKPlacesKit.framework",
@@ -950,6 +955,7 @@
 				FABF02502265DFBB0067960C /* SideMenuTableViewController.swift in Sources */,
 				FAD5015922AE8E4600D21F57 /* NotificationViewController.swift in Sources */,
 				9010B4AC22CF2AB70083A468 /* TermsPageViewController.swift in Sources */,
+				5EC919A822DCA002002E9A3A /* PostManager.swift in Sources */,
 				5EEC6B5E22A67052005B1C34 /* LoginScreenViewController.swift in Sources */,
 				FAD5015322AA6F3100D21F57 /* EditProfileViewController.swift in Sources */,
 				FA4D544C2260F7F200E9589B /* UserTypeActionViewController.swift in Sources */,

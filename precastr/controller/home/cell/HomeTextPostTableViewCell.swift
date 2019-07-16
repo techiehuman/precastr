@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import EasyTipView
 
 class HomeTextPostTableViewCell: UITableViewCell,UIScrollViewDelegate {
 
@@ -16,9 +17,6 @@ class HomeTextPostTableViewCell: UITableViewCell,UIScrollViewDelegate {
         //self.postImageCollectionView.register(UINib.init(nibName: "PostImageCollectionViewCell", bundle: Bundle.main), forCellWithReuseIdentifier: "PostImageCollectionViewCell")
         self.imageGalleryScrollView.delegate = self
         self.imageCounterView.layer.cornerRadius = 10
-      
-            
-       
     }
 
     @IBOutlet weak var profilePicImageView: UIImageView!
@@ -62,6 +60,8 @@ class HomeTextPostTableViewCell: UITableViewCell,UIScrollViewDelegate {
     @IBOutlet weak var separator: UIView!
     
     var currentCount : Int!
+    var homeViewControllerDelegate: HomeViewController!;
+
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
@@ -129,4 +129,5 @@ class HomeTextPostTableViewCell: UITableViewCell,UIScrollViewDelegate {
         let percentageVerticalOffset: CGFloat = currentVerticalOffset / maximumVerticalOffset
         
     }
+    
 }

@@ -12,6 +12,8 @@ import TwitterCore
 import Fabric
 import Crashlytics
 import Firebase
+import FBSDKCoreKit
+import FBSDKLoginKit
 
 let setting = UserDefaults.standard
 var postStatusList = [PostStatus]();
@@ -28,6 +30,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate {
         // Override point for customization after application launch.
         FirebaseApp.configure()
         Messaging.messaging().delegate = self
+        ApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions);
 
         Fabric.with([Crashlytics.self])
          TWTRTwitter.sharedInstance().start(withConsumerKey:"anwp6W4J66hoUWrB1PX9zMHiu", consumerSecret: "tXOlOLD8gcRQhrux93NcBQOA1v2WE24PcZTb9PrgLSS8c4DUAI")
@@ -99,6 +102,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate {
 
     func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+        
+        AppEvents.activateApp();
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
@@ -106,7 +111,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate {
     }
 
     func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
-        return TWTRTwitter.sharedInstance().application(app, open: url, options: options)
+        
+        print(url.absoluteString.contains("fb"))
+        
+        if (url.absoluteString.contains("fb")) {
+            return ApplicationDelegate.shared.application(app
+                , open: url
+                , options: options)
+
+        } else {
+            return TWTRTwitter.sharedInstance().application(app, open: url, options: options)
+
+        }
+        return true;
     }
     
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String) {

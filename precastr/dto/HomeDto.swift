@@ -21,3 +21,11 @@ class HomePostCellHeight {
     static let ScrollViewHeight: Int = 430;
     static let PageControlHeight: Int = 40;
 }
+
+class HomePostPublishStatusId {
+    static let PENDINGSTATUSID = 1;
+    static let REJECTEDSTATUSID = 6;
+    static let APPROVEDSTATUSID = 5;
+    static let PUBLISHSTATUSID = 7;
+
+}

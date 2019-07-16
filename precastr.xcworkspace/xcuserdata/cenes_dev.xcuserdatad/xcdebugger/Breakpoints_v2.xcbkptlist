@@ -26,7 +26,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "precastr/controller/guest/cells/SignupScreenTableViewCell.swift"
-            timestampString = "584867738.040212"
+            timestampString = "584868277.172766"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "257"
@@ -42,7 +42,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "precastr/controller/guest/cells/SignupScreenTableViewCell.swift"
-            timestampString = "584867738.040606"
+            timestampString = "584868277.173087"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "121"
@@ -80,6 +80,22 @@
             startingLineNumber = "147"
             endingLineNumber = "147"
             landmarkName = "postMultipartImageSocial(url:image:postData:complete:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "precastr/controller/home/HomeViewController.swift"
+            timestampString = "584951260.633219"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "431"
+            endingLineNumber = "431"
+            landmarkName = "showPostToolTip(sender:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

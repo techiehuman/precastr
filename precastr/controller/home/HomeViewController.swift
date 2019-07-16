@@ -10,26 +10,21 @@ import UIKit
 import SDWebImage
 import FBSDKShareKit
 import FBSDKCoreKit
+import EasyTipView
 
-class HomeViewController: UIViewController, SharingDelegate {
-    func sharer(_ sharer: Sharing, didFailWithError error: Error) {
-        print("Fail")
-    }
-    
-    func sharerDidCancel(_ sharer: Sharing) {
-        print("Cancel")
-    }
-    
+class HomeViewController: UIViewController, EasyTipViewDelegate, SharingDelegate {
 
     @IBOutlet weak var socialPostList: UITableView!
     
     @IBOutlet weak var noPostsText: UILabel!
     @IBOutlet weak var noPostsIcon: UIImageView!
     
+    var postToPublish: Post!;
     var posts = [Post]();
     var loggedInUser : User!
     var social : SocialPlatform!
     var postArray : [String:Any] = [String:Any]()
+    var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView();
     private let refreshControl = UIRefreshControl()
     var slides:[SlideUIView] = [];
     class func MainViewController() -> UITabBarController{
@@ -46,7 +41,12 @@ class HomeViewController: UIViewController, SharingDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
        
-            // Add Refresh Control to Table View
+        activityIndicator.center = view.center;
+        activityIndicator.hidesWhenStopped = true;
+        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.whiteLarge;
+        self.view.addSubview(activityIndicator);
+        
+        //Add Refresh Control to Table View
         if #available(iOS 10.0, *) {
             self.socialPostList.refreshControl = refreshControl
         } else {
@@ -307,6 +307,7 @@ class HomeViewController: UIViewController, SharingDelegate {
     @objc func postToFacebookPressed(sender: PostToSocialMediaGestureRecognizer) {
         
         let post = sender.post!;
+        self.postToPublish = sender.post;
         if (post.postDescription != "") {
             
             if (post.postImages.count == 0) {
@@ -316,9 +317,16 @@ class HomeViewController: UIViewController, SharingDelegate {
                 
                 let shareDialog = ShareDialog()
                 shareDialog.shareContent = content;
-                shareDialog.mode = .automatic;
+                shareDialog.mode = .native;
                 shareDialog.fromViewController = self;
-                shareDialog.show();
+                shareDialog.delegate = self;
+                shareDialog.shouldFailOnDataError = true;
+                if (shareDialog.canShow == false) {
+                    self.showAlert(title: "Alert", message: "Please install Facebook App");
+                } else {
+                    shareDialog.show();
+                }
+                
             } else {
                 
                 UIPasteboard.general.string = post.postDescription;
@@ -342,7 +350,13 @@ class HomeViewController: UIViewController, SharingDelegate {
                 shareDialog.shareContent = sharePhotoContent;
                 shareDialog.mode = .native;
                 shareDialog.fromViewController = self;
-                shareDialog.show()
+                shareDialog.delegate = self;
+                shareDialog.shouldFailOnDataError = true;
+                if (shareDialog.canShow == false) {
+                    self.showAlert(title: "Alert", message: "Please install Facebook App");
+                } else {
+                    shareDialog.show();
+                }
             }
         } else {
             
@@ -365,17 +379,74 @@ class HomeViewController: UIViewController, SharingDelegate {
             shareDialog.shareContent = sharePhotoContent;
             shareDialog.mode = .native;
             shareDialog.fromViewController = self;
-            shareDialog.show()
+            shareDialog.delegate = self;
+            shareDialog.shouldFailOnDataError = true;
+            if (shareDialog.canShow == false) {
+                self.showAlert(title: "Alert", message: "Please install Facebook App");
+            } else {
+                shareDialog.show();
+            }
         }
     }
     
+    //This method will be called. when user pushlish on twitter.
     @objc func postToTwitterPressed(sender: PostToSocialMediaGestureRecognizer) {
         
+        self.activityIndicator.startAnimating();
+        self.postToPublish = sender.post;
+        PostManager().publishPostOnTwitter(post: self.postToPublish, complete: {(response) in
+            self.activityIndicator.stopAnimating();
+
+            let statusCode = Int(response.value(forKey: "status") as! String)!
+            if(statusCode == 0) {
+                self.showAlert(title: "Alert", message: response.value(forKey: "message") as! String);
+            }
+        });
     }
     
+    //This method will be called when user post feed on facebook.
     func sharer(_ sharer: Sharing, didCompleteWithResults results: [String : Any]) {
-        print("After sharing here.")
+        
+        print("Response from facebook..")
+        self.activityIndicator.startAnimating();
+        PostManager().publishOnFacebook(post: self.postToPublish, complete: {(response) in
+            print(response);
+            self.activityIndicator.stopAnimating();
+            let statusCode = Int(response.value(forKey: "status") as! String)!
+            if(statusCode == 0) {
+                self.showAlert(title: "Alert", message: response.value(forKey: "message") as! String);
+            }
+        });
     }
+    
+    func sharer(_ sharer: Sharing, didFailWithError error: Error) {
+        print("Fail")
+    }
+    
+    func sharerDidCancel(_ sharer: Sharing) {
+        print("Cancel")
+    }
+    
+    @objc func showPostToolTip(sender: FacebookPublishInfoGestureRecognizer) {
+        var preferences = EasyTipView.Preferences()
+        preferences.drawing.font = UIFont(name: "VisbyCF-Regular", size: 14)!
+        preferences.drawing.foregroundColor = UIColor.white
+        preferences.drawing.backgroundColor = UIColor.init(red: 12, green: 111, blue: 233, alpha: 1);
+        preferences.drawing.arrowPosition = EasyTipView.ArrowPosition.top;
+        preferences.drawing.cornerRadius = 4;
+        
+        EasyTipView.show(forView: sender.publishInfoIcon,
+                         withinSuperview: sender.cell.contentView,
+                         text: "Tip view inside the navigation controller's view. Tap to dismiss!",
+                         preferences: preferences,
+                         delegate: self)
+        
+        
+    }
+    func easyTipViewDidDismiss(_ tipView: EasyTipView) {
+        tipView.dismiss();
+    }
+    
 }
 
 class MyTapRecognizer : UITapGestureRecognizer {
@@ -385,6 +456,11 @@ class MyTapRecognizer : UITapGestureRecognizer {
 class PostToSocialMediaGestureRecognizer: UITapGestureRecognizer {
     var rowId: Int!;
     var post: Post!;
+}
+
+class FacebookPublishInfoGestureRecognizer: UIGestureRecognizer {
+    var cell: HomeTextPostTableViewCell!;
+    var publishInfoIcon: UIView!;
 }
 
 extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
@@ -452,7 +528,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             let cell: HomeTextPostTableViewCell = tableView.dequeueReusableCell(withIdentifier: "HomeTextPostTableViewCell", for: indexPath) as! HomeTextPostTableViewCell;
             cell.sourceImageFacebook.isHidden = false;
             cell.sourceImageTwitter.isHidden = false;
-            
+            cell.homeViewControllerDelegate = self;
             let postDescTap = MyTapRecognizer.init(target: self, action: #selector(postDescriptionPressed(sender:)));
             postDescTap.rowId = indexPath.row;
             
@@ -461,6 +537,12 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             
             let postToTwitterTapGesture = PostToSocialMediaGestureRecognizer.init(target: self, action: #selector(postToTwitterPressed(sender:)));
             postToTwitterTapGesture.post = post;
+            
+            let publishInfoTapGesture = FacebookPublishInfoGestureRecognizer.init(target: self, action: #selector(showPostToolTip(sender:)));
+            publishInfoTapGesture.cell = cell;
+            publishInfoTapGesture.publishInfoIcon = cell.publishInfoIcon;
+            cell.publishInfoIcon.addGestureRecognizer(publishInfoTapGesture);
+            
             
             var facebookIconHidden = true;
             var twitterIconHidden = true;
