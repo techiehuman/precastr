@@ -144,7 +144,7 @@ class HttpService {
             }
             
             MultipartFormData.append( "\(String(describing: postData["post_description"]!))".data(using: .utf8)!, withName: "post_description")
-            MultipartFormData.append( "\(String(describing: postData["social_media_id"]!))".data(using: .utf8)!, withName: "social_media_id")
+            //MultipartFormData.append( "\(String(describing: postData["social_media_id"]!))".data(using: .utf8)!, withName: "social_media_id")
             MultipartFormData.append( "\(String(describing: postData["user_id"]!))".data(using: .utf8)!, withName: "user_id")
             
             if (postData["post_id"] != nil) {

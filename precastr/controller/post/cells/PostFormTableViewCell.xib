@@ -63,45 +63,8 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </view>
-                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bfP-pC-Cgu">
-                        <rect key="frame" x="0.0" y="258" width="378" height="39"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                        <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Select the social media platforms on which you plan to cast" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TwN-kz-VQH">
-                                <rect key="frame" x="15" y="0.0" width="255" height="39"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <fontDescription key="fontDescription" name="VisbyCF-Medium" family="Visby CF" pointSize="16"/>
-                                <color key="textColor" red="0.039215686270000001" green="0.34509803919999998" blue="0.72156862749999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k1J-A5-9pZ">
-                                <rect key="frame" x="281" y="2" width="34" height="34"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
-                                <inset key="imageEdgeInsets" minX="4" minY="4" maxX="4" maxY="4"/>
-                                <state key="normal" image="twitter-group"/>
-                                <connections>
-                                    <action selector="twitterBtnClicked:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="rIe-br-WZK"/>
-                                </connections>
-                            </button>
-                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="51Z-mG-oGt">
-                                <rect key="frame" x="327" y="2" width="34" height="34"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <inset key="imageEdgeInsets" minX="4" minY="4" maxX="4" maxY="4"/>
-                                <state key="normal" image="facebook-group"/>
-                                <connections>
-                                    <action selector="facebookBtnClicked:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="H50-66-t75"/>
-                                </connections>
-                            </button>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    </view>
                     <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fPF-VQ-8Jh">
-                        <rect key="frame" x="238" y="315" width="120" height="32"/>
+                        <rect key="frame" x="238" y="275" width="120" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qeh-EM-aKZ">
@@ -133,14 +96,14 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </view>
                     <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="20 files uploaded successfully" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8s1-1h-jeB">
-                        <rect key="frame" x="92" y="356" width="266" height="21"/>
+                        <rect key="frame" x="92" y="316" width="266" height="21"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                         <fontDescription key="fontDescription" name="VisbyCF-Regular" family="Visby CF" pointSize="14"/>
                         <color key="textColor" red="0.13333333333333333" green="0.13333333333333333" blue="0.13333333333333333" alpha="0.84705882352941175" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <button hidden="YES" opaque="NO" contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qxz-XI-f4I">
-                        <rect key="frame" x="15" y="315" width="107" height="30"/>
+                        <rect key="frame" x="15" y="275" width="107" height="30"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <fontDescription key="fontDescription" name="VisbyCF-Regular" family="Visby CF" pointSize="14"/>
                         <inset key="imageEdgeInsets" minX="10" minY="3" maxX="0.0" maxY="0.0"/>
@@ -158,13 +121,11 @@
                 <outlet property="attachmentBtn" destination="qeh-EM-aKZ" id="Ltq-tZ-l0J"/>
                 <outlet property="changeStatusBtn" destination="qxz-XI-f4I" id="7QR-We-wSI"/>
                 <outlet property="charaterCountLabel" destination="beK-LK-CcY" id="heE-g7-3tz"/>
-                <outlet property="facebookBtn" destination="51Z-mG-oGt" id="bBe-u6-6dx"/>
                 <outlet property="filesUploadedtext" destination="8s1-1h-jeB" id="WMJ-wK-uUd"/>
                 <outlet property="inputViewArea" destination="9J3-tt-J6t" id="pTg-Vg-iMZ"/>
                 <outlet property="postTextField" destination="3sx-VK-U2i" id="FPF-9X-LVK"/>
                 <outlet property="sendViewArea" destination="fPF-VQ-8Jh" id="eZj-LR-HFN"/>
                 <outlet property="submitBtn" destination="0Sk-gB-72Z" id="8Bt-kh-m0m"/>
-                <outlet property="twitterBtn" destination="k1J-A5-9pZ" id="bwZ-V8-VA2"/>
             </connections>
             <point key="canvasLocation" x="115" y="116"/>
         </tableViewCell>
@@ -172,8 +133,6 @@
     <resources>
         <image name="clips" width="16" height="14"/>
         <image name="down_arrow" width="12" height="7"/>
-        <image name="facebook-group" width="20" height="20"/>
         <image name="sent-email" width="16" height="14.5"/>
-        <image name="twitter-group" width="20" height="20"/>
     </resources>
 </document>

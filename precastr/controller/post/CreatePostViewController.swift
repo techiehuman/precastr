@@ -260,7 +260,7 @@ extension CreatePostViewController: UITableViewDelegate, UITableViewDataSource {
                 cell.filesUploadedtext.text = "\(post.postImages.count) files uploaded successfully."
             }
             
-            var facebookIconHidden = true;
+            /*var facebookIconHidden = true;
             var twitterIconHidden = true;
             if (post.socialMediaIds.count > 0) {
                 
@@ -287,7 +287,7 @@ extension CreatePostViewController: UITableViewDelegate, UITableViewDataSource {
                 cell.activeTwitterIcon();
                 cell.charaterCountLabel.isHidden = false;
 
-            }
+            }*/
             for postStatus in postStatusList {
                 if (postStatus.postStatusId == self.post.postStatusId) {
                     cell.changeStatusBtn.setTitle(postStatus.title, for: .normal);

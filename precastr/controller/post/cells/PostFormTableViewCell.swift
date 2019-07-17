@@ -16,8 +16,8 @@ class PostFormTableViewCell: UITableViewCell, UITextViewDelegate, PostFormCellPr
    
 
     @IBOutlet weak var postTextField: UITextView!
-    @IBOutlet weak var twitterBtn: UIButton!
-    @IBOutlet weak var facebookBtn: UIButton!
+    //@IBOutlet weak var twitterBtn: UIButton!
+    //@IBOutlet weak var facebookBtn: UIButton!
     @IBOutlet weak var sendViewArea: UIView!
     @IBOutlet weak var inputViewArea: UIView!
 
@@ -36,10 +36,10 @@ class PostFormTableViewCell: UITableViewCell, UITextViewDelegate, PostFormCellPr
         super.awakeFromNib()
         // Initialization code
         
-        self.facebookBtn.layer.borderColor = UIColor(red: 12/255, green: 111/255, blue: 233/255, alpha: 1).cgColor;
+        /*self.facebookBtn.layer.borderColor = UIColor(red: 12/255, green: 111/255, blue: 233/255, alpha: 1).cgColor;
         self.facebookBtn.layer.borderWidth = 1
         self.twitterBtn.layer.borderColor = UIColor(red: 12/255, green: 111/255, blue: 233/255, alpha: 1).cgColor;
-        self.twitterBtn.layer.borderWidth = 1
+        self.twitterBtn.layer.borderWidth = 1*/
         
         self.postTextField.delegate = self
         self.postTextField.layer.borderColor =  UIColor(red: 146/255, green: 147/255, blue: 149/255, alpha: 1).cgColor;
@@ -78,7 +78,7 @@ class PostFormTableViewCell: UITableViewCell, UITextViewDelegate, PostFormCellPr
         }
     }
     
-    func activeFacebookIcon() {
+    /*func activeFacebookIcon() {
         self.facebookBtn.backgroundColor = UIColor.init(red: 12/255, green: 111/255, blue: 2333/255, alpha: 1);
         self.facebookBtn.layer.borderWidth = 0
         let image = UIImage(named: "facebook")
@@ -90,9 +90,9 @@ class PostFormTableViewCell: UITableViewCell, UITextViewDelegate, PostFormCellPr
                 break;
             }
         }
-    }
+    }*/
 
-    @IBAction func facebookBtnClicked(_ sender: Any) {
+    /*@IBAction func facebookBtnClicked(_ sender: Any) {
         
         //self.socialMediaPlatform.append((social.socialPlatformId["facebook"])!)
         if(createPostViewControllerDelegate.facebookStatus == false){//If facebook is not clicked.
@@ -122,10 +122,10 @@ class PostFormTableViewCell: UITableViewCell, UITextViewDelegate, PostFormCellPr
         }
      
         
-    }
+    }*/
     
     
-    func activeTwitterIcon () {
+    /*func activeTwitterIcon () {
         self.twitterBtn.backgroundColor = UIColor.init(red: 12/255, green: 111/255, blue: 2333/255, alpha: 1);
         self.twitterBtn.layer.borderWidth = 0
         let image = UIImage(named: "twitter")
@@ -137,9 +137,9 @@ class PostFormTableViewCell: UITableViewCell, UITextViewDelegate, PostFormCellPr
                 break;
             }
         }
-    }
+    }*/
     
-    @IBAction func twitterBtnClicked(_ sender: Any) {
+    /*@IBAction func twitterBtnClicked(_ sender: Any) {
         
         if(createPostViewControllerDelegate.twitterStatus==false) {//Twitter is not clicked yet.
             
@@ -177,7 +177,7 @@ class PostFormTableViewCell: UITableViewCell, UITextViewDelegate, PostFormCellPr
         }
         
         
-    }
+    }*/
     @IBAction func AddSocialMedia(_ sender: Any) {
         
         self.createPostViewControllerDelegate.imageUploadClicked();
@@ -392,7 +392,7 @@ class PostFormTableViewCell: UITableViewCell, UITextViewDelegate, PostFormCellPr
                             UserService().postDataMethod(jsonURL: jsonURL,postData:postData,complete:{(response) in
                                 print(response);
                                 
-                                self.activeFacebookIcon();
+                                //self.activeFacebookIcon();
                             });
                         });
                         

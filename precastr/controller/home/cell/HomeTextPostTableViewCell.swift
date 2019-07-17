@@ -33,6 +33,8 @@ class HomeTextPostTableViewCell: UITableViewCell,UIScrollViewDelegate {
     @IBOutlet weak var pushToFacebookView: UIView!
     @IBOutlet weak var pushToTwitterView: UIView!
     
+    @IBOutlet weak var publishToTwitterImage: UIImageView!
+    @IBOutlet weak var publishToFacebookImage: UIImageView!
     
     var imagesArray : [String] = [String]();
     
@@ -136,19 +138,30 @@ class HomeTextPostTableViewCell: UITableViewCell,UIScrollViewDelegate {
     
     @IBAction func publishInfoButtonPressed(_ sender: Any) {
         
-        var preferences = EasyTipView.Preferences()
-        preferences.drawing.font = UIFont(name: "VisbyCF-Regular", size: 14)!
-        preferences.drawing.foregroundColor = UIColor.white
-        preferences.drawing.backgroundColor = UIColor.black;
+        if (self.homeViewControllerDelegate.easyToolTip == nil) {
+            var preferences = EasyTipView.Preferences()
+            preferences.drawing.font = UIFont(name: "VisbyCF-Regular", size: 14)!
+            preferences.drawing.textAlignment  = .left;
+            preferences.drawing.foregroundColor = UIColor.white
+            preferences.drawing.backgroundColor = UIColor.init(red: 12/255, green: 111/255, blue: 233/255, alpha: 1);
+            
+            preferences.drawing.arrowPosition = EasyTipView.ArrowPosition.top;
+            preferences.drawing.cornerRadius = 4;
+            let text = "\u{2022} If you are posting to FB and your post contains images & content, hit the \"Push to FB\" button, a window opens --> tap in the text box --> select \"Paste\" option -->  follow the on screen instructions to publish.\n\n\u{2022} And if your post contains only images OR only content, simply hit the \"Push to FB\" button --> follow the on screen instructions";
+            
+            self.homeViewControllerDelegate.easyToolTip = EasyTipView(text: text, preferences: preferences, delegate: homeViewControllerDelegate.self)
+            self.homeViewControllerDelegate.easyToolTip.show(animated: true, forView: publishInfoButton, withinSuperview: self.contentView)
+        } else {
+            self.homeViewControllerDelegate.easyToolTip.dismiss();
+            self.homeViewControllerDelegate.easyToolTip = nil;
+        }
         
-        preferences.drawing.arrowPosition = EasyTipView.ArrowPosition.top;
-        preferences.drawing.cornerRadius = 4;
+            //self.homeViewControllerDelegate.easyToolTip.show(animated: true, forView: publishInfoButton, withinSuperview: self.contentView)(forView: publishInfoButton,
+                            // withinSuperview: self.contentView,
+                             //text: "",
+                            // preferences: preferences,
+                             //delegate: homeViewControllerDelegate.self)
         
-        EasyTipView.show(forView: publishInfoButton,
-                         withinSuperview: self.contentView,
-                         text: "Tip view inside the navigation controller's view. Tap to dismiss!",
-                         preferences: preferences,
-                         delegate: homeViewControllerDelegate.self)
     }
     @objc func publishInfoIconPressed() {
         print("clicked");

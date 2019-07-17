@@ -70,16 +70,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "No"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "precastr/service/HttpService.swift"
-            timestampString = "583691436.829687"
+            filePath = "precastr/controller/home/cell/HomeTextPostTableViewCell.swift"
+            timestampString = "585060355.279709"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "147"
-            endingLineNumber = "147"
-            landmarkName = "postMultipartImageSocial(url:image:postData:complete:)"
+            startingLineNumber = "155"
+            endingLineNumber = "155"
+            landmarkName = "publishInfoButtonPressed(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

@@ -10,6 +10,9 @@ import UIKit
 import SDWebImage
 import FBSDKShareKit
 import FBSDKCoreKit
+import FBSDKLoginKit
+import FacebookShare
+import FBSDKCoreKit
 import EasyTipView
 
 class HomeViewController: UIViewController, EasyTipViewDelegate, SharingDelegate {
@@ -27,6 +30,9 @@ class HomeViewController: UIViewController, EasyTipViewDelegate, SharingDelegate
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView();
     private let refreshControl = UIRefreshControl()
     var slides:[SlideUIView] = [];
+    var toolTipOpened: Bool = false;
+    var easyToolTip: EasyTipView!
+    
     class func MainViewController() -> UITabBarController{
         
         let tabBarContro = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MadTabBar") as! UITabBarController
@@ -40,11 +46,6 @@ class HomeViewController: UIViewController, EasyTipViewDelegate, SharingDelegate
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-       
-        activityIndicator.center = view.center;
-        activityIndicator.hidesWhenStopped = true;
-        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.whiteLarge;
-        self.view.addSubview(activityIndicator);
         
         //Add Refresh Control to Table View
         if #available(iOS 10.0, *) {
@@ -57,9 +58,8 @@ class HomeViewController: UIViewController, EasyTipViewDelegate, SharingDelegate
         socialPostList.register(UINib(nibName: "ModeratorCastsTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "ModeratorCastsTableViewCell")
         
         //socialPostList.register(UINib(nibName: "PostTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "PostTableViewCell")
-        
         loggedInUser = User().loadUserDataFromUserDefaults(userDataDict : setting);
-        
+
         self.getAllPostStatuses();
 
         if (loggedInUser.isCastr == 1) {
@@ -306,6 +306,12 @@ class HomeViewController: UIViewController, EasyTipViewDelegate, SharingDelegate
     
     @objc func postToFacebookPressed(sender: PostToSocialMediaGestureRecognizer) {
         
+        print(sender.post.postDescription);
+
+        DispatchQueue.main.async {
+            //self.activityIndicator.startAnimating();
+        }
+
         let post = sender.post!;
         self.postToPublish = sender.post;
         if (post.postDescription != "") {
@@ -322,18 +328,19 @@ class HomeViewController: UIViewController, EasyTipViewDelegate, SharingDelegate
                 shareDialog.delegate = self;
                 shareDialog.shouldFailOnDataError = true;
                 if (shareDialog.canShow == false) {
-                    self.showAlert(title: "Alert", message: "Please install Facebook App");
+                    //self.showAlert(title: "Alert", message: "Please install Facebook App");
+                    showFacebookFailAlert();
                 } else {
                     shareDialog.show();
                 }
                 
             } else {
                 
-                UIPasteboard.general.string = post.postDescription;
-                self.showToast(message: "Text Copied to clipboard");
+                //self.showToast(message: "Text Copied to clipboard");
+
                 
                 let sharePhotoContent = SharePhotoContent();
-                for photoStr in post.postImages {
+                /*for photoStr in post.postImages {
                     let sharePhoto = SharePhoto();
                     //sharePhoto.imageURL = URL.init(string:photoStr)!
                     let url = URL(string: photoStr)
@@ -344,8 +351,14 @@ class HomeViewController: UIViewController, EasyTipViewDelegate, SharingDelegate
                         sharePhoto.image = image;
                     }
                     sharePhotoContent.photos.append(sharePhoto);
-                }
+                }*/
                 
+                
+                
+                //self.activityIndicator.stopAnimating();
+                
+                UIPasteboard.general.string = "\(sender.post.postDescription)";
+
                 let shareDialog = ShareDialog()
                 shareDialog.shareContent = sharePhotoContent;
                 shareDialog.mode = .native;
@@ -353,13 +366,13 @@ class HomeViewController: UIViewController, EasyTipViewDelegate, SharingDelegate
                 shareDialog.delegate = self;
                 shareDialog.shouldFailOnDataError = true;
                 if (shareDialog.canShow == false) {
-                    self.showAlert(title: "Alert", message: "Please install Facebook App");
+                    showFacebookFailAlert();
                 } else {
                     shareDialog.show();
                 }
             }
         } else {
-            
+
             //If there are only images but not text.. Then we will go for this.
             let sharePhotoContent = SharePhotoContent();
             for photoStr in post.postImages {
@@ -375,6 +388,7 @@ class HomeViewController: UIViewController, EasyTipViewDelegate, SharingDelegate
                 sharePhotoContent.photos.append(sharePhoto);
             }
             
+            self.activityIndicator.stopAnimating();
             let shareDialog = ShareDialog()
             shareDialog.shareContent = sharePhotoContent;
             shareDialog.mode = .native;
@@ -382,7 +396,7 @@ class HomeViewController: UIViewController, EasyTipViewDelegate, SharingDelegate
             shareDialog.delegate = self;
             shareDialog.shouldFailOnDataError = true;
             if (shareDialog.canShow == false) {
-                self.showAlert(title: "Alert", message: "Please install Facebook App");
+                showFacebookFailAlert();
             } else {
                 shareDialog.show();
             }
@@ -400,6 +414,8 @@ class HomeViewController: UIViewController, EasyTipViewDelegate, SharingDelegate
             let statusCode = Int(response.value(forKey: "status") as! String)!
             if(statusCode == 0) {
                 self.showAlert(title: "Alert", message: response.value(forKey: "message") as! String);
+            } else {
+                self.socialPostList.reloadData();
             }
         });
     }
@@ -415,12 +431,16 @@ class HomeViewController: UIViewController, EasyTipViewDelegate, SharingDelegate
             let statusCode = Int(response.value(forKey: "status") as! String)!
             if(statusCode == 0) {
                 self.showAlert(title: "Alert", message: response.value(forKey: "message") as! String);
+            } else {
+                self.socialPostList.reloadData();
             }
         });
     }
     
     func sharer(_ sharer: Sharing, didFailWithError error: Error) {
         print("Fail")
+        self.activityIndicator.stopAnimating();
+        showFacebookFailAlert();
     }
     
     func sharerDidCancel(_ sharer: Sharing) {
@@ -431,6 +451,24 @@ class HomeViewController: UIViewController, EasyTipViewDelegate, SharingDelegate
         tipView.dismiss();
     }
     
+    
+    func showFacebookFailAlert() {
+        
+        var refreshAlert = UIAlertController(title: "Facebook Not Installed", message: "It looks like the Facebook app is not installed on your iPhone. Click \"OK\" to download, after installing please come back to the same screen and hit the \"Push to FB\" button", preferredStyle: UIAlertControllerStyle.alert)
+        
+        refreshAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (action: UIAlertAction!) in
+            if let url = URL(string: "https://apps.apple.com/in/app/facebook/id284882215") {
+                UIApplication.shared.open(url)
+            }
+        }));
+        
+        refreshAlert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: { (action: UIAlertAction!) in
+            
+            
+        }));
+        self.present(refreshAlert, animated: true, completion: nil)
+
+    }
 }
 
 class MyTapRecognizer : UITapGestureRecognizer {
@@ -579,8 +617,12 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
                 cell.sourceImageTwitter.isHidden = false;
                 cell.sourceImageFacebook.isHidden = true;
                 cell.sourceImageTwitter.image = UIImage.init(named: "twitter-group");
+            } else {
+                cell.sourceImageTwitter.isHidden = true;
+                cell.sourceImageFacebook.isHidden = true;
             }
             
+            /***** CODE TO SHOW HIDE PUSH TO TWITTER/FACEBOOK BUTTONS  *********/
             //Lets handle the logic of Hiding and Shwoing Publish Buttons.
             //First lets check if post status is Approved/ Published.
             //If post status is approved, then we would have to show both buttons.
@@ -614,16 +656,30 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
                     cell.postPrePublishView.isHidden = false;
                     
                     if (facebookPublished == true) {
-                        cell.pushToFacebookView.isHidden = true;
+                        //cell.pushToFacebookView.isHidden = true;
+                        cell.pushToFacebookView.backgroundColor = UIColor.init(red: 237/255, green: 237/255, blue: 237/255, alpha: 1);
+                        cell.publishToFacebookImage.backgroundColor = UIColor.init(red: 237/255, green: 237/255, blue: 237/255, alpha: 1);
+                        cell.pushToFacebookView.isUserInteractionEnabled = false;
                     } else {
-                        cell.pushToFacebookView.isHidden = false;
+                        //cell.pushToFacebookView.isHidden = false;
+                        cell.pushToFacebookView.backgroundColor = UIColor.init(red: 48/255, green: 77/255, blue: 141/255, alpha: 1);
+                        cell.pushToFacebookView.backgroundColor = UIColor.init(red: 82/255, green: 117/255, blue: 194/255, alpha: 1);
+                        cell.pushToFacebookView.isUserInteractionEnabled = true;
                     }
                     
                     
                     if (twitterPublished == true) {
-                        cell.pushToTwitterView.isHidden = true;
+                        //cell.pushToTwitterView.isHidden = true;
+                        cell.pushToTwitterView.backgroundColor = UIColor.init(red: 237/255, green: 237/255, blue: 237/255, alpha: 1);
+                        cell.publishToTwitterImage.backgroundColor = UIColor.init(red: 237/255, green: 237/255, blue: 237/255, alpha: 1);
+                        cell.pushToTwitterView.isUserInteractionEnabled = false;
+
                     } else {
-                        cell.pushToTwitterView.isHidden = false;
+                        //cell.pushToTwitterView.isHidden = false;
+                        cell.pushToTwitterView.backgroundColor = UIColor.init(red: 0, green: 153/255, blue: 219/255, alpha: 1);
+                        cell.publishToTwitterImage.backgroundColor = UIColor.init(red: 42/255, green: 185/255, blue: 195/255, alpha: 1);
+                        cell.pushToTwitterView.isUserInteractionEnabled = true;
+
                     }
                 }
                 
@@ -651,18 +707,6 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             } else if (status == "Rejected") {
                 imageStatus = "rejected"
               //  status = "Rejected"
-            } else if(status == "Pending with caster") {
-                imageStatus = "under-review"
-               // status = "Under review"
-            } else if(status == "Unread by moderator") {
-                imageStatus = "under-review"
-               // status = "Unread by moderator"
-            } else if(status == "Pending with moderator") {
-                imageStatus = "under-review"
-               // status = "Under review"
-            } else if(status == "Deleted") {
-                imageStatus = "under-review"
-               // status = "Deleted"
             } else if(status == "Published") {
                 imageStatus = "published"
                // status = "Deleted"
@@ -724,8 +768,6 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
                 proNameLbl.numberOfLines = 0
             }
             cell.descriptionView.addSubview(proNameLbl)
-            //cell.descriptionView.addGestureRecognizer(postDescTap);
-            
             if (cell.postPrePublishView.isHidden == true) {
                 cell.descriptionView.frame = CGRect.init(x: cell.descriptionView.frame.origin.x, y: 55, width: cell.descriptionView.frame.width, height: height);
             } else {
@@ -785,6 +827,12 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             }
             //ScrollView functionality
             cell.addGestureRecognizer(postDescTap)
+            
+            activityIndicator.center = cell.center;
+            activityIndicator.hidesWhenStopped = true;
+            activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.whiteLarge;
+            cell.addSubview(activityIndicator);
+
             return cell;
             
         } else if (loggedInUser.isCastr == 2) { // moderator
@@ -842,6 +890,9 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
                 cell.sourceImageTwitter.isHidden = false;
                 cell.sourceImageFacebook.isHidden = true;
                 cell.sourceImageTwitter.image = UIImage.init(named: "twitter-group");
+            } else {
+                cell.sourceImageTwitter.isHidden = true;
+                cell.sourceImageFacebook.isHidden = true;
             }
             
             //********************  CODE TO SHOW HIDE SOCIAL MEDIA ICON ENDS   *********************//

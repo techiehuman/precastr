@@ -10,8 +10,9 @@ import UIKit
 import BSImagePicker
 import MobileCoreServices
 import Photos
-import FBSDKLoginKit
+import FBSDKShareKit
 import FBSDKCoreKit
+import EasyTipView
 import TwitterKit
 import TwitterCore
 
@@ -19,7 +20,7 @@ protocol ImageLibProtocolC {
     func takePicture(viewC : UIViewController);
 }
 
-class CommunicationViewController: UIViewController,UITextViewDelegate, UIImagePickerControllerDelegate {
+class CommunicationViewController: UIViewController,UITextViewDelegate, UIImagePickerControllerDelegate, EasyTipViewDelegate, SharingDelegate {
 
     var posts = [Post]();
     var post = Post();
@@ -51,6 +52,8 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
     var PhotoArray = [UIImage]()
     var postStatus : Int = 0
     var postArray : [String:Any] = [String:Any]()
+    var postToPublish: Post!;
+
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView();
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -138,13 +141,13 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
         //If Logged in user is a moderator, then we will
         self.loggedInUser = User().loadUserDataFromUserDefaults(userDataDict: setting);
         if (loggedInUser.isCastr == 2) {
-            self.navigationItem.title = "Moderate Casts";
+            self.navigationItem.title = "Cast Detail";
             
             if (self.tabBarController!.viewControllers?.count == 4) {
                 self.tabBarController!.viewControllers?.remove(at: 1)
             }
         } else {
-            self.navigationItem.title = "My Casts";
+            self.navigationItem.title = "Cast Detail";
             
             if (self.tabBarController!.viewControllers?.count == 3) {
                 
@@ -554,7 +557,136 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
         }
     }
 
+    @objc func postToFacebookPressed(sender: PostToSocialMediaGestureRecognizer) {
+        
+        let post = sender.post!;
+        self.postToPublish = sender.post;
+        if (post.postDescription != "") {
+            
+            if (post.postImages.count == 0) {
+                
+                let content = ShareLinkContent();
+                content.quote = post.postDescription;
+                
+                let shareDialog = ShareDialog()
+                shareDialog.shareContent = content;
+                shareDialog.mode = .native;
+                shareDialog.fromViewController = self;
+                shareDialog.delegate = self;
+                shareDialog.shouldFailOnDataError = true;
+                if (shareDialog.canShow == false) {
+                    self.showAlert(title: "Alert", message: "Please install Facebook App");
+                } else {
+                    shareDialog.show();
+                }
+                
+            } else {
+                
+                UIPasteboard.general.string = post.postDescription;
+                self.showToast(message: "Text Copied to clipboard");
+                
+                let sharePhotoContent = SharePhotoContent();
+                for photoStr in post.postImages {
+                    let sharePhoto = SharePhoto();
+                    //sharePhoto.imageURL = URL.init(string:photoStr)!
+                    let url = URL(string: photoStr)
+                    let data = try? Data(contentsOf: url!)
+                    
+                    if let imageData = data {
+                        let image = UIImage(data: imageData)
+                        sharePhoto.image = image;
+                    }
+                    sharePhotoContent.photos.append(sharePhoto);
+                }
+                
+                let shareDialog = ShareDialog()
+                shareDialog.shareContent = sharePhotoContent;
+                shareDialog.mode = .native;
+                shareDialog.fromViewController = self;
+                shareDialog.delegate = self;
+                shareDialog.shouldFailOnDataError = true;
+                if (shareDialog.canShow == false) {
+                    self.showAlert(title: "Alert", message: "Please install Facebook App");
+                } else {
+                    shareDialog.show();
+                }
+            }
+        } else {
+            
+            //If there are only images but not text.. Then we will go for this.
+            let sharePhotoContent = SharePhotoContent();
+            for photoStr in post.postImages {
+                let sharePhoto = SharePhoto();
+                //sharePhoto.imageURL = URL.init(string:photoStr)!
+                let url = URL(string: photoStr)
+                let data = try? Data(contentsOf: url!)
+                
+                if let imageData = data {
+                    let image = UIImage(data: imageData)
+                    sharePhoto.image = image;
+                }
+                sharePhotoContent.photos.append(sharePhoto);
+            }
+            
+            let shareDialog = ShareDialog()
+            shareDialog.shareContent = sharePhotoContent;
+            shareDialog.mode = .native;
+            shareDialog.fromViewController = self;
+            shareDialog.delegate = self;
+            shareDialog.shouldFailOnDataError = true;
+            if (shareDialog.canShow == false) {
+                self.showAlert(title: "Alert", message: "Please install Facebook App");
+            } else {
+                shareDialog.show();
+            }
+        }
+    }
     
+    //This method will be called. when user pushlish on twitter.
+    @objc func postToTwitterPressed(sender: PostToSocialMediaGestureRecognizer) {
+        
+        self.activityIndicator.startAnimating();
+        self.postToPublish = sender.post;
+        PostManager().publishPostOnTwitter(post: self.postToPublish, complete: {(response) in
+            self.activityIndicator.stopAnimating();
+            
+            let statusCode = Int(response.value(forKey: "status") as! String)!
+            if(statusCode == 0) {
+                self.showAlert(title: "Alert", message: response.value(forKey: "message") as! String);
+            } else {
+                self.communicationTableView.reloadData();
+            }
+        });
+    }
+    
+    //This method will be called when user post feed on facebook.
+    func sharer(_ sharer: Sharing, didCompleteWithResults results: [String : Any]) {
+        
+        print("Response from facebook..")
+        self.activityIndicator.startAnimating();
+        PostManager().publishOnFacebook(post: self.postToPublish, complete: {(response) in
+            print(response);
+            self.activityIndicator.stopAnimating();
+            let statusCode = Int(response.value(forKey: "status") as! String)!
+            if(statusCode == 0) {
+                self.showAlert(title: "Alert", message: response.value(forKey: "message") as! String);
+            } else {
+                self.communicationTableView.reloadData();
+            }
+        });
+    }
+    
+    func sharer(_ sharer: Sharing, didFailWithError error: Error) {
+        print("Fail")
+    }
+    
+    func sharerDidCancel(_ sharer: Sharing) {
+        print("Cancel")
+    }
+    
+    func easyTipViewDidDismiss(_ tipView: EasyTipView) {
+        tipView.dismiss();
+    }
 }
 
 extension CommunicationViewController: UITableViewDelegate, UITableViewDataSource {
@@ -572,6 +704,13 @@ extension CommunicationViewController: UITableViewDelegate, UITableViewDataSourc
         
         if (indexPath.row == 0) {
             let cell: HomeTextPostTableViewCell = tableView.dequeueReusableCell(withIdentifier: "HomeTextPostTableViewCell") as! HomeTextPostTableViewCell;
+            
+            let postToFacebookTapGesture = PostToSocialMediaGestureRecognizer.init(target: self, action: #selector(postToFacebookPressed(sender:)));
+            postToFacebookTapGesture.post = post;
+            
+            let postToTwitterTapGesture = PostToSocialMediaGestureRecognizer.init(target: self, action: #selector(postToTwitterPressed(sender:)));
+            postToTwitterTapGesture.post = post;
+
             
             cell.sourceImageFacebook.isHidden = false;
             cell.sourceImageTwitter.isHidden = false;
@@ -601,6 +740,9 @@ extension CommunicationViewController: UITableViewDelegate, UITableViewDataSourc
                 cell.sourceImageTwitter.isHidden = false;
                 cell.sourceImageFacebook.isHidden = true;
                 cell.sourceImageTwitter.image = UIImage.init(named: "twitter-group");
+            } else {
+                cell.sourceImageTwitter.isHidden = true;
+                cell.sourceImageFacebook.isHidden = true;
             }
             
             //Lets handle the logic of Hiding and Shwoing Publish Buttons.
@@ -633,19 +775,31 @@ extension CommunicationViewController: UITableViewDelegate, UITableViewDataSourc
                 if (facebookPublished == true && twitterPublished == true) {
                     cell.postPrePublishView.isHidden = true;
                 } else {
-                    cell.postPrePublishView.isHidden = false;
-                    
                     if (facebookPublished == true) {
-                        cell.pushToFacebookView.isHidden = true;
+                        //cell.pushToFacebookView.isHidden = true;
+                        cell.pushToFacebookView.backgroundColor = UIColor.init(red: 237/255, green: 237/255, blue: 237/255, alpha: 1);
+                        cell.publishToFacebookImage.backgroundColor = UIColor.init(red: 237/255, green: 237/255, blue: 237/255, alpha: 1);
+                        cell.pushToFacebookView.isUserInteractionEnabled = false;
                     } else {
-                        cell.pushToFacebookView.isHidden = false;
+                        //cell.pushToFacebookView.isHidden = false;
+                        cell.pushToFacebookView.backgroundColor = UIColor.init(red: 48/255, green: 77/255, blue: 141/255, alpha: 1);
+                        cell.pushToFacebookView.backgroundColor = UIColor.init(red: 82/255, green: 117/255, blue: 194/255, alpha: 1);
+                        cell.pushToFacebookView.isUserInteractionEnabled = true;
                     }
                     
                     
                     if (twitterPublished == true) {
-                        cell.pushToTwitterView.isHidden = true;
+                        //cell.pushToTwitterView.isHidden = true;
+                        cell.pushToTwitterView.backgroundColor = UIColor.init(red: 237/255, green: 237/255, blue: 237/255, alpha: 1);
+                        cell.publishToTwitterImage.backgroundColor = UIColor.init(red: 237/255, green: 237/255, blue: 237/255, alpha: 1);
+                        cell.pushToTwitterView.isUserInteractionEnabled = false;
+                        
                     } else {
-                        cell.pushToTwitterView.isHidden = false;
+                        //cell.pushToTwitterView.isHidden = false;
+                        cell.pushToTwitterView.backgroundColor = UIColor.init(red: 0, green: 153/255, blue: 219/255, alpha: 1);
+                        cell.publishToTwitterImage.backgroundColor = UIColor.init(red: 42/255, green: 185/255, blue: 195/255, alpha: 1);
+                        cell.pushToTwitterView.isUserInteractionEnabled = true;
+                        
                     }
                 }
                 
@@ -706,6 +860,11 @@ extension CommunicationViewController: UITableViewDelegate, UITableViewDataSourc
             cell.statusImage.frame = CGRect.init(x: 0, y: 0, width: 20, height: 20);
             cell.profileLabel.frame = CGRect.init(x: 25, y: 0, width: cell.profileLabel.intrinsicContentSize.width, height: 20);
             cell.dateLabel.frame = CGRect.init(x: (cell.profileLabel.intrinsicContentSize.width + cell.profileLabel.frame.origin.x + 5), y: 0, width: cell.dateLabel.intrinsicContentSize.width, height: 20);
+            
+            if (cell.postPrePublishView.isHidden == false) {
+                cell.pushToTwitterView.addGestureRecognizer(postToTwitterTapGesture);
+                cell.pushToFacebookView.addGestureRecognizer(postToFacebookTapGesture);
+            }
             
             //Call this function
             let height = self.heightForView(text: post.postDescription, font: UIFont.init(name: "VisbyCF-Regular", size: 16.0)!, width: cell.contentView.frame.width - 30)
