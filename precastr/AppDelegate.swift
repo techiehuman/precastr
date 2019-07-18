@@ -76,9 +76,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate {
         }
         
         print("Registered with device token: \(token)")
-        let userDefaults = UserDefaults.standard
-        userDefaults.setValue(token , forKey: "tokenData")
-        userDefaults.synchronize()
+        //let userDefaults = UserDefaults.standard
+        //userDefaults.setValue(token , forKey: "tokenData")
+        //userDefaults.synchronize()
             
 
     }
@@ -129,6 +129,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate {
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String) {
         print("Firebase registration token: \(fcmToken)")
         
+        let userDefaults = UserDefaults.standard
+        userDefaults.setValue(fcmToken , forKey: "tokenData")
+        userDefaults.synchronize()
+
         let dataDict:[String: String] = ["token": fcmToken]
         NotificationCenter.default.post(name: Notification.Name("FCMToken"), object: nil, userInfo: dataDict)
         // TODO: If necessary send token to application server.
