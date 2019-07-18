@@ -17,38 +17,6 @@
             endingLineNumber = "518"
             landmarkName = "getPostCommunications()"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "precastr.CommunicationViewController.getPostCommunications() -&gt; ()"
-                  moduleName = "precastr"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/mandeepsingh/Desktop/Mandeep/apps/projects/precastr/precastr/precastr/controller/communication/CommunicationViewController.swift"
-                  timestampString = "584953867.9450459"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "519"
-                  endingLineNumber = "519"
-                  offsetFromSymbolStart = "742">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (__C.NSDictionary) -&gt; () in precastr.CommunicationViewController.getPostCommunications() -&gt; ()"
-                  moduleName = "precastr"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/mandeepsingh/Desktop/Mandeep/apps/projects/precastr/precastr/precastr/controller/communication/CommunicationViewController.swift"
-                  timestampString = "584953867.947524"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "521"
-                  endingLineNumber = "521"
-                  offsetFromSymbolStart = "366">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -65,54 +33,6 @@
             endingLineNumber = "526"
             landmarkName = "getPostCommunications()"
             landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "precastr/AppDelegate.swift"
-            timestampString = "584618876.875242"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "113"
-            endingLineNumber = "113"
-            landmarkName = "messaging(_:didReceiveRegistrationToken:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "default argument 2 of precastr.AppDelegate.application(_: __C.UIApplication, open: Foundation.URL, options: Swift.Dictionary&lt;__C.UIApplicationOpenURLOptionsKey, Any&gt;) -&gt; Swift.Bool"
-                  moduleName = "precastr"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/mandeepsingh/Desktop/Mandeep/apps/projects/precastr/precastr/precastr/AppDelegate.swift"
-                  timestampString = "584953867.962755"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "113"
-                  endingLineNumber = "113"
-                  offsetFromSymbolStart = "12">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "precastr.AppDelegate.application(_: __C.UIApplication, open: Foundation.URL, options: Swift.Dictionary&lt;__C.UIApplicationOpenURLOptionsKey, Any&gt;) -&gt; Swift.Bool"
-                  moduleName = "precastr"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/mandeepsingh/Desktop/Mandeep/apps/projects/precastr/precastr/precastr/AppDelegate.swift"
-                  timestampString = "584953867.966765"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "115"
-                  endingLineNumber = "115"
-                  offsetFromSymbolStart = "161">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

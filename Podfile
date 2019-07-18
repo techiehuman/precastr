@@ -5,10 +5,14 @@ target 'precastr' do
   # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
   use_frameworks!
 
+  pod 'FacebookSDK'
   pod 'FBSDKPlacesKit'
   pod 'FacebookCore'
   pod 'FacebookLogin'
   pod 'FacebookShare'
+  pod 'Firebase/Core'
+  pod 'Firebase/Messaging'
+  
   pod 'TwitterKit'
   pod 'Alamofire'
   pod 'SDWebImage', '~> 4.0'
@@ -18,8 +22,6 @@ target 'precastr' do
   pod 'BSImagePicker', '~> 2.8'
   pod 'EasyTipView', '~> 2.0.4'
 
-  pod 'Firebase/Core'
-  pod 'Firebase/Messaging'
   # Pods for precastr
 
   target 'precastrTests' do
