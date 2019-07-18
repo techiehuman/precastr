@@ -38,6 +38,8 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
     @IBOutlet weak var submitBtn : UIButton!
     @IBOutlet weak var topButtonBars: UIView!
     @IBOutlet weak var lblPostDate: UILabel!
+    @IBOutlet weak var separator: UIView!
+    
     
     var loggedInUser : User!
     var uploadImage : [UIImage] = [UIImage]()
@@ -91,21 +93,14 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
         self.changeStatusBtn.layer.cornerRadius = 4;
         self.changeStatusBtn.layer.borderWidth = 1;
         self.changeStatusBtn.layer.borderColor = UIColor(red: 112/255, green: 112/255, blue: 112/255, alpha: 1).cgColor;
-       
-        if (loggedInUser.isCastr == 1) {
-            self.changeStatusBtn.setImage(nil, for: .normal);
-            self.changeStatusBtn.isUserInteractionEnabled = false;
-        } else {
-            if (self.post.status == "Approved" || self.post.status == "Published") {
-                self.changeStatusBtn.setImage(nil, for: .normal);
-                self.changeStatusBtn.isUserInteractionEnabled = false;
-            } else {
-                self.changeStatusBtn.setImage(UIImage.init(named: "down_arrow"), for: .normal);
-                self.changeStatusBtn.isUserInteractionEnabled = true;
-            }
-        }
+      
         
         self.lblPostDate.text = Date().ddspEEEEcmyyyyspHHclmmclaa(dateStr: self.post.createdOn);
+        self.lblPostDate.frame = CGRect.init(x: self.view.frame.width - (self.lblPostDate.intrinsicContentSize.width + 10), y: self.lblPostDate.frame.origin.y, width: self.lblPostDate.intrinsicContentSize.width, height: self.lblPostDate.frame.height)
+        self.separator.frame = CGRect.init(x: self.view.frame.width - (self.lblPostDate.intrinsicContentSize.width + 20), y: self.separator.frame.origin.y, width: 1, height: 15)
+        
+        self.changeStatusBtn.setTitle(post.status.capitalized, for: .normal)
+        self.changeStatusBtn.frame = CGRect.init(x: self.view.frame.width - (self.lblPostDate.intrinsicContentSize.width + self.changeStatusBtn.intrinsicContentSize.width + 40), y: self.changeStatusBtn.frame.origin.y, width: self.changeStatusBtn.intrinsicContentSize.width, height: self.changeStatusBtn.frame.height);
         
         self.topButtonBars.frame = CGRect.init(x: 0, y: (UIApplication.shared.statusBarFrame.size.height + (self.navigationController?.navigationBar.frame.height)!) + 10, width: self.view.frame.width, height: self.topButtonBars.frame.height);
         
@@ -126,6 +121,8 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
         self.getPostCommunications();
         
         self.getAllPostStatuses();
+        
+        self.changeStatusFunction();
    //  postStatusList = loadPostStatus()
     }
 
@@ -316,8 +313,10 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
         // present an actionSheet...
         //Only Moderatuor can change the status from dropdown
         if (self.loggedInUser.isCastr == 2) {
+            //self.changeStatusFunction();
             present(actionSheetController, animated: true, completion: nil)
         }
+        
     }
     
     @IBAction func editPostBtnClicked(_ sender: Any) {
@@ -482,9 +481,12 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
                         // Lets add ui labels in width.
                         let totalWidthOfUIView = self.changeStatusBtn.intrinsicContentSize.width + 20;
                         self.changeStatusBtn.frame = CGRect.init(x: (self.changeStatusBtn.frame.origin.x), y: self.changeStatusBtn.frame.origin.y, width: totalWidthOfUIView, height: self.changeStatusBtn.frame.height);
+                        
+                        
+                        self.changeStatusFunction();
                         /*if(self.post.status == "Published"){
                             
-                            
+                         
                             for sourcePlatformId in self.post.socialMediaIds {
                                 if(Int(sourcePlatformId) == social.socialPlatformId["Twitter"]) {
                                     var postDataTwitter = [String: Any]();
@@ -748,6 +750,40 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
         self.present(refreshAlert, animated: true, completion: nil)
         
     }
+    func changeStatusFunction(){
+        print("SDSDSDSDSDSD")
+        if (loggedInUser.isCastr == 1 || (loggedInUser.isCastr == 2 && (self.post.status == "Approved" || self.post.status == "Published"))) {
+        self.changeStatusBtn.isUserInteractionEnabled = false;
+        self.changeStatusBtn.layer.borderWidth = 0
+        var status = "";
+        var imageStatus = "";
+        status = self.post.status
+        if (status == "Pending") {
+            imageStatus = "pending-review"
+            // status = "Pending review"
+        } else if (status == "Approved") {
+            imageStatus = "approved"
+            // status = "Approved"
+        } else if (status == "Rejected") {
+            imageStatus = "rejected"
+            // status = "Rejected"
+        } else if(status == "Published") {
+            imageStatus = "published"
+            //  status = "Deleted"
+        } else if(status == ""){
+            imageStatus = ""
+        }
+        
+        self.changeStatusBtn.setImage(UIImage.init(named: imageStatus), for: .normal);
+        self.changeStatusBtn.semanticContentAttribute = UIApplication.shared
+            .userInterfaceLayoutDirection == .leftToRight ? .forceLeftToRight : .forceRightToLeft;
+        
+        self.changeStatusBtn.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 10);
+        }else{
+            self.changeStatusBtn.setImage(UIImage.init(named: "down_arrow"), for: .normal);
+            self.changeStatusBtn.isUserInteractionEnabled = true;
+        }
+    }
 }
 
 extension CommunicationViewController: UITableViewDelegate, UITableViewDataSource {
@@ -870,11 +906,11 @@ extension CommunicationViewController: UITableViewDelegate, UITableViewDataSourc
                 imageStatus = "under-review"
                // status = "Deleted"
             } else if(post.status == "Published") {
-               
+                imageStatus = "published";
                 
                     self.communicationTableView.frame = CGRect.init(x: 0, y: self.topButtonBars.frame.origin.y + self.topButtonBars.frame.height + 5, width: self.view.frame.width, height: self.textAreaBtnBottomView.frame.origin.y -  (self.topButtonBars.frame.origin.y + 40));
                
-                    self.changeStatusBtn.setImage(nil, for: .normal);
+                    self.changeStatusBtn.setImage(UIImage.init(named: imageStatus), for: .normal);
                     self.changeStatusBtn.isUserInteractionEnabled = false;
                     self.editPostBtn.isHidden = true
                 imageStatus = "published"

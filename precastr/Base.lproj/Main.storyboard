@@ -1198,12 +1198,17 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kMQ-Uf-5SP">
-                                        <rect key="frame" x="218" y="0.0" width="149" height="26"/>
+                                        <rect key="frame" x="258" y="0.0" width="109" height="26"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
                                         <color key="textColor" red="0.47843137254901957" green="0.69803921568627447" blue="0.96862745098039216" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Lyh-3m-nPO">
+                                        <rect key="frame" x="249" y="6" width="1" height="15"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" red="0.13333333333333333" green="0.13333333333333333" blue="0.13333333333333333" alpha="1" colorSpace="calibratedRGB"/>
+                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
@@ -1263,6 +1268,7 @@
                         <outlet property="communicationTableView" destination="Kk3-st-DCF" id="trn-UE-VFG"/>
                         <outlet property="editPostBtn" destination="1iz-7M-8Pz" id="xKP-JG-F0Y"/>
                         <outlet property="lblPostDate" destination="kMQ-Uf-5SP" id="fdz-Zd-xAm"/>
+                        <outlet property="separator" destination="Lyh-3m-nPO" id="WG1-Pk-cPD"/>
                         <outlet property="submitBtn" destination="SeF-yk-w9f" id="GRq-XM-vRM"/>
                         <outlet property="textArea" destination="Gff-aO-1Sx" id="p4w-BT-wl5"/>
                         <outlet property="textAreaBtnBottomView" destination="31B-Qx-a1r" id="faf-oD-gi7"/>
