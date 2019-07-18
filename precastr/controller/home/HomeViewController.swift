@@ -318,12 +318,13 @@ class HomeViewController: UIViewController, EasyTipViewDelegate, SharingDelegate
             
             if (post.postImages.count == 0) {
             
+                
                 let content = ShareLinkContent();
                 content.quote = post.postDescription;
-                
+                content.contentURL = URL.init(string: "http://precastr.com")!;
                 let shareDialog = ShareDialog()
                 shareDialog.shareContent = content;
-                shareDialog.mode = .native;
+                shareDialog.mode = .automatic;
                 shareDialog.fromViewController = self;
                 shareDialog.delegate = self;
                 shareDialog.shouldFailOnDataError = true;
@@ -337,10 +338,11 @@ class HomeViewController: UIViewController, EasyTipViewDelegate, SharingDelegate
             } else {
                 
                 //self.showToast(message: "Text Copied to clipboard");
+                UIPasteboard.general.string = "\(sender.post.postDescription)";
 
                 
                 let sharePhotoContent = SharePhotoContent();
-                /*for photoStr in post.postImages {
+                for photoStr in post.postImages {
                     let sharePhoto = SharePhoto();
                     //sharePhoto.imageURL = URL.init(string:photoStr)!
                     let url = URL(string: photoStr)
@@ -351,17 +353,16 @@ class HomeViewController: UIViewController, EasyTipViewDelegate, SharingDelegate
                         sharePhoto.image = image;
                     }
                     sharePhotoContent.photos.append(sharePhoto);
-                }*/
+                }
                 
                 
                 
                 //self.activityIndicator.stopAnimating();
                 
-                UIPasteboard.general.string = "\(sender.post.postDescription)";
 
                 let shareDialog = ShareDialog()
                 shareDialog.shareContent = sharePhotoContent;
-                shareDialog.mode = .native;
+                shareDialog.mode = .automatic;
                 shareDialog.fromViewController = self;
                 shareDialog.delegate = self;
                 shareDialog.shouldFailOnDataError = true;
@@ -391,7 +392,7 @@ class HomeViewController: UIViewController, EasyTipViewDelegate, SharingDelegate
             self.activityIndicator.stopAnimating();
             let shareDialog = ShareDialog()
             shareDialog.shareContent = sharePhotoContent;
-            shareDialog.mode = .native;
+            shareDialog.mode = .automatic;
             shareDialog.fromViewController = self;
             shareDialog.delegate = self;
             shareDialog.shouldFailOnDataError = true;
@@ -415,7 +416,7 @@ class HomeViewController: UIViewController, EasyTipViewDelegate, SharingDelegate
             if(statusCode == 0) {
                 self.showAlert(title: "Alert", message: response.value(forKey: "message") as! String);
             } else {
-                self.socialPostList.reloadData();
+                self.loadUserPosts();
             }
         });
     }
@@ -432,7 +433,7 @@ class HomeViewController: UIViewController, EasyTipViewDelegate, SharingDelegate
             if(statusCode == 0) {
                 self.showAlert(title: "Alert", message: response.value(forKey: "message") as! String);
             } else {
-                self.socialPostList.reloadData();
+                self.loadUserPosts();
             }
         });
     }

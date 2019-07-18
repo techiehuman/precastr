@@ -1,32 +1,16 @@
 //
-//  HomeTextPostTableViewCell.swift
+//  PostDetailTableViewCell.swift
 //  precastr
 //
-//  Created by Macbook on 25/05/19.
+//  Created by Cenes_Dev on 18/07/2019.
 //  Copyright © 2019 Macbook. All rights reserved.
 //
 
 import UIKit
 import EasyTipView
 
-class HomeTextPostTableViewCell: UITableViewCell,UIScrollViewDelegate {
+class PostDetailTableViewCell: UITableViewCell, UIScrollViewDelegate {
 
-    @IBOutlet weak var profilePicImageView: UIImageView!
-    
-    @IBOutlet weak var socialIconsView: UIView!
-    
-    @IBOutlet weak var dateLabel: UILabel!
-    
-    @IBOutlet weak var profileLabel: UILabel!
-    
-    @IBOutlet weak var sourceImageTwitter: UIImageView!
-    
-    @IBOutlet weak var sourceImageFacebook: UIImageView!
-    
-    @IBOutlet weak var statusImage: UIImageView!
-    
-    @IBOutlet weak var postStatusDateView: UIView!
-    
     @IBOutlet weak var postPrePublishView: UIView!
     
     @IBOutlet weak var publishInfoButton: UIButton!
@@ -54,16 +38,15 @@ class HomeTextPostTableViewCell: UITableViewCell,UIScrollViewDelegate {
     @IBOutlet weak var separator: UIView!
     
     var currentCount : Int!
-    var homeViewControllerDelegate: HomeViewController!;
+    var communicationViewControllerDelegate: CommunicationViewController!;
 
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        //self.postImageCollectionView.register(UINib.init(nibName: "PostImageCollectionViewCell", bundle: Bundle.main), forCellWithReuseIdentifier: "PostImageCollectionViewCell")
-        self.imageGalleryScrollView.delegate = self
-        self.imageCounterView.layer.cornerRadius = 10
         
-        var predictiveIconTapGesture = UITapGestureRecognizer.init(target: self, action: #selector(publishInfoIconPressed))
+        self.imageGalleryScrollView.delegate = self
+        self.imageCounterView.layer.cornerRadius = 1;
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -93,28 +76,28 @@ class HomeTextPostTableViewCell: UITableViewCell,UIScrollViewDelegate {
             view.removeFromSuperview();
         }
         imageGalleryScrollView.contentSize.width = imageGalleryScrollView.frame.width * CGFloat(imagesArray.count);
-
+        
         for i in 0 ..< imagesArray.count {
             
             let setupSlideScrollView = UIImageView();
             
             let xposition = self.imageGalleryScrollView.frame.width * CGFloat(i);
             setupSlideScrollView.frame = CGRect.init(x: xposition, y: 0, width: imageGalleryScrollView.frame.width, height: imageGalleryScrollView.frame.height);
-
+            
             setupSlideScrollView.sd_setImage(with: URL(string: imagesArray[i]), placeholderImage: UIImage.init(named: "post-image-placeholder"));
             setupSlideScrollView.contentMode = .scaleAspectFill;
             setupSlideScrollView.clipsToBounds = true
             print("imageGalleryScrollView", imageGalleryScrollView.frame.width)
             
             print("X Position : ", xposition, "width", imageGalleryScrollView.frame.width * CGFloat(i + 1));
-
+            
             imageGalleryScrollView.addSubview(setupSlideScrollView)
             self.currentCount = i as! Int
         }
         
         //imageGalleryScrollView.addSubview(imageCounterView);
     }
-
+    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         
         
@@ -134,11 +117,9 @@ class HomeTextPostTableViewCell: UITableViewCell,UIScrollViewDelegate {
         
     }
     
-    
-    
     @IBAction func publishInfoButtonPressed(_ sender: Any) {
         
-        if (self.homeViewControllerDelegate.easyToolTip == nil) {
+        if (self.communicationViewControllerDelegate.easyToolTip == nil) {
             var preferences = EasyTipView.Preferences()
             preferences.drawing.font = UIFont(name: "VisbyCF-Regular", size: 14)!
             preferences.drawing.textAlignment  = .left;
@@ -149,15 +130,12 @@ class HomeTextPostTableViewCell: UITableViewCell,UIScrollViewDelegate {
             preferences.drawing.cornerRadius = 4;
             let text = "\u{2022} If you are posting to FB and your post contains images & content, hit the \"Push to FB\" button, a window opens --> tap in the text box --> select \"Paste\" option -->  follow the on screen instructions to publish.\n\n\u{2022} And if your post contains only images OR only content, simply hit the \"Push to FB\" button --> follow the on screen instructions";
             
-            self.homeViewControllerDelegate.easyToolTip = EasyTipView(text: text, preferences: preferences, delegate: homeViewControllerDelegate.self)
-            self.homeViewControllerDelegate.easyToolTip.show(animated: true, forView: publishInfoButton, withinSuperview: self.homeViewControllerDelegate.view)
+            self.communicationViewControllerDelegate.easyToolTip = EasyTipView(text: text, preferences: preferences, delegate: communicationViewControllerDelegate.self)
+            self.communicationViewControllerDelegate.easyToolTip.show(animated: true, forView: publishInfoButton, withinSuperview: self.communicationViewControllerDelegate.view)
         } else {
-            self.homeViewControllerDelegate.easyToolTip.dismiss();
-            self.homeViewControllerDelegate.easyToolTip = nil;
+            self.communicationViewControllerDelegate.easyToolTip.dismiss();
+            self.communicationViewControllerDelegate.easyToolTip = nil;
         }
         
-    }
-    @objc func publishInfoIconPressed() {
-        print("clicked");
     }
 }

@@ -27,6 +27,7 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
     @IBOutlet weak var communicationTableView: UITableView!
     //@IBOutlet weak var postTextField: UITextView!
     
+    
     @IBOutlet weak var textAreaBtnBottomView: UIView!
     @IBOutlet weak var textArea: UITextView!
         
@@ -36,6 +37,7 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
     @IBOutlet weak var attachmentBtn: UIButton!
     @IBOutlet weak var submitBtn : UIButton!
     @IBOutlet weak var topButtonBars: UIView!
+    @IBOutlet weak var lblPostDate: UILabel!
     
     var loggedInUser : User!
     var uploadImage : [UIImage] = [UIImage]()
@@ -53,6 +55,7 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
     var postStatus : Int = 0
     var postArray : [String:Any] = [String:Any]()
     var postToPublish: Post!;
+    var easyToolTip: EasyTipView!
 
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView();
     override func viewDidLoad() {
@@ -64,7 +67,7 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
         self.editPostBtn.semanticContentAttribute = UIApplication.shared
             .userInterfaceLayoutDirection == .rightToLeft ? .forceLeftToRight : .forceRightToLeft;
         
-        communicationTableView.register(UINib(nibName: "HomeTextPostTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "HomeTextPostTableViewCell")
+        communicationTableView.register(UINib(nibName: "PostDetailTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "PostDetailTableViewCell")
         communicationTableView.register(UINib.init(nibName: "LeftCommunicationTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "LeftCommunicationTableViewCell");
           communicationTableView.register(UINib.init(nibName: "RightCommunicationTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "RightCommunicationTableViewCell");
          communicationTableView.register(UINib.init(nibName: "HomeTextPostTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "HomeTextPostTableViewCell");
@@ -89,15 +92,20 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
         self.changeStatusBtn.layer.borderWidth = 1;
         self.changeStatusBtn.layer.borderColor = UIColor(red: 112/255, green: 112/255, blue: 112/255, alpha: 1).cgColor;
        
-        if(loggedInUser.isCastr == 1) {
-            
-            if (self.post.status == "Approved") {
-                self.changeStatusBtn.isHidden = false
+        if (loggedInUser.isCastr == 1) {
+            self.changeStatusBtn.setImage(nil, for: .normal);
+            self.changeStatusBtn.isUserInteractionEnabled = false;
+        } else {
+            if (self.post.status == "Approved" || self.post.status == "Published") {
+                self.changeStatusBtn.setImage(nil, for: .normal);
+                self.changeStatusBtn.isUserInteractionEnabled = false;
             } else {
-                self.changeStatusBtn.isHidden = true
+                self.changeStatusBtn.setImage(UIImage.init(named: "down_arrow"), for: .normal);
+                self.changeStatusBtn.isUserInteractionEnabled = true;
             }
         }
         
+        self.lblPostDate.text = Date().ddspEEEEcmyyyyspHHclmmclaa(dateStr: self.post.createdOn);
         
         self.topButtonBars.frame = CGRect.init(x: 0, y: (UIApplication.shared.statusBarFrame.size.height + (self.navigationController?.navigationBar.frame.height)!) + 10, width: self.view.frame.width, height: self.topButtonBars.frame.height);
         
@@ -151,7 +159,7 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
             
             if (self.tabBarController!.viewControllers?.count == 3) {
                 
-                var navController = self.storyboard?.instantiateViewController(withIdentifier: "CreateNewPostNavController") as! UINavigationController;
+                let navController = self.storyboard?.instantiateViewController(withIdentifier: "CreateNewPostNavController") as! UINavigationController;
                 self.tabBarController!.viewControllers?.insert(navController, at: 1);
             }
         }
@@ -173,7 +181,7 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
                 
                 // Lets add ui labels in width.
                 let totalWidthOfUIView = self.changeStatusBtn.intrinsicContentSize.width + 20;
-                self.changeStatusBtn.frame = CGRect.init(x: (self.view.frame.width - totalWidthOfUIView - 15), y: self.changeStatusBtn.frame.origin.y, width: totalWidthOfUIView, height: self.changeStatusBtn.frame.height);
+                self.changeStatusBtn.frame = CGRect.init(x: (self.changeStatusBtn.frame.origin.x), y: self.changeStatusBtn.frame.origin.y, width: totalWidthOfUIView, height: self.changeStatusBtn.frame.height);
                 break;
             }
         }
@@ -426,11 +434,13 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
     @objc func keyboardWillHide(notification: NSNotification) {
         if let keyboardSize = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
             
-            let positionOfBottomView = self.view.frame.height - (self.textAreaBtnBottomView.frame.height + ((self.tabBarController?.tabBar.frame.height)!) + 5);
-
-            self.textAreaBtnBottomView.frame.origin.y = positionOfBottomView;
-            
-            self.communicationTableView.frame = CGRect.init(x: 0, y: self.communicationTableView.frame.origin.y, width: self.view.frame.width, height: self.textAreaBtnBottomView.frame.origin.y - self.communicationTableView.frame.origin.y)
+            if (self.tabBarController != nil) {
+                let positionOfBottomView = self.view.frame.height - (self.textAreaBtnBottomView.frame.height + ((self.tabBarController?.tabBar.frame.height)!) + 5);
+                
+                self.textAreaBtnBottomView.frame.origin.y = positionOfBottomView;
+                
+                self.communicationTableView.frame = CGRect.init(x: 0, y: self.communicationTableView.frame.origin.y, width: self.view.frame.width, height: self.textAreaBtnBottomView.frame.origin.y - self.communicationTableView.frame.origin.y)
+            }
         }
     }
     
@@ -471,7 +481,7 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
                         
                         // Lets add ui labels in width.
                         let totalWidthOfUIView = self.changeStatusBtn.intrinsicContentSize.width + 20;
-                        self.changeStatusBtn.frame = CGRect.init(x: (self.view.frame.width - totalWidthOfUIView - 15), y: self.changeStatusBtn.frame.origin.y, width: totalWidthOfUIView, height: self.changeStatusBtn.frame.height);
+                        self.changeStatusBtn.frame = CGRect.init(x: (self.changeStatusBtn.frame.origin.x), y: self.changeStatusBtn.frame.origin.y, width: totalWidthOfUIView, height: self.changeStatusBtn.frame.height);
                         /*if(self.post.status == "Published"){
                             
                             
@@ -559,31 +569,40 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
 
     @objc func postToFacebookPressed(sender: PostToSocialMediaGestureRecognizer) {
         
+        print(sender.post.postDescription);
+        
+        DispatchQueue.main.async {
+            //self.activityIndicator.startAnimating();
+        }
+        
         let post = sender.post!;
         self.postToPublish = sender.post;
         if (post.postDescription != "") {
             
             if (post.postImages.count == 0) {
                 
+                
                 let content = ShareLinkContent();
                 content.quote = post.postDescription;
-                
+                content.contentURL = URL.init(string: "http://precastr.com")!;
                 let shareDialog = ShareDialog()
                 shareDialog.shareContent = content;
-                shareDialog.mode = .native;
+                shareDialog.mode = .automatic;
                 shareDialog.fromViewController = self;
                 shareDialog.delegate = self;
                 shareDialog.shouldFailOnDataError = true;
                 if (shareDialog.canShow == false) {
-                    self.showAlert(title: "Alert", message: "Please install Facebook App");
+                    //self.showAlert(title: "Alert", message: "Please install Facebook App");
+                    showFacebookFailAlert();
                 } else {
                     shareDialog.show();
                 }
                 
             } else {
                 
-                UIPasteboard.general.string = post.postDescription;
-                self.showToast(message: "Text Copied to clipboard");
+                //self.showToast(message: "Text Copied to clipboard");
+                UIPasteboard.general.string = "\(sender.post.postDescription)";
+                
                 
                 let sharePhotoContent = SharePhotoContent();
                 for photoStr in post.postImages {
@@ -599,14 +618,19 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
                     sharePhotoContent.photos.append(sharePhoto);
                 }
                 
+                
+                
+                //self.activityIndicator.stopAnimating();
+                
+                
                 let shareDialog = ShareDialog()
                 shareDialog.shareContent = sharePhotoContent;
-                shareDialog.mode = .native;
+                shareDialog.mode = .automatic;
                 shareDialog.fromViewController = self;
                 shareDialog.delegate = self;
                 shareDialog.shouldFailOnDataError = true;
                 if (shareDialog.canShow == false) {
-                    self.showAlert(title: "Alert", message: "Please install Facebook App");
+                    showFacebookFailAlert();
                 } else {
                     shareDialog.show();
                 }
@@ -628,14 +652,15 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
                 sharePhotoContent.photos.append(sharePhoto);
             }
             
+            self.activityIndicator.stopAnimating();
             let shareDialog = ShareDialog()
             shareDialog.shareContent = sharePhotoContent;
-            shareDialog.mode = .native;
+            shareDialog.mode = .automatic;
             shareDialog.fromViewController = self;
             shareDialog.delegate = self;
             shareDialog.shouldFailOnDataError = true;
             if (shareDialog.canShow == false) {
-                self.showAlert(title: "Alert", message: "Please install Facebook App");
+                showFacebookFailAlert();
             } else {
                 shareDialog.show();
             }
@@ -654,7 +679,15 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
             if(statusCode == 0) {
                 self.showAlert(title: "Alert", message: response.value(forKey: "message") as! String);
             } else {
+                self.post.postStatusId = 7;
+                self.post.status = "Approved";
                 self.communicationTableView.reloadData();
+                self.changeStatusBtn.setTitle("Approved", for: .normal);
+                
+                // Lets add ui labels in width.
+                let totalWidthOfUIView = self.changeStatusBtn.intrinsicContentSize.width + 20;
+                self.changeStatusBtn.frame = CGRect.init(x: (self.changeStatusBtn.frame.origin.x), y: self.changeStatusBtn.frame.origin.y, width: totalWidthOfUIView, height: self.changeStatusBtn.frame.height);
+
             }
         });
     }
@@ -671,13 +704,22 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
             if(statusCode == 0) {
                 self.showAlert(title: "Alert", message: response.value(forKey: "message") as! String);
             } else {
+                self.post.postStatusId = 7;
+                self.post.status = "Approved";
                 self.communicationTableView.reloadData();
+                self.changeStatusBtn.setTitle("Approved", for: .normal);
+                
+                // Lets add ui labels in width.
+                let totalWidthOfUIView = self.changeStatusBtn.intrinsicContentSize.width + 20;
+                self.changeStatusBtn.frame = CGRect.init(x: (self.changeStatusBtn.frame.origin.x), y: self.changeStatusBtn.frame.origin.y, width: totalWidthOfUIView, height: self.changeStatusBtn.frame.height);
             }
         });
     }
     
     func sharer(_ sharer: Sharing, didFailWithError error: Error) {
         print("Fail")
+        self.activityIndicator.stopAnimating();
+        showFacebookFailAlert();
     }
     
     func sharerDidCancel(_ sharer: Sharing) {
@@ -686,6 +728,25 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
     
     func easyTipViewDidDismiss(_ tipView: EasyTipView) {
         tipView.dismiss();
+    }
+    
+    
+    func showFacebookFailAlert() {
+        
+        var refreshAlert = UIAlertController(title: "Facebook Not Installed", message: "It looks like the Facebook app is not installed on your iPhone. Click \"OK\" to download, after installing please come back to the same screen and hit the \"Push to FB\" button", preferredStyle: UIAlertControllerStyle.alert)
+        
+        refreshAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (action: UIAlertAction!) in
+            if let url = URL(string: "https://apps.apple.com/in/app/facebook/id284882215") {
+                UIApplication.shared.open(url)
+            }
+        }));
+        
+        refreshAlert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: { (action: UIAlertAction!) in
+            
+            
+        }));
+        self.present(refreshAlert, animated: true, completion: nil)
+        
     }
 }
 
@@ -703,7 +764,7 @@ extension CommunicationViewController: UITableViewDelegate, UITableViewDataSourc
         //let cell : RightCommunicationTableViewCell = tableView.dequeueReusableCell(withIdentifier: "RightCommunicationTableViewCell") as! RightCommunicationTableViewCell;
         
         if (indexPath.row == 0) {
-            let cell: HomeTextPostTableViewCell = tableView.dequeueReusableCell(withIdentifier: "HomeTextPostTableViewCell") as! HomeTextPostTableViewCell;
+            let cell: PostDetailTableViewCell = tableView.dequeueReusableCell(withIdentifier: "PostDetailTableViewCell") as! PostDetailTableViewCell;
             
             let postToFacebookTapGesture = PostToSocialMediaGestureRecognizer.init(target: self, action: #selector(postToFacebookPressed(sender:)));
             postToFacebookTapGesture.post = post;
@@ -711,46 +772,17 @@ extension CommunicationViewController: UITableViewDelegate, UITableViewDataSourc
             let postToTwitterTapGesture = PostToSocialMediaGestureRecognizer.init(target: self, action: #selector(postToTwitterPressed(sender:)));
             postToTwitterTapGesture.post = post;
 
-            
-            cell.sourceImageFacebook.isHidden = false;
-            cell.sourceImageTwitter.isHidden = false;
-            
-            var facebookIconHidden = true;
-            var twitterIconHidden = true;
-            if (post.socialMediaIds.count > 0) {
-                
-                for sourcePlatformId in post.socialMediaIds {
-                    if(Int(sourcePlatformId) == social.socialPlatformId["Facebook"]){
-                        facebookIconHidden = false;
-                    }  else if(Int(sourcePlatformId) == social.socialPlatformId["Twitter"]) {
-                        twitterIconHidden = false;
-                    }
-                }
-            }
-            
-            if (twitterIconHidden == false && facebookIconHidden == false) {
-                cell.sourceImageTwitter.isHidden = false;
-                cell.sourceImageFacebook.isHidden = false;
-            } else if (facebookIconHidden == false && twitterIconHidden == true) {
-                //If twitter is not present then we will replace sourceImageTwitter image with facebook
-                cell.sourceImageTwitter.isHidden = false;
-                cell.sourceImageFacebook.isHidden = true;
-                cell.sourceImageTwitter.image = UIImage.init(named: "facebook-group");
-            } else if (twitterIconHidden == false && facebookIconHidden == true) {
-                cell.sourceImageTwitter.isHidden = false;
-                cell.sourceImageFacebook.isHidden = true;
-                cell.sourceImageTwitter.image = UIImage.init(named: "twitter-group");
-            } else {
-                cell.sourceImageTwitter.isHidden = true;
-                cell.sourceImageFacebook.isHidden = true;
-            }
-            
             //Lets handle the logic of Hiding and Shwoing Publish Buttons.
             //First lets check if post status is Approved/ Published.
             //If post status is approved, then we would have to show both buttons.
             //Publish to Twitter and Publish to Facebook
             if (post.postStatusId == HomePostPublishStatusId.APPROVEDSTATUSID) {
-                cell.postPrePublishView.isHidden = false;
+                
+                if (loggedInUser.isCastr == 2) {
+                    cell.postPrePublishView.isHidden = true;
+                } else {
+                    cell.postPrePublishView.isHidden = false;
+                }
                 
                 //If post status is Published, Then we have to check
                 //If user posted on both platforms or not
@@ -775,31 +807,35 @@ extension CommunicationViewController: UITableViewDelegate, UITableViewDataSourc
                 if (facebookPublished == true && twitterPublished == true) {
                     cell.postPrePublishView.isHidden = true;
                 } else {
-                    if (facebookPublished == true) {
-                        //cell.pushToFacebookView.isHidden = true;
-                        cell.pushToFacebookView.backgroundColor = UIColor.init(red: 237/255, green: 237/255, blue: 237/255, alpha: 1);
-                        cell.publishToFacebookImage.backgroundColor = UIColor.init(red: 237/255, green: 237/255, blue: 237/255, alpha: 1);
-                        cell.pushToFacebookView.isUserInteractionEnabled = false;
-                    } else {
-                        //cell.pushToFacebookView.isHidden = false;
-                        cell.pushToFacebookView.backgroundColor = UIColor.init(red: 48/255, green: 77/255, blue: 141/255, alpha: 1);
-                        cell.pushToFacebookView.backgroundColor = UIColor.init(red: 82/255, green: 117/255, blue: 194/255, alpha: 1);
-                        cell.pushToFacebookView.isUserInteractionEnabled = true;
-                    }
                     
-                    
-                    if (twitterPublished == true) {
-                        //cell.pushToTwitterView.isHidden = true;
-                        cell.pushToTwitterView.backgroundColor = UIColor.init(red: 237/255, green: 237/255, blue: 237/255, alpha: 1);
-                        cell.publishToTwitterImage.backgroundColor = UIColor.init(red: 237/255, green: 237/255, blue: 237/255, alpha: 1);
-                        cell.pushToTwitterView.isUserInteractionEnabled = false;
-                        
+                    if (loggedInUser.isCastr == 2) {
+                        cell.postPrePublishView.isHidden = true;
                     } else {
-                        //cell.pushToTwitterView.isHidden = false;
-                        cell.pushToTwitterView.backgroundColor = UIColor.init(red: 0, green: 153/255, blue: 219/255, alpha: 1);
-                        cell.publishToTwitterImage.backgroundColor = UIColor.init(red: 42/255, green: 185/255, blue: 195/255, alpha: 1);
-                        cell.pushToTwitterView.isUserInteractionEnabled = true;
+                        if (facebookPublished == true) {
+                            //cell.pushToFacebookView.isHidden = true;
+                            cell.pushToFacebookView.backgroundColor = UIColor.init(red: 237/255, green: 237/255, blue: 237/255, alpha: 1);
+                            cell.publishToFacebookImage.backgroundColor = UIColor.init(red: 237/255, green: 237/255, blue: 237/255, alpha: 1);
+                            cell.pushToFacebookView.isUserInteractionEnabled = false;
+                        } else {
+                            //cell.pushToFacebookView.isHidden = false;
+                            cell.pushToFacebookView.backgroundColor = UIColor.init(red: 48/255, green: 77/255, blue: 141/255, alpha: 1);
+                            cell.pushToFacebookView.backgroundColor = UIColor.init(red: 82/255, green: 117/255, blue: 194/255, alpha: 1);
+                            cell.pushToFacebookView.isUserInteractionEnabled = true;
+                        }
                         
+                        
+                        if (twitterPublished == true) {
+                            //cell.pushToTwitterView.isHidden = true;
+                            cell.pushToTwitterView.backgroundColor = UIColor.init(red: 237/255, green: 237/255, blue: 237/255, alpha: 1);
+                            cell.publishToTwitterImage.backgroundColor = UIColor.init(red: 237/255, green: 237/255, blue: 237/255, alpha: 1);
+                            cell.pushToTwitterView.isUserInteractionEnabled = false;
+                            
+                        } else {
+                            //cell.pushToTwitterView.isHidden = false;
+                            cell.pushToTwitterView.backgroundColor = UIColor.init(red: 0, green: 153/255, blue: 219/255, alpha: 1);
+                            cell.publishToTwitterImage.backgroundColor = UIColor.init(red: 42/255, green: 185/255, blue: 195/255, alpha: 1);
+                            cell.pushToTwitterView.isUserInteractionEnabled = true;
+                        }
                     }
                 }
                 
@@ -808,7 +844,6 @@ extension CommunicationViewController: UITableViewDelegate, UITableViewDataSourc
             } else {
                 cell.postPrePublishView.isHidden = true;
             }
-            
             
             var imageStatus = ""
             var status = "";
@@ -836,30 +871,17 @@ extension CommunicationViewController: UITableViewDelegate, UITableViewDataSourc
                // status = "Deleted"
             } else if(post.status == "Published") {
                
-                    self.communicationTableView.frame = CGRect.init(x: 0, y: self.topButtonBars.frame.origin.y, width: self.view.frame.width, height: self.textAreaBtnBottomView.frame.origin.y -  (self.topButtonBars.frame.origin.y + 10));
+                
+                    self.communicationTableView.frame = CGRect.init(x: 0, y: self.topButtonBars.frame.origin.y + self.topButtonBars.frame.height + 5, width: self.view.frame.width, height: self.textAreaBtnBottomView.frame.origin.y -  (self.topButtonBars.frame.origin.y + 40));
                
-                    self.changeStatusBtn.isHidden = true
+                    self.changeStatusBtn.setImage(nil, for: .normal);
+                    self.changeStatusBtn.isUserInteractionEnabled = false;
                     self.editPostBtn.isHidden = true
                 imageStatus = "published"
               //  status = "Deleted"
             } else if(post.status == ""){
                 imageStatus = ""
             }
-            
-            // status = "dfsdf fdsdfs dsfsdfsdf"
-            cell.statusImage.image = UIImage.init(named: imageStatus)
-            let pipe = " |"
-            cell.profileLabel.text = "\((post.status))\(pipe)"
-            print(cell.profileLabel.intrinsicContentSize.width)
-            cell.dateLabel.text = Date().ddspEEEEcmyyyyspHHclmmclaa(dateStr: post.createdOn)
-            
-            // Lets add ui labels in width.
-            let totalWidthOfUIView = cell.statusImage.frame.width + cell.profileLabel.intrinsicContentSize.width + cell.dateLabel.intrinsicContentSize.width + 10;
-            cell.postStatusDateView.frame = CGRect.init(x: cell.frame.width - (totalWidthOfUIView + 15), y: cell.postStatusDateView.frame.origin.y, width: totalWidthOfUIView, height: cell.postStatusDateView.frame.height);
-            
-            cell.statusImage.frame = CGRect.init(x: 0, y: 0, width: 20, height: 20);
-            cell.profileLabel.frame = CGRect.init(x: 25, y: 0, width: cell.profileLabel.intrinsicContentSize.width, height: 20);
-            cell.dateLabel.frame = CGRect.init(x: (cell.profileLabel.intrinsicContentSize.width + cell.profileLabel.frame.origin.x + 5), y: 0, width: cell.dateLabel.intrinsicContentSize.width, height: 20);
             
             if (cell.postPrePublishView.isHidden == false) {
                 cell.pushToTwitterView.addGestureRecognizer(postToTwitterTapGesture);
@@ -897,16 +919,13 @@ extension CommunicationViewController: UITableViewDelegate, UITableViewDataSourc
             proNameLbl.attributedText = attrString;
             
             cell.descriptionView.addSubview(proNameLbl)
-            if (self.loggedInUser.isCastr == 2) {
-                cell.postPrePublishView.isHidden = true;
-                cell.descriptionView.frame = CGRect.init(x: cell.descriptionView.frame.origin.x, y: 55, width: cell.descriptionView.frame.width, height: height);
+            
+            
+            //Setting frame for DESCRIPITON VIEW
+            if (cell.postPrePublishView.isHidden == true) {
+                cell.descriptionView.frame = CGRect.init(x: cell.descriptionView.frame.origin.x, y: 15, width: cell.descriptionView.frame.width, height: height);
             } else {
-                
-                if (cell.postPrePublishView.isHidden == true) {
-                    cell.descriptionView.frame = CGRect.init(x: cell.descriptionView.frame.origin.x, y: 55, width: cell.descriptionView.frame.width, height: height);
-                } else {
-                    cell.descriptionView.frame = CGRect.init(x: cell.descriptionView.frame.origin.x, y: (55 + 25), width: cell.descriptionView.frame.width, height: height);
-                }
+                cell.descriptionView.frame = CGRect.init(x: cell.descriptionView.frame.origin.x, y: (55), width: cell.descriptionView.frame.width, height: height);
             }
             
             
@@ -962,7 +981,8 @@ extension CommunicationViewController: UITableViewDelegate, UITableViewDataSourc
                 cell.imageGalleryScrollView.isHidden = true;
                 cell.pageControl.isHidden = true;
             }
-            //ScrollView functionality
+            
+            cell.communicationViewControllerDelegate = self;
             return cell;
             
             
@@ -1189,9 +1209,9 @@ extension CommunicationViewController: UITableViewDelegate, UITableViewDataSourc
                 
                 if (post.postImages.count == 1) {
                     
-                    return (CGFloat(HomePostCellHeight.GapAboveStatus) + CGFloat(HomePostCellHeight.PostStatusViewHeight) + CGFloat(HomePostCellHeight.GapBelowStatus) + postPublishViewHeight +  height + CGFloat(HomePostCellHeight.GapBelowLabel) + 420);
+                    return (CGFloat(HomePostCellHeight.GapAboveStatus) + postPublishViewHeight +  height + CGFloat(HomePostCellHeight.GapBelowLabel) + 420);
                 }
-                return (CGFloat(HomePostCellHeight.GapAboveStatus) + CGFloat(HomePostCellHeight.PostStatusViewHeight) + CGFloat(HomePostCellHeight.GapBelowStatus) + postPublishViewHeight + height + CGFloat(HomePostCellHeight.GapBelowLabel) + 420 +  30);
+                return (CGFloat(HomePostCellHeight.GapAboveStatus) + postPublishViewHeight + height + CGFloat(HomePostCellHeight.GapBelowLabel) + 420 +  30);
             }
             return (CGFloat(HomePostCellHeight.GapAboveStatus + HomePostCellHeight.PostStatusViewHeight) + postPublishViewHeight + height);
         } else {

@@ -693,7 +693,7 @@
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Mandeep Singh" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v1D-b1-FX9">
-                                                    <rect key="frame" x="67" y="17" width="280" height="21"/>
+                                                    <rect key="frame" x="67" y="15" width="280" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" name="VisbyCF-Medium" family="Visby CF" pointSize="16"/>
                                                     <color key="textColor" red="0.13333333333333333" green="0.13333333333333333" blue="0.13333333333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1186,7 +1186,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="34X-Ta-IVH">
-                                        <rect key="frame" x="260" y="0.0" width="107" height="24"/>
+                                        <rect key="frame" x="103" y="0.0" width="107" height="24"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="VisbyCF-Regular" family="Visby CF" pointSize="14"/>
                                         <inset key="imageEdgeInsets" minX="10" minY="3" maxX="0.0" maxY="0.0"/>
@@ -1197,6 +1197,13 @@
                                             <action selector="changeStatusButtonClicked:" destination="isS-Sv-T1f" eventType="touchUpInside" id="l6m-YH-J2X"/>
                                         </connections>
                                     </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kMQ-Uf-5SP">
+                                        <rect key="frame" x="218" y="0.0" width="149" height="26"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
+                                        <color key="textColor" red="0.47843137254901957" green="0.69803921568627447" blue="0.96862745098039216" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
@@ -1255,6 +1262,7 @@
                         <outlet property="changeStatusBtn" destination="34X-Ta-IVH" id="PBz-t7-sTX"/>
                         <outlet property="communicationTableView" destination="Kk3-st-DCF" id="trn-UE-VFG"/>
                         <outlet property="editPostBtn" destination="1iz-7M-8Pz" id="xKP-JG-F0Y"/>
+                        <outlet property="lblPostDate" destination="kMQ-Uf-5SP" id="fdz-Zd-xAm"/>
                         <outlet property="submitBtn" destination="SeF-yk-w9f" id="GRq-XM-vRM"/>
                         <outlet property="textArea" destination="Gff-aO-1Sx" id="p4w-BT-wl5"/>
                         <outlet property="textAreaBtnBottomView" destination="31B-Qx-a1r" id="faf-oD-gi7"/>
@@ -1323,7 +1331,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="fw0-gA-StE">
-                                <rect key="frame" x="0.0" y="64" width="375" height="554"/>
+                                <rect key="frame" x="0.0" y="112" width="375" height="506"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <connections>
@@ -1331,12 +1339,25 @@
                                     <outlet property="delegate" destination="2eh-vb-lrP" id="n54-Km-7Zk"/>
                                 </connections>
                             </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tao-M9-Jpb">
+                                <rect key="frame" x="302" y="80" width="65" height="24"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.39215686274509803" green="0.65098039215686276" blue="0.96862745098039216" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" name="VisbyCF-Regular" family="Visby CF" pointSize="14"/>
+                                <state key="normal" title="Clear All">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="clearButtonPressed:" destination="2eh-vb-lrP" eventType="touchUpInside" id="pYU-Lj-SSO"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="G62-bH-lao"/>
                     </view>
                     <navigationItem key="navigationItem" title="Notifications" id="kUz-kA-5EB"/>
                     <connections>
+                        <outlet property="clearAllButton" destination="Tao-M9-Jpb" id="sef-P0-SZ2"/>
                         <outlet property="notificationTableView" destination="fw0-gA-StE" id="cvh-no-lLF"/>
                     </connections>
                 </viewController>

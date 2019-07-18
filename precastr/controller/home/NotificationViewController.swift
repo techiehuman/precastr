@@ -11,6 +11,9 @@ import UIKit
 class NotificationViewController: UIViewController {
 
     @IBOutlet weak var notificationTableView: UITableView!
+    
+    @IBOutlet weak var clearAllButton: UIButton!
+    
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView();
     var loggedInUser : User!
     var postData : [String : Any] = [String : Any]()
@@ -26,8 +29,16 @@ class NotificationViewController: UIViewController {
         self.hideKeyboadOnTapOutside();
         self.loggedInUser = User().loadUserDataFromUserDefaults(userDataDict: setting);
         
+        activityIndicator.activityIndicatorViewStyle = .gray;
+        activityIndicator.center = view.center;
+        self.view.addSubview(activityIndicator);
         
-         self.postData["user_id"] = self.loggedInUser.userId;
+        self.postData["user_id"] = self.loggedInUser.userId;
+        if (self.loggedInUser.isCastr == 1) {
+            self.postData["role_id"] = 0;
+        } else {
+            self.postData["role_id"] = 1;
+        }
         
         self.loadNotifications();
         let jsonURL = "posts/update_notification_status/format/json"
@@ -66,13 +77,13 @@ class NotificationViewController: UIViewController {
         //If Logged in user is a moderator, then we will
         self.loggedInUser = User().loadUserDataFromUserDefaults(userDataDict: setting);
         if (loggedInUser.isCastr == 2) {
-            self.navigationItem.title = "Moderate Casts";
+            self.navigationItem.title = "Notifications";
             
             if (self.tabBarController!.viewControllers?.count == 4) {
                 self.tabBarController!.viewControllers?.remove(at: 1)
             }
         } else {
-            self.navigationItem.title = "My Casts";
+            self.navigationItem.title = "Notifications";
             
             if (self.tabBarController!.viewControllers?.count == 3) {
                 
@@ -84,10 +95,10 @@ class NotificationViewController: UIViewController {
 
     func loadNotifications() {
         let jsonURL = "posts/get_notifications/format/json"
-       
+        activityIndicator.startAnimating();
         UserService().postDataMethod(jsonURL: jsonURL, postData: self.postData, complete: {(response) in
             print(response)
-           
+            self.activityIndicator.stopAnimating();
             let success = Int(response.value(forKey: "status") as! String)!
             if (success == 0) {
                 self.notificationTableView.isHidden =  true;
@@ -127,10 +138,34 @@ class NotificationViewController: UIViewController {
         self.tabBarController?.tabBar.isHidden = false;
 
     }
+    
+    func clearAllNotification() {
+        //http://lyonsdemoz.website/pre-caster/api/posts/clear_notification/format/json
+        
+        let jsonURL = "posts/clear_notification/format/json"
+        activityIndicator.startAnimating();
+        UserService().postDataMethod(jsonURL: jsonURL, postData: self.postData, complete: {(response) in
+            print(response)
+            self.activityIndicator.stopAnimating();
+            let success = Int(response.value(forKey: "status") as! String)!
+            if (success == 0) {
+                let message = response.value(forKey: "message") as! String;
+                self.showAlert(title: "Error", message: message);
+            } else {
+                self.loadNotifications();
+            }
+        });
+    }
+    
     @objc func menuButtonClicked() {
         let viewController: SideMenuTableViewController = self.storyboard?.instantiateViewController(withIdentifier: "SideMenuTableViewController") as! SideMenuTableViewController;
         self.navigationController?.pushViewController(viewController, animated: true);
     }
+    
+    @IBAction func clearButtonPressed(_ sender: Any) {
+        clearAllNotification();
+    }
+    
 }
 extension NotificationViewController: UITableViewDelegate, UITableViewDataSource {
     

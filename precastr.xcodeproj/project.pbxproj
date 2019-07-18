@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5E2A0E2F22DF83EE009033E7 /* PostDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E2A0E2D22DF83EE009033E7 /* PostDetailTableViewCell.swift */; };
+		5E2A0E3022DF83EE009033E7 /* PostDetailTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5E2A0E2E22DF83EE009033E7 /* PostDetailTableViewCell.xib */; };
 		5E6BB7B222B530F500D92681 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E6BB7B122B530F500D92681 /* Post.swift */; };
 		5E93313022D70ED300980BF5 /* SideMenuDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E93312F22D70ED300980BF5 /* SideMenuDto.swift */; };
 		5E94973B22C280FE0023F30B /* PostService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E94973A22C280FE0023F30B /* PostService.swift */; };
@@ -120,6 +122,8 @@
 		27A38E047A676826532D9793 /* Pods-precastrUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-precastrUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-precastrUITests/Pods-precastrUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		561E50304594AB7F3B9F4993 /* Pods_precastrUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_precastrUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5E1217CE22A28EE90075961A /* precastr.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = precastr.entitlements; sourceTree = "<group>"; };
+		5E2A0E2D22DF83EE009033E7 /* PostDetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailTableViewCell.swift; sourceTree = "<group>"; };
+		5E2A0E2E22DF83EE009033E7 /* PostDetailTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PostDetailTableViewCell.xib; sourceTree = "<group>"; };
 		5E6BB7B122B530F500D92681 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		5E93312F22D70ED300980BF5 /* SideMenuDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuDto.swift; sourceTree = "<group>"; };
 		5E93313122DB900200980BF5 /* FacebookCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = FacebookCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -598,6 +602,8 @@
 				FAE6173922B3B07E00A8B2F3 /* LeftCommunicationTableViewCell.xib */,
 				FAE6173C22B3B09800A8B2F3 /* RightCommunicationTableViewCell.swift */,
 				FAE6173D22B3B09800A8B2F3 /* RightCommunicationTableViewCell.xib */,
+				5E2A0E2D22DF83EE009033E7 /* PostDetailTableViewCell.swift */,
+				5E2A0E2E22DF83EE009033E7 /* PostDetailTableViewCell.xib */,
 			);
 			path = cells;
 			sourceTree = "<group>";
@@ -739,6 +745,7 @@
 				FAE6173F22B3B09800A8B2F3 /* RightCommunicationTableViewCell.xib in Resources */,
 				5EEC6B5C22A66EAA005B1C34 /* LoginScreenTableViewCell.xib in Resources */,
 				FADFEAFD22A51A46006E3CD2 /* VisbyCF-Medium.otf in Resources */,
+				5E2A0E3022DF83EE009033E7 /* PostDetailTableViewCell.xib in Resources */,
 				FA6AB58322531E8200C5491F /* Assets.xcassets in Resources */,
 				FADFEB0122A51A46006E3CD2 /* VisbyCF-Thin.otf in Resources */,
 				902FDE4122D7250F002D1601 /* GoogleService-Info.plist in Resources */,
@@ -964,6 +971,7 @@
 				FAD5015322AA6F3100D21F57 /* EditProfileViewController.swift in Sources */,
 				FA4D544C2260F7F200E9589B /* UserTypeActionViewController.swift in Sources */,
 				5EB754DF22ABE136006D636B /* ForgetPasswordTableViewCell.swift in Sources */,
+				5E2A0E2F22DF83EE009033E7 /* PostDetailTableViewCell.swift in Sources */,
 				5EEC6B6122A6842F005B1C34 /* SignupScreenTableViewCell.swift in Sources */,
 				FAFCE3C3228E8F0000AB6DB5 /* SocialPlatform.swift in Sources */,
 				5ED3A32A22BF3EE400F65CF2 /* PostCommunication.swift in Sources */,
