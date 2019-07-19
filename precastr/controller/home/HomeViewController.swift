@@ -658,12 +658,17 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
                     
                     if (facebookPublished == true) {
                         //cell.pushToFacebookView.isHidden = true;
-                        cell.pushToFacebookView.backgroundColor = UIColor.init(red: 237/255, green: 237/255, blue: 237/255, alpha: 1);
+                        cell.pushToFacebookText.textColor = UIColor.init(red: 34/255, green: 34/255, blue: 34/255, alpha: 1)
+                        cell.pushToFacebookView.backgroundColor = UIColor.clear;
+                        cell.pushToFacebookView.layer.borderWidth = 0.5;
+                        cell.pushToFacebookView.layer.borderColor = UIColor.init(red: 146/255, green: 147/255, blue: 149/255, alpha: 1).cgColor
                         cell.publishToFacebookImage.backgroundColor = UIColor.init(red: 237/255, green: 237/255, blue: 237/255, alpha: 1);
                         cell.pushToFacebookView.isUserInteractionEnabled = false;
                     } else {
                         //cell.pushToFacebookView.isHidden = false;
+                        cell.pushToFacebookText.textColor = UIColor.white
                         cell.pushToFacebookView.backgroundColor = UIColor.init(red: 48/255, green: 77/255, blue: 141/255, alpha: 1);
+                        cell.pushToFacebookView.layer.borderWidth = 0;
                         cell.pushToFacebookView.backgroundColor = UIColor.init(red: 82/255, green: 117/255, blue: 194/255, alpha: 1);
                         cell.pushToFacebookView.isUserInteractionEnabled = true;
                     }
@@ -671,13 +676,19 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
                     
                     if (twitterPublished == true) {
                         //cell.pushToTwitterView.isHidden = true;
-                        cell.pushToTwitterView.backgroundColor = UIColor.init(red: 237/255, green: 237/255, blue: 237/255, alpha: 1);
+                        cell.pushToTwitterText.textColor = UIColor.init(red: 34/255, green: 34/255, blue: 34/255, alpha: 1)
+                        cell.pushToTwitterView.backgroundColor = UIColor.clear;
+                        cell.pushToTwitterView.layer.borderWidth = 0.5;
+                        cell.pushToTwitterView.layer.borderColor = UIColor.init(red: 146/255, green: 147/255, blue: 149/255, alpha: 1).cgColor
+
                         cell.publishToTwitterImage.backgroundColor = UIColor.init(red: 237/255, green: 237/255, blue: 237/255, alpha: 1);
                         cell.pushToTwitterView.isUserInteractionEnabled = false;
 
                     } else {
                         //cell.pushToTwitterView.isHidden = false;
+                        cell.pushToTwitterText.textColor = UIColor.white
                         cell.pushToTwitterView.backgroundColor = UIColor.init(red: 0, green: 153/255, blue: 219/255, alpha: 1);
+                        cell.pushToTwitterView.layer.borderWidth = 0;
                         cell.publishToTwitterImage.backgroundColor = UIColor.init(red: 42/255, green: 185/255, blue: 195/255, alpha: 1);
                         cell.pushToTwitterView.isUserInteractionEnabled = true;
 

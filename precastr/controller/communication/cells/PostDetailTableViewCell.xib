@@ -138,7 +138,9 @@
                 <outlet property="publishInfoButton" destination="iHw-Xd-cnI" id="hTG-Rn-iSe"/>
                 <outlet property="publishToFacebookImage" destination="9vq-hy-ze8" id="AJr-I0-NtK"/>
                 <outlet property="publishToTwitterImage" destination="KVE-Rk-mWg" id="7Lw-iA-b8X"/>
+                <outlet property="pushToFacebookText" destination="kAA-90-ko0" id="wca-aw-Hgv"/>
                 <outlet property="pushToFacebookView" destination="WfR-OJ-zz2" id="Ypl-RY-bsL"/>
+                <outlet property="pushToTwitterText" destination="dWb-GD-qS0" id="Cvm-Gq-Yj1"/>
                 <outlet property="pushToTwitterView" destination="eFt-wN-EPB" id="GIy-Ty-wkt"/>
                 <outlet property="separator" destination="G8N-3B-qgc" id="2FC-s9-Hcq"/>
                 <outlet property="totalCountImageLbl" destination="6y6-64-NZE" id="Xjr-UZ-tNj"/>

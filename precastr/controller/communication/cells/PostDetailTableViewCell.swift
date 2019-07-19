@@ -20,6 +20,10 @@ class PostDetailTableViewCell: UITableViewCell, UIScrollViewDelegate {
     @IBOutlet weak var publishToTwitterImage: UIImageView!
     @IBOutlet weak var publishToFacebookImage: UIImageView!
     
+    @IBOutlet weak var pushToFacebookText: UILabel!
+    
+    @IBOutlet weak var pushToTwitterText: UILabel!
+    
     var imagesArray : [String] = [String]();
     
     @IBOutlet weak var imageGalleryScrollView: UIScrollView!
