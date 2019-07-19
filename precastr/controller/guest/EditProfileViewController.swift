@@ -55,13 +55,13 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
         //If Logged in user is a moderator, then we will
         self.loggedInUser = User().loadUserDataFromUserDefaults(userDataDict: setting);
         if (loggedInUser.isCastr == 2) {
-            self.navigationItem.title = "Moderate Casts";
+            self.navigationItem.title = "My Account";
             
             if (self.tabBarController!.viewControllers?.count == 4) {
                 self.tabBarController!.viewControllers?.remove(at: 1)
             }
         } else {
-            self.navigationItem.title = "My Casts";
+            self.navigationItem.title = "My Account";
             
             if (self.tabBarController!.viewControllers?.count == 3) {
                 

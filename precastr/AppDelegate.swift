@@ -20,7 +20,7 @@ var postStatusList = [PostStatus]();
 var social : SocialPlatform!
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUserNotificationCenterDelegate {
 
     var window: UIWindow?
 
@@ -63,6 +63,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate {
         }
         
         application.registerForRemoteNotifications()
+        
+        //User Notification
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) {(accepted, error) in
+            if !accepted {
+                print("Notification access denied.")
+                
+            }else{
+                DispatchQueue.main.async {
+                    print ("Notificaiton access success")
+                    UIApplication.shared.registerForRemoteNotifications()
+                }
+            }
+        }
+        UNUserNotificationCenter.current().delegate = self
         return true
 
     }
@@ -138,6 +152,42 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate {
         // TODO: If necessary send token to application server.
         // Note: This callback is fired at each app startup and whenever a new token is generated.
     }
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        completionHandler([.alert, .badge, .sound])
+        
+        let userInfo = notification.request.content.userInfo as! NSDictionary;
+        
+        let payloadDict = convertToDictionary(from: userInfo["gcm.notification.payload"] as! String);
+        
+        print(payloadDict!["screen"]!)
+        var screen = payloadDict!["screen"]!
+        if(screen == "Home"){
+        if let screenTabBarViewControllers =  UITabBarController().viewControllers {
+          
+            
+            let homeViewController = (screenTabBarViewControllers[0] as? UINavigationController)?.viewControllers.first as? HomeViewController
+            homeViewController?.refreshScreenData();
+        }
+        }else if(screen == "Communication"){
+            
+            print(UITabBarController().viewControllers?.count)
+            
+            let storyBoard = UIStoryboard.init(name: "Main", bundle: nil)
+            var viewContros = storyBoard.instantiateViewController(withIdentifier: "CommunicationViewController") as! CommunicationViewController;
+                viewContros.refreshScreenData();
+        }
+        
+    }
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        let userInfo = response.notification.request.content.userInfo
+        print(userInfo)
+    }
     
+    func convertToDictionary(from text: String) -> [String: String]? { guard let data = text.data(using: .utf8) else { return nil }
+        let anyResult = try? JSONSerialization.jsonObject(with: data, options: [])
+        return anyResult as? [String: String]
+        
+    }
+
 }
 

@@ -779,10 +779,15 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
             .userInterfaceLayoutDirection == .leftToRight ? .forceLeftToRight : .forceRightToLeft;
         
         self.changeStatusBtn.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 10);
+            self.separator.isHidden = false
         }else{
             self.changeStatusBtn.setImage(UIImage.init(named: "down_arrow"), for: .normal);
             self.changeStatusBtn.isUserInteractionEnabled = true;
+            self.separator.isHidden = true
         }
+    }
+    func refreshScreenData(){
+        self.getPostCommunications();
     }
 }
 

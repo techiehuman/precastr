@@ -72,7 +72,7 @@ class NotificationViewController: UIViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         self.setupNavigationBar();
-      //  self.loadNotifications();
+        self.loadNotifications();
         
         //If Logged in user is a moderator, then we will
         self.loggedInUser = User().loadUserDataFromUserDefaults(userDataDict: setting);

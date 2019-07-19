@@ -324,7 +324,7 @@ class HomeViewController: UIViewController, EasyTipViewDelegate, SharingDelegate
                 content.contentURL = URL.init(string: "http://precastr.com")!;
                 let shareDialog = ShareDialog()
                 shareDialog.shareContent = content;
-                shareDialog.mode = .automatic;
+                shareDialog.mode = .native;
                 shareDialog.fromViewController = self;
                 shareDialog.delegate = self;
                 shareDialog.shouldFailOnDataError = true;
@@ -470,6 +470,14 @@ class HomeViewController: UIViewController, EasyTipViewDelegate, SharingDelegate
         self.present(refreshAlert, animated: true, completion: nil)
 
     }
+    func refreshScreenData(){
+        if (loggedInUser.isCastr == 1) {
+            self.loadUserPosts();
+        } else if (loggedInUser.isCastr == 2) {
+            loadModeratorUserPosts();
+        }
+    }
+    
 }
 
 class MyTapRecognizer : UITapGestureRecognizer {
