@@ -57,6 +57,9 @@ class HomeViewController: UIViewController, EasyTipViewDelegate, SharingDelegate
         socialPostList.register(UINib(nibName: "HomeTextPostTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "HomeTextPostTableViewCell")
         socialPostList.register(UINib(nibName: "ModeratorCastsTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "ModeratorCastsTableViewCell")
         
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.refreshPostsData), name: NSNotification.Name(rawValue: "reloadHomeScreen"), object: nil)
+
         //socialPostList.register(UINib(nibName: "PostTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "PostTableViewCell")
         loggedInUser = User().loadUserDataFromUserDefaults(userDataDict : setting);
 
@@ -67,38 +70,8 @@ class HomeViewController: UIViewController, EasyTipViewDelegate, SharingDelegate
         } else if (loggedInUser.isCastr == 2) {
             loadModeratorUserPosts();
         }
-        let jsonURL = "posts/get_notifications_count/format/json"
-         self.postArray["user_id"] = String(loggedInUser.userId)
-        UserService().postDataMethod(jsonURL: jsonURL, postData: self.postArray, complete: {(response) in
-            print(response)
-          
-            let success = Int(response.value(forKey: "status") as! String)!
-            if (success == 1) {
-                 let dataArray = response.value(forKey: "data") as! NSDictionary;
-                if let tabItems = self.tabBarController?.tabBar.items {
-                    // In this case we want to modify the badge number of the third tab:
-                    var index = 0;
-                    if (self.loggedInUser.isCastr == 1) {
-                        index =  3;
-                    } else {
-                        index = 2;
-                    }
-                    let tabItem = tabItems[index]
-                    let badgeCount = dataArray.value(forKey: "total") as! String
-                    print(badgeCount)
-                    if(badgeCount != "nil" && badgeCount != "0"){
-                        tabItem.badgeValue =  dataArray.value(forKey: "total") as? String;
-                    }else{
-                        tabItem.badgeValue =  nil;
-                    }
-                    
-                }
-            }else{
-                let message = response.value(forKey: "message") as! String;
-                self.showAlert(title: "Error", message: message);
-            }
-        });
-
+        
+        self.showBadgeCount();
     }
     override func viewWillAppear(_ animated: Bool) {
         loggedInUser = User().loadUserDataFromUserDefaults(userDataDict : setting);
@@ -174,9 +147,45 @@ class HomeViewController: UIViewController, EasyTipViewDelegate, SharingDelegate
         } else if (loggedInUser.isCastr == 2) { // moderator
             loadModeratorUserPosts();
         }
+        self.showBadgeCount();
         self.refreshControl.endRefreshing()
        
-        
+    }
+    
+    func showBadgeCount() {
+        let jsonURL = "posts/get_notifications_count/format/json"
+        self.postArray["user_id"] = String(loggedInUser.userId)
+        if (self.loggedInUser.isCastr == 1) {
+            self.postArray["role_id"] = 0;
+        } else {
+            self.postArray["role_id"] = 1;
+        }
+        UserService().postDataMethod(jsonURL: jsonURL, postData: self.postArray, complete: {(response) in
+            print(response)
+            
+            let success = Int(response.value(forKey: "status") as! String)!
+            if (success == 1) {
+                let dataArray = response.value(forKey: "data") as! NSDictionary;
+                if let tabItems = self.tabBarController?.tabBar.items {
+                    // In this case we want to modify the badge number of the third tab:
+                    var index = 0;
+                    if (self.loggedInUser.isCastr == 1) {
+                        index =  3;
+                    } else {
+                        index = 2;
+                    }
+                    let tabItem = tabItems[index]
+                    let badgeCount = dataArray.value(forKey: "total") as! String
+                    print(badgeCount)
+                    if (badgeCount != "nil" && badgeCount != "0"){
+                        tabItem.badgeValue =  dataArray.value(forKey: "total") as? String;
+                    } else {
+                        tabItem.badgeValue =  nil;
+                    }
+                    
+                }
+            }
+        });
     }
     
     func loadUserPosts() {
@@ -471,11 +480,17 @@ class HomeViewController: UIViewController, EasyTipViewDelegate, SharingDelegate
 
     }
     func refreshScreenData(){
+        
+        loggedInUser = User().loadUserDataFromUserDefaults(userDataDict : setting);
+
         if (loggedInUser.isCastr == 1) {
             self.loadUserPosts();
         } else if (loggedInUser.isCastr == 2) {
             loadModeratorUserPosts();
         }
+        
+        self.showBadgeCount();
+
     }
     
 }

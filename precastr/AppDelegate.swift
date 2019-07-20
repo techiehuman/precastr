@@ -116,7 +116,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
 
     func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-        
+        application.applicationIconBadgeNumber = 0
         AppEvents.activateApp();
     }
 
@@ -156,37 +156,82 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
         completionHandler([.alert, .badge, .sound])
         
         let userInfo = notification.request.content.userInfo as! NSDictionary;
+        print(userInfo["gcm.notification.payload"]);
+        let payloadDict = convertToDictionary(from: userInfo["gcm.notification.payload"]! as! String);
         
-        let payloadDict = convertToDictionary(from: userInfo["gcm.notification.payload"] as! String);
-        
-        print(payloadDict!["screen"]!)
         var screen = payloadDict!["screen"]!
-        if(screen == "Home"){
-        if let screenTabBarViewControllers =  UITabBarController().viewControllers {
-          
+        if(screen == "Home") {
             
-            let homeViewController = (screenTabBarViewControllers[0] as? UINavigationController)?.viewControllers.first as? HomeViewController
-            homeViewController?.refreshScreenData();
-        }
+            //let storyBoard = UIStoryboard.init(name: "Main", bundle: nil)
+            //var viewContros = storyBoard.instantiateViewController(withIdentifier: "HomeViewController") as! HomeViewController;
+            //viewContros.refreshScreenData();
+            
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "reloadHomeScreen"), object: nil)
+
+            
+            
         }else if(screen == "Communication"){
             
             print(UITabBarController().viewControllers?.count)
             
-            let storyBoard = UIStoryboard.init(name: "Main", bundle: nil)
-            var viewContros = storyBoard.instantiateViewController(withIdentifier: "CommunicationViewController") as! CommunicationViewController;
-                viewContros.refreshScreenData();
+            /*let storyBoard = UIStoryboard.init(name: "Main", bundle: nil)
+            let viewContros = storyBoard.instantiateViewController(withIdentifier: "CommunicationViewController") as! CommunicationViewController;
+            viewContros.refreshScreenData();*/
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "reloadCommunicationScreen"), object: nil)
+
         }
         
+        //self.showBadgeCount();
     }
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
         let userInfo = response.notification.request.content.userInfo
         print(userInfo)
     }
     
-    func convertToDictionary(from text: String) -> [String: String]? { guard let data = text.data(using: .utf8) else { return nil }
+    func convertToDictionary(from text: String) -> [String: String]? {
+        guard let data = text.data(using: .utf8) else { return nil }
         let anyResult = try? JSONSerialization.jsonObject(with: data, options: [])
         return anyResult as? [String: String]
         
+    }
+    
+    func showBadgeCount() {
+        
+        var loggedInUser = User().loadUserDataFromUserDefaults(userDataDict: setting);
+        let jsonURL = "posts/get_notifications_count/format/json"
+        var postArray = [String: Any]();
+        postArray["user_id"] = String(loggedInUser.userId)
+        if (loggedInUser.isCastr == 1) {
+            postArray["role_id"] = 0;
+        } else {
+            postArray["role_id"] = 1;
+        }
+        UserService().postDataMethod(jsonURL: jsonURL, postData: postArray, complete: {(response) in
+            print(response)
+            
+            let success = Int(response.value(forKey: "status") as! String)!
+            if (success == 1) {
+                let dataArray = response.value(forKey: "data") as! NSDictionary;
+                if let tabItems = UITabBarController().tabBar.items {
+                    // In this case we want to modify the badge number of the third tab:
+                    var index = 0;
+                    if (loggedInUser.isCastr == 1) {
+                        index =  3;
+                    } else {
+                        index = 2;
+                    }
+                    let tabItem = tabItems[index]
+                    let badgeCount = dataArray.value(forKey: "total") as! String
+                    print(badgeCount)
+                    if (badgeCount != "nil" && badgeCount != "0"){
+                        tabItem.badgeValue =  dataArray.value(forKey: "total") as? String;
+                    } else {
+                        tabItem.badgeValue =  nil;
+                    }
+                    
+                }
+            }
+        });
     }
 
 }

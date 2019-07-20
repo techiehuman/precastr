@@ -74,6 +74,8 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
           communicationTableView.register(UINib.init(nibName: "RightCommunicationTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "RightCommunicationTableViewCell");
          communicationTableView.register(UINib.init(nibName: "HomeTextPostTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "HomeTextPostTableViewCell");
         
+        NotificationCenter.default.addObserver(self, selector: #selector(self.refreshScreenData), name: NSNotification.Name(rawValue: "reloadCommunicationScreen"), object: nil)
+
         
         activityIndicator.center = view.center;
         activityIndicator.hidesWhenStopped = true;
@@ -170,6 +172,44 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
         // Pass the selected object to the new view controller.
     }
     */
+    
+    func showBadgeCount() {
+        let jsonURL = "posts/get_notifications_count/format/json"
+        
+        var postArray = [String: Any]();
+        postArray["user_id"] = String(loggedInUser.userId)
+        if (self.loggedInUser.isCastr == 1) {
+            postArray["role_id"] = 0;
+        } else {
+            postArray["role_id"] = 1;
+        }
+        UserService().postDataMethod(jsonURL: jsonURL, postData: postArray, complete: {(response) in
+            print(response)
+            
+            let success = Int(response.value(forKey: "status") as! String)!
+            if (success == 1) {
+                let dataArray = response.value(forKey: "data") as! NSDictionary;
+                if let tabItems = self.tabBarController?.tabBar.items {
+                    // In this case we want to modify the badge number of the third tab:
+                    var index = 0;
+                    if (self.loggedInUser.isCastr == 1) {
+                        index =  3;
+                    } else {
+                        index = 2;
+                    }
+                    let tabItem = tabItems[index]
+                    let badgeCount = dataArray.value(forKey: "total") as! String
+                    print(badgeCount)
+                    if (badgeCount != "nil" && badgeCount != "0"){
+                        tabItem.badgeValue =  dataArray.value(forKey: "total") as? String;
+                    } else {
+                        tabItem.badgeValue =  nil;
+                    }
+                    
+                }
+            }
+        });
+    }
     
     func getAllPostStatuses() {
         for postStatus in postStatusList {
@@ -786,8 +826,9 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
             self.separator.isHidden = true
         }
     }
-    func refreshScreenData(){
+    @objc func refreshScreenData(){
         self.getPostCommunications();
+        self.showBadgeCount();
     }
 }
 
