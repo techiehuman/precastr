@@ -46,6 +46,7 @@ class SideMenuTableViewController: UITableViewController {
         //moderatorRoleSwitch.isEnabled = false;
         profilePic.sd_setImage(with: URL(string: self.loggedInUser.profilePic), placeholderImage: UIImage.init(named: "Moderate Casts"));
         
+        print("Table Reloadedddd...");
     }
 
     override func viewWillAppear(_ animated: Bool) {
