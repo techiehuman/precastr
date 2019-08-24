@@ -142,15 +142,16 @@ class SideMenuTableViewController: UITableViewController {
         switch indexPath.row {
         case 0://Profile Tab
             print("")
-        case 1://Membership
+        case 1://Moderator
+            print("")
+        case 2://Membership
             print("")
 
-        case 2://Moderators
+        case 3://Moderators
             self.performSegue(withIdentifier: "moderatorSegue", sender: self);
-        case 3://Casters
+        case 4://Casters
             self.performSegue(withIdentifier: "casterSegue", sender: self);
-        case 4://Moderator
-            print("")
+        
             
         case 5://FAQ
             print("")
@@ -170,22 +171,22 @@ class SideMenuTableViewController: UITableViewController {
         switch indexPath.row {
         case 0:
             return 70;
-        case 1:
+        case 1://Moderator
             return 50;
         case 2:
+            return 50;
+        case 3://Moderators
             if (loggedInUser.isCastr == 1) {//If Logged In User is Caster We will show Moderators Row
                 return 50
             } else {
                 return 0;//If Logged In User is Moderator We will hide Moderators Row
             }
-        case 3:
+        case 4://Casters
             if (loggedInUser.isCastr == 2) {//If Logged In User is Caster We will show Moderators Row
                 return 50
             } else {
                 return 0;//If Logged In User is Moderator We will hide Moderators Row
             }
-        case 4:
-            return 50;
         case 5:
             return 50;
         case 6:

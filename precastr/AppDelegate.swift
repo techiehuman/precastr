@@ -117,6 +117,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
     func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
         application.applicationIconBadgeNumber = 0
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "reloadHomeScreen"), object: nil)
         AppEvents.activateApp();
     }
 
@@ -166,11 +167,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
             //var viewContros = storyBoard.instantiateViewController(withIdentifier: "HomeViewController") as! HomeViewController;
             //viewContros.refreshScreenData();
             
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "reloadHomeScreen"), object: nil)
-
-            
-            
-        }else if(screen == "Communication"){
+            //NotificationCenter.default.post(name: NSNotification.Name(rawValue: "reloadHomeScreen"), object: nil)
+        } else if(screen == "Communication") {
             
             print(UITabBarController().viewControllers?.count)
             
@@ -180,11 +178,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "reloadCommunicationScreen"), object: nil)
 
         }
-        
-        //self.showBadgeCount();
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "reloadHomeScreen"), object: nil)
+
     }
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
         let userInfo = response.notification.request.content.userInfo
+        
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "reloadHomeScreen"), object: nil)
+
         print(userInfo)
     }
     

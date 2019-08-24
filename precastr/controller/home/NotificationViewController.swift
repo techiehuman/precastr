@@ -71,11 +71,19 @@ class NotificationViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     override func viewWillAppear(_ animated: Bool) {
-        self.setupNavigationBar();
-        self.loadNotifications();
         
         //If Logged in user is a moderator, then we will
         self.loggedInUser = User().loadUserDataFromUserDefaults(userDataDict: setting);
+        self.postData["user_id"] = self.loggedInUser.userId;
+        if (self.loggedInUser.isCastr == 1) {
+            self.postData["role_id"] = 0;
+        } else {
+            self.postData["role_id"] = 1;
+        }
+        
+        self.setupNavigationBar();
+        self.loadNotifications();
+        
         if (loggedInUser.isCastr == 2) {
             self.navigationItem.title = "Notifications";
             

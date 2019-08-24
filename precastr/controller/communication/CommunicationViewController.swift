@@ -520,7 +520,7 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
                         
                         // Lets add ui labels in width.
                         let totalWidthOfUIView = self.changeStatusBtn.intrinsicContentSize.width + 20;
-                        self.changeStatusBtn.frame = CGRect.init(x: (self.changeStatusBtn.frame.origin.x), y: self.changeStatusBtn.frame.origin.y, width: totalWidthOfUIView, height: self.changeStatusBtn.frame.height);
+                        self.changeStatusBtn.frame = CGRect.init(x:  self.view.frame.width - (self.lblPostDate.intrinsicContentSize.width + self.changeStatusBtn.intrinsicContentSize.width + 40), y: self.changeStatusBtn.frame.origin.y, width: totalWidthOfUIView, height: self.changeStatusBtn.frame.height);
                         
                         
                         self.changeStatusFunction();
@@ -629,7 +629,15 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
                 content.contentURL = URL.init(string: "http://precastr.com")!;
                 let shareDialog = ShareDialog()
                 shareDialog.shareContent = content;
-                shareDialog.mode = .automatic;
+
+                let fbInstalled = schemeAvailable(scheme: "fb://")
+                
+                if (fbInstalled) {
+                    shareDialog.mode = .automatic;
+                } else {
+                    shareDialog.mode = .native;
+                }
+
                 shareDialog.fromViewController = self;
                 shareDialog.delegate = self;
                 shareDialog.shouldFailOnDataError = true;
@@ -644,7 +652,6 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
                 
                 //self.showToast(message: "Text Copied to clipboard");
                 UIPasteboard.general.string = "\(sender.post.postDescription)";
-                
                 
                 let sharePhotoContent = SharePhotoContent();
                 for photoStr in post.postImages {
@@ -775,7 +782,7 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
     
     func showFacebookFailAlert() {
         
-        var refreshAlert = UIAlertController(title: "Facebook Not Installed", message: "It looks like the Facebook app is not installed on your iPhone. Click \"OK\" to download, after installing please come back to the same screen and hit the \"Push to FB\" button", preferredStyle: UIAlertControllerStyle.alert)
+        var refreshAlert = UIAlertController(title: "Facebook Not Installed", message: "It looks like the Facebook app is not installed on your iPhone. Click \"OK\" to download, after installing please \"LOG IN\" to the \"FB App\" and come back to the same screen on \"PreCastr\" and hit the \"Push to FB\" button", preferredStyle: UIAlertControllerStyle.alert)
         
         refreshAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (action: UIAlertAction!) in
             if let url = URL(string: "https://apps.apple.com/in/app/facebook/id284882215") {
@@ -826,6 +833,14 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
             self.separator.isHidden = true
         }
     }
+    
+    func schemeAvailable(scheme: String) -> Bool {
+        if let url = URL(string: scheme) {
+            return UIApplication.shared.canOpenURL(url)
+        }
+        return false
+    }
+
     @objc func refreshScreenData(){
         self.getPostCommunications();
         self.showBadgeCount();

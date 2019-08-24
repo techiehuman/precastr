@@ -118,6 +118,7 @@ class HomeViewController: UIViewController, EasyTipViewDelegate, SharingDelegate
             loadModeratorUserPosts();
         }
 
+        //self.showBadgeCount();
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -153,6 +154,7 @@ class HomeViewController: UIViewController, EasyTipViewDelegate, SharingDelegate
     }
     
     func showBadgeCount() {
+        loggedInUser = User().loadUserDataFromUserDefaults(userDataDict : setting);
         let jsonURL = "posts/get_notifications_count/format/json"
         self.postArray["user_id"] = String(loggedInUser.userId)
         if (self.loggedInUser.isCastr == 1) {
@@ -333,7 +335,14 @@ class HomeViewController: UIViewController, EasyTipViewDelegate, SharingDelegate
                 content.contentURL = URL.init(string: "http://precastr.com")!;
                 let shareDialog = ShareDialog()
                 shareDialog.shareContent = content;
-                shareDialog.mode = .native;
+                
+                let fbInstalled = schemeAvailable(scheme: "fb://")
+
+                if (fbInstalled) {
+                    shareDialog.mode = .automatic;
+                } else {
+                    shareDialog.mode = .native;
+                }
                 shareDialog.fromViewController = self;
                 shareDialog.delegate = self;
                 shareDialog.shouldFailOnDataError = true;
@@ -464,7 +473,7 @@ class HomeViewController: UIViewController, EasyTipViewDelegate, SharingDelegate
     
     func showFacebookFailAlert() {
         
-        var refreshAlert = UIAlertController(title: "Facebook Not Installed", message: "It looks like the Facebook app is not installed on your iPhone. Click \"OK\" to download, after installing please come back to the same screen and hit the \"Push to FB\" button", preferredStyle: UIAlertControllerStyle.alert)
+        var refreshAlert = UIAlertController(title: "Facebook Not Installed", message: "It looks like the Facebook app is not installed on your iPhone. Click \"OK\" to download, after installing please \"LOG IN\" to the \"FB App\" and come back to the same screen on \"PreCastr\" and hit the \"Push to FB\" button", preferredStyle: UIAlertControllerStyle.alert)
         
         refreshAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (action: UIAlertAction!) in
             if let url = URL(string: "https://apps.apple.com/in/app/facebook/id284882215") {
@@ -493,6 +502,12 @@ class HomeViewController: UIViewController, EasyTipViewDelegate, SharingDelegate
 
     }
     
+    func schemeAvailable(scheme: String) -> Bool {
+        if let url = URL(string: scheme) {
+            return UIApplication.shared.canOpenURL(url)
+        }
+        return false
+    }
 }
 
 class MyTapRecognizer : UITapGestureRecognizer {
@@ -540,6 +555,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             return (CGFloat(HomePostCellHeight.GapAboveStatus + 44) + height + 20 + 20);
             
         } else if (loggedInUser.isCastr == 1) {
+            
             //Call this function
             var postPublishViewHeight = 0
             //Lets handle the logic of Hiding and Shwoing Publish Buttons.
@@ -632,6 +648,8 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             if (twitterIconHidden == false && facebookIconHidden == false) {
                 cell.sourceImageTwitter.isHidden = false;
                 cell.sourceImageFacebook.isHidden = false;
+                cell.sourceImageTwitter.image = UIImage.init(named: "twitter-group");
+                cell.sourceImageFacebook.image = UIImage.init(named: "facebook-group");
             } else if (facebookIconHidden == false && twitterIconHidden == true) {
                 //If twitter is not present then we will replace sourceImageTwitter image with facebook
                 cell.sourceImageTwitter.isHidden = false;
@@ -654,6 +672,20 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             if (post.postStatusId == HomePostPublishStatusId.APPROVEDSTATUSID) {
                 cell.postPrePublishView.isHidden = false;
                 
+                
+                //cell.pushToFacebookView.isHidden = false;
+                cell.pushToFacebookText.textColor = UIColor.white
+                cell.pushToFacebookView.backgroundColor = UIColor.init(red: 48/255, green: 77/255, blue: 141/255, alpha: 1);
+                cell.pushToFacebookView.layer.borderWidth = 0;
+                cell.pushToFacebookView.backgroundColor = UIColor.init(red: 82/255, green: 117/255, blue: 194/255, alpha: 1);
+                cell.pushToFacebookView.isUserInteractionEnabled = true;
+                
+                cell.pushToTwitterText.textColor = UIColor.white
+                cell.pushToTwitterView.backgroundColor = UIColor.init(red: 0, green: 153/255, blue: 219/255, alpha: 1);
+                cell.pushToTwitterView.layer.borderWidth = 0;
+                cell.publishToTwitterImage.backgroundColor = UIColor.init(red: 42/255, green: 185/255, blue: 195/255, alpha: 1);
+                cell.pushToTwitterView.isUserInteractionEnabled = true;
+                
                 //If post status is Published, Then we have to check
                 //If user posted on both platforms or not
             } else if (post.postStatusId == HomePostPublishStatusId.PUBLISHSTATUSID) {
@@ -663,6 +695,8 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
                     if (socialMediaId == social.socialPlatformId["Facebook"]) {
                         facebookPublished = true;
                         break;
+                    }else{
+                        facebookPublished = false;
                     }
                 }
                 
@@ -671,6 +705,8 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
                     if (socialMediaId == social.socialPlatformId["Twitter"]) {
                         twitterPublished = true;
                         break;
+                    }else{
+                        twitterPublished = false;
                     }
                 }
                 
@@ -698,6 +734,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
                     
                     
                     if (twitterPublished == true) {
+                         print(post.postDescription)
                         //cell.pushToTwitterView.isHidden = true;
                         cell.pushToTwitterText.textColor = UIColor.init(red: 34/255, green: 34/255, blue: 34/255, alpha: 1)
                         cell.pushToTwitterView.backgroundColor = UIColor.clear;
@@ -708,6 +745,8 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
                         cell.pushToTwitterView.isUserInteractionEnabled = false;
 
                     } else {
+                        print("*****")
+                        print(post.postDescription)
                         //cell.pushToTwitterView.isHidden = false;
                         cell.pushToTwitterText.textColor = UIColor.white
                         cell.pushToTwitterView.backgroundColor = UIColor.init(red: 0, green: 153/255, blue: 219/255, alpha: 1);
