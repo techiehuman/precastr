@@ -39,6 +39,8 @@ class HomeTextPostTableViewCell: UITableViewCell,UIScrollViewDelegate {
     @IBOutlet weak var pushToFacebookText: UILabel!
     @IBOutlet weak var pushToTwitterText: UILabel!
     
+    @IBOutlet weak var editPostbutton: UIButton!;
+    
     var imagesArray : [String] = [String]();
     
     @IBOutlet weak var imageGalleryScrollView: UIScrollView!
@@ -65,7 +67,8 @@ class HomeTextPostTableViewCell: UITableViewCell,UIScrollViewDelegate {
         //self.postImageCollectionView.register(UINib.init(nibName: "PostImageCollectionViewCell", bundle: Bundle.main), forCellWithReuseIdentifier: "PostImageCollectionViewCell")
         self.imageGalleryScrollView.delegate = self
         self.imageCounterView.layer.cornerRadius = 10
-        
+        self.editPostbutton.layer.cornerRadius = 4;
+
         var predictiveIconTapGesture = UITapGestureRecognizer.init(target: self, action: #selector(publishInfoIconPressed))
     }
 

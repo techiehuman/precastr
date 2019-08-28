@@ -46,7 +46,7 @@
                                 <rect key="frame" x="138" y="4" width="111" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="VisbyCF-Regular" family="Visby CF" pointSize="14"/>
-                                <color key="textColor" red="0.39215686274509803" green="0.65098039215686276" blue="0.96862745098039216" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="textColor" red="0.047058823529411764" green="0.43529411764705883" blue="0.9137254901960784" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
@@ -153,21 +153,15 @@
                         </subviews>
                         <color key="backgroundColor" red="0.047058823529411764" green="0.43529411764705883" blue="0.9137254901960784" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
-                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="y4W-yS-wtT">
-                        <rect key="frame" x="15" y="15" width="45" height="20"/>
+                    <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jTf-wg-IoC">
+                        <rect key="frame" x="15" y="18" width="87" height="24"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="twitter-group" translatesAutoresizingMaskIntoConstraints="NO" id="qjX-r6-ZZ2">
-                                <rect key="frame" x="0.0" y="0.0" width="20" height="20"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="facebook-group" translatesAutoresizingMaskIntoConstraints="NO" id="TOd-OX-rkV">
-                                <rect key="frame" x="25" y="0.0" width="20" height="20"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
-                            </imageView>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    </view>
+                        <color key="backgroundColor" red="0.3921568627" green="0.65098039220000004" blue="0.96862745100000003" alpha="1" colorSpace="calibratedRGB"/>
+                        <fontDescription key="fontDescription" name="VisbyCF-Regular" family="Visby CF" pointSize="14"/>
+                        <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <inset key="imageEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        <state key="normal" title="Edit Post" image="pencil"/>
+                    </button>
                 </subviews>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
@@ -175,6 +169,7 @@
                 <outlet property="currentCountImageLbl" destination="C2x-7g-Slh" id="tsW-WU-fjC"/>
                 <outlet property="dateLabel" destination="Gg1-ma-dqD" id="jRG-cp-U2e"/>
                 <outlet property="descriptionView" destination="h2e-jP-uD5" id="Vvw-OD-U9o"/>
+                <outlet property="editPostbutton" destination="jTf-wg-IoC" id="cxZ-CB-b36"/>
                 <outlet property="imageCounterView" destination="7xy-Fs-gCr" id="FTd-7F-iT0"/>
                 <outlet property="imageGalleryScrollView" destination="DAD-Le-9Ur" id="VZT-cB-gwl"/>
                 <outlet property="pageControl" destination="kmg-Py-FWc" id="MZP-Xw-frJ"/>
@@ -188,9 +183,6 @@
                 <outlet property="pushToFacebookView" destination="KMV-Vy-Fw4" id="FeK-rb-OVf"/>
                 <outlet property="pushToTwitterText" destination="dex-MB-dKa" id="Cts-Hg-Bf8"/>
                 <outlet property="pushToTwitterView" destination="pCM-Ht-2XQ" id="2Lp-Bb-9wV"/>
-                <outlet property="socialIconsView" destination="y4W-yS-wtT" id="teH-7Q-0VR"/>
-                <outlet property="sourceImageFacebook" destination="TOd-OX-rkV" id="uP1-nJ-j6h"/>
-                <outlet property="sourceImageTwitter" destination="qjX-r6-ZZ2" id="3sQ-L3-2Ob"/>
                 <outlet property="statusImage" destination="Kbq-2p-8e2" id="t18-GW-yTc"/>
                 <outlet property="totalCountImageLbl" destination="eDX-MY-CWn" id="KdA-BQ-qZz"/>
             </connections>
@@ -199,10 +191,9 @@
     </objects>
     <resources>
         <image name="approved" width="20" height="20"/>
-        <image name="facebook-group" width="20" height="20"/>
+        <image name="pencil" width="14" height="14"/>
         <image name="publish_info" width="20" height="20"/>
         <image name="publishto_facebook" width="20" height="20"/>
         <image name="publishto_twitter" width="20" height="20"/>
-        <image name="twitter-group" width="20" height="20"/>
     </resources>
 </document>

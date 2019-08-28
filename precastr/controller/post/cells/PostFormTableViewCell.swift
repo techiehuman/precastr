@@ -27,6 +27,7 @@ class PostFormTableViewCell: UITableViewCell, UITextViewDelegate, PostFormCellPr
     @IBOutlet weak var attachmentBtn : UIButton!
     @IBOutlet weak var submitBtn : UIButton!
     @IBOutlet weak var changeStatusBtn: UIButton!
+    @IBOutlet weak var imageCollectionView: UICollectionView!
     
     var createPostViewControllerDelegate: CreatePostViewController!;
     var descriptionMsg : String = "";
@@ -40,6 +41,7 @@ class PostFormTableViewCell: UITableViewCell, UITextViewDelegate, PostFormCellPr
         self.facebookBtn.layer.borderWidth = 1
         self.twitterBtn.layer.borderColor = UIColor(red: 12/255, green: 111/255, blue: 233/255, alpha: 1).cgColor;
         self.twitterBtn.layer.borderWidth = 1*/
+        self.imageCollectionView.register(UINib.init(nibName: "PostImageCollectionViewCell", bundle: Bundle.main), forCellWithReuseIdentifier: "PostImageCollectionViewCell");
         
         self.postTextField.delegate = self
         self.postTextField.layer.borderColor =  UIColor(red: 146/255, green: 147/255, blue: 149/255, alpha: 1).cgColor;
@@ -241,7 +243,17 @@ class PostFormTableViewCell: UITableViewCell, UITextViewDelegate, PostFormCellPr
                         UIApplication.shared.keyWindow?.rootViewController = HomeViewController.MainViewController();
                     }
                     })
-                }else{
+                } else {
+                    var imagesStr = "";
+                    if (self.createPostViewControllerDelegate.post.postImages.count > 0) {
+                        for imageStr in self.createPostViewControllerDelegate.post.postImages {
+                            imagesStr = imagesStr + "\(imageStr),";
+                        }
+                        
+                        //This is neeeded if we are updating and we have alreay image urls.
+                        postData["old_image_path"] = imagesStr.prefix(imagesStr.count-1);
+                    }
+                    
                     UserService().postDataMethod(jsonURL: jsonURL, postData: postData, complete: { (response) in
                         print(response);
                         let status = Int(response.value(forKey: "status") as! String)!
@@ -525,4 +537,65 @@ class PostFormTableViewCell: UITableViewCell, UITextViewDelegate, PostFormCellPr
             
         }
     }
+    
+    func reloadCollctionView() {
+        self.imageCollectionView.reloadData();
+    }
+    
+    @objc func deleteFromList(sender: DeleteIconGestureRecognizer) {
+        
+        if (self.createPostViewControllerDelegate.post != nil && self.createPostViewControllerDelegate.post.postId != nil && self.createPostViewControllerDelegate.post.postImages.count != 0) {
+            self.createPostViewControllerDelegate.post.postImages.remove(at: sender.index);
+            self.upadedSelectedImageCounts(counts: String(self.createPostViewControllerDelegate.post.postImages.count));
+
+        } else {
+            
+            self.createPostViewControllerDelegate.PhotoArray.remove(at: sender.index);
+            self.upadedSelectedImageCounts(counts: String(self.createPostViewControllerDelegate.PhotoArray.count));
+
+        }
+        self.imageCollectionView.reloadData();
+    }
+}
+
+class DeleteIconGestureRecognizer: UITapGestureRecognizer {
+    
+    var index: Int = 0;
+}
+extension PostFormTableViewCell: UICollectionViewDelegate, UICollectionViewDataSource {
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if (self.createPostViewControllerDelegate.post != nil && self.createPostViewControllerDelegate.post.postId != nil && self.createPostViewControllerDelegate.post.postImages.count != 0) {
+            return self.createPostViewControllerDelegate.post.postImages.count;
+        } else {
+            return self.createPostViewControllerDelegate.PhotoArray.count;
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        var imageToShow : UIImage? = nil;
+        var imageUrlToShow:  String? = nil;
+
+        if (self.createPostViewControllerDelegate.post != nil && self.createPostViewControllerDelegate.post.postId != nil && self.createPostViewControllerDelegate.post.postImages.count != 0) {
+            imageUrlToShow = self.createPostViewControllerDelegate.post.postImages[indexPath.row];
+        } else {
+            imageToShow = self.createPostViewControllerDelegate.PhotoArray[indexPath.row];
+        }
+        let cell = self.imageCollectionView.dequeueReusableCell(withReuseIdentifier: "PostImageCollectionViewCell", for: indexPath) as! PostImageCollectionViewCell;
+        
+        if (imageToShow != nil) {
+            cell.postImage.image = imageToShow;
+        } else {
+            cell.postImage.image = UIImage.init(url: URL.init(string: imageUrlToShow!));
+        }
+        var deleteButtonTapGestureReco = DeleteIconGestureRecognizer.init(target: self, action: #selector(deleteFromList(sender:)));
+        deleteButtonTapGestureReco.index = indexPath.row;
+        cell.crossIconImage.addGestureRecognizer(deleteButtonTapGestureReco);
+        
+        return cell;
+    }
+    
+    
+    
 }

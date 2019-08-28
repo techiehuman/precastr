@@ -23,11 +23,11 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="PostFormTableViewCell" rowHeight="433" id="KGk-i7-Jjw" customClass="PostFormTableViewCell" customModule="precastr" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="378" height="434"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="PostFormTableViewCell" rowHeight="547" id="KGk-i7-Jjw" customClass="PostFormTableViewCell" customModule="precastr" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="378" height="548"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="378" height="433.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="378" height="547.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Type your post here and attach any files using the icon below" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="veT-b9-ffu">
@@ -63,8 +63,23 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </view>
+                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="hoz-FQ-Fod">
+                        <rect key="frame" x="0.0" y="250" width="378" height="110"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="YjF-cQ-PSn">
+                            <size key="itemSize" width="100" height="100"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                        <connections>
+                            <outlet property="dataSource" destination="KGk-i7-Jjw" id="svz-q5-vA3"/>
+                            <outlet property="delegate" destination="KGk-i7-Jjw" id="Gnt-oB-bvY"/>
+                        </connections>
+                    </collectionView>
                     <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fPF-VQ-8Jh">
-                        <rect key="frame" x="238" y="275" width="120" height="32"/>
+                        <rect key="frame" x="238" y="375" width="120" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qeh-EM-aKZ">
@@ -95,15 +110,8 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </view>
-                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="20 files uploaded successfully" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8s1-1h-jeB">
-                        <rect key="frame" x="92" y="316" width="266" height="21"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
-                        <fontDescription key="fontDescription" name="VisbyCF-Regular" family="Visby CF" pointSize="14"/>
-                        <color key="textColor" red="0.13333333333333333" green="0.13333333333333333" blue="0.13333333333333333" alpha="0.84705882352941175" colorSpace="calibratedRGB"/>
-                        <nil key="highlightedColor"/>
-                    </label>
                     <button hidden="YES" opaque="NO" contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qxz-XI-f4I">
-                        <rect key="frame" x="15" y="275" width="107" height="30"/>
+                        <rect key="frame" x="15" y="375" width="107" height="30"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <fontDescription key="fontDescription" name="VisbyCF-Regular" family="Visby CF" pointSize="14"/>
                         <inset key="imageEdgeInsets" minX="10" minY="3" maxX="0.0" maxY="0.0"/>
@@ -114,6 +122,13 @@
                             <action selector="changeStatusButtonClicked:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="5U0-Hr-Ooz"/>
                         </connections>
                     </button>
+                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="20 files uploaded successfully" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8s1-1h-jeB">
+                        <rect key="frame" x="92" y="416" width="266" height="21"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                        <fontDescription key="fontDescription" name="VisbyCF-Regular" family="Visby CF" pointSize="14"/>
+                        <color key="textColor" red="0.13333333333333333" green="0.13333333333333333" blue="0.13333333333333333" alpha="0.84705882352941175" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
@@ -122,12 +137,13 @@
                 <outlet property="changeStatusBtn" destination="qxz-XI-f4I" id="7QR-We-wSI"/>
                 <outlet property="charaterCountLabel" destination="beK-LK-CcY" id="heE-g7-3tz"/>
                 <outlet property="filesUploadedtext" destination="8s1-1h-jeB" id="WMJ-wK-uUd"/>
+                <outlet property="imageCollectionView" destination="hoz-FQ-Fod" id="p2N-Sq-hJe"/>
                 <outlet property="inputViewArea" destination="9J3-tt-J6t" id="pTg-Vg-iMZ"/>
                 <outlet property="postTextField" destination="3sx-VK-U2i" id="FPF-9X-LVK"/>
                 <outlet property="sendViewArea" destination="fPF-VQ-8Jh" id="eZj-LR-HFN"/>
                 <outlet property="submitBtn" destination="0Sk-gB-72Z" id="8Bt-kh-m0m"/>
             </connections>
-            <point key="canvasLocation" x="115" y="116"/>
+            <point key="canvasLocation" x="113.59999999999999" y="166.41679160419793"/>
         </tableViewCell>
     </objects>
     <resources>

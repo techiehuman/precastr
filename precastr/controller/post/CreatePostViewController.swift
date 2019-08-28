@@ -17,6 +17,7 @@ import Photos
 
 protocol PostFormCellProtocol {
     func upadedSelectedImageCounts(counts: String);
+    func reloadCollctionView();
 }
 
 class CreatePostViewController: UIViewController, UIImagePickerControllerDelegate {
@@ -165,7 +166,9 @@ class CreatePostViewController: UIViewController, UIImagePickerControllerDelegat
                 
                 manager.requestImage(for: SelectedAssets[i], targetSize: CGSize(width: 512, height: 512), contentMode: .aspectFill, options: option, resultHandler: {(result, info)->Void in
                     
-                    
+                    if (self.post != nil && self.post.postId != nil && self.post.postImages.count != 0) {
+                        self.post.postImages = [String]();
+                    }
                     if(result != nil){
                         thumbnail = result!
                         
@@ -173,7 +176,7 @@ class CreatePostViewController: UIViewController, UIImagePickerControllerDelegat
                         let newImage = UIImage(data: data!)
                         
                         self.PhotoArray.append(newImage! as UIImage)
-                        
+                        self.postFormCellProtocolDelegate.reloadCollctionView();
                     }else{
                         let message = "Error in Image loading..."
                         self.showAlert(title: "Error", message: message);
@@ -190,6 +193,7 @@ class CreatePostViewController: UIViewController, UIImagePickerControllerDelegat
 
                 //self.showToast(message: "\(self.SelectedAssets.count) Images Uploaded")
                 self.postFormCellProtocolDelegate.upadedSelectedImageCounts(counts: "\(self.SelectedAssets.count)");
+
             }
         }
     }
@@ -258,6 +262,7 @@ extension CreatePostViewController: UITableViewDelegate, UITableViewDataSource {
             if (post.postImages.count > 0) {
                 cell.filesUploadedtext.isHidden = false;
                 cell.filesUploadedtext.text = "\(post.postImages.count) files uploaded successfully."
+                cell.reloadCollctionView();
             }
             
             /*var facebookIconHidden = true;

@@ -206,7 +206,6 @@ class HomeViewController: UIViewController, EasyTipViewDelegate, SharingDelegate
             
             let status = Int(response.value(forKey: "status") as! String)!
             if(status == 0){
-                print("hello")
                 self.noPostsText.text = response.value(forKey: "message") as! String;
                 let alert = UIAlertController.init(title: "Error", message: response.value(forKey: "message") as! String, preferredStyle: .alert);
                 alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil));
@@ -223,6 +222,13 @@ class HomeViewController: UIViewController, EasyTipViewDelegate, SharingDelegate
                 //self.homePosts = modeArray as! [Any]
                 self.posts = Post().loadPostsFromNSArray(postsArr: modeArray);
                 self.socialPostList.reloadData();
+                
+                
+                
+                if (self.loggedInUser.isCastr == 1) {
+                    self.navigationItem.title = "My Casts (\(response.value(forKey: "count") as! Int))";
+                }
+
 
             } else {
                 self.noPostsText.text = "You do not have any casts, please click on \"Add New\" in order to create a new Cast !";
@@ -234,6 +240,8 @@ class HomeViewController: UIViewController, EasyTipViewDelegate, SharingDelegate
 
                 self.socialPostList.isHidden = true;
             }
+                
+                
         }
         });
     }
@@ -275,6 +283,10 @@ class HomeViewController: UIViewController, EasyTipViewDelegate, SharingDelegate
                     self.posts = Post().loadPostsFromNSArray(postsArr: modeArray);
                     self.socialPostList.reloadData();
                     
+                    if (self.loggedInUser.isCastr == 2) {
+                        self.navigationItem.title = "Moderate Casts (\(response.value(forKey: "count") as! Int))";
+                    }
+                    
                 } else {
                     self.noPostsText.text = "No casts available for moderating !";
                     self.noPostsText.frame = CGRect.init(x: self.noPostsText.frame.origin.x, y: self.noPostsText.frame.origin.y, width: self.noPostsText.frame.width, height: 25)
@@ -307,6 +319,15 @@ class HomeViewController: UIViewController, EasyTipViewDelegate, SharingDelegate
         }
         });
     }
+    
+    @objc func editPostButtonPressed(sender: EditButtonTapRecognizer){
+        
+        let viewController = self.storyboard?.instantiateViewController(withIdentifier: "CreatePostViewController") as! CreatePostViewController;
+        viewController.post = sender.post;
+        self.navigationController?.pushViewController(viewController, animated: true);
+
+    }
+
     
     @objc func postDescriptionPressed(sender: MyTapRecognizer){
        
@@ -524,6 +545,10 @@ class FacebookPublishInfoGestureRecognizer: UIGestureRecognizer {
     var publishInfoIcon: UIButton!;
 }
 
+class EditButtonTapRecognizer : UITapGestureRecognizer {
+    var post: Post!;
+}
+
 extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1;
@@ -620,8 +645,8 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             
             //var postTextDescHeight: CGFloat = 0;
             let cell: HomeTextPostTableViewCell = tableView.dequeueReusableCell(withIdentifier: "HomeTextPostTableViewCell", for: indexPath) as! HomeTextPostTableViewCell;
-            cell.sourceImageFacebook.isHidden = false;
-            cell.sourceImageTwitter.isHidden = false;
+            //cell.sourceImageFacebook.isHidden = false;
+            //cell.sourceImageTwitter.isHidden = false;
             cell.homeViewControllerDelegate = self;
             let postDescTap = MyTapRecognizer.init(target: self, action: #selector(postDescriptionPressed(sender:)));
             postDescTap.rowId = indexPath.row;
@@ -632,7 +657,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             let postToTwitterTapGesture = PostToSocialMediaGestureRecognizer.init(target: self, action: #selector(postToTwitterPressed(sender:)));
             postToTwitterTapGesture.post = post;
             
-            var facebookIconHidden = true;
+            /*var facebookIconHidden = true;
             var twitterIconHidden = true;
             if (post.socialMediaIds.count > 0) {
                 
@@ -662,7 +687,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             } else {
                 cell.sourceImageTwitter.isHidden = true;
                 cell.sourceImageFacebook.isHidden = true;
-            }
+            }*/
             
             /***** CODE TO SHOW HIDE PUSH TO TWITTER/FACEBOOK BUTTONS  *********/
             //Lets handle the logic of Hiding and Shwoing Publish Buttons.
@@ -763,6 +788,14 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
                 cell.postPrePublishView.isHidden = true;
             }
             
+            
+            cell.editPostbutton.isHidden = false
+            
+            let editButtonTapRecognizer = EditButtonTapRecognizer();
+            editButtonTapRecognizer.addTarget(self, action: #selector(editPostButtonPressed(sender:)));
+            editButtonTapRecognizer.post = post;
+            cell.editPostbutton.addGestureRecognizer(editButtonTapRecognizer);
+            
             var imageStatus = ""
             var status = "";
 
@@ -778,12 +811,16 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             } else if (status == "Approved") {
                 imageStatus = "approved"
               //  status = "Approved"
+            cell.editPostbutton.isHidden = false
+
             } else if (status == "Rejected") {
                 imageStatus = "rejected"
               //  status = "Rejected"
             } else if(status == "Published") {
                 imageStatus = "published"
                // status = "Deleted"
+                cell.editPostbutton.isHidden = false
+                
             } else if(status == ""){
                 imageStatus = ""
             }
@@ -1021,7 +1058,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             let dateLabel = UILabel()
             dateLabel.font = UIFont(name: "VisbyCF-Regular",
                                        size: 14.0)
-            dateLabel.textColor = UIColor(red: 100/255, green: 166/255, blue: 247/255, alpha: 1)
+            dateLabel.textColor = UIColor(red: 12/255, green: 111/255, blue: 233/255, alpha: 1)
             dateLabel.text = Date().ddspEEEEcmyyyy(dateStr: post.createdOn)
             dateLabel.frame =  CGRect(x: profileLabel.intrinsicContentSize.width+32, y: 0, width: dateLabel.intrinsicContentSize.width, height: 20)
             cell.postStatusViewCell.addSubview(dateLabel)

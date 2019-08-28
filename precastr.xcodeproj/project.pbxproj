@@ -15,6 +15,8 @@
 		5EB754DC22ABE125006D636B /* ForgetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EB754DB22ABE125006D636B /* ForgetPasswordViewController.swift */; };
 		5EB754DF22ABE136006D636B /* ForgetPasswordTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EB754DD22ABE136006D636B /* ForgetPasswordTableViewCell.swift */; };
 		5EB754E022ABE136006D636B /* ForgetPasswordTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5EB754DE22ABE136006D636B /* ForgetPasswordTableViewCell.xib */; };
+		5EC1B0C32316656B0017CDCB /* PostImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EC1B0C12316656B0017CDCB /* PostImageCollectionViewCell.swift */; };
+		5EC1B0C42316656B0017CDCB /* PostImageCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5EC1B0C22316656B0017CDCB /* PostImageCollectionViewCell.xib */; };
 		5EC919A822DCA002002E9A3A /* PostManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EC919A722DCA002002E9A3A /* PostManager.swift */; };
 		5ED3A32A22BF3EE400F65CF2 /* PostCommunication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED3A32922BF3EE400F65CF2 /* PostCommunication.swift */; };
 		5EE9EBFF22B803C300FD04B6 /* HomeDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EE9EBFE22B803C300FD04B6 /* HomeDto.swift */; };
@@ -133,6 +135,8 @@
 		5EB754DB22ABE125006D636B /* ForgetPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgetPasswordViewController.swift; sourceTree = "<group>"; };
 		5EB754DD22ABE136006D636B /* ForgetPasswordTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgetPasswordTableViewCell.swift; sourceTree = "<group>"; };
 		5EB754DE22ABE136006D636B /* ForgetPasswordTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ForgetPasswordTableViewCell.xib; sourceTree = "<group>"; };
+		5EC1B0C12316656B0017CDCB /* PostImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostImageCollectionViewCell.swift; sourceTree = "<group>"; };
+		5EC1B0C22316656B0017CDCB /* PostImageCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PostImageCollectionViewCell.xib; sourceTree = "<group>"; };
 		5EC919A722DCA002002E9A3A /* PostManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostManager.swift; sourceTree = "<group>"; };
 		5ED3A32922BF3EE400F65CF2 /* PostCommunication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCommunication.swift; sourceTree = "<group>"; };
 		5EE9EBFE22B803C300FD04B6 /* HomeDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeDto.swift; sourceTree = "<group>"; };
@@ -283,6 +287,8 @@
 			children = (
 				5EF623F322A588E900124C55 /* PostFormTableViewCell.swift */,
 				5EF623F422A588E900124C55 /* PostFormTableViewCell.xib */,
+				5EC1B0C12316656B0017CDCB /* PostImageCollectionViewCell.swift */,
+				5EC1B0C22316656B0017CDCB /* PostImageCollectionViewCell.xib */,
 			);
 			path = cells;
 			sourceTree = "<group>";
@@ -771,6 +777,7 @@
 				FA84F19522A1355A007796A3 /* HeaderViewTableViewCell.xib in Resources */,
 				FADFEB0222A51A46006E3CD2 /* VisbyCF-ThinOblique.otf in Resources */,
 				FAD5015722AE895C00D21F57 /* NotificationTableViewCell.xib in Resources */,
+				5EC1B0C42316656B0017CDCB /* PostImageCollectionViewCell.xib in Resources */,
 				FADFEAFF22A51A46006E3CD2 /* VisbyCF-Regular.otf in Resources */,
 				5EEC6B6222A6842F005B1C34 /* SignupScreenTableViewCell.xib in Resources */,
 			);
@@ -905,6 +912,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5EC1B0C32316656B0017CDCB /* PostImageCollectionViewCell.swift in Sources */,
 				FAE6173E22B3B09800A8B2F3 /* RightCommunicationTableViewCell.swift in Sources */,
 				FA0372E222605A3800C3B3C9 /* UserManager.swift in Sources */,
 				FAE6173A22B3B07E00A8B2F3 /* LeftCommunicationTableViewCell.swift in Sources */,

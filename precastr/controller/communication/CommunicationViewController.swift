@@ -34,6 +34,8 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
     @IBOutlet weak var changeStatusBtn: UIButton!
     
     @IBOutlet weak var editPostBtn: UIButton!
+    @IBOutlet weak var editPostBtnBottom: UIButton!;
+    
     @IBOutlet weak var attachmentBtn: UIButton!
     @IBOutlet weak var submitBtn : UIButton!
     @IBOutlet weak var topButtonBars: UIView!
@@ -58,7 +60,7 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
     var postArray : [String:Any] = [String:Any]()
     var postToPublish: Post!;
     var easyToolTip: EasyTipView!
-
+    var placeholderText = "Communicate with your Moderator. P.S. - This won't edit the post. In order to edit the post please click on the \"Edit Post\" button.";
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView();
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -87,11 +89,13 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
         self.textArea.layer.cornerRadius = 4;
         self.textArea.layer.borderWidth = 1;
         self.textArea.layer.borderColor = UIColor(red: 112/255, green: 112/255, blue: 112/255, alpha: 1).cgColor;
-        self.textArea.text = "Type a message..."
+        self.textArea.text = placeholderText;
+        
         self.textArea.textColor = UIColor.lightGray
 
         self.editPostBtn.layer.cornerRadius = 4;
-        
+        self.editPostBtnBottom.layer.cornerRadius = 4;
+
         self.changeStatusBtn.layer.cornerRadius = 4;
         self.changeStatusBtn.layer.borderWidth = 1;
         self.changeStatusBtn.layer.borderColor = UIColor(red: 112/255, green: 112/255, blue: 112/255, alpha: 1).cgColor;
@@ -118,7 +122,11 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
 
         self.setUpNavigationBarItems();
         
-        self.hideKeyboadOnTapOutside();
+        //self.hideKeyboadOnTapOutside();
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
+        tap.cancelsTouchesInView = false
+        communicationTableView.addGestureRecognizer(tap);
+
         
         self.getPostCommunications();
         
@@ -143,6 +151,9 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
     override func viewWillAppear(_ animated: Bool) {
         
        // self.getPostCommunications();
+        self.editPostBtn.layer.cornerRadius = 4;
+        self.editPostBtnBottom.layer.cornerRadius = 4;
+
         self.communicationTableView.reloadData();
         
         //If Logged in user is a moderator, then we will
@@ -258,7 +269,7 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
 
     @IBAction func submitBtnClicked(_ sender: Any) {
         
-        if(textArea.text != "" && textArea.text != "Type a message..." || PhotoArray.count > 0){
+        if(textArea.text != "" && textArea.text != placeholderText || PhotoArray.count > 0){
             self.activityIndicator.startAnimating();
             
             let jsonURL = "\(ApiUrl)posts/add_post_communication/format/json"
@@ -276,7 +287,7 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
                     self.activityIndicator.stopAnimating();
                     //Load latest Communications
                     self.getPostCommunications();
-                    self.textArea.text = "Type a message...";
+                    self.textArea.text = self.placeholderText;
                     self.textArea.textColor = UIColor.lightGray
                 });
             } else {
@@ -286,7 +297,7 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
                     self.activityIndicator.stopAnimating();
                     //Load latest Communications
                     self.getPostCommunications();
-                    self.textArea.text = "Type a message...";
+                    self.textArea.text = self.placeholderText;
                     self.textArea.textColor = UIColor.lightGray
                     self.communicationTableView.reloadData();
                 });
@@ -604,7 +615,7 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
 
     func textViewDidEndEditing(_ textView: UITextView) {
         if self.textArea.text.isEmpty {
-            self.textArea.text = "Type a message..."
+            self.textArea.text = self.placeholderText
             self.textArea.textColor = UIColor.lightGray
         }
     }
@@ -964,6 +975,8 @@ extension CommunicationViewController: UITableViewDelegate, UITableViewDataSourc
                // status = "Pending review"
             } else if (post.status == "Approved") {
                  self.editPostBtn.isHidden = true
+                self.editPostBtnBottom.isHidden = true
+
                 imageStatus = "approved"
                // status = "Approved"
             } else if (post.status == "Rejected") {
@@ -989,6 +1002,8 @@ extension CommunicationViewController: UITableViewDelegate, UITableViewDataSourc
                     self.changeStatusBtn.setImage(UIImage.init(named: imageStatus), for: .normal);
                     self.changeStatusBtn.isUserInteractionEnabled = false;
                     self.editPostBtn.isHidden = true
+                    self.editPostBtnBottom.isHidden = true
+
                 imageStatus = "published"
               //  status = "Deleted"
             } else if(post.status == ""){
