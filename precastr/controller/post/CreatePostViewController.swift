@@ -40,7 +40,8 @@ class CreatePostViewController: UIViewController, UIImagePickerControllerDelegat
     var SelectedAssets = [PHAsset]()
     var PhotoArray = [UIImage]()
     var postArray : [String:Any] = [String:Any]()
-
+    var postImageDtos = [PostImageDto]();
+    var isSubmitAlreadyAdjustedUp = false;
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -56,7 +57,17 @@ class CreatePostViewController: UIViewController, UIImagePickerControllerDelegat
         social = SocialPlatform().loadSocialDataFromUserDefaults();
         self.getUserDetail();
         
-
+        postImageDtos = [PostImageDto]();
+        if (post != nil) {
+            var index = 0;
+            for imageStr in post.postImages {
+                let postImageDto = PostImageDto();
+                postImageDto.imageStr = imageStr;
+                postImageDto.index = index;
+                self.postImageDtos.append(postImageDto);
+                index = index + 1;
+            }
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -139,6 +150,7 @@ class CreatePostViewController: UIViewController, UIImagePickerControllerDelegat
             // User cancelled. And this where the assets currently selected.
         }, finish: { (assets: [PHAsset]) -> Void in
             // User finished with these assets
+            self.SelectedAssets = [PHAsset]();
             for i in 0..<assets.count
             {
                 self.SelectedAssets.append(assets[i])
@@ -152,7 +164,7 @@ class CreatePostViewController: UIViewController, UIImagePickerControllerDelegat
     }
     
     func convertAssetToImages() -> Void {
-        
+        self.PhotoArray = [UIImage]();
         if SelectedAssets.count != 0{
             
             for i in 0..<SelectedAssets.count{
@@ -166,16 +178,21 @@ class CreatePostViewController: UIViewController, UIImagePickerControllerDelegat
                 
                 manager.requestImage(for: SelectedAssets[i], targetSize: CGSize(width: 512, height: 512), contentMode: .aspectFill, options: option, resultHandler: {(result, info)->Void in
                     
-                    if (self.post != nil && self.post.postId != nil && self.post.postImages.count != 0) {
-                        self.post.postImages = [String]();
-                    }
+                    //if (self.post != nil && self.post.postId != nil && self.post.postImages.count != 0) {
+                    //    self.post.postImages = [String]();
+                    //}
                     if(result != nil){
                         thumbnail = result!
                         
                         let data = UIImageJPEGRepresentation(thumbnail, 0.7)
                         let newImage = UIImage(data: data!)
                         
-                        self.PhotoArray.append(newImage! as UIImage)
+                        self.PhotoArray.append(newImage as! UIImage);
+                        
+                        let postImageDto = PostImageDto();
+                        postImageDto.postImage = newImage as! UIImage;
+                        self.postImageDtos.append(postImageDto);
+                        
                         self.postFormCellProtocolDelegate.reloadCollctionView();
                     }else{
                         let message = "Error in Image loading..."
@@ -189,12 +206,7 @@ class CreatePostViewController: UIViewController, UIImagePickerControllerDelegat
             // self.imgView.animationImages = self.PhotoArray
             //self.imgView.animationDuration = 3.0
             //self.imgView.startAnimating()
-            DispatchQueue.main.async {
-
-                //self.showToast(message: "\(self.SelectedAssets.count) Images Uploaded")
-                self.postFormCellProtocolDelegate.upadedSelectedImageCounts(counts: "\(self.SelectedAssets.count)");
-
-            }
+            self.createPostTableView.reloadData()
         }
     }
     
@@ -304,6 +316,60 @@ extension CreatePostViewController: UITableViewDelegate, UITableViewDataSource {
                     break;
                 }
             }
+            
+            
+        }
+        
+        /*if (post == nil) {
+            if (PhotoArray.count == 0) {
+                
+                cell.sendViewArea.frame = CGRect.init(x: cell.sendViewArea.frame.origin.x, y: (cell.sendViewArea.frame.origin.y - 100), width: cell.sendViewArea.frame.width, height: cell.sendViewArea.frame.height);
+                cell.changeStatusBtn.frame = CGRect.init(x: cell.changeStatusBtn.frame.origin.x, y: (cell.changeStatusBtn.frame.origin.y - 100), width: cell.changeStatusBtn.frame.width, height: cell.changeStatusBtn.frame.height);
+                cell.filesUploadedtext.frame = CGRect.init(x: cell.filesUploadedtext.frame.origin.x, y: (cell.filesUploadedtext.frame.origin.y - 100), width: cell.filesUploadedtext.frame.width, height: cell.filesUploadedtext.frame.height);
+            } else {
+                
+                cell.sendViewArea.frame = CGRect.init(x: cell.sendViewArea.frame.origin.x, y: (cell.sendViewArea.frame.origin.y + 100), width: cell.sendViewArea.frame.width, height: cell.sendViewArea.frame.height);
+                cell.changeStatusBtn.frame = CGRect.init(x: cell.changeStatusBtn.frame.origin.x, y: (cell.changeStatusBtn.frame.origin.y + 100), width: cell.changeStatusBtn.frame.width, height: cell.changeStatusBtn.frame.height);
+                cell.filesUploadedtext.frame = CGRect.init(x: cell.filesUploadedtext.frame.origin.x, y: (cell.filesUploadedtext.frame.origin.y + 100), width: cell.filesUploadedtext.frame.width, height: cell.filesUploadedtext.frame.height);
+
+            }
+            
+        } else {
+            
+            if (post != nil) {
+                if (post.postImages.count > 0 || PhotoArray.count > 0) {
+                
+                    cell.sendViewArea.frame = CGRect.init(x: cell.sendViewArea.frame.origin.x, y: cell.sendViewArea.frame.origin.y, width: cell.sendViewArea.frame.width, height: cell.sendViewArea.frame.height);
+                    cell.changeStatusBtn.frame = CGRect.init(x: cell.changeStatusBtn.frame.origin.x, y: cell.changeStatusBtn.frame.origin.y, width: cell.changeStatusBtn.frame.width, height: cell.changeStatusBtn.frame.height);
+                    cell.filesUploadedtext.frame = CGRect.init(x: cell.filesUploadedtext.frame.origin.x, y: cell.filesUploadedtext.frame.origin.y, width: cell.filesUploadedtext.frame.width, height: cell.filesUploadedtext.frame.height);
+
+                } else {
+                    
+                    cell.sendViewArea.frame = CGRect.init(x: cell.sendViewArea.frame.origin.x, y: (cell.sendViewArea.frame.origin.y + 100), width: cell.sendViewArea.frame.width, height: cell.sendViewArea.frame.height);
+                    cell.changeStatusBtn.frame = CGRect.init(x: cell.changeStatusBtn.frame.origin.x, y: (cell.changeStatusBtn.frame.origin.y + 100), width: cell.changeStatusBtn.frame.width, height: cell.changeStatusBtn.frame.height);
+                    cell.filesUploadedtext.frame = CGRect.init(x: cell.filesUploadedtext.frame.origin.x, y: (cell.filesUploadedtext.frame.origin.y + 100), width: cell.filesUploadedtext.frame.width, height: cell.filesUploadedtext.frame.height);
+
+                }
+            }
+        }*/
+            
+        if (self.isSubmitAlreadyAdjustedUp == false && self.postImageDtos.count == 0) {
+            cell.sendViewArea.frame = CGRect.init(x: cell.sendViewArea.frame.origin.x, y: (cell.sendViewArea.frame.origin.y - 100), width: cell.sendViewArea.frame.width, height: cell.sendViewArea.frame.height);
+            cell.changeStatusBtn.frame = CGRect.init(x: cell.changeStatusBtn.frame.origin.x, y: (cell.changeStatusBtn.frame.origin.y - 100), width: cell.changeStatusBtn.frame.width, height: cell.changeStatusBtn.frame.height);
+            cell.filesUploadedtext.frame = CGRect.init(x: cell.filesUploadedtext.frame.origin.x, y: (cell.filesUploadedtext.frame.origin.y - 100), width: cell.filesUploadedtext.frame.width, height: cell.filesUploadedtext.frame.height);
+            self.isSubmitAlreadyAdjustedUp = true;
+        } else {
+            if (self.isSubmitAlreadyAdjustedUp == true) {
+                cell.sendViewArea.frame = CGRect.init(x: cell.sendViewArea.frame.origin.x, y: (cell.sendViewArea.frame.origin.y + 100), width: cell.sendViewArea.frame.width, height: cell.sendViewArea.frame.height);
+                cell.changeStatusBtn.frame = CGRect.init(x: cell.changeStatusBtn.frame.origin.x, y: (cell.changeStatusBtn.frame.origin.y + 100), width: cell.changeStatusBtn.frame.width, height: cell.changeStatusBtn.frame.height);
+                cell.filesUploadedtext.frame = CGRect.init(x: cell.filesUploadedtext.frame.origin.x, y: (cell.filesUploadedtext.frame.origin.y + 100), width: cell.filesUploadedtext.frame.width, height: cell.filesUploadedtext.frame.height);
+                self.isSubmitAlreadyAdjustedUp = false
+            }
+        }
+
+        DispatchQueue.main.async {
+            //self.showToast(message: "\(self.SelectedAssets.count) Images Uploaded")
+            self.postFormCellProtocolDelegate.upadedSelectedImageCounts(counts: "\(self.postImageDtos.count)");
         }
             
         activityIndicator.center = view.center;

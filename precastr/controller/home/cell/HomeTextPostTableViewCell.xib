@@ -160,7 +160,7 @@
                         <fontDescription key="fontDescription" name="VisbyCF-Regular" family="Visby CF" pointSize="14"/>
                         <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <inset key="imageEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
-                        <state key="normal" title="Edit Post" image="pencil"/>
+                        <state key="normal" title="View Details"/>
                     </button>
                 </subviews>
             </tableViewCellContentView>
@@ -191,7 +191,6 @@
     </objects>
     <resources>
         <image name="approved" width="20" height="20"/>
-        <image name="pencil" width="14" height="14"/>
         <image name="publish_info" width="20" height="20"/>
         <image name="publishto_facebook" width="20" height="20"/>
         <image name="publishto_twitter" width="20" height="20"/>

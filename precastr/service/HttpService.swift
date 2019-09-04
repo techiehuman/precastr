@@ -152,6 +152,16 @@ class HttpService {
 
             }
             
+            if (postData["old_image_path"] != nil) {
+                MultipartFormData.append( "\(String(describing: postData["old_image_path"]!))".data(using: .utf8)!, withName: "old_image_path")
+                
+            }
+            
+            if (postData["post_status_id"] != nil) {
+                MultipartFormData.append( "\(String(describing: postData["post_status_id"]!))".data(using: .utf8)!, withName: "post_status_id")
+                
+            }
+            
         }, usingThreshold: UInt64.init(), to: "\(url)", method: .post, headers:Auth_header ) { (result) in
             
             var returnDict = NSDictionary();

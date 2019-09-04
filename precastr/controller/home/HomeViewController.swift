@@ -791,9 +791,8 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             
             cell.editPostbutton.isHidden = false
             
-            let editButtonTapRecognizer = EditButtonTapRecognizer();
-            editButtonTapRecognizer.addTarget(self, action: #selector(editPostButtonPressed(sender:)));
-            editButtonTapRecognizer.post = post;
+            let editButtonTapRecognizer = MyTapRecognizer.init(target: self, action: #selector(postDescriptionPressed(sender:)));
+            editButtonTapRecognizer.rowId = indexPath.row;
             cell.editPostbutton.addGestureRecognizer(editButtonTapRecognizer);
             
             var imageStatus = ""

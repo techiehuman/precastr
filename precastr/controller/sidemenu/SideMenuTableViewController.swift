@@ -79,9 +79,14 @@ class SideMenuTableViewController: UITableViewController {
             var vewContrs = UIApplication.shared.keyWindow?.rootViewController?.tabBarController?.viewControllers
             vewContrs?.remove(at: 1);
             UIApplication.shared.keyWindow?.rootViewController?.tabBarController?.viewControllers = vewContrs;
+            
+            self.showToastMultipleLines(message: "You have turned ON the \"MODERATOR MODE\".\nPlease go on the \"Home Screen\" and moderate the casts..");
         } else {
             self.loggedInUser.isCastr = 1;
             User().updateUserRole(roleId: 1);
+            
+            self.showToastMultipleLines(message: "You have turned ON the \"CASTER MODE\".\nPlease go on the \"Home Screen\" and manage your casts.")
+
         }
           self.tableView.reloadData()
     }

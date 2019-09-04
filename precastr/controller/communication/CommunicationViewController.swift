@@ -60,7 +60,7 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
     var postArray : [String:Any] = [String:Any]()
     var postToPublish: Post!;
     var easyToolTip: EasyTipView!
-    var placeholderText = "Communicate with your Moderator. P.S. - This won't edit the post. In order to edit the post please click on the \"Edit Post\" button.";
+    var placeholderText = "Communicate with your Moderator.\nP.S. - This won't edit the post. In order to edit the post, please click on the \"Edit Post\" button.";
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView();
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -133,6 +133,8 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
         self.getAllPostStatuses();
         
         self.changeStatusFunction();
+        
+        self.addDoneButtonOnKeyboard();
    //  postStatusList = loadPostStatus()
     }
 
@@ -288,7 +290,7 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
                     //Load latest Communications
                     self.getPostCommunications();
                     self.textArea.text = self.placeholderText;
-                    self.textArea.textColor = UIColor.lightGray
+                    self.textArea.textColor = UIColor.darkGray
                 });
             } else {
                 HttpService().postMethod(url: jsonURL, postData: postData, complete: {(response) in
@@ -298,7 +300,7 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
                     //Load latest Communications
                     self.getPostCommunications();
                     self.textArea.text = self.placeholderText;
-                    self.textArea.textColor = UIColor.lightGray
+                    self.textArea.textColor = UIColor.darkGray
                     self.communicationTableView.reloadData();
                 });
             }
@@ -616,7 +618,7 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
     func textViewDidEndEditing(_ textView: UITextView) {
         if self.textArea.text.isEmpty {
             self.textArea.text = self.placeholderText
-            self.textArea.textColor = UIColor.lightGray
+            self.textArea.textColor = UIColor.darkGray
         }
     }
 
@@ -850,6 +852,28 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
             return UIApplication.shared.canOpenURL(url)
         }
         return false
+    }
+    
+    func addDoneButtonOnKeyboard() {
+        
+        // add a done button to the numberpad
+        var toolBar = UIToolbar()
+        toolBar.barStyle = UIBarStyle.default
+        toolBar.isTranslucent = true
+        var cancelButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: self, action: nil)
+        var doneButton = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.done, target: self, action: "doneButtonAction")
+        var spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
+        toolBar.setItems([cancelButton, spaceButton, doneButton], animated: false)
+        toolBar.isUserInteractionEnabled = true
+        toolBar.sizeToFit()
+        
+        self.textArea.delegate = self
+        self.textArea.inputAccessoryView = toolBar
+    }
+    
+
+    @objc func doneButtonAction() {
+        self.textArea.resignFirstResponder()
     }
 
     @objc func refreshScreenData(){
