@@ -12,4 +12,5 @@ import UIKit
     let ApiUrl = "http://lyonsdemoz.website/pre-caster/api/"
     let ApiToken = "82haf8kklm3fotpr23-f4gh2-vq587-32ky"
     let siteURL = "http://lyonsdemoz.website/pre-caster/"
+    let castTextAreaPlaceholder = "Communicate with your Moderator.\nP.S. - This won't edit the post. In order to edit the post, please click on the \"Edit Post\" button."
 

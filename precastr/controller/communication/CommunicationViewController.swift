@@ -91,7 +91,7 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
         self.textArea.layer.borderColor = UIColor(red: 112/255, green: 112/255, blue: 112/255, alpha: 1).cgColor;
         self.textArea.text = placeholderText;
         
-        self.textArea.textColor = UIColor.lightGray
+        self.textArea.textColor = UIColor(red: 118/255, green: 118/255, blue: 119/255, alpha: 1);
 
         self.editPostBtn.layer.cornerRadius = 4;
         self.editPostBtnBottom.layer.cornerRadius = 4;
@@ -492,7 +492,12 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
                 self.textAreaBtnBottomView.frame.origin.y = positionOfBottomView;
                 
                 self.communicationTableView.frame = CGRect.init(x: 0, y: self.communicationTableView.frame.origin.y, width: self.view.frame.width, height: self.textAreaBtnBottomView.frame.origin.y - self.communicationTableView.frame.origin.y)
+                
             }
+        }
+        
+        if(self.textArea.text == castTextAreaPlaceholder){
+            self.textArea.textColor = UIColor(red: 118/255, green: 118/255, blue: 119/255, alpha: 1);
         }
     }
     
@@ -609,7 +614,7 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
     }
     
     func textViewDidBeginEditing(_ textView: UITextView) {
-        if self.textArea.textColor == UIColor.lightGray {
+        if self.textArea.textColor == UIColor(red: 118/255, green: 118/255, blue: 119/255, alpha: 1) {
             self.textArea.text = nil
             self.textArea.textColor = UIColor(red: 34/255, green: 34/255, blue: 34/255, alpha: 1);
         }

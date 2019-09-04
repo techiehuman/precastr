@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "precastr/controller/communication/CommunicationViewController.swift"
-            timestampString = "585252660.717784"
+            timestampString = "589300410.6401581"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "518"
-            endingLineNumber = "518"
+            startingLineNumber = "523"
+            endingLineNumber = "523"
             landmarkName = "updatePostStatus(postStatusId:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "precastr/controller/communication/CommunicationViewController.swift"
-            timestampString = "585252660.718418"
+            timestampString = "589300410.640964"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "526"
-            endingLineNumber = "526"
+            startingLineNumber = "531"
+            endingLineNumber = "531"
             landmarkName = "updatePostStatus(postStatusId:)"
             landmarkType = "7">
          </BreakpointContent>

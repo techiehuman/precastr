@@ -69,7 +69,7 @@ class PostFormTableViewCell: UITableViewCell, UITextViewDelegate, PostFormCellPr
     
     func textViewDidBeginEditing(_ textView: UITextView) {
         print("A")
-        if self.postTextField.textColor == UIColor.lightGray {
+        if self.postTextField.textColor == UIColor(red: 118/255, green: 118/255, blue: 119/255, alpha: 1) {
             self.postTextField.text = ""
             self.postTextField.textColor = UIColor.black
         }
@@ -78,7 +78,7 @@ class PostFormTableViewCell: UITableViewCell, UITextViewDelegate, PostFormCellPr
         print("B")
         if self.postTextField.text == "" {
             self.postTextField.text = "Write Something..."
-            self.postTextField.textColor = UIColor.lightGray
+            self.postTextField.textColor = UIColor(red: 118/255, green: 118/255, blue: 119/255, alpha: 1);
         }
     }
     

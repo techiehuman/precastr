@@ -289,6 +289,7 @@
 			children = (
 				5EF623F322A588E900124C55 /* PostFormTableViewCell.swift */,
 				5EF623F422A588E900124C55 /* PostFormTableViewCell.xib */,
+				FA84F18822A0E4C9007796A3 /* moderator */,
 				5EC1B0C12316656B0017CDCB /* PostImageCollectionViewCell.swift */,
 				5EC1B0C22316656B0017CDCB /* PostImageCollectionViewCell.xib */,
 			);
@@ -464,7 +465,6 @@
 				9010B4AD22CF6CF40083A468 /* casters */,
 				FAE6173622B3B02C00A8B2F3 /* communication */,
 				5EF623F122A5889A00124C55 /* post */,
-				FA84F18822A0E4C9007796A3 /* moderator */,
 				FABF02492264FB500067960C /* sidemenu */,
 				FABF02462264EE600067960C /* home */,
 				FA6AB5AA2253355F00C5491F /* guest */,
