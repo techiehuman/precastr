@@ -159,6 +159,7 @@ class SignupScreenViewController: UIViewController, UIImagePickerControllerDeleg
                 self.signUpSuccessCallback(response: response);
             })
         } else {
+            print(user);
             UserService().postDataMethod(jsonURL: jsonURL, postData: user.toDictionary(user: user), complete: {(response) in
                 self.signUpSuccessCallback(response: response);
                 

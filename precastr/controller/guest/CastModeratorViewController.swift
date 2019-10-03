@@ -46,9 +46,11 @@ class CastModeratorViewController: UIViewController, CNContactPickerDelegate, MF
     */
     
     @IBAction func browseContactsPressed(_ sender: Any) {
-        let cnPicker = CNContactPickerViewController()
+        /*let cnPicker = CNContactPickerViewController()
         cnPicker.delegate = self
-        self.present(cnPicker, animated: true, completion: nil)
+        self.present(cnPicker, animated: true, completion: nil)*/
+        let viewController = self.storyboard?.instantiateViewController(withIdentifier: "ContactsViewController") as! ContactsViewController;
+        self.navigationController?.pushViewController(viewController, animated: true);
     }
     
     
@@ -73,7 +75,7 @@ class CastModeratorViewController: UIViewController, CNContactPickerDelegate, MF
         
         if (MFMessageComposeViewController.canSendText()) {
             let controller = MFMessageComposeViewController()
-            controller.body = "Hey! I’m using a cool app called preCastr and I’d like you to be my moderator cick on this link to download he free app and get going \n https://www.precastr.com"
+            controller.body = "Hey! I'm using a cool app called preCastr and I’d like you to be my moderator cick on this link to download he free app and get going \n https://www.precastr.com"
             controller.recipients = self.contactsSelected
             controller.messageComposeDelegate = self
             self.present(controller, animated: true, completion: nil)

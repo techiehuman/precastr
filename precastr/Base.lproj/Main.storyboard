@@ -963,6 +963,7 @@
                     <connections>
                         <outlet property="inviteModeratorButton" destination="vJi-7A-sbV" id="yfy-g4-JhS"/>
                         <outlet property="moderatorList" destination="PS6-cN-Uqg" id="njM-Ei-Fra"/>
+                        <segue destination="MVa-m2-RZ4" kind="show" id="4Dn-9U-Pnc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Lf0-Jr-lKt" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1116,6 +1117,46 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="p2S-H4-hR3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1482" y="1490"/>
+        </scene>
+        <!--Contacts-->
+        <scene sceneID="zNE-nk-ljP">
+            <objects>
+                <viewController storyboardIdentifier="ContactsViewController" title="Contacts" useStoryboardIdentifierAsRestorationIdentifier="YES" id="MVa-m2-RZ4" customClass="ContactsViewController" customModule="precastr" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="NJ3-rq-vAN">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Search" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="GcI-mh-X9o">
+                                <rect key="frame" x="36" y="100" width="314" height="30"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="MVa-m2-RZ4" id="SMG-Cf-Ohp"/>
+                                </connections>
+                            </textField>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="jRH-qe-L5Y">
+                                <rect key="frame" x="0.0" y="130" width="375" height="547"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="MVa-m2-RZ4" id="yrL-YO-HOe"/>
+                                    <outlet property="delegate" destination="MVa-m2-RZ4" id="gYx-qB-pQ9"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="fTo-Sr-GcN"/>
+                    </view>
+                    <connections>
+                        <outlet property="contactUITableView" destination="jRH-qe-L5Y" id="QTq-ef-4Ps"/>
+                        <outlet property="txtSearchBox" destination="GcI-mh-X9o" id="qe1-CD-Wf4"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zL4-48-5vi" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1156" y="4170.7646176911549"/>
         </scene>
         <!--Create a new Cast-->
         <scene sceneID="KUj-9M-fNA">
@@ -1610,6 +1651,6 @@
     <inferredMetricsTieBreakers>
         <segue reference="9cd-nP-F1L"/>
         <segue reference="0cb-mg-TdQ"/>
-        <segue reference="fxt-0a-n1d"/>
+        <segue reference="tIc-7l-s1k"/>
     </inferredMetricsTieBreakers>
 </document>

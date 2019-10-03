@@ -173,6 +173,14 @@ class NotificationViewController: UIViewController {
     @IBAction func clearButtonPressed(_ sender: Any) {
         clearAllNotification();
     }
+    @objc func postDescriptionPressed(sender:MyTapRecognizer){
+        let viewController = self.storyboard?.instantiateViewController(withIdentifier: "CommunicationViewController") as! CommunicationViewController;
+        viewController.postId = sender.postId;
+        self.navigationController?.pushViewController(viewController, animated: true);
+    }
+    class MyTapRecognizer : UITapGestureRecognizer {
+        var postId: Int!;
+    }
     
 }
 extension NotificationViewController: UITableViewDelegate, UITableViewDataSource {
@@ -188,10 +196,13 @@ extension NotificationViewController: UITableViewDelegate, UITableViewDataSource
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let notification = modeArray[indexPath.row] as AnyObject;
-        
+        print("*****");
+        print(Int(notification.value(forKey: "post_id") as! String)!);
         let cell: NotificationTableViewCell = tableView.dequeueReusableCell(withIdentifier: "NotificationTableViewCell") as! NotificationTableViewCell;
         
-        
+        let postDescTap = MyTapRecognizer.init(target: self, action: #selector(postDescriptionPressed(sender:)));
+        postDescTap.postId = Int(notification.value(forKey: "post_id") as! String)! ;
+        cell.notificationTextView.addGestureRecognizer(postDescTap)
         //This is your label
         for view in cell.notificationTextView.subviews {
             view.removeFromSuperview();

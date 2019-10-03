@@ -8,7 +8,7 @@
 
 import UIKit
 import SDWebImage
-import FBSDKShareKit
+//import FBSDKShareKit
 import FBSDKCoreKit
 import FBSDKLoginKit
 import FacebookShare

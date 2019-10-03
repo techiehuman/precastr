@@ -165,7 +165,7 @@ final class PhotosViewController : UICollectionViewController {
             if let vc = previewViewContoller, let indexPath = indexPath, let cell = collectionView?.cellForItem(at: indexPath) as? PhotoCell, let asset = cell.asset {
                 // Setup fetch options to be synchronous
                 let options = PHImageRequestOptions()
-                options.isSynchronous = true
+                options.isNetworkAccessAllowed = true
                 
                 // Load image for preview
                 if let imageView = vc.imageView {
@@ -208,7 +208,9 @@ final class PhotosViewController : UICollectionViewController {
     func updateAlbumTitle(_ album: PHAssetCollection) {
         guard let title = album.localizedTitle else { return }
         // Update album title
-        albumTitleView?.setAlbumTitle(title)
+        albumTitleView?.setTitle(title, for: .normal)
+        // Size the button to fit the new title
+        albumTitleView?.sizeToFit()
     }
     
   func initializePhotosDataSource(_ album: PHAssetCollection) {
@@ -223,12 +225,8 @@ final class PhotosViewController : UICollectionViewController {
     
     func initializePhotosDataSourceWithFetchResult(_ fetchResult: PHFetchResult<PHAsset>) {
         let newDataSource = PhotoCollectionViewDataSource(fetchResult: fetchResult, assetStore: assetStore, settings: settings)
-        
-        // Transfer image size
-        // TODO: Move image size to settings
-        if let photosDataSource = photosDataSource {
-            newDataSource.imageSize = photosDataSource.imageSize
-        }
+
+        newDataSource.imageSize = imageSize()
         
         photosDataSource = newDataSource
         
@@ -369,10 +367,18 @@ extension PhotosViewController {
             collectionViewFlowLayout.itemSpacing = itemSpacing
             collectionViewFlowLayout.itemsPerRow = cellsPerRow
             
-            photosDataSource?.imageSize = collectionViewFlowLayout.itemSize
+            photosDataSource?.imageSize = imageSize()
             
             updateDoneButton()
         }
+    }
+
+    private func imageSize() -> CGSize {
+        guard let collectionViewFlowLayout = collectionViewLayout as? GridCollectionViewLayout else { return .zero }
+        let scale = UIScreen.main.scale
+        let itemSize = collectionViewFlowLayout.itemSize
+
+        return CGSize(width: itemSize.width * scale, height: itemSize.height * scale)
     }
 }
 
@@ -415,11 +421,11 @@ extension PhotosViewController: UIImagePickerControllerDelegate {
 // MARK: PHPhotoLibraryChangeObserver
 extension PhotosViewController: PHPhotoLibraryChangeObserver {
     func photoLibraryDidChange(_ changeInstance: PHChange) {
-        guard let photosDataSource = photosDataSource, let collectionView = collectionView else {
-            return
-        }
         
         DispatchQueue.main.async(execute: { () -> Void in
+            guard let photosDataSource = self.photosDataSource, let collectionView = self.collectionView else {
+                return
+            }
             if let photosChanges = changeInstance.changeDetails(for: photosDataSource.fetchResult as! PHFetchResult<PHObject>) {
                 // Update collection view
                 // Alright...we get spammed with change notifications, even when there are none. So guard against it

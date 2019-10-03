@@ -15,7 +15,7 @@ class SocialPlatform {
         setting.setValue(self.socialPlatformId, forKey: "socialPlatform")
     }
     
-    func fetchSocialPlatformData(){
+    func fetchSocialPlatformData() {
        let jsonURL = "home/get_all_social_media_platform/format/json";
         let postData = [String : Any]()
         UserService().postDataMethod(jsonURL: jsonURL,postData:postData,complete:{(response) in
