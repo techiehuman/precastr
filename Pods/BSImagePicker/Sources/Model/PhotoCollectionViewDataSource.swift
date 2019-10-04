@@ -30,21 +30,19 @@ final class PhotoCollectionViewDataSource : NSObject, UICollectionViewDataSource
     var fetchResult: PHFetchResult<PHAsset>
 
     private let photosManager = PHCachingImageManager.default()
+    private let imageRequestOptions: PHImageRequestOptions
     private let imageContentMode: PHImageContentMode = .aspectFill
     private let assetStore: AssetStore
     
     let settings: BSImagePickerSettings?
-    var imageSize: CGSize = CGSize.zero {
-        didSet {
-            let scale = UIScreen.main.scale
-            imageSize = CGSize(width: imageSize.width * scale, height: imageSize.height * scale)
-        }
-    }
+    var imageSize: CGSize = .zero
     
     init(fetchResult: PHFetchResult<PHAsset>, assetStore: AssetStore, settings: BSImagePickerSettings?) {
         self.fetchResult = fetchResult
         self.settings = settings
         self.assetStore = assetStore
+        imageRequestOptions = PHImageRequestOptions()
+        imageRequestOptions.isNetworkAccessAllowed = true
 
         super.init()
     }
@@ -65,17 +63,19 @@ final class PhotoCollectionViewDataSource : NSObject, UICollectionViewDataSource
         if let settings = settings {
             cell.settings = settings
         }
-        
+
         // Cancel any pending image requests
         if cell.tag != 0 {
-            photosManager.cancelImageRequest(PHImageRequestID(cell.tag))
+            photosManager.cancelImageRequest(PHImageRequestID(Int32(cell.tag)))
         }
         
         let asset = fetchResult[indexPath.row]
         cell.asset = asset
         
         // Request image
-        cell.tag = Int(photosManager.requestImage(for: asset, targetSize: imageSize, contentMode: imageContentMode, options: nil) { (result, _) in
+        cell.tag = Int(photosManager.requestImage(for: asset, targetSize: imageSize, contentMode: imageContentMode, options: imageRequestOptions) { (result, _) in
+            // Closure is called even on cancellation. So make sure we actually have an image
+            guard let result = result else { return }
             cell.imageView.image = result
         })
         

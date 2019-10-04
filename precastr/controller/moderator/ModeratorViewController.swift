@@ -10,7 +10,7 @@ import UIKit
 import ContactsUI
 import MessageUI
 
-class ModeratorViewController: UIViewController, CNContactPickerDelegate, MFMessageComposeViewControllerDelegate {
+class ModeratorViewController: UIViewController, CNContactPickerDelegate, MFMessageComposeViewControllerDelegate, ModeratorViewControllerDelegate {
 
     @IBOutlet weak var moderatorList: UITableView!
     
@@ -25,41 +25,17 @@ class ModeratorViewController: UIViewController, CNContactPickerDelegate, MFMess
     
     @IBAction func inviteModeratorBtnClicked(_ sender: Any) {
         
-        let cnPicker = CNContactPickerViewController()
+        /*let cnPicker = CNContactPickerViewController()
         cnPicker.delegate = self
-        self.present(cnPicker, animated: true, completion: nil)
+        self.present(cnPicker, animated: true, completion: nil)*/
+        
+        let viewController = self.storyboard?.instantiateViewController(withIdentifier: "ContactsViewController") as! ContactsViewController;
+        viewController.moderatorViewControllerDelegte = self;
+        self.navigationController?.pushViewController(viewController, animated: true);
+
         
         /*let viewController: CastModeratorViewController = self.storyboard?.instantiateViewController(withIdentifier: "CastModeratorViewController") as! CastModeratorViewController;
         self.navigationController?.pushViewController(viewController, animated: true); */
-    }
-    //MARK:- CNContactPickerDelegate Method
-    func contactPicker(_ picker: CNContactPickerViewController, didSelect contacts: [CNContact]) {
-        contacts.forEach { contact in
-            for number in contact.phoneNumbers {
-                let phoneNumber = number.value
-                print("number is = \(phoneNumber)")
-                self.contactsSelected.append(phoneNumber.stringValue);
-            }
-        }
-        self.addSelectedContsctsBtnPressed();
-       
-    }
-    
-    func contactPickerDidCancel(_ picker: CNContactPickerViewController) {
-        print("Cancel Contact Picker")
-    }
-    func addSelectedContsctsBtnPressed() {
-        
-        self.dismiss(animated: false, completion: nil);
-        
-        if (MFMessageComposeViewController.canSendText()) {
-            let controller = MFMessageComposeViewController()
-            controller.body = "Hey! \r\nI’m using a cool app called preCastr and I’d like you to be my moderator click on this link to download the free app and get going \r\n\r\nhttps://www.precastr.com. \r\n\r\nUse the 4 didit code \(self.loggedInUser.casterReferalCode!) to be a moderator."
-            controller.recipients = self.contactsSelected
-            controller.messageComposeDelegate = self
-            self.present(controller, animated: true, completion: nil)
-        }
-        
     }
     
     func messageComposeViewController(_ controller: MFMessageComposeViewController, didFinishWith result: MessageComposeResult) {
@@ -93,6 +69,38 @@ class ModeratorViewController: UIViewController, CNContactPickerDelegate, MFMess
         }
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+         loggedInUser = User().loadUserDataFromUserDefaults(userDataDict : setting);
+        moderatorList.register(UINib(nibName: "moderatorTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "moderatorTableViewCell")
+        
+        moderatorList.register(UINib(nibName: "HeaderViewTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "HeaderViewTableViewCell")
+        // Do any additional setup after loading the view.
+        self.inviteModeratorButton.layer.cornerRadius = 4;
+        self.loadModeratorData();
+    }
+
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.title = "Moderators";
+        
+        setUpNavigationBarItems();
+        
+    }
+    /*
+    // MARK: - Navigation
+
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Get the new view controller using segue.destinationViewController.
+        // Pass the selected object to the new view controller.
+    }
+    */
     func setUpNavigationBarItems() {
         
         let menuButton = UIButton();
@@ -122,43 +130,87 @@ class ModeratorViewController: UIViewController, CNContactPickerDelegate, MFMess
     @objc func homeButtonPressed() {
         UIApplication.shared.keyWindow?.rootViewController = HomeViewController.MainViewController();
     }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    func contactsDoneButtonPressed(userContactItems: [UserContactItem]) {
         
-         loggedInUser = User().loadUserDataFromUserDefaults(userDataDict : setting);
-        moderatorList.register(UINib(nibName: "moderatorTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "moderatorTableViewCell")
-        
-        moderatorList.register(UINib(nibName: "HeaderViewTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "HeaderViewTableViewCell")
-        // Do any additional setup after loading the view.
-        self.inviteModeratorButton.layer.cornerRadius = 4;
-        self.loadModeratorData();
-        
-        
-     
+        if (userContactItems.count > 0) {
+            self.contactsSelected = [String]();
+            for userContactItem in userContactItems {
+                self.contactsSelected.append(userContactItem.phone);
+            }
+            print("Selected Numbers : ",self.contactsSelected)
+            self.addSelectedContsctsBtnPressed();
+        }
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        self.title = "Moderators";
+    func addSelectedContsctsBtnPressed() {
         
-        setUpNavigationBarItems();
+        //self.dismiss(animated: false, completion: nil);
+        
+        if (MFMessageComposeViewController.canSendText()) {
+            let controller = MFMessageComposeViewController()
+            controller.body = "Hey! \r\nI'm using a cool app called preCastr and I'd like you to be my moderator click on this link to download the free app and get going \r\n\r\nhttps://www.precastr.com. \r\n\r\nUse the 4 digit code \(self.loggedInUser.casterReferalCode!) to be a moderator."
+            controller.recipients = self.contactsSelected
+            controller.messageComposeDelegate = self
+            self.present(controller, animated: true, completion: nil)
+        }
         
     }
-    /*
-    // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    func loadModeratorData(){
+        
+        self.moderatorDto = [ModeratorsDto]()
+        self.userListApproved = [User]()
+        self.userListPending  = [User]()
+        var jsonURL = "";
+        print(String(loggedInUser.userId))
+        //  if(Bool(moderatorBool)==true){
+        if(self.loggedInUser.isCastr == 1){
+            jsonURL = "user/get_caster_moderator/format/json?user_id=\(String(loggedInUser.userId))&submit=1";
+        }else{
+            jsonURL = "user/get_moderator_casters/format/json?moderator_id=\(String(loggedInUser.userId))&submit=1";
+        }
+        UserService().getDataMethod(jsonURL: jsonURL,complete:{(response) in
+            print(response);
+            let status = Int(response.value(forKey: "status") as! String)!
+            if(status == 0){
+                let message = response.value(forKey: "message") as! String;
+                self.showAlert(title: "Error", message: message);
+            }else{
+                let modeArray = response.value(forKey: "data") as! NSArray;
+                var moderatorDtoPending : ModeratorsDto = ModeratorsDto()
+                var moderatorDtoApproved : ModeratorsDto = ModeratorsDto()
+                for mode in modeArray{
+                    
+                    var user : User = User()
+                    var modeDict = mode as! NSDictionary;
+                    // self.moderators.append(String((modeDict.value(forKey: "username") as! NSString) as String)!);
+                    user.name = modeDict.value(forKey: "name") as! String
+                    user.username = modeDict.value(forKey: "username") as! String
+                    user.profilePic = modeDict.value(forKey: "profile_pic") as! String
+                    user.userId = Int32(((modeDict.value(forKey: "moderator_id") as? NSString)?.doubleValue)!)
+                    let statusModerator = Int(((modeDict.value(forKey: "is_approved")as? NSString)?.doubleValue)!)
+                    user.miscStatus = statusModerator as! Int
+                    if(statusModerator == 0){
+                        
+                        self.userListPending.append(user)
+                    }else{
+                        self.userListApproved.append(user)
+                    }
+                }
+                if(self.userListPending.count > 0 ){
+                    moderatorDtoPending.sectionKey = "Pending Approval"
+                    moderatorDtoPending.sectionObjects = self.userListPending
+                    self.moderatorDto.append(moderatorDtoPending)
+                }
+                if(self.userListApproved.count > 0 ){
+                    moderatorDtoApproved.sectionKey = "Approved Moderators"
+                    moderatorDtoApproved.sectionObjects = self.userListApproved
+                    self.moderatorDto.append(moderatorDtoApproved)
+                }
+                self.moderatorList.reloadData();
+            }
+        });
     }
-    */
-
 }
 
 extension ModeratorViewController: UITableViewDelegate, UITableViewDataSource {
@@ -241,61 +293,6 @@ extension ModeratorViewController: UITableViewDelegate, UITableViewDataSource {
             self.loadModeratorData();
         });
         print(sender.tag)
-    }
-    func loadModeratorData(){
-     
-         self.moderatorDto = [ModeratorsDto]()
-         self.userListApproved = [User]()
-         self.userListPending  = [User]()
-        var jsonURL = "";
-        print(String(loggedInUser.userId))
-      //  if(Bool(moderatorBool)==true){
-        if(self.loggedInUser.isCastr == 1){
-            jsonURL = "user/get_caster_moderator/format/json?user_id=\(String(loggedInUser.userId))&submit=1";
-        }else{
-            jsonURL = "user/get_moderator_casters/format/json?moderator_id=\(String(loggedInUser.userId))&submit=1";
-        }
-        UserService().getDataMethod(jsonURL: jsonURL,complete:{(response) in
-            print(response);
-            let status = Int(response.value(forKey: "status") as! String)!
-            if(status == 0){
-                let message = response.value(forKey: "message") as! String;
-                self.showAlert(title: "Error", message: message);
-            }else{
-            let modeArray = response.value(forKey: "data") as! NSArray;
-            var moderatorDtoPending : ModeratorsDto = ModeratorsDto()
-            var moderatorDtoApproved : ModeratorsDto = ModeratorsDto()
-            for mode in modeArray{
-                
-                var user : User = User()
-                var modeDict = mode as! NSDictionary;
-                // self.moderators.append(String((modeDict.value(forKey: "username") as! NSString) as String)!);
-                user.name = modeDict.value(forKey: "name") as! String
-                user.username = modeDict.value(forKey: "username") as! String
-                user.profilePic = modeDict.value(forKey: "profile_pic") as! String
-                user.userId = Int32(((modeDict.value(forKey: "moderator_id") as? NSString)?.doubleValue)!)
-                let statusModerator = Int(((modeDict.value(forKey: "is_approved")as? NSString)?.doubleValue)!)
-                user.miscStatus = statusModerator as! Int
-                if(statusModerator == 0){
-                    
-                    self.userListPending.append(user)
-                }else{
-                    self.userListApproved.append(user)
-                }
-            }
-            if(self.userListPending.count > 0 ){
-                moderatorDtoPending.sectionKey = "Pending Approval"
-                moderatorDtoPending.sectionObjects = self.userListPending
-                self.moderatorDto.append(moderatorDtoPending)
-            }
-            if(self.userListApproved.count > 0 ){
-                moderatorDtoApproved.sectionKey = "Approved Moderators"
-                moderatorDtoApproved.sectionObjects = self.userListApproved
-                self.moderatorDto.append(moderatorDtoApproved)
-            }
-            self.moderatorList.reloadData();
-        }
-        });
     }
 }
 

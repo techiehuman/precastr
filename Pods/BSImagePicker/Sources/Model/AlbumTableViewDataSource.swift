@@ -28,10 +28,14 @@ Implements the UITableViewDataSource protocol with a data source and cell factor
 */
 final class AlbumTableViewDataSource : NSObject, UITableViewDataSource {
     let fetchResults: [PHFetchResult<PHAssetCollection>]
+    private let imageRequestOptions: PHImageRequestOptions
+    private let imageManager = PHCachingImageManager.default()
     
     init(fetchResults: [PHFetchResult<PHAssetCollection>]) {
         self.fetchResults = fetchResults
-        
+        imageRequestOptions = PHImageRequestOptions()
+        imageRequestOptions.isNetworkAccessAllowed = true
+
         super.init()
     }
     
@@ -52,7 +56,7 @@ final class AlbumTableViewDataSource : NSObject, UITableViewDataSource {
         let album = fetchResults[indexPath.section][indexPath.row]
         // Title
         cell.albumTitleLabel.text = album.localizedTitle
-        
+
         let fetchOptions = PHFetchOptions()
         fetchOptions.sortDescriptors = [
             NSSortDescriptor(key: "creationDate", ascending: false)
@@ -63,21 +67,30 @@ final class AlbumTableViewDataSource : NSObject, UITableViewDataSource {
         let imageSize = CGSize(width: 79 * scale, height: 79 * scale)
         let imageContentMode: PHImageContentMode = .aspectFill
         let result = PHAsset.fetchAssets(in: album, options: fetchOptions)
-        result.enumerateObjects({ (asset, idx, stop) in
+        result.enumerateObjects({ [weak self] (asset, idx, stop) in
             switch idx {
             case 0:
-                PHCachingImageManager.default().requestImage(for: asset, targetSize: imageSize, contentMode: imageContentMode, options: nil) { (result, _) in
+                self?.imageManager.requestImage(for: asset, targetSize: imageSize, contentMode: imageContentMode, options: self?.imageRequestOptions) { (result, _) in
+                    // Closure is called even on cancellation. So make sure we actually have an image
+                    guard let result = result else { return }
+
                     cell.firstImageView.image = result
                     cell.secondImageView.image = result
                     cell.thirdImageView.image = result
                 }
             case 1:
-                PHCachingImageManager.default().requestImage(for: asset, targetSize: imageSize, contentMode: imageContentMode, options: nil) { (result, _) in
+                self?.imageManager.requestImage(for: asset, targetSize: imageSize, contentMode: imageContentMode, options: self?.imageRequestOptions) { (result, _) in
+                    // Closure is called even on cancellation. So make sure we actually have an image
+                    guard let result = result else { return }
+
                     cell.secondImageView.image = result
                     cell.thirdImageView.image = result
                 }
             case 2:
-                PHCachingImageManager.default().requestImage(for: asset, targetSize: imageSize, contentMode: imageContentMode, options: nil) { (result, _) in
+                self?.imageManager.requestImage(for: asset, targetSize: imageSize, contentMode: imageContentMode, options: self?.imageRequestOptions) { (result, _) in
+                    // Closure is called even on cancellation. So make sure we actually have an image
+                    guard let result = result else { return }
+                    
                     cell.thirdImageView.image = result
                 }
                 

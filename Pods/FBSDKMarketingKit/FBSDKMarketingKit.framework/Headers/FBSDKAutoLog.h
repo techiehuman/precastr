@@ -18,6 +18,11 @@
 
 #import <Foundation/Foundation.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
+NS_SWIFT_NAME(AutoLog)
 @interface FBSDKAutoLog : NSObject
 
 @end
+
+NS_ASSUME_NONNULL_END

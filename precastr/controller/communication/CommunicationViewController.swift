@@ -24,6 +24,7 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
 
     var posts = [Post]();
     var post = Post();
+    var postId : Int!;
     @IBOutlet weak var communicationTableView: UITableView!
     //@IBOutlet weak var postTextField: UITextView!
     
@@ -100,22 +101,12 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
         self.changeStatusBtn.layer.borderWidth = 1;
         self.changeStatusBtn.layer.borderColor = UIColor(red: 112/255, green: 112/255, blue: 112/255, alpha: 1).cgColor;
       
-        
-        self.lblPostDate.text = Date().ddspEEEEcmyyyyspHHclmmclaa(dateStr: self.post.createdOn);
-        self.lblPostDate.frame = CGRect.init(x: self.view.frame.width - (self.lblPostDate.intrinsicContentSize.width + 10), y: self.lblPostDate.frame.origin.y, width: self.lblPostDate.intrinsicContentSize.width, height: self.lblPostDate.frame.height)
-        self.separator.frame = CGRect.init(x: self.view.frame.width - (self.lblPostDate.intrinsicContentSize.width + 20), y: self.separator.frame.origin.y, width: 1, height: 15)
-        
-        self.changeStatusBtn.setTitle(post.status.capitalized, for: .normal)
-        self.changeStatusBtn.frame = CGRect.init(x: self.view.frame.width - (self.lblPostDate.intrinsicContentSize.width + self.changeStatusBtn.intrinsicContentSize.width + 40), y: self.changeStatusBtn.frame.origin.y, width: self.changeStatusBtn.intrinsicContentSize.width, height: self.changeStatusBtn.frame.height);
-        
-        self.topButtonBars.frame = CGRect.init(x: 0, y: (UIApplication.shared.statusBarFrame.size.height + (self.navigationController?.navigationBar.frame.height)!) + 10, width: self.view.frame.width, height: self.topButtonBars.frame.height);
-        
-        
-        let positionOfBottomView = self.view.frame.height - (self.textAreaBtnBottomView.frame.height + ((self.tabBarController?.tabBar.frame.height)!) + 5);
-        self.textAreaBtnBottomView.frame = CGRect.init(x: 0, y: positionOfBottomView, width: self.view.frame.width, height: self.textAreaBtnBottomView.frame.height);
-        
-        self.communicationTableView.frame = CGRect.init(x: 0, y: self.topButtonBars.frame.origin.y + 30, width: self.view.frame.width, height: self.textAreaBtnBottomView.frame.origin.y -  (self.topButtonBars.frame.origin.y + 30 + 10));
-        
+        if (self.post.postId != 0) {
+            self.populatePostData();
+            self.getPostCommunications(postId: self.post.postId );
+        } else if (self.postId != nil) {
+            self.getPostCommunications(postId: self.postId);
+        }
         
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
@@ -128,7 +119,7 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
         communicationTableView.addGestureRecognizer(tap);
 
         
-        self.getPostCommunications();
+       
         
         self.getAllPostStatuses();
         
@@ -288,7 +279,7 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
                     
                     self.activityIndicator.stopAnimating();
                     //Load latest Communications
-                    self.getPostCommunications();
+                    self.getPostCommunications(postId: self.post.postId);
                     self.textArea.text = self.placeholderText;
                     self.textArea.textColor = UIColor.darkGray
                 });
@@ -298,7 +289,7 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
                     
                     self.activityIndicator.stopAnimating();
                     //Load latest Communications
-                    self.getPostCommunications();
+                    self.getPostCommunications(postId: self.post.postId);
                     self.textArea.text = self.placeholderText;
                     self.textArea.textColor = UIColor.darkGray
                     self.communicationTableView.reloadData();
@@ -583,11 +574,11 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
    
     }
     
-    func getPostCommunications() {
+    func getPostCommunications(postId:Int) {
         
         let getComUrl = "\(ApiUrl)posts/get_post_communication/format/json";
         var postData : [String : Any] = [String : Any]()
-        postData["post_id"] = self.post.postId;
+        postData["post_id"] = postId;
         
         HttpService().postMethod(url: getComUrl, postData: postData, complete: {(response) in
             
@@ -599,10 +590,18 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
             } else {
                 print(response)
                 let data = response.value(forKey: "data") as! NSDictionary;
+                
+                if (self.post.postId == 0){
+                    var postData = data.value(forKey: "postdetails") as! NSDictionary;
+                    self.post = Post().loadPostFromDict(postDict: postData);
+                    self.populatePostData();
+                    self.communicationTableView.reloadData();
+                }
+                
                 let postCommArr = data.value(forKey: "postcommunication") as! NSArray;
                 
                 self.post.postCommunications = PostCommunication().loadCommunicationsFromNsArray(commArray: postCommArr);
-                
+                self.getAllPostStatuses();
                 // Put your code which should be executed with a delay here
                 self.communicationTableView.reloadData();
                 
@@ -882,8 +881,26 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
     }
 
     @objc func refreshScreenData(){
-        self.getPostCommunications();
+        self.getPostCommunications(postId: self.post.postId);
         self.showBadgeCount();
+    }
+    func populatePostData(){
+        self.lblPostDate.text = Date().ddspEEEEcmyyyyspHHclmmclaa(dateStr: self.post.createdOn);
+        self.lblPostDate.frame = CGRect.init(x: self.view.frame.width - (self.lblPostDate.intrinsicContentSize.width + 10), y: self.lblPostDate.frame.origin.y, width: self.lblPostDate.intrinsicContentSize.width, height: self.lblPostDate.frame.height)
+        self.separator.frame = CGRect.init(x: self.view.frame.width - (self.lblPostDate.intrinsicContentSize.width + 20), y: self.separator.frame.origin.y, width: 1, height: 15)
+        
+        self.changeStatusBtn.setTitle(post.status.capitalized, for: .normal)
+        self.changeStatusBtn.frame = CGRect.init(x: self.view.frame.width - (self.lblPostDate.intrinsicContentSize.width + self.changeStatusBtn.intrinsicContentSize.width + 40), y: self.changeStatusBtn.frame.origin.y, width: self.changeStatusBtn.intrinsicContentSize.width, height: self.changeStatusBtn.frame.height);
+        
+        self.topButtonBars.frame = CGRect.init(x: 0, y: (UIApplication.shared.statusBarFrame.size.height + (self.navigationController?.navigationBar.frame.height)!) + 10, width: self.view.frame.width, height: self.topButtonBars.frame.height);
+        
+        
+        let positionOfBottomView = self.view.frame.height - (self.textAreaBtnBottomView.frame.height + ((self.tabBarController?.tabBar.frame.height)!) + 5);
+        self.textAreaBtnBottomView.frame = CGRect.init(x: 0, y: positionOfBottomView, width: self.view.frame.width, height: self.textAreaBtnBottomView.frame.height);
+        
+        self.communicationTableView.frame = CGRect.init(x: 0, y: self.topButtonBars.frame.origin.y + 30, width: self.view.frame.width, height: self.textAreaBtnBottomView.frame.origin.y -  (self.topButtonBars.frame.origin.y + 30 + 10));
+        
+        
     }
 }
 

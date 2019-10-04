@@ -35,6 +35,10 @@
 		9010B4AC22CF2AB70083A468 /* TermsPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9010B4AB22CF2AB70083A468 /* TermsPageViewController.swift */; };
 		9010B4AF22CF6D070083A468 /* CastersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9010B4AE22CF6D070083A468 /* CastersViewController.swift */; };
 		902FDE4122D7250F002D1601 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 902FDE4022D7250F002D1601 /* GoogleService-Info.plist */; };
+		90881EF62341FB0F00023450 /* ContactTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90881EF42341FB0F00023450 /* ContactTableViewCell.swift */; };
+		90881EF72341FB0F00023450 /* ContactTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90881EF52341FB0F00023450 /* ContactTableViewCell.xib */; };
+		90881EF92341FC2100023450 /* ContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90881EF82341FC2100023450 /* ContactsViewController.swift */; };
+		90881EFB23420CB400023450 /* UserContactItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90881EFA23420CB400023450 /* UserContactItem.swift */; };
 		908D6F3122C241F800762145 /* commonExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 908D6F3022C241F800762145 /* commonExtension.swift */; };
 		908D6F3322C243D800762145 /* PostStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 908D6F3222C243D800762145 /* PostStatus.swift */; };
 		FA0294E3227315F300465318 /* TwitterPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0294E2227315F300465318 /* TwitterPostViewController.swift */; };
@@ -155,6 +159,10 @@
 		9010B4AB22CF2AB70083A468 /* TermsPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsPageViewController.swift; sourceTree = "<group>"; };
 		9010B4AE22CF6D070083A468 /* CastersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CastersViewController.swift; sourceTree = "<group>"; };
 		902FDE4022D7250F002D1601 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		90881EF42341FB0F00023450 /* ContactTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactTableViewCell.swift; sourceTree = "<group>"; };
+		90881EF52341FB0F00023450 /* ContactTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ContactTableViewCell.xib; sourceTree = "<group>"; };
+		90881EF82341FC2100023450 /* ContactsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsViewController.swift; sourceTree = "<group>"; };
+		90881EFA23420CB400023450 /* UserContactItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserContactItem.swift; sourceTree = "<group>"; };
 		908D6F3022C241F800762145 /* commonExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = commonExtension.swift; sourceTree = "<group>"; };
 		908D6F3222C243D800762145 /* PostStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostStatus.swift; sourceTree = "<group>"; };
 		9562719E26A20DC50B681220 /* Pods-precastrUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-precastrUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-precastrUITests/Pods-precastrUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -324,6 +332,16 @@
 			path = cells;
 			sourceTree = "<group>";
 		};
+		90881EF32341FAEB00023450 /* contact */ = {
+			isa = PBXGroup;
+			children = (
+				90881EF42341FB0F00023450 /* ContactTableViewCell.swift */,
+				90881EF52341FB0F00023450 /* ContactTableViewCell.xib */,
+				90881EF82341FC2100023450 /* ContactsViewController.swift */,
+			);
+			path = contact;
+			sourceTree = "<group>";
+		};
 		FA0294E1227307B900465318 /* CasterModerator */ = {
 			isa = PBXGroup;
 			children = (
@@ -365,6 +383,7 @@
 				5E6BB7B122B530F500D92681 /* Post.swift */,
 				5ED3A32922BF3EE400F65CF2 /* PostCommunication.swift */,
 				908D6F3222C243D800762145 /* PostStatus.swift */,
+				90881EFA23420CB400023450 /* UserContactItem.swift */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -462,8 +481,10 @@
 			isa = PBXGroup;
 			children = (
 				FA84F18822A0E4C9007796A3 /* moderator */,
+				90881EF32341FAEB00023450 /* contact */,
 				9010B4AD22CF6CF40083A468 /* casters */,
 				FAE6173622B3B02C00A8B2F3 /* communication */,
+				FA84F18822A0E4C9007796A3 /* moderator */,
 				5EF623F122A5889A00124C55 /* post */,
 				FABF02492264FB500067960C /* sidemenu */,
 				FABF02462264EE600067960C /* home */,
@@ -748,6 +769,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				90881EF72341FB0F00023450 /* ContactTableViewCell.xib in Resources */,
 				FA6AB58622531E8200C5491F /* LaunchScreen.storyboard in Resources */,
 				FADFEAFE22A51A46006E3CD2 /* VisbyCF-MediumOblique.otf in Resources */,
 				FADFEB0022A51A46006E3CD2 /* VisbyCF-RegularOblique.otf in Resources */,
@@ -939,7 +961,9 @@
 				FAD5015322AA6F3100D21F57 /* EditProfileViewController.swift in Sources */,
 				FA4D544C2260F7F200E9589B /* UserTypeActionViewController.swift in Sources */,
 				5EB754DF22ABE136006D636B /* ForgetPasswordTableViewCell.swift in Sources */,
+				90881EF62341FB0F00023450 /* ContactTableViewCell.swift in Sources */,
 				5E2A0E2F22DF83EE009033E7 /* PostDetailTableViewCell.swift in Sources */,
+				90881EFB23420CB400023450 /* UserContactItem.swift in Sources */,
 				5EEC6B6122A6842F005B1C34 /* SignupScreenTableViewCell.swift in Sources */,
 				FAFCE3C3228E8F0000AB6DB5 /* SocialPlatform.swift in Sources */,
 				5ED3A32A22BF3EE400F65CF2 /* PostCommunication.swift in Sources */,
@@ -948,6 +972,7 @@
 				FA6AB57C22531E7300C5491F /* AppDelegate.swift in Sources */,
 				FA84F18522A03289007796A3 /* SlideUIView.swift in Sources */,
 				FAFCE3CA22999F1000AB6DB5 /* HomeTextPostTableViewCell.swift in Sources */,
+				90881EF92341FC2100023450 /* ContactsViewController.swift in Sources */,
 				FA1C1CDD228400A800583E1B /* Reusable.swift in Sources */,
 				FAF601CA2286A3C700B54F9B /* SplashViewController.swift in Sources */,
 				FA0294E3227315F300465318 /* TwitterPostViewController.swift in Sources */,
