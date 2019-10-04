@@ -156,7 +156,6 @@ class CreatePostViewController: UIViewController, UIImagePickerControllerDelegat
                 self.SelectedAssets.append(assets[i])
                 
             }
-            
             self.convertAssetToImages()
             
         }, completion: nil)
@@ -382,6 +381,6 @@ extension CreatePostViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return (self.view.frame.height - ((self.tabBarController?.tabBar.frame.height)! + (self.navigationController?.navigationBar.frame.height)!));
+        return (self.view.frame.height - ((self.tabBarController?.tabBar.frame.height)! + (self.navigationController?.navigationBar.frame.height)!)) + 40;
     }
 }

@@ -637,6 +637,12 @@ extension PostFormTableViewCell: UICollectionViewDelegate, UICollectionViewDataS
         } else {
             cell.postImage.sd_setImage(with: URL.init(string: imageUrlToShow!), placeholderImage: UIImage.init(named: "post-image-placeholder"));
         }
+        
+        if (createPostViewControllerDelegate.post != nil && createPostViewControllerDelegate.post.postId != nil) {
+            cell.crossIconImage.image = UIImage.init(named: "remove_icon_red")
+        } else {
+            cell.crossIconImage.image = UIImage.init(named: "remove_icon_green")
+        }
         var deleteButtonTapGestureReco = DeleteIconGestureRecognizer.init(target: self, action: #selector(deleteFromList(sender:)));
         deleteButtonTapGestureReco.index = indexPath.row;
         cell.crossIconImage.addGestureRecognizer(deleteButtonTapGestureReco);

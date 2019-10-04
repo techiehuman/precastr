@@ -20,6 +20,8 @@ class HomePostCellHeight {
     static let GapBelowLabel: Int = 10;
     static let ScrollViewHeight: Int = 430;
     static let PageControlHeight: Int = 40;
+    static let CastPaginationArrow: Int = 30;
+
 }
 
 class HomePostPublishStatusId {

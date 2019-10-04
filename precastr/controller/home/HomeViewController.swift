@@ -460,6 +460,11 @@ class HomeViewController: UIViewController, EasyTipViewDelegate, SharingDelegate
         });
     }
     
+    @objc func paginationArrowTapped(sender: MyTapRecognizer) {
+        var indexPath = IndexPath.init(row: (sender.rowId + 1), section: 0);
+        scrollTableToPosition(indexPath: indexPath)
+    }
+    
     //This method will be called when user post feed on facebook.
     func sharer(_ sharer: Sharing, didCompleteWithResults results: [String : Any]) {
         
@@ -529,6 +534,11 @@ class HomeViewController: UIViewController, EasyTipViewDelegate, SharingDelegate
         }
         return false
     }
+    
+    func scrollTableToPosition(indexPath: IndexPath) {
+        socialPostList.scrollToRow(at: indexPath, at: .top, animated: true);
+    }
+
 }
 
 class MyTapRecognizer : UITapGestureRecognizer {
@@ -617,6 +627,8 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
                 }
                 //If Post status is neither approved nor publised
                 //Then we will hide the Publish Post Bar
+            } else {
+                postPublishViewHeight = 40;
             }
             
             var height = self.heightForView(text: post.postDescription, font: UIFont.init(name: "VisbyCF-Regular", size: 16.0)!, width: tableView.frame.width - 30)
@@ -632,7 +644,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
                 }
                 return (CGFloat(HomePostCellHeight.GapAboveStatus) + CGFloat(HomePostCellHeight.PostStatusViewHeight) + CGFloat(HomePostCellHeight.GapBelowStatus) + CGFloat(postPublishViewHeight) + height + CGFloat(HomePostCellHeight.GapBelowLabel) + 420 +  30);
             }
-            return (CGFloat(HomePostCellHeight.GapAboveStatus + Int(postPublishViewHeight) + HomePostCellHeight.PostStatusViewHeight) + height);
+            return (CGFloat(HomePostCellHeight.GapAboveStatus + Int(postPublishViewHeight) + HomePostCellHeight.PostStatusViewHeight) + CGFloat(HomePostCellHeight.CastPaginationArrow) + height);
         }
         return 0;
     }
@@ -694,6 +706,8 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             //First lets check if post status is Approved/ Published.
             //If post status is approved, then we would have to show both buttons.
             //Publish to Twitter and Publish to Facebook
+            cell.pendingInfoView.isHidden = true;
+            
             if (post.postStatusId == HomePostPublishStatusId.APPROVEDSTATUSID) {
                 cell.postPrePublishView.isHidden = false;
                 
@@ -786,8 +800,8 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
                 //Then we will hide the Publish Post Bar
             } else {
                 cell.postPrePublishView.isHidden = true;
+                cell.pendingInfoView.isHidden = false;
             }
-            
             
             cell.editPostbutton.isHidden = false
             
@@ -878,12 +892,25 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
                 proNameLbl.numberOfLines = 0
             }
             cell.descriptionView.addSubview(proNameLbl)
-            if (cell.postPrePublishView.isHidden == true) {
-                cell.descriptionView.frame = CGRect.init(x: cell.descriptionView.frame.origin.x, y: 55, width: cell.descriptionView.frame.width, height: height);
+            if (indexPath.row == (self.posts.count - 1)) {
+                cell.castPaginationArrow.isHidden = true;
             } else {
-                cell.descriptionView.frame = CGRect.init(x: cell.descriptionView.frame.origin.x, y: (55 + 25), width: cell.descriptionView.frame.width, height: height);
+                cell.castPaginationArrow.isHidden = false;
             }
             
+            if (cell.postPrePublishView.isHidden == true) {
+                cell.descriptionView.frame = CGRect.init(x: cell.descriptionView.frame.origin.x, y: (55 + 35), width: cell.descriptionView.frame.width, height: height);
+                
+                cell.castPaginationArrow.frame = CGRect.init(x: cell.castPaginationArrow.frame.origin.x, y: (55 + 35 + height), width: cell.castPaginationArrow.frame.width, height: 30);
+            } else {
+                cell.descriptionView.frame = CGRect.init(x: cell.descriptionView.frame.origin.x, y: (55 + 25), width: cell.descriptionView.frame.width, height: height);
+                
+                cell.castPaginationArrow.frame = CGRect.init(x: cell.castPaginationArrow.frame.origin.x, y: (55 + 25 + height), width: cell.castPaginationArrow.frame.width, height: 30);
+            }
+        
+            let paginationArrowTapGuesture = MyTapRecognizer.init(target: self, action: #selector(paginationArrowTapped(sender: )));
+            paginationArrowTapGuesture.rowId = indexPath.row;
+            cell.castPaginationArrow.addGestureRecognizer(paginationArrowTapGuesture)
             
             if (post.postImages.count > 0) {
                 cell.imagesArray = [String]();
@@ -946,7 +973,6 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             return cell;
             
         } else if (loggedInUser.isCastr == 2) { // moderator
-            
             
             let cell: ModeratorCastsTableViewCell = tableView.dequeueReusableCell(withIdentifier: "ModeratorCastsTableViewCell", for: indexPath) as! ModeratorCastsTableViewCell;
 
@@ -1109,6 +1135,22 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
 
            
             //********************  CODE TO SHOW POST DESCRIPTION ENDS   *********************//
+            
+            //******************** CODE TO HANDLE PAGINATION ARROW STARST  ********************//
+            
+            if (indexPath.row == (self.posts.count - 1)) {
+                cell.castPaginationArrow.isHidden = true;
+            } else {
+                cell.castPaginationArrow.isHidden = false;
+                cell.castPaginationArrow.frame = CGRect.init(x: cell.castPaginationArrow.frame.origin.x, y: cell.descriptionView.frame.origin.y + cell.descriptionView.frame.height + 10, width: cell.castPaginationArrow.frame.width, height: cell.castPaginationArrow.frame.height);
+                
+                let paginationArrowTapGuesture = MyTapRecognizer.init(target: self, action: #selector(paginationArrowTapped(sender: )));
+                paginationArrowTapGuesture.rowId = indexPath.row;
+                cell.castPaginationArrow.addGestureRecognizer(paginationArrowTapGuesture)
+
+            }
+            //******************** CODE TO HANDLE PAGINATION ARROW ENDS  ********************//
+
             
             
             //********************  CODE TO ADJUST IMAGE SCROLL VIEW STARTS   *********************//

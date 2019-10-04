@@ -29,6 +29,8 @@ class HomeTextPostTableViewCell: UITableViewCell,UIScrollViewDelegate {
     
     @IBOutlet weak var postPrePublishView: UIView!
     
+    @IBOutlet weak var pendingInfoView: UIView!
+    
     @IBOutlet weak var publishInfoButton: UIButton!
     @IBOutlet weak var pushToFacebookView: UIView!
     @IBOutlet weak var pushToTwitterView: UIView!
@@ -57,6 +59,8 @@ class HomeTextPostTableViewCell: UITableViewCell,UIScrollViewDelegate {
     @IBOutlet weak var descriptionView: UIView!
     
     @IBOutlet weak var separator: UIView!
+    
+    @IBOutlet weak var castPaginationArrow: UIImageView!
     
     var currentCount : Int!
     var homeViewControllerDelegate: HomeViewController!;
@@ -137,10 +141,7 @@ class HomeTextPostTableViewCell: UITableViewCell,UIScrollViewDelegate {
         
         let percentageHorizontalOffset: CGFloat = currentHorizontalOffset / maximumHorizontalOffset
         let percentageVerticalOffset: CGFloat = currentVerticalOffset / maximumVerticalOffset
-        
     }
-    
-    
     
     @IBAction func publishInfoButtonPressed(_ sender: Any) {
         

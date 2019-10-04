@@ -53,6 +53,8 @@ class ModeratorCastsTableViewCell: UITableViewCell, UIScrollViewDelegate {
     
     @IBOutlet weak var descriptionView: UIView!
     
+    @IBOutlet weak var castPaginationArrow: UIImageView!
+
     var currentCount : Int!
     
     override func setSelected(_ selected: Bool, animated: Bool) {

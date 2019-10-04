@@ -99,10 +99,15 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </view>
+                    <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="cast_pagination_arrow" translatesAutoresizingMaskIntoConstraints="NO" id="lM9-Nm-kqz">
+                        <rect key="frame" x="188" y="95" width="20" height="19"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    </imageView>
                 </subviews>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
+                <outlet property="castPaginationArrow" destination="lM9-Nm-kqz" id="13A-Ap-sNJ"/>
                 <outlet property="currentCountImageLbl" destination="agW-Wu-yzd" id="Ute-Ja-TnH"/>
                 <outlet property="descriptionView" destination="OjP-Al-hiB" id="fJ9-vy-aiF"/>
                 <outlet property="imageCounterView" destination="QJg-My-suh" id="SK8-MU-NYO"/>
@@ -121,6 +126,7 @@
     </objects>
     <resources>
         <image name="Moderate Casts" width="40" height="40"/>
+        <image name="cast_pagination_arrow" width="19.666666030883789" height="19"/>
         <image name="facebook-group" width="20" height="20"/>
         <image name="twitter-group" width="20" height="20"/>
     </resources>
