@@ -32,6 +32,7 @@ class HomeViewController: UIViewController, EasyTipViewDelegate, SharingDelegate
     var slides:[SlideUIView] = [];
     var toolTipOpened: Bool = false;
     var easyToolTip: EasyTipView!
+    var postId: Int!;
     
     class func MainViewController() -> UITabBarController{
         
@@ -72,6 +73,15 @@ class HomeViewController: UIViewController, EasyTipViewDelegate, SharingDelegate
         }
         
         self.showBadgeCount();
+        
+        if (postIdFromPush != 0) {
+             let viewController: CommunicationViewController = self.storyboard?.instantiateViewController(withIdentifier: "CommunicationViewController") as! CommunicationViewController;
+            viewController.postId = postIdFromPush
+            postIdFromPush = 0;
+            self.navigationController?.pushViewController(viewController, animated: true);
+        }
+
+        
     }
     override func viewWillAppear(_ animated: Bool) {
         loggedInUser = User().loadUserDataFromUserDefaults(userDataDict : setting);
@@ -83,7 +93,7 @@ class HomeViewController: UIViewController, EasyTipViewDelegate, SharingDelegate
         if (loggedInUser.isCastr == 2) {
             self.navigationItem.title = "Moderate Casts";
             
-            if (self.tabBarController!.viewControllers?.count == 4) {
+            if (self.tabBarController != nil && self.tabBarController!.viewControllers?.count == 4) {
                 self.tabBarController!.viewControllers?.remove(at: 1)
             }
         } else {
@@ -117,6 +127,14 @@ class HomeViewController: UIViewController, EasyTipViewDelegate, SharingDelegate
         } else if (loggedInUser.isCastr == 2) {
             loadModeratorUserPosts();
         }
+        
+        if (postIdFromPush != 0) {
+             let viewController: CommunicationViewController = self.storyboard?.instantiateViewController(withIdentifier: "CommunicationViewController") as! CommunicationViewController;
+            viewController.postId = postIdFromPush
+            postIdFromPush = 0;
+            self.navigationController?.pushViewController(viewController, animated: true);
+        }
+
 
         //self.showBadgeCount();
     }

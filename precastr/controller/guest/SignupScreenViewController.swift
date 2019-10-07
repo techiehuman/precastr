@@ -33,7 +33,7 @@ class SignupScreenViewController: UIViewController, UIImagePickerControllerDeleg
 
         // Do any additional setup after loading the view.
         signupTableView.register(UINib.init(nibName: "SignupScreenTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "SignupScreenTableViewCell");
-        imageDelegate = Reusable()
+        //imageDelegate = Reusable()
 
         self.hideKeyboadOnTapOutside();
     }

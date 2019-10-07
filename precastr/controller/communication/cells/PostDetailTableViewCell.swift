@@ -91,9 +91,9 @@ class PostDetailTableViewCell: UITableViewCell, UIScrollViewDelegate {
             setupSlideScrollView.sd_setImage(with: URL(string: imagesArray[i]), placeholderImage: UIImage.init(named: "post-image-placeholder"));
             setupSlideScrollView.contentMode = .scaleAspectFill;
             setupSlideScrollView.clipsToBounds = true
-            print("imageGalleryScrollView", imageGalleryScrollView.frame.width)
+            print("------- imageGalleryScrollView", imageGalleryScrollView.frame.width)
             
-            print("X Position : ", xposition, "width", imageGalleryScrollView.frame.width * CGFloat(i + 1));
+            print("------- X Position : ", xposition, "width", imageGalleryScrollView.frame.width * CGFloat(i + 1));
             
             imageGalleryScrollView.addSubview(setupSlideScrollView)
             self.currentCount = i as! Int

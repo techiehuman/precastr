@@ -154,7 +154,7 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
         if (loggedInUser.isCastr == 2) {
             self.navigationItem.title = "Cast Detail";
             
-            if (self.tabBarController!.viewControllers?.count == 4) {
+            if (self.tabBarController != nil && self.tabBarController!.viewControllers?.count == 4) {
                 self.tabBarController!.viewControllers?.remove(at: 1)
             }
         } else {
@@ -1101,6 +1101,7 @@ extension CommunicationViewController: UITableViewDelegate, UITableViewDataSourc
                 cell.descriptionView.frame = CGRect.init(x: cell.descriptionView.frame.origin.x, y: (55), width: cell.descriptionView.frame.width, height: height);
             }
             
+            cell.imageGalleryScrollView.frame = CGRect.init(x: 0, y: 0, width: Int(self.view.frame.width), height: HomePostCellHeight.ScrollViewHeight);
             
             if (post.postImages.count > 0) {
                 cell.imagesArray = [String]();
@@ -1118,7 +1119,7 @@ extension CommunicationViewController: UITableViewDelegate, UITableViewDataSourc
                 var heightOfDesc = 0;
                 heightOfDesc = Int(height);
                 let y = Int(cell.descriptionView.frame.origin.y) + heightOfDesc + 10;
-                cell.imageGalleryScrollView.frame = CGRect.init(x: 0, y: y, width: Int(cell.imageGalleryScrollView.frame.width), height: HomePostCellHeight.ScrollViewHeight)
+                cell.imageGalleryScrollView.frame = CGRect.init(x: 0, y: y, width: Int(self.view.frame.width), height: HomePostCellHeight.ScrollViewHeight)
                 
                 cell.setupSlideScrollView()
                 if(cell.imagesArray.count > 1){

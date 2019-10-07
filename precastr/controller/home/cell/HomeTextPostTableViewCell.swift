@@ -49,7 +49,6 @@ class HomeTextPostTableViewCell: UITableViewCell,UIScrollViewDelegate {
     
     @IBOutlet weak var pageControl: UIPageControl!
     
-    
     @IBOutlet weak var imageCounterView: UIView!
     
     @IBOutlet weak var currentCountImageLbl : UILabel!

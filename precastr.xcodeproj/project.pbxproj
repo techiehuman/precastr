@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5E203CBA2349C5EA00EFFC2D /* ModeratorPhoneNumberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E203CB92349C5EA00EFFC2D /* ModeratorPhoneNumberViewController.swift */; };
 		5E2A0E2F22DF83EE009033E7 /* PostDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E2A0E2D22DF83EE009033E7 /* PostDetailTableViewCell.swift */; };
 		5E2A0E3022DF83EE009033E7 /* PostDetailTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5E2A0E2E22DF83EE009033E7 /* PostDetailTableViewCell.xib */; };
 		5E6BB7B222B530F500D92681 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E6BB7B122B530F500D92681 /* Post.swift */; };
@@ -129,6 +130,7 @@
 		27A38E047A676826532D9793 /* Pods-precastrUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-precastrUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-precastrUITests/Pods-precastrUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		561E50304594AB7F3B9F4993 /* Pods_precastrUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_precastrUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5E1217CE22A28EE90075961A /* precastr.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = precastr.entitlements; sourceTree = "<group>"; };
+		5E203CB92349C5EA00EFFC2D /* ModeratorPhoneNumberViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModeratorPhoneNumberViewController.swift; sourceTree = "<group>"; };
 		5E2A0E2D22DF83EE009033E7 /* PostDetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailTableViewCell.swift; sourceTree = "<group>"; };
 		5E2A0E2E22DF83EE009033E7 /* PostDetailTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PostDetailTableViewCell.xib; sourceTree = "<group>"; };
 		5E6BB7B122B530F500D92681 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
@@ -480,7 +482,6 @@
 		FA6AB5A92253355800C5491F /* controller */ = {
 			isa = PBXGroup;
 			children = (
-				FA84F18822A0E4C9007796A3 /* moderator */,
 				90881EF32341FAEB00023450 /* contact */,
 				9010B4AD22CF6CF40083A468 /* casters */,
 				FAE6173622B3B02C00A8B2F3 /* communication */,
@@ -557,6 +558,7 @@
 				FABF02472264EF640067960C /* HomeViewController.swift */,
 				FA52DDCE227722AE0093FDF8 /* cell */,
 				FAD5015822AE8E4600D21F57 /* NotificationViewController.swift */,
+				5E203CB92349C5EA00EFFC2D /* ModeratorPhoneNumberViewController.swift */,
 			);
 			path = home;
 			sourceTree = "<group>";
@@ -947,6 +949,7 @@
 				FA84F19422A1355A007796A3 /* HeaderViewTableViewCell.swift in Sources */,
 				FAD5014C22A97B0400D21F57 /* ModeratorCastsTableViewCell.swift in Sources */,
 				FA4D544E2260F95200E9589B /* PrecastTypeSectionViewController.swift in Sources */,
+				5E203CBA2349C5EA00EFFC2D /* ModeratorPhoneNumberViewController.swift in Sources */,
 				FA6AB57E22531E7300C5491F /* ViewController.swift in Sources */,
 				9010B4AF22CF6D070083A468 /* CastersViewController.swift in Sources */,
 				5E93313022D70ED300980BF5 /* SideMenuDto.swift in Sources */,

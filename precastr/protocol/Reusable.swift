@@ -10,7 +10,7 @@ import Foundation
 import MobileCoreServices
 import Photos
 
-class Reusable : UIViewController,UIImagePickerControllerDelegate,UINavigationControllerDelegate,ImageLibProtocol{
+/*class Reusable : UIViewController,UIImagePickerControllerDelegate,UINavigationControllerDelegate,ImageLibProtocol{
     
     let picController = UIImagePickerController();
     var imageView = UIImageView()
@@ -59,3 +59,4 @@ class Reusable : UIViewController,UIImagePickerControllerDelegate,UINavigationCo
     
     
 }
+*/

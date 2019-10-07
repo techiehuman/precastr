@@ -18,7 +18,7 @@ import FBSDKLoginKit
 let setting = UserDefaults.standard
 var postStatusList = [PostStatus]();
 var social : SocialPlatform!
-
+var postIdFromPush = 0;
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUserNotificationCenterDelegate {
 
@@ -157,10 +157,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
         completionHandler([.alert, .badge, .sound])
         
         let userInfo = notification.request.content.userInfo as! NSDictionary;
-        print(userInfo["gcm.notification.payload"]);
-        let payloadDict = convertToDictionary(from: userInfo["gcm.notification.payload"]! as! String);
+        //let payloadDict = convertToDictionary(from: userInfo["gcm.notification.payload"]! as! String);
         
-        var screen = payloadDict!["screen"]!
+        var screen = userInfo["gcm.notification.screen"] as! String
         if(screen == "Home") {
             
             //let storyBoard = UIStoryboard.init(name: "Main", bundle: nil)
@@ -182,13 +181,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
 
     }
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
-        let userInfo = response.notification.request.content.userInfo
+        let userInfo = response.notification.request.content.userInfo as! NSDictionary
         
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "reloadHomeScreen"), object: nil)
-
+        
+        postIdFromPush = (Int)(userInfo.value(forKey: "gcm.notification.id") as! String)!
+            
+        //let navigationController = storyBoard.instantiateViewController(withIdentifier: "nav") as! UINavigationController;
+        //window?.rootViewController = navigationController;
         print(userInfo)
     }
+        
+    func messaging(_ messaging: Messaging, didReceive remoteMessage: MessagingRemoteMessage) {
+        print(remoteMessage.messageID)
+    }
     
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        debugPrint("Received: \(userInfo)")
+        completionHandler(.newData)
+    }
+
     func convertToDictionary(from text: String) -> [String: String]? {
         guard let data = text.data(using: .utf8) else { return nil }
         let anyResult = try? JSONSerialization.jsonObject(with: data, options: [])
