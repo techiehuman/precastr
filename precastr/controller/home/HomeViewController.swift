@@ -988,7 +988,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
                 cell.pageControl.isHidden = true;
             }
             //ScrollView functionality
-            cell.addGestureRecognizer(postDescTap)
+           // cell.addGestureRecognizer(postDescTap)
             
             activityIndicator.center = cell.center;
             activityIndicator.hidesWhenStopped = true;
