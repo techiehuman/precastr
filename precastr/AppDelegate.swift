@@ -186,7 +186,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "reloadHomeScreen"), object: nil)
         
         postIdFromPush = (Int)(userInfo.value(forKey: "gcm.notification.id") as! String)!
-            
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "reloadHomeScreen"), object: nil)
+
         //let navigationController = storyBoard.instantiateViewController(withIdentifier: "nav") as! UINavigationController;
         //window?.rootViewController = navigationController;
         print(userInfo)

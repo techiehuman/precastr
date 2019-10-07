@@ -281,7 +281,8 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
                     //Load latest Communications
                     self.getPostCommunications(postId: self.post.postId);
                     self.textArea.text = self.placeholderText;
-                    self.textArea.textColor = UIColor.darkGray
+                    self.textArea.textColor = UIColor(red: 118/255, green: 118/255, blue: 119/255, alpha: 1)
+                    self.textArea.resignFirstResponder();
                 });
             } else {
                 HttpService().postMethod(url: jsonURL, postData: postData, complete: {(response) in
@@ -291,7 +292,8 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
                     //Load latest Communications
                     self.getPostCommunications(postId: self.post.postId);
                     self.textArea.text = self.placeholderText;
-                    self.textArea.textColor = UIColor.darkGray
+                    self.textArea.textColor = UIColor(red: 118/255, green: 118/255, blue: 119/255, alpha: 1)
+                    self.textArea.resignFirstResponder();
                     self.communicationTableView.reloadData();
                 });
             }

@@ -160,6 +160,13 @@ class HomeViewController: UIViewController, EasyTipViewDelegate, SharingDelegate
     */
     
     @objc private func refreshPostsData(_ sender: Any) {
+        
+        if (postIdFromPush != 0) {
+            let viewController: CommunicationViewController = self.storyboard?.instantiateViewController(withIdentifier: "CommunicationViewController") as! CommunicationViewController;
+            viewController.postId = postIdFromPush
+            postIdFromPush = 0;
+            self.navigationController?.pushViewController(viewController, animated: true);
+        }
       //  In this methid call the home screen api
         if (loggedInUser.isCastr == 1) { // caster
             self.loadUserPosts();
