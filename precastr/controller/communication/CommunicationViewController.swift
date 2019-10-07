@@ -1101,7 +1101,7 @@ extension CommunicationViewController: UITableViewDelegate, UITableViewDataSourc
                 cell.descriptionView.frame = CGRect.init(x: cell.descriptionView.frame.origin.x, y: (55), width: cell.descriptionView.frame.width, height: height);
             }
             
-            cell.imageGalleryScrollView.frame = CGRect.init(x: 0, y: 0, width: Int(self.view.frame.width), height: HomePostCellHeight.ScrollViewHeight);
+            //cell.imageGalleryScrollView.frame = CGRect.init(x: 0, y: 0, width: Int(self.view.frame.width), height: HomePostCellHeight.ScrollViewHeight);
             
             if (post.postImages.count > 0) {
                 cell.imagesArray = [String]();
@@ -1385,7 +1385,7 @@ extension CommunicationViewController: UITableViewDelegate, UITableViewDataSourc
                     
                     return (CGFloat(HomePostCellHeight.GapAboveStatus) + postPublishViewHeight +  height + CGFloat(HomePostCellHeight.GapBelowLabel) + 420);
                 }
-                return (CGFloat(HomePostCellHeight.GapAboveStatus) + postPublishViewHeight + height + CGFloat(HomePostCellHeight.GapBelowLabel) + 420 +  30);
+                return (CGFloat(HomePostCellHeight.GapAboveStatus) + postPublishViewHeight + height + CGFloat(HomePostCellHeight.GapBelowLabel) + 420 +  40);
             }
             return (CGFloat(HomePostCellHeight.GapAboveStatus + HomePostCellHeight.PostStatusViewHeight) + postPublishViewHeight + height);
         } else {
