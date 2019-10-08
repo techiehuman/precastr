@@ -424,7 +424,7 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
                     }
                 })
                 if(thumbnail != nil){
-                let data = UIImageJPEGRepresentation(thumbnail, 0.7)
+                let data = UIImageJPEGRepresentation(thumbnail, 1)
                 let newImage = UIImage(data: data!)
                 
                 
