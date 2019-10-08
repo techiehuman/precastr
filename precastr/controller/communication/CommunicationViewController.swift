@@ -278,7 +278,7 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
             if (PhotoArray.count > 0) {
             
                 HttpService().postMultipartImageForPostCommunication(url: jsonURL, image: PhotoArray, postData: postData, complete: {(response) in
-                    
+                    self.PhotoArray = [UIImage]();
                     print(response);
                     
                     self.activityIndicator.stopAnimating();
@@ -414,25 +414,25 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
                 
                 let manager = PHImageManager.default()
                 let option = PHImageRequestOptions()
-                var thumbnail = UIImage()
-                option.isSynchronous = false
+                option.isSynchronous = true
                 option.isNetworkAccessAllowed = true
+                var thumbnail = UIImage();
                 
-                manager.requestImage(for: SelectedAssets[i], targetSize: CGSize(width: 400, height: 400), contentMode: .aspectFill, options: option, resultHandler: {(result, info)->Void in
+                manager.requestImage(for: SelectedAssets[i], targetSize: CGSize(width: 512, height: 512), contentMode: .aspectFill, options: option, resultHandler: {(result, info)->Void in
+                
                     if(result != nil){
-                    thumbnail = result!
+                        thumbnail = result!
+                        let data = UIImageJPEGRepresentation(thumbnail, 0.7)
+                        let newImage = UIImage(data: data!)
+                        self.PhotoArray.append(newImage! as UIImage)
+
+                    } else {
+                        
+                        let message = "Error in Image loading..."
+                        self.showAlert(title: "Error", message: message);
                     }
-                })
-                if(thumbnail != nil){
-                let data = UIImageJPEGRepresentation(thumbnail, 1)
-                let newImage = UIImage(data: data!)
+                });
                 
-                
-                PhotoArray.append(newImage! as UIImage)
-                }else{
-                    let message = "Error in Image loading..."
-                    self.showAlert(title: "Error", message: message);
-                }
             }
             // self.imgView.animationImages = self.PhotoArray
             //self.imgView.animationDuration = 3.0

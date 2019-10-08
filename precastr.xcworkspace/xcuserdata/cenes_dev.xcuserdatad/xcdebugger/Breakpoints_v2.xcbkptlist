@@ -75,32 +75,32 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "0CC3FC73-419A-421B-A680-463AB62193E5"
+            uuid = "9499D3A7-C9EB-4F5A-B8D1-A2C8923BA1BE"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "precastr/AppDelegate.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "163"
-            endingLineNumber = "163"
-            landmarkName = "userNotificationCenter(_:willPresent:withCompletionHandler:)"
+            startingLineNumber = "193"
+            endingLineNumber = "193"
+            landmarkName = "userNotificationCenter(_:didReceive:withCompletionHandler:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "91A46189-5D35-4C7C-B194-D6AF77FB07C5"
+            uuid = "0F82E143-0B71-4495-85C7-A12E7AD332B8"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "precastr/AppDelegate.swift"
+            filePath = "precastr/controller/guest/LoginScreenViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "159"
-            endingLineNumber = "159"
-            landmarkName = "userNotificationCenter(_:willPresent:withCompletionHandler:)"
+            startingLineNumber = "63"
+            endingLineNumber = "63"
+            landmarkName = "userManage(jsonURL:user:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
