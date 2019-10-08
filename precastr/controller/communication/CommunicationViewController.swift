@@ -269,7 +269,9 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
             var postData : [String : Any] = [String : Any]()
             if(textArea.text != placeholderText){
                 postData["post_communication_description"] = self.textArea.text
-            }
+            }else{
+                postData["post_communication_description"] = "";
+        }
             postData["post_id"] = self.post.postId;
             postData["user_id"] = self.loggedInUser.userId;
             
