@@ -262,12 +262,14 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
 
     @IBAction func submitBtnClicked(_ sender: Any) {
         
-        if(textArea.text != "" && textArea.text != placeholderText || PhotoArray.count > 0){
+       /* if(textArea.text != "" && textArea.text != placeholderText || PhotoArray.count > 0){ */
             self.activityIndicator.startAnimating();
             
             let jsonURL = "\(ApiUrl)posts/add_post_communication/format/json"
             var postData : [String : Any] = [String : Any]()
-            postData["post_communication_description"] = self.textArea.text
+            if(textArea.text != placeholderText){
+                postData["post_communication_description"] = self.textArea.text
+            }
             postData["post_id"] = self.post.postId;
             postData["user_id"] = self.loggedInUser.userId;
             
@@ -297,12 +299,12 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
                     self.communicationTableView.reloadData();
                 });
             }
-        }else{
+       /* }else{
             if (PhotoArray.count == 0) {
             let message = "Please enter some text or image to post!"
             self.showAlert(title: "Error", message: message);
             }
-        }
+        }*/
     }
     
     @IBAction func mediaAttachmentBtnClicked(_ sender: Any) {
@@ -414,7 +416,7 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
                 option.isSynchronous = false
                 option.isNetworkAccessAllowed = true
                 
-                manager.requestImage(for: SelectedAssets[i], targetSize: CGSize(width: 200, height: 200), contentMode: .aspectFill, options: option, resultHandler: {(result, info)->Void in
+                manager.requestImage(for: SelectedAssets[i], targetSize: CGSize(width: 400, height: 400), contentMode: .aspectFill, options: option, resultHandler: {(result, info)->Void in
                     if(result != nil){
                     thumbnail = result!
                     }
