@@ -41,7 +41,7 @@ class NotificationViewController: UIViewController {
         }
         
         self.loadNotifications();
-        let jsonURL = "posts/update_notification_status/format/json"
+       /* let jsonURL = "posts/update_notification_status/format/json"
         
         UserService().postDataMethod(jsonURL: jsonURL, postData: self.postData, complete: {(response) in
             print(response)
@@ -62,7 +62,18 @@ class NotificationViewController: UIViewController {
             }else{
                 
             }
-        });
+        });*/
+        if let tabItems = self.tabBarController?.tabBar.items {
+            // In this case we want to modify the badge number of the third tab:
+            var index = 0;
+            if (self.loggedInUser.isCastr == 1) {
+                index =  3;
+            } else {
+                index = 2;
+            }
+            let tabItem = tabItems[index]
+            tabItem.badgeValue = nil
+        }
         
     }
 
