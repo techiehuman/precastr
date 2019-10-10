@@ -75,13 +75,12 @@ class HomeViewController: UIViewController, EasyTipViewDelegate, SharingDelegate
         self.showBadgeCount();
         
         if (postIdFromPush != 0) {
-             let viewController: CommunicationViewController = self.storyboard?.instantiateViewController(withIdentifier: "CommunicationViewController") as! CommunicationViewController;
+            let viewController: CommunicationViewController = self.storyboard?.instantiateViewController(withIdentifier: "CommunicationViewController") as! CommunicationViewController;
             viewController.postId = postIdFromPush
-            postIdFromPush = 0;
             self.navigationController?.pushViewController(viewController, animated: true);
         }
 
-        
+        isAppKilled = false;
     }
     override func viewWillAppear(_ animated: Bool) {
         loggedInUser = User().loadUserDataFromUserDefaults(userDataDict : setting);
@@ -127,15 +126,6 @@ class HomeViewController: UIViewController, EasyTipViewDelegate, SharingDelegate
         } else if (loggedInUser.isCastr == 2) {
             loadModeratorUserPosts();
         }
-        
-        if (postIdFromPush != 0) {
-             let viewController: CommunicationViewController = self.storyboard?.instantiateViewController(withIdentifier: "CommunicationViewController") as! CommunicationViewController;
-            viewController.postId = postIdFromPush
-            postIdFromPush = 0;
-            self.navigationController?.pushViewController(viewController, animated: true);
-        }
-
-
         //self.showBadgeCount();
     }
     override func didReceiveMemoryWarning() {
@@ -161,12 +151,6 @@ class HomeViewController: UIViewController, EasyTipViewDelegate, SharingDelegate
     
     @objc private func refreshPostsData(_ sender: Any) {
         
-        if (postIdFromPush != 0) {
-            let viewController: CommunicationViewController = self.storyboard?.instantiateViewController(withIdentifier: "CommunicationViewController") as! CommunicationViewController;
-            viewController.postId = postIdFromPush
-            postIdFromPush = 0;
-            self.navigationController?.pushViewController(viewController, animated: true);
-        }
       //  In this methid call the home screen api
         if (loggedInUser.isCastr == 1) { // caster
             self.loadUserPosts();

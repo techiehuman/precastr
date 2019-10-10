@@ -66,6 +66,7 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        postIdFromPush = 0;
         self.loggedInUser = User().loadUserDataFromUserDefaults(userDataDict: setting);
         social = SocialPlatform().loadSocialDataFromUserDefaults();
 
@@ -118,9 +119,6 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
         tap.cancelsTouchesInView = false
         communicationTableView.addGestureRecognizer(tap);
 
-        
-       
-        
         self.getAllPostStatuses();
         
         self.changeStatusFunction();
@@ -160,7 +158,7 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
         } else {
             self.navigationItem.title = "Cast Detail";
             
-            if (self.tabBarController!.viewControllers?.count == 3) {
+            if (self.tabBarController != nil && self.tabBarController!.viewControllers?.count == 3) {
                 
                 let navController = self.storyboard?.instantiateViewController(withIdentifier: "CreateNewPostNavController") as! UINavigationController;
                 self.tabBarController!.viewControllers?.insert(navController, at: 1);

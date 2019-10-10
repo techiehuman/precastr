@@ -19,6 +19,7 @@ let setting = UserDefaults.standard
 var postStatusList = [PostStatus]();
 var social : SocialPlatform!
 var postIdFromPush = 0;
+var isAppKilled = true;
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUserNotificationCenterDelegate {
 
@@ -117,7 +118,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
     func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
         application.applicationIconBadgeNumber = 0
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "reloadHomeScreen"), object: nil)
+        //NotificationCenter.default.post(name: NSNotification.Name(rawValue: "reloadHomeScreen"), object: nil)
         AppEvents.activateApp();
     }
 
@@ -166,7 +167,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
             //var viewContros = storyBoard.instantiateViewController(withIdentifier: "HomeViewController") as! HomeViewController;
             //viewContros.refreshScreenData();
             
-            //NotificationCenter.default.post(name: NSNotification.Name(rawValue: "reloadHomeScreen"), object: nil)
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "reloadHomeScreen"), object: nil)
         } else if(screen == "Communication") {
             
             print(UITabBarController().viewControllers?.count)
@@ -176,20 +177,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
             viewContros.refreshScreenData();*/
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "reloadCommunicationScreen"), object: nil)
 
+        } else {
+            
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "reloadHomeScreen"), object: nil)
+            
         }
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "reloadHomeScreen"), object: nil)
 
     }
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        
         let userInfo = response.notification.request.content.userInfo as! NSDictionary
-        
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "reloadHomeScreen"), object: nil)
-        
-        postIdFromPush = (Int)(userInfo.value(forKey: "gcm.notification.id") as! String)!
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "reloadHomeScreen"), object: nil)
-
-        //let navigationController = storyBoard.instantiateViewController(withIdentifier: "nav") as! UINavigationController;
-        //window?.rootViewController = navigationController;
+                
+        //DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {
+          //  let storyBoard = UIStoryboard.init(name: "Main", bundle: nil)
+            postIdFromPush = (Int)(userInfo.value(forKey: "gcm.notification.id") as! String)!
+            if (!isAppKilled) {
+                self.window?.rootViewController = HomeViewController.MainViewController();
+            }
+        //}
         print(userInfo)
     }
         
@@ -211,7 +216,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
     
     func showBadgeCount() {
         
-        var loggedInUser = User().loadUserDataFromUserDefaults(userDataDict: setting);
+        let loggedInUser = User().loadUserDataFromUserDefaults(userDataDict: setting);
         let jsonURL = "posts/get_notifications_count/format/json"
         var postArray = [String: Any]();
         postArray["user_id"] = String(loggedInUser.userId)

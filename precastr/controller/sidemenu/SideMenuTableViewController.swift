@@ -100,7 +100,9 @@ class SideMenuTableViewController: UITableViewController {
             let defaults = UserDefaults.standard
             let dictionary = defaults.dictionaryRepresentation()
             dictionary.keys.forEach { key in
-                defaults.removeObject(forKey: key)
+                if (key != "tokenData") {
+                    defaults.removeObject(forKey: key);
+                }
             }
             UIApplication.shared.keyWindow?.rootViewController = LoginScreenViewController.MainViewController();
         }));
