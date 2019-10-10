@@ -20,4 +20,13 @@ class PostService {
         });
     };
     
+    func markNotificationAsRead(notificationId: Int, complete: @escaping(NSDictionary)->Void) {
+        
+        var postData = [String: Any]();
+        postData["notification_id"] = notificationId;
+        let jsonURL = "posts/update_notification_status_by_notification_id/format/json"
+        UserService().postDataMethod(jsonURL: jsonURL, postData: postData, complete: {(response) in
+            complete(response);
+        });
+    };
 }

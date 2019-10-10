@@ -165,6 +165,12 @@ class NotificationViewController: UIViewController {
         });
     }
     
+    func markNotificationAsRead(notificationId: Int) {
+        PostService().markNotificationAsRead(notificationId: notificationId, complete: {(response) in
+            
+        });
+    }
+    
     @objc func menuButtonClicked() {
         let viewController: SideMenuTableViewController = self.storyboard?.instantiateViewController(withIdentifier: "SideMenuTableViewController") as! SideMenuTableViewController;
         self.navigationController?.pushViewController(viewController, animated: true);
@@ -174,12 +180,16 @@ class NotificationViewController: UIViewController {
         clearAllNotification();
     }
     @objc func postDescriptionPressed(sender:MyTapRecognizer){
+        
+        self.markNotificationAsRead(notificationId: sender.notificationId);
+        
         let viewController = self.storyboard?.instantiateViewController(withIdentifier: "CommunicationViewController") as! CommunicationViewController;
         viewController.postId = sender.postId;
         self.navigationController?.pushViewController(viewController, animated: true);
     }
     class MyTapRecognizer : UITapGestureRecognizer {
         var postId: Int!;
+        var notificationId: Int!;
     }
     
 }
@@ -202,6 +212,7 @@ extension NotificationViewController: UITableViewDelegate, UITableViewDataSource
         
         let postDescTap = MyTapRecognizer.init(target: self, action: #selector(postDescriptionPressed(sender:)));
         postDescTap.postId = Int(notification.value(forKey: "post_id") as! String)! ;
+        postDescTap.notificationId = Int(notification.value(forKey: "notification_id") as! String)!;
         cell.notificationTextView.addGestureRecognizer(postDescTap)
         //This is your label
         for view in cell.notificationTextView.subviews {
