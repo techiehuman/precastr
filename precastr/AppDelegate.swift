@@ -19,6 +19,7 @@ let setting = UserDefaults.standard
 var postStatusList = [PostStatus]();
 var social : SocialPlatform!
 var postIdFromPush = 0;
+var pushNotificationId = 0;
 var isAppKilled = true;
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUserNotificationCenterDelegate {
