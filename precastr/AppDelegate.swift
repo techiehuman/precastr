@@ -192,6 +192,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
         //DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {
           //  let storyBoard = UIStoryboard.init(name: "Main", bundle: nil)
             postIdFromPush = (Int)(userInfo.value(forKey: "gcm.notification.id") as! String)!
+            pushNotificationId = (Int)(userInfo.value(forKey: "gcm.notification.notification_id") as! String)!
             if (!isAppKilled) {
                 self.window?.rootViewController = HomeViewController.MainViewController();
             }

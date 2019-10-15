@@ -76,10 +76,6 @@ class HomeViewController: UIViewController, EasyTipViewDelegate, SharingDelegate
         
         if (postIdFromPush != 0) {
             
-            PostService().markNotificationAsRead(notificationId: pushNotificationId, complete: {(response) in
-                
-            });
-            
             let viewController: CommunicationViewController = self.storyboard?.instantiateViewController(withIdentifier: "CommunicationViewController") as! CommunicationViewController;
             viewController.postId = postIdFromPush
             self.navigationController?.pushViewController(viewController, animated: true);

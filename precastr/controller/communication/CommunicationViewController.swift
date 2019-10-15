@@ -124,6 +124,10 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
         self.changeStatusFunction();
         
         self.addDoneButtonOnKeyboard();
+        
+        PostService().markNotificationAsRead(notificationId: pushNotificationId, complete: {(response) in
+            pushNotificationId = 0;
+        });
    //  postStatusList = loadPostStatus()
     }
 
