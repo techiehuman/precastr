@@ -72,7 +72,7 @@ class HomeViewController: UIViewController, EasyTipViewDelegate, SharingDelegate
             loadModeratorUserPosts();
         }
         
-        self.showBadgeCount();
+        HomeViewController.showBadgeCount();
         
         if (postIdFromPush != 0) {
             
@@ -158,30 +158,33 @@ class HomeViewController: UIViewController, EasyTipViewDelegate, SharingDelegate
         } else if (loggedInUser.isCastr == 2) { // moderator
             loadModeratorUserPosts();
         }
-        self.showBadgeCount();
+        HomeViewController.showBadgeCount();
         self.refreshControl.endRefreshing()
        
     }
     
-    func showBadgeCount() {
-        loggedInUser = User().loadUserDataFromUserDefaults(userDataDict : setting);
-        let jsonURL = "posts/get_notifications_count/format/json"
-        self.postArray["user_id"] = String(loggedInUser.userId)
-        if (self.loggedInUser.isCastr == 1) {
-            self.postArray["role_id"] = 0;
+   class func showBadgeCount() {
+        let loggedInUser = User().loadUserDataFromUserDefaults(userDataDict: setting);
+    let jsonURL = "posts/get_notifications_count/format/json";
+    var postArray = [String: Any]();
+        postArray["user_id"] = String(loggedInUser.userId)
+        if (loggedInUser.isCastr == 1) {
+            postArray["role_id"] = 0;
         } else {
-            self.postArray["role_id"] = 1;
+            postArray["role_id"] = 1;
         }
-        UserService().postDataMethod(jsonURL: jsonURL, postData: self.postArray, complete: {(response) in
+        UserService().postDataMethod(jsonURL: jsonURL, postData: postArray, complete: {(response) in
             print(response)
             
             let success = Int(response.value(forKey: "status") as! String)!
             if (success == 1) {
                 let dataArray = response.value(forKey: "data") as! NSDictionary;
-                if let tabItems = self.tabBarController?.tabBar.items {
+                let tabBarContro = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MadTabBar") as! UITabBarController
+
+                if let tabItems = tabBarContro.tabBar.items {
                     // In this case we want to modify the badge number of the third tab:
                     var index = 0;
-                    if (self.loggedInUser.isCastr == 1) {
+                    if (loggedInUser.isCastr == 1) {
                         index =  3;
                     } else {
                         index = 2;
@@ -534,7 +537,7 @@ class HomeViewController: UIViewController, EasyTipViewDelegate, SharingDelegate
             loadModeratorUserPosts();
         }
         
-        self.showBadgeCount();
+        HomeViewController.showBadgeCount();
 
     }
     

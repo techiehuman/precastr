@@ -42,6 +42,10 @@
 		90881EFB23420CB400023450 /* UserContactItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90881EFA23420CB400023450 /* UserContactItem.swift */; };
 		908D6F3122C241F800762145 /* commonExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 908D6F3022C241F800762145 /* commonExtension.swift */; };
 		908D6F3322C243D800762145 /* PostStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 908D6F3222C243D800762145 /* PostStatus.swift */; };
+		90B611AA2356205D0060255D /* CountryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90B611A92356205C0060255D /* CountryViewController.swift */; };
+		90B611AF235623410060255D /* CountryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90B611AD235623410060255D /* CountryTableViewCell.swift */; };
+		90B611B0235623410060255D /* CountryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90B611AE235623410060255D /* CountryTableViewCell.xib */; };
+		90B611B2235623840060255D /* CountryCodeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90B611B1235623830060255D /* CountryCodeService.swift */; };
 		FA0294E3227315F300465318 /* TwitterPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0294E2227315F300465318 /* TwitterPostViewController.swift */; };
 		FA0372E222605A3800C3B3C9 /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0372E122605A3700C3B3C9 /* UserManager.swift */; };
 		FA1C1CDD228400A800583E1B /* Reusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1C1CDC228400A800583E1B /* Reusable.swift */; };
@@ -167,6 +171,10 @@
 		90881EFA23420CB400023450 /* UserContactItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserContactItem.swift; sourceTree = "<group>"; };
 		908D6F3022C241F800762145 /* commonExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = commonExtension.swift; sourceTree = "<group>"; };
 		908D6F3222C243D800762145 /* PostStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostStatus.swift; sourceTree = "<group>"; };
+		90B611A92356205C0060255D /* CountryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryViewController.swift; sourceTree = "<group>"; };
+		90B611AD235623410060255D /* CountryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryTableViewCell.swift; sourceTree = "<group>"; };
+		90B611AE235623410060255D /* CountryTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CountryTableViewCell.xib; sourceTree = "<group>"; };
+		90B611B1235623830060255D /* CountryCodeService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountryCodeService.swift; sourceTree = "<group>"; };
 		9562719E26A20DC50B681220 /* Pods-precastrUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-precastrUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-precastrUITests/Pods-precastrUITests.release.xcconfig"; sourceTree = "<group>"; };
 		A62D95851A596AF11E67E59A /* Pods_precastrTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_precastrTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B549B4DD788D08952FB6A04F /* Pods-precastrTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-precastrTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-precastrTests/Pods-precastrTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -344,6 +352,24 @@
 			path = contact;
 			sourceTree = "<group>";
 		};
+		90B611AB2356230A0060255D /* country */ = {
+			isa = PBXGroup;
+			children = (
+				90B611AC235623230060255D /* cell */,
+				90B611A92356205C0060255D /* CountryViewController.swift */,
+			);
+			path = country;
+			sourceTree = "<group>";
+		};
+		90B611AC235623230060255D /* cell */ = {
+			isa = PBXGroup;
+			children = (
+				90B611AD235623410060255D /* CountryTableViewCell.swift */,
+				90B611AE235623410060255D /* CountryTableViewCell.xib */,
+			);
+			path = cell;
+			sourceTree = "<group>";
+		};
 		FA0294E1227307B900465318 /* CasterModerator */ = {
 			isa = PBXGroup;
 			children = (
@@ -393,6 +419,7 @@
 		FA291B0B22538B160093E6CE /* service */ = {
 			isa = PBXGroup;
 			children = (
+				90B611B1235623830060255D /* CountryCodeService.swift */,
 				FA291B0C2253ABCD0093E6CE /* HttpService.swift */,
 				FAE4DF60225F0E94008875C3 /* UserService.swift */,
 				5E94973A22C280FE0023F30B /* PostService.swift */,
@@ -482,6 +509,7 @@
 		FA6AB5A92253355800C5491F /* controller */ = {
 			isa = PBXGroup;
 			children = (
+				90B611AB2356230A0060255D /* country */,
 				90881EF32341FAEB00023450 /* contact */,
 				9010B4AD22CF6CF40083A468 /* casters */,
 				FAE6173622B3B02C00A8B2F3 /* communication */,
@@ -785,6 +813,7 @@
 				5EB754E022ABE136006D636B /* ForgetPasswordTableViewCell.xib in Resources */,
 				FA84F18722A0329D007796A3 /* Slide.xib in Resources */,
 				FAD5014D22A97B0400D21F57 /* ModeratorCastsTableViewCell.xib in Resources */,
+				90B611B0235623410060255D /* CountryTableViewCell.xib in Resources */,
 				5EF623F622A588E900124C55 /* PostFormTableViewCell.xib in Resources */,
 				FADFEAF622A51A46006E3CD2 /* VisbyCF-DemiBoldOblique.otf in Resources */,
 				FAD5015122AA6B1700D21F57 /* EditProfileTableViewCell.xib in Resources */,
@@ -942,6 +971,7 @@
 				5EC1B0C32316656B0017CDCB /* PostImageCollectionViewCell.swift in Sources */,
 				FAE6173E22B3B09800A8B2F3 /* RightCommunicationTableViewCell.swift in Sources */,
 				FA0372E222605A3800C3B3C9 /* UserManager.swift in Sources */,
+				90B611B2235623840060255D /* CountryCodeService.swift in Sources */,
 				FAE6173A22B3B07E00A8B2F3 /* LeftCommunicationTableViewCell.swift in Sources */,
 				5E6BB7B222B530F500D92681 /* Post.swift in Sources */,
 				FAE4DF61225F0E94008875C3 /* UserService.swift in Sources */,
@@ -962,6 +992,7 @@
 				5EC919A822DCA002002E9A3A /* PostManager.swift in Sources */,
 				5EEC6B5E22A67052005B1C34 /* LoginScreenViewController.swift in Sources */,
 				FAD5015322AA6F3100D21F57 /* EditProfileViewController.swift in Sources */,
+				90B611AA2356205D0060255D /* CountryViewController.swift in Sources */,
 				FA4D544C2260F7F200E9589B /* UserTypeActionViewController.swift in Sources */,
 				5EB754DF22ABE136006D636B /* ForgetPasswordTableViewCell.swift in Sources */,
 				90881EF62341FB0F00023450 /* ContactTableViewCell.swift in Sources */,
@@ -984,6 +1015,7 @@
 				5EEC6B5B22A66EAA005B1C34 /* LoginScreenTableViewCell.swift in Sources */,
 				FAD5015622AE895C00D21F57 /* NotificationTableViewCell.swift in Sources */,
 				FA7A3644227AD0A900689E27 /* multiExtension.swift in Sources */,
+				90B611AF235623410060255D /* CountryTableViewCell.swift in Sources */,
 				FA291B0D2253ABCD0093E6CE /* HttpService.swift in Sources */,
 				908D6F3122C241F800762145 /* commonExtension.swift in Sources */,
 				5E94973B22C280FE0023F30B /* PostService.swift in Sources */,

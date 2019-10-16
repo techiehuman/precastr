@@ -127,6 +127,8 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
         
         PostService().markNotificationAsRead(notificationId: pushNotificationId, complete: {(response) in
             pushNotificationId = 0;
+            HomeViewController.showBadgeCount();
+            
         });
    //  postStatusList = loadPostStatus()
     }

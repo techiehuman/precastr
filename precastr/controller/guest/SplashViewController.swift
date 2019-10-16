@@ -55,8 +55,8 @@ class SplashViewController: UIViewController {
                 UIApplication.shared.keyWindow?.rootViewController = HomeViewController.MainViewController();
             }
         }else{
-            //window?.rootViewController = LoginStep1ViewController.MainViewController()
-            performSegue(withIdentifier: "loginScreenSegue", sender: self)
+            UIApplication.shared.keyWindow?.rootViewController = LoginScreenViewController.MainViewController()
+            //performSegue(withIdentifier: "loginScreenSegue", sender: self)
 
         }
     }

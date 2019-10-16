@@ -18,14 +18,19 @@ class SignupScreenTableViewCell: UITableViewCell, UITextFieldDelegate, SignupCel
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
+    @IBOutlet weak var phoneTextField: UITextField!
     @IBOutlet weak var cameraUIView: UIView!
     @IBOutlet weak var agreecheckBoxBtn: UIButton!
     @IBOutlet weak var uploadImage: UIImageView!
     @IBOutlet weak var cameraImage: UIImageView!
+    @IBOutlet weak var countryCode: UILabel!
     
     @IBOutlet weak var loginBtn: UIButton!
     
     @IBOutlet weak var TermsLinkLabel: UILabel!
+    
+    
+    @IBOutlet weak var countryPhoneCodeView: UIView!
     var signupScreenViewDelegate: SignupScreenViewController!;
     var agreeCheckBox = false
 
@@ -41,6 +46,12 @@ class SignupScreenTableViewCell: UITableViewCell, UITextFieldDelegate, SignupCel
         
         self.nameTextField.layer.borderColor = UIColor.white.cgColor
         self.nameTextField.layer.borderWidth = 0.5
+        
+        self.phoneTextField.attributedPlaceholder = NSAttributedString(string: "Phone Number", attributes: [NSAttributedStringKey.foregroundColor : UIColor.white ])
+        
+        self.phoneTextField.layer.borderColor = UIColor.white.cgColor
+        self.phoneTextField.layer.borderWidth = 0.5
+        
         let profileIconContainerView: UIView = UIView(frame:
             CGRect(x: 20, y: 0, width: 40, height: self.emailTextField.frame.height));
         let profileImageView = UIImageView(frame: CGRect(x: 10, y: (profileIconContainerView.frame.height/2 - 30/2), width: 27, height: 30))
@@ -49,6 +60,18 @@ class SignupScreenTableViewCell: UITableViewCell, UITextFieldDelegate, SignupCel
         profileIconContainerView.addSubview(profileImageView)
         self.nameTextField.leftView = profileIconContainerView
         self.nameTextField.leftViewMode = .always
+        
+        let phoneIconContainerView: UIView = UIView(frame:
+            CGRect(x: 70, y: 0, width: 40, height: self.emailTextField.frame.height));
+        let phoneImageView = UIImageView(frame: CGRect(x: 10, y: (phoneIconContainerView.frame.height/2 - 30/2), width: 27, height: 30))
+        let phoneImage = UIImage(named: "phone");
+        phoneImageView.image = phoneImage;
+        phoneIconContainerView.addSubview(phoneImageView)
+        self.phoneTextField.leftView = phoneIconContainerView
+        self.phoneTextField.leftViewMode = .always
+        
+        self.countryPhoneCodeView.layer.borderWidth = 0.5
+        self.countryPhoneCodeView.layer.borderColor = UIColor.white.cgColor as! CGColor
         // self.nameTextField.leftView = UIView(frame: CGRect(x: 0, y: 0, width:35, height: self.nameTextField.frame.height))
         
         self.emailTextField.attributedPlaceholder = NSAttributedString(string: "Email Address", attributes: [NSAttributedStringKey.foregroundColor : UIColor.white ])
@@ -89,6 +112,9 @@ class SignupScreenTableViewCell: UITableViewCell, UITextFieldDelegate, SignupCel
         let termsLink = UITapGestureRecognizer.init(target: self, action: #selector(TermsLinkClicked))
         TermsLinkLabel.addGestureRecognizer(termsLink);
         // Do any additional setup after loading the view.
+        
+        let countryCodeTapGesture = UITapGestureRecognizer.init(target: self, action: #selector(countryPhoneCodeViewPressed));
+        countryPhoneCodeView.addGestureRecognizer(countryCodeTapGesture);
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -108,6 +134,8 @@ class SignupScreenTableViewCell: UITableViewCell, UITextFieldDelegate, SignupCel
         user.username = emailTextField.text;
         user.name = nameTextField.text;
         user.password = passwordTextField.text;
+        user.countryCode = countryCode.text;
+        user.phoneNumber = phoneTextField.text;
         let isValid = self.signupScreenViewDelegate.validateSignupForm(user: user); //CALLING VALIDATION FUNCTION
         
         if(isValid==true && agreeCheckBox==true){
@@ -274,5 +302,13 @@ class SignupScreenTableViewCell: UITableViewCell, UITextFieldDelegate, SignupCel
         
         signupScreenViewDelegate.performSegue(withIdentifier: "terms", sender: signupScreenViewDelegate)
         
+    }
+    
+    @objc func countryPhoneCodeViewPressed() {
+        signupScreenViewDelegate.openCountryCodeList();
+        //signupScreenViewDelegate.performSegue(withIdentifier: "countryListSegue", sender: self);
+    }
+    func countryCodeValueSelected(country : CountryCodeService){
+        self.countryCode.text = country.getPhoneCode();
     }
 }

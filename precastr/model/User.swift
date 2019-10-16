@@ -29,6 +29,8 @@ class User  {
     var profilePic          : String!
     var miscStatus          : Int!
     var casterReferalCode   : String!
+    var countryCode         : String!
+    var phoneNumber         : String!
     
     func getUserData(userDataDict: NSDictionary)->User {
         let user = User();
@@ -51,7 +53,8 @@ class User  {
         user.userDevice = userDataDict.value(forKey: "device_registered_from")as? Int8;
         user.deviceToken = userDataDict.value(forKey: "device_token")as? String;
         user.casterReferalCode = userDataDict.value(forKey: "caster_referral_code")as? String;
-
+        user.countryCode = userDataDict.value(forKey: "country_code")as? String;
+        user.phoneNumber = userDataDict.value(forKey: "phone_number")as? String;
         return user;
     }
     
@@ -69,6 +72,8 @@ class User  {
         userJson["twitter_access_token"] = user.twitterAccessToken
         userJson["twitter_access_secret"] = user.twitterAccessSecret
         userJson["is_twiter"] = user.isTwitter;
+        userJson["country_code"] = user.countryCode;
+        userJson["phone_number"] = user.phoneNumber
         if (user.isTwitter == 1) {
             var token = "";
             token = token + "{\"twitter_access_token\":\"\(user.twitterAccessToken!)\"";
@@ -120,7 +125,8 @@ class User  {
         user.deviceToken = userDataDict.value(forKey: "device_token")as? String;
         user.profilePic = userDataDict.value(forKey: "profile_pic")as? String;
         user.casterReferalCode = userDataDict.value(forKey: "caster_referral_code")as? String;
-
+        user.countryCode = userDataDict.value(forKey: "country_code")as? String;
+        user.phoneNumber = userDataDict.value(forKey: "phone_number")as? String;
         return user;
     }
     func loadUserDefaults()->Void{
@@ -140,6 +146,8 @@ class User  {
         setting.setValue(self.userCastSettingId!, forKey: "user_cast_setting_id")
         setting.setValue(self.profilePic, forKey: "profile_pic")
         setting.setValue(self.casterReferalCode, forKey: "caster_referral_code");
+        setting.setValue(self.countryCode, forKey: "country_code");
+        setting.setValue(self.phoneNumber, forKey: "phone_number");
         //setting.setValue(self.userDevice!, forKey: "device_registered_from")
         //setting.setValue(self.deviceToken, forKey: "device_token")
     }

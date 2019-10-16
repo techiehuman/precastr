@@ -16,6 +16,7 @@ protocol ImageLibProtocol {
 }
 protocol SignupCellProtocol {
     func pictureSelected(selectedImage: UIImage);
+    func countryCodeValueSelected(country : CountryCodeService);
 }
 class SignupScreenViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
@@ -194,7 +195,14 @@ class SignupScreenViewController: UIViewController, UIImagePickerControllerDeleg
         }
 
 }
-
+    func countriesDoneButtonPressed(country: CountryCodeService){
+        self.signupCellProtocolDelegate.countryCodeValueSelected(country: country);
+    }
+    func openCountryCodeList(){
+        let viewController = storyboard?.instantiateViewController(withIdentifier: "CountryViewController") as! CountryViewController;
+        viewController.signupScreenViewControllerDelegate = self;
+        self.navigationController?.pushViewController(viewController, animated: true);
+    }
 }
 extension SignupScreenViewController: UITableViewDataSource, UITableViewDelegate {
     
