@@ -152,6 +152,30 @@ class User  {
         //setting.setValue(self.deviceToken, forKey: "device_token")
     }
     
+    func loadCastModeratorsFromDict(castModeratorDict: NSDictionary) -> User {
+        
+        let user = User();
+        user.name = castModeratorDict.value(forKey: "name") as! String;
+        
+        user.userId = Int32(castModeratorDict.value(forKey: "user_id") as! String);
+
+        if let photo = castModeratorDict.value(forKey: "profile_pic") as? String {
+            user.profilePic = photo;
+        }
+        
+        if let phoneNumber = castModeratorDict.value(forKey: "phone_number") as? String {
+            user.phoneNumber = phoneNumber;
+        }
+        if let countryCode = castModeratorDict.value(forKey: "country_code") as? String {
+            user.countryCode = countryCode;
+        }
+        
+        if let username = castModeratorDict.value(forKey: "username") as? String {
+            user.username = username;
+        }
+        return user;
+    }
+    
     func updateUserData(userData: [String: String]) {
         
         if (userData["name"] != nil) {
@@ -160,6 +184,12 @@ class User  {
         
         if (userData["profile_pic"] != nil) {
             setting.setValue(userData["profile_pic"], forKey: "profile_pic")
+        }
+        if (userData["country_code"] != nil) {
+            setting.setValue(userData["country_code"], forKey: "country_code")
+        }
+        if (userData["phone_number"] != nil) {
+            setting.setValue(userData["phone_number"], forKey: "phone_number")
         }
     }
     

@@ -12,10 +12,14 @@ class EditProfileTableViewCell: UITableViewCell,UITextFieldDelegate, EditProfile
 
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var nameUIView: UIView!
+    @IBOutlet weak var phoneNumberUIView: UIView!
+    @IBOutlet weak var countryPhoneCodeView: UIView!
     @IBOutlet weak var cameraUIView: UIView!
     @IBOutlet weak var nameTextField: UITextField!
+    @IBOutlet weak var phoneNumberTextField: UITextField!
     @IBOutlet weak var invitationUIView: UIView!
     @IBOutlet weak var invitationCodeLabel: UILabel!
+    @IBOutlet weak var countryCode: UILabel!
     
     @IBOutlet weak var updateNameButton: UIButton!
     
@@ -47,6 +51,10 @@ class EditProfileTableViewCell: UITableViewCell,UITextFieldDelegate, EditProfile
         lineView.backgroundColor = UIColor.init(red: 146/255, green: 147/255, blue: 149/255, alpha: 1)
         self.nameTextField.addSubview(lineView)
         
+        let lineViewPhone = UIView(frame: CGRect(x: 0, y: self.phoneNumberTextField.frame.height, width: self.phoneNumberTextField.bounds.width - 14, height: 0.5))
+        lineViewPhone.backgroundColor = UIColor.init(red: 146/255, green: 147/255, blue: 149/255, alpha: 1)
+        self.phoneNumberTextField.addSubview(lineViewPhone)
+        
         let uplineView = UIView(frame: CGRect(x: 0, y: self.currentPasswordTextField.frame.height, width: self.currentPasswordTextField.bounds.width - 14, height: 0.5))
         uplineView.backgroundColor = UIColor.init(red: 146/255, green: 147/255, blue: 149/255, alpha: 1)
         self.currentPasswordTextField.addSubview(uplineView)
@@ -59,6 +67,8 @@ class EditProfileTableViewCell: UITableViewCell,UITextFieldDelegate, EditProfile
     
         updateNameButton.roundEdgesBtn();
         updatePasswordBtn.roundEdgesBtn();
+        let countryCodeTapGesture = UITapGestureRecognizer.init(target: self, action: #selector(countryPhoneCodeViewPressed));
+        countryPhoneCodeView.addGestureRecognizer(countryCodeTapGesture);
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -76,6 +86,8 @@ class EditProfileTableViewCell: UITableViewCell,UITextFieldDelegate, EditProfile
             var postData = [String: Any]();
             postData["name"] = nameTextField.text!;
             postData["user_id"] = "\(editProfileViewControllerDelegate.loggedInUser.userId!)";
+            postData["country_code"] = countryCode.text!
+            postData["phone_number"] = phoneNumberTextField.text!
             editProfileViewControllerDelegate.updateNameProfilePic(postData: postData)
         }
     }
@@ -119,5 +131,12 @@ class EditProfileTableViewCell: UITableViewCell,UITextFieldDelegate, EditProfile
         }
         
         return true;
+    }
+    @objc func countryPhoneCodeViewPressed() {
+        editProfileViewControllerDelegate.openCountryCodeList();
+        
+    }
+    func countryCodeValueSelected(country : CountryCodeService){
+        self.countryCode.text = country.getPhoneCode();
     }
 }

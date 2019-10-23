@@ -306,7 +306,7 @@ class SignupScreenTableViewCell: UITableViewCell, UITextFieldDelegate, SignupCel
     
     @objc func countryPhoneCodeViewPressed() {
         signupScreenViewDelegate.openCountryCodeList();
-        //signupScreenViewDelegate.performSegue(withIdentifier: "countryListSegue", sender: self);
+       
     }
     func countryCodeValueSelected(country : CountryCodeService){
         self.countryCode.text = country.getPhoneCode();

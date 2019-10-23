@@ -124,10 +124,16 @@ class SignupScreenViewController: UIViewController, UIImagePickerControllerDeleg
         else if (user.username == "") {
             message = "Username cannot be empty"
             isValid = false
-        } else if (user.password == "") {
+        }
+        else if (user.phoneNumber == "") {
+            message = "Phone number cannot be empty"
+            isValid = false
+        }
+        else if (user.password == "") {
             message = "Password cannot be empty"
             isValid = false
         }
+       
         /*else if(uploadImageStatus == false){
          message = "Please upload profile picture"
          isValid = false
@@ -182,10 +188,15 @@ class SignupScreenViewController: UIViewController, UIImagePickerControllerDeleg
             print(userDict)
             let user = User().getUserData(userDataDict: userDict);
             user.loadUserDefaults();
+            print("&&& *** &&&")
+            print(user);
             
+            if(user.phoneNumber == nil || user.phoneNumber == ""){
+               self.performSegue(withIdentifier: "signUpUpdatePhoneSegue", sender: self)
+            }else{
             let viewController: UserTypeActionViewController = self.storyboard?.instantiateViewController(withIdentifier: "UserTypeActionViewController") as! UserTypeActionViewController;
             self.navigationController?.pushViewController(viewController, animated: true);
-            
+            }
         } else {
             let message = response.value(forKey: "message") as! String;
             

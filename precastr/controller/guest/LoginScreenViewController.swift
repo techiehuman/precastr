@@ -84,7 +84,11 @@ class LoginScreenViewController: UIViewController {
                 let user = User().getUserData(userDataDict: userDict);
                 user.loadUserDefaults();
                 //If is the First Time user then we will send him to complete the steps.
-                if (userDefaultRole == 0) {
+                
+                if(user.phoneNumber == "" || user.phoneNumber == nil){
+                   self.performSegue(withIdentifier: "loginUpdatePhoneSegue", sender: self)
+                }
+              else if (userDefaultRole == 0) {
                     
                     let viewController: UserTypeActionViewController = self.storyboard?.instantiateViewController(withIdentifier: "UserTypeActionViewController") as! UserTypeActionViewController;
                     self.navigationController?.pushViewController(viewController, animated: true);

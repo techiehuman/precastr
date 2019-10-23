@@ -14,8 +14,9 @@ import FBSDKLoginKit
 import FacebookShare
 import FBSDKCoreKit
 import EasyTipView
+import MessageUI
 
-class HomeViewController: UIViewController, EasyTipViewDelegate, SharingDelegate {
+class HomeViewController: UIViewController, EasyTipViewDelegate, SharingDelegate,MFMessageComposeViewControllerDelegate {
 
     @IBOutlet weak var socialPostList: UITableView!
     
@@ -463,7 +464,7 @@ class HomeViewController: UIViewController, EasyTipViewDelegate, SharingDelegate
         self.postToPublish = sender.post;
         PostManager().publishPostOnTwitter(post: self.postToPublish, complete: {(response) in
             self.activityIndicator.stopAnimating();
-
+            
             let statusCode = Int(response.value(forKey: "status") as! String)!
             if(statusCode == 0) {
                 self.showAlert(title: "Alert", message: response.value(forKey: "message") as! String);
@@ -476,6 +477,24 @@ class HomeViewController: UIViewController, EasyTipViewDelegate, SharingDelegate
     @objc func paginationArrowTapped(sender: MyTapRecognizer) {
         var indexPath = IndexPath.init(row: (sender.rowId + 1), section: 0);
         scrollTableToPosition(indexPath: indexPath)
+    }
+    
+    @objc func callInfoButtonPressed(sender: PostToSocialMediaGestureRecognizer) {
+        let post = sender.post;
+        let viewController = storyboard?.instantiateViewController(withIdentifier: "CastContactsViewController") as! CastContactsViewController;
+        
+        viewController.castContacts = post?.castModerators;
+        viewController.postDescription = post?.postDescription;
+        self.navigationController?.pushViewController(viewController, animated: true);
+    }
+    
+    @objc func callInfoFirstButtonPressed(sender: PostToSocialMediaGestureRecognizer) {
+        let post = sender.post;
+        let viewController = storyboard?.instantiateViewController(withIdentifier: "CastContactsViewController") as! CastContactsViewController;
+       
+        viewController.castContacts = post?.castModerators;
+        viewController.postDescription = post?.postDescription;
+        self.navigationController?.pushViewController(viewController, animated: true);
     }
     
     //This method will be called when user post feed on facebook.
@@ -550,6 +569,58 @@ class HomeViewController: UIViewController, EasyTipViewDelegate, SharingDelegate
     
     func scrollTableToPosition(indexPath: IndexPath) {
         socialPostList.scrollToRow(at: indexPath, at: .top, animated: true);
+    }
+    @objc func postToSMSPressed(sender: PostToSocialMediaGestureRecognizer) {
+        let post = sender.post;
+        self.postId = post?.postId
+        var phoneNumbers = [String]();
+        for user in post!.castModerators {
+            //print(user.countryCode!)
+            print(user.phoneNumber!)
+            if(user.countryCode != nil && user.phoneNumber != nil){
+                phoneNumbers.append("\(user.countryCode)\(user.phoneNumber)");
+            }
+        }
+        if (MFMessageComposeViewController.canSendText()) {
+            let controller = MFMessageComposeViewController()
+            controller.recipients = phoneNumbers
+            controller.body = post?.postDescription;
+            controller.messageComposeDelegate = self
+            self.present(controller, animated: true, completion: nil)
+        }
+    }
+    
+    func messageComposeViewController(_ controller: MFMessageComposeViewController, didFinishWith result: MessageComposeResult) {
+        switch (result)
+        {
+        case .sent:
+            print("sms sent.")
+            var postData = [String: Any]();
+            postData["user_id"] = self.loggedInUser.userId
+            postData["post_id"] = self.postId!
+            let jsonURL = "user/send_post_sms/format/json";
+            UserService().postDataMethod(jsonURL: jsonURL,postData:postData,complete:{(response) in
+                self.activityIndicator.stopAnimating();
+                
+                let statusCode = Int(response.value(forKey: "status") as! String)!
+                if(statusCode == 0) {
+                    self.showAlert(title: "Alert", message: response.value(forKey: "message") as! String);
+                } else {
+                    self.loadUserPosts();
+                }
+                
+        });
+            break
+        case .cancelled:
+            print("sms cancelled.")
+            break
+        case .failed:
+            print("failed sending email")
+            break
+        default:
+            break
+        }
+        self.dismiss(animated: true, completion: nil)
     }
 
 }
@@ -632,8 +703,16 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
                         break;
                     }
                 }
-                
-                if (facebookPublished == true && twitterPublished == true) {
+
+                var smsPublished = false;
+                for socialMediaId in post.socialMediaIds {
+                    if (socialMediaId == social.socialPlatformId["SMS"]) {
+                        smsPublished = true;
+                        break;
+                    }
+                }
+
+                if (facebookPublished == true && twitterPublished == true && smsPublished == true) {
                     postPublishViewHeight = 0;
                 } else {
                     postPublishViewHeight = HomePostCellHeight.publishPostButtonsView;
@@ -682,6 +761,8 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             let postToTwitterTapGesture = PostToSocialMediaGestureRecognizer.init(target: self, action: #selector(postToTwitterPressed(sender:)));
             postToTwitterTapGesture.post = post;
             
+            let postToSMSTapGesture = PostToSocialMediaGestureRecognizer.init(target: self, action: #selector(postToSMSPressed(sender:)));
+            postToSMSTapGesture.post = post;
             /*var facebookIconHidden = true;
             var twitterIconHidden = true;
             if (post.socialMediaIds.count > 0) {
@@ -720,7 +801,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             //If post status is approved, then we would have to show both buttons.
             //Publish to Twitter and Publish to Facebook
             cell.pendingInfoView.isHidden = true;
-            
+
             if (post.postStatusId == HomePostPublishStatusId.APPROVEDSTATUSID) {
                 cell.postPrePublishView.isHidden = false;
                 
@@ -761,8 +842,18 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
                         twitterPublished = false;
                     }
                 }
-                
-                if (facebookPublished == true && twitterPublished == true) {
+
+                var smsPublished = false;
+                for socialMediaId in post.socialMediaIds {
+                    if (socialMediaId == social.socialPlatformId["SMS"]) {
+                        smsPublished = true;
+                        break;
+                    }else{
+                        smsPublished = false;
+                    }
+                }
+
+                if (facebookPublished == true && twitterPublished == true && smsPublished == true) {
                     cell.postPrePublishView.isHidden = true;
                 } else {
                     cell.postPrePublishView.isHidden = false;
@@ -807,6 +898,29 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
                         cell.pushToTwitterView.isUserInteractionEnabled = true;
 
                     }
+                    
+                    if (smsPublished == true) {
+                        print(post.postDescription)
+                        //cell.pushToTwitterView.isHidden = true;
+                        cell.pushToSmsText.textColor = UIColor.init(red: 34/255, green: 34/255, blue: 34/255, alpha: 1)
+                        cell.pushtoSmsView.backgroundColor = UIColor.clear;
+                        cell.pushtoSmsView.layer.borderWidth = 0.5;
+                        cell.pushtoSmsView.layer.borderColor = UIColor.init(red: 146/255, green: 147/255, blue: 149/255, alpha: 1).cgColor
+                        
+                        cell.pushToSmsImage.backgroundColor = UIColor.init(red: 237/255, green: 237/255, blue: 237/255, alpha: 1);
+                        cell.pushtoSmsView.isUserInteractionEnabled = false;
+                        
+                    } else {
+                        print("*****")
+                        print(post.postDescription)
+                        //cell.pushToTwitterView.isHidden = false;
+                        cell.pushToSmsText.textColor = UIColor.white
+                        cell.pushtoSmsView.backgroundColor = UIColor.init(red: 75/255, green: 215/255, blue: 99/255, alpha: 1);
+                        cell.pushtoSmsView.layer.borderWidth = 0;
+                        cell.pushToSmsImage.backgroundColor = UIColor.init(red: 28/255, green: 164/255, blue: 51/255, alpha: 1);
+                        cell.pushToSmsImage.isUserInteractionEnabled = true;
+                        
+                    }
                 }
                 
                 //If Post status is neither approved nor publised
@@ -816,6 +930,13 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
                 cell.pendingInfoView.isHidden = false;
             }
             
+            let callInfoButtonTapRecognizer = PostToSocialMediaGestureRecognizer.init(target: self, action: #selector(callInfoButtonPressed(sender:)));
+            callInfoButtonTapRecognizer.post = post;
+            cell.castContactsIcon.addGestureRecognizer(callInfoButtonTapRecognizer);
+
+            let callInfoButtonFirstTapRecognizer = PostToSocialMediaGestureRecognizer.init(target: self, action: #selector(callInfoFirstButtonPressed(sender:)));
+            callInfoButtonFirstTapRecognizer.post = post;
+        cell.castContactsIconFirst.addGestureRecognizer(callInfoButtonFirstTapRecognizer);
             cell.editPostbutton.isHidden = false
             
             let editButtonTapRecognizer = MyTapRecognizer.init(target: self, action: #selector(postDescriptionPressed(sender:)));
@@ -869,6 +990,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             if (cell.postPrePublishView.isHidden == false) {
                 cell.pushToTwitterView.addGestureRecognizer(postToTwitterTapGesture);
                 cell.pushToFacebookView.addGestureRecognizer(postToFacebookTapGesture);
+                cell.pushtoSmsView.addGestureRecognizer(postToSMSTapGesture);
             }
             
             //Call this function

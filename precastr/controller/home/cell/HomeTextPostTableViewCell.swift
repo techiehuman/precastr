@@ -34,12 +34,16 @@ class HomeTextPostTableViewCell: UITableViewCell,UIScrollViewDelegate {
     @IBOutlet weak var publishInfoButton: UIButton!
     @IBOutlet weak var pushToFacebookView: UIView!
     @IBOutlet weak var pushToTwitterView: UIView!
+
+    @IBOutlet weak var pushtoSmsView: UIView!
     
     @IBOutlet weak var publishToTwitterImage: UIImageView!
     @IBOutlet weak var publishToFacebookImage: UIImageView!
+    @IBOutlet weak var pushToSmsImage: UIImageView!
     
     @IBOutlet weak var pushToFacebookText: UILabel!
     @IBOutlet weak var pushToTwitterText: UILabel!
+    @IBOutlet weak var pushToSmsText: UILabel!
     
     @IBOutlet weak var editPostbutton: UIButton!;
     
@@ -61,6 +65,8 @@ class HomeTextPostTableViewCell: UITableViewCell,UIScrollViewDelegate {
     
     @IBOutlet weak var castPaginationArrow: UIImageView!
     
+    @IBOutlet weak var castContactsIcon: UIButton!
+    @IBOutlet weak var castContactsIconFirst: UIButton!
     var currentCount : Int!
     var homeViewControllerDelegate: HomeViewController!;
 

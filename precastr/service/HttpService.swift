@@ -86,6 +86,8 @@ class HttpService {
             MultipartFormData.append( "\(String(describing: postData["password"]!))".data(using: .utf8)!, withName: "password")
             MultipartFormData.append( "\(String(describing: postData["device_registered_from"]!))".data(using: .utf8)!, withName: "device_registered_from")
             MultipartFormData.append( "\(String(describing: postData["device_token"]!))".data(using: .utf8)!, withName: "device_token")
+            MultipartFormData.append( "\(String(describing: postData["country_code"]!))".data(using: .utf8)!, withName: "country_code")
+            MultipartFormData.append( "\(String(describing: postData["phone_number"]!))".data(using: .utf8)!, withName: "phone_number")
             
         }, usingThreshold: UInt64.init(), to: "\(url)", method: .post, headers:Auth_header ) { (result) in
             
@@ -275,7 +277,8 @@ class HttpService {
             MultipartFormData.append(imgData, withName: "profile_pic", fileName: "file.jpg", mimeType: "image/jpg")
             MultipartFormData.append( "\(String(describing: postData["name"]!))".data(using: .utf8)!, withName: "name")
             MultipartFormData.append( "\(String(describing: postData["user_id"]!))".data(using: .utf8)!, withName: "user_id")
-
+            MultipartFormData.append( "\(String(describing: postData["country_code"]!))".data(using: .utf8)!, withName: "country_code")
+             MultipartFormData.append( "\(String(describing: postData["phone_number"]!))".data(using: .utf8)!, withName: "phone_number")
         }, usingThreshold: UInt64.init(), to: "\(url)", method: .post, headers:Auth_header ) { (result) in
             
             var returnDict = NSDictionary();

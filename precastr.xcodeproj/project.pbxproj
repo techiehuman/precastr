@@ -42,10 +42,16 @@
 		90881EFB23420CB400023450 /* UserContactItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90881EFA23420CB400023450 /* UserContactItem.swift */; };
 		908D6F3122C241F800762145 /* commonExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 908D6F3022C241F800762145 /* commonExtension.swift */; };
 		908D6F3322C243D800762145 /* PostStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 908D6F3222C243D800762145 /* PostStatus.swift */; };
+		90B54ADC235F0524000574FF /* UpdatePhoneNumberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90B54ADB235F0524000574FF /* UpdatePhoneNumberViewController.swift */; };
 		90B611AA2356205D0060255D /* CountryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90B611A92356205C0060255D /* CountryViewController.swift */; };
 		90B611AF235623410060255D /* CountryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90B611AD235623410060255D /* CountryTableViewCell.swift */; };
 		90B611B0235623410060255D /* CountryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90B611AE235623410060255D /* CountryTableViewCell.xib */; };
 		90B611B2235623840060255D /* CountryCodeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90B611B1235623830060255D /* CountryCodeService.swift */; };
+		90C8F55E235B267B00ECD8B1 /* CastContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90C8F55D235B267B00ECD8B1 /* CastContactsViewController.swift */; };
+		90C8F561235B26CA00ECD8B1 /* CastContactTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90C8F55F235B26CA00ECD8B1 /* CastContactTableViewCell.swift */; };
+		90C8F562235B26CA00ECD8B1 /* CastContactTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90C8F560235B26CA00ECD8B1 /* CastContactTableViewCell.xib */; };
+		90F14680236058770096D56C /* UpdatePhoneNumberTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90F1467E236058770096D56C /* UpdatePhoneNumberTableViewCell.swift */; };
+		90F14681236058770096D56C /* UpdatePhoneNumberTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90F1467F236058770096D56C /* UpdatePhoneNumberTableViewCell.xib */; };
 		FA0294E3227315F300465318 /* TwitterPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0294E2227315F300465318 /* TwitterPostViewController.swift */; };
 		FA0372E222605A3800C3B3C9 /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0372E122605A3700C3B3C9 /* UserManager.swift */; };
 		FA1C1CDD228400A800583E1B /* Reusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1C1CDC228400A800583E1B /* Reusable.swift */; };
@@ -171,10 +177,16 @@
 		90881EFA23420CB400023450 /* UserContactItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserContactItem.swift; sourceTree = "<group>"; };
 		908D6F3022C241F800762145 /* commonExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = commonExtension.swift; sourceTree = "<group>"; };
 		908D6F3222C243D800762145 /* PostStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostStatus.swift; sourceTree = "<group>"; };
+		90B54ADB235F0524000574FF /* UpdatePhoneNumberViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatePhoneNumberViewController.swift; sourceTree = "<group>"; };
 		90B611A92356205C0060255D /* CountryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryViewController.swift; sourceTree = "<group>"; };
 		90B611AD235623410060255D /* CountryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryTableViewCell.swift; sourceTree = "<group>"; };
 		90B611AE235623410060255D /* CountryTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CountryTableViewCell.xib; sourceTree = "<group>"; };
 		90B611B1235623830060255D /* CountryCodeService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountryCodeService.swift; sourceTree = "<group>"; };
+		90C8F55D235B267B00ECD8B1 /* CastContactsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CastContactsViewController.swift; sourceTree = "<group>"; };
+		90C8F55F235B26CA00ECD8B1 /* CastContactTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CastContactTableViewCell.swift; sourceTree = "<group>"; };
+		90C8F560235B26CA00ECD8B1 /* CastContactTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CastContactTableViewCell.xib; sourceTree = "<group>"; };
+		90F1467E236058770096D56C /* UpdatePhoneNumberTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatePhoneNumberTableViewCell.swift; sourceTree = "<group>"; };
+		90F1467F236058770096D56C /* UpdatePhoneNumberTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UpdatePhoneNumberTableViewCell.xib; sourceTree = "<group>"; };
 		9562719E26A20DC50B681220 /* Pods-precastrUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-precastrUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-precastrUITests/Pods-precastrUITests.release.xcconfig"; sourceTree = "<group>"; };
 		A62D95851A596AF11E67E59A /* Pods_precastrTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_precastrTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B549B4DD788D08952FB6A04F /* Pods-precastrTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-precastrTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-precastrTests/Pods-precastrTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -288,6 +300,8 @@
 				FAD5014F22AA6B1700D21F57 /* EditProfileTableViewCell.xib */,
 				5EB754DD22ABE136006D636B /* ForgetPasswordTableViewCell.swift */,
 				5EB754DE22ABE136006D636B /* ForgetPasswordTableViewCell.xib */,
+				90F1467E236058770096D56C /* UpdatePhoneNumberTableViewCell.swift */,
+				90F1467F236058770096D56C /* UpdatePhoneNumberTableViewCell.xib */,
 			);
 			path = cells;
 			sourceTree = "<group>";
@@ -437,6 +451,8 @@
 				FAD5014B22A97B0300D21F57 /* ModeratorCastsTableViewCell.xib */,
 				FAD5015422AE895C00D21F57 /* NotificationTableViewCell.swift */,
 				FAD5015522AE895C00D21F57 /* NotificationTableViewCell.xib */,
+				90C8F55F235B26CA00ECD8B1 /* CastContactTableViewCell.swift */,
+				90C8F560235B26CA00ECD8B1 /* CastContactTableViewCell.xib */,
 			);
 			path = cell;
 			sourceTree = "<group>";
@@ -536,6 +552,7 @@
 				FAD5015222AA6F3100D21F57 /* EditProfileViewController.swift */,
 				5EB754DB22ABE125006D636B /* ForgetPasswordViewController.swift */,
 				9010B4AB22CF2AB70083A468 /* TermsPageViewController.swift */,
+				90B54ADB235F0524000574FF /* UpdatePhoneNumberViewController.swift */,
 			);
 			path = guest;
 			sourceTree = "<group>";
@@ -587,6 +604,7 @@
 				FA52DDCE227722AE0093FDF8 /* cell */,
 				FAD5015822AE8E4600D21F57 /* NotificationViewController.swift */,
 				5E203CB92349C5EA00EFFC2D /* ModeratorPhoneNumberViewController.swift */,
+				90C8F55D235B267B00ECD8B1 /* CastContactsViewController.swift */,
 			);
 			path = home;
 			sourceTree = "<group>";
@@ -802,6 +820,7 @@
 				90881EF72341FB0F00023450 /* ContactTableViewCell.xib in Resources */,
 				FA6AB58622531E8200C5491F /* LaunchScreen.storyboard in Resources */,
 				FADFEAFE22A51A46006E3CD2 /* VisbyCF-MediumOblique.otf in Resources */,
+				90C8F562235B26CA00ECD8B1 /* CastContactTableViewCell.xib in Resources */,
 				FADFEB0022A51A46006E3CD2 /* VisbyCF-RegularOblique.otf in Resources */,
 				FAE6173F22B3B09800A8B2F3 /* RightCommunicationTableViewCell.xib in Resources */,
 				5EEC6B5C22A66EAA005B1C34 /* LoginScreenTableViewCell.xib in Resources */,
@@ -810,6 +829,7 @@
 				FA6AB58322531E8200C5491F /* Assets.xcassets in Resources */,
 				FADFEB0122A51A46006E3CD2 /* VisbyCF-Thin.otf in Resources */,
 				902FDE4122D7250F002D1601 /* GoogleService-Info.plist in Resources */,
+				90F14681236058770096D56C /* UpdatePhoneNumberTableViewCell.xib in Resources */,
 				5EB754E022ABE136006D636B /* ForgetPasswordTableViewCell.xib in Resources */,
 				FA84F18722A0329D007796A3 /* Slide.xib in Resources */,
 				FAD5014D22A97B0400D21F57 /* ModeratorCastsTableViewCell.xib in Resources */,
@@ -976,11 +996,13 @@
 				5E6BB7B222B530F500D92681 /* Post.swift in Sources */,
 				FAE4DF61225F0E94008875C3 /* UserService.swift in Sources */,
 				FA291B0A225380830093E6CE /* User.swift in Sources */,
+				90F14680236058770096D56C /* UpdatePhoneNumberTableViewCell.swift in Sources */,
 				FA84F19422A1355A007796A3 /* HeaderViewTableViewCell.swift in Sources */,
 				FAD5014C22A97B0400D21F57 /* ModeratorCastsTableViewCell.swift in Sources */,
 				FA4D544E2260F95200E9589B /* PrecastTypeSectionViewController.swift in Sources */,
 				5E203CBA2349C5EA00EFFC2D /* ModeratorPhoneNumberViewController.swift in Sources */,
 				FA6AB57E22531E7300C5491F /* ViewController.swift in Sources */,
+				90C8F55E235B267B00ECD8B1 /* CastContactsViewController.swift in Sources */,
 				9010B4AF22CF6D070083A468 /* CastersViewController.swift in Sources */,
 				5E93313022D70ED300980BF5 /* SideMenuDto.swift in Sources */,
 				5E9A18F22318001A00AC5E79 /* PostImageDto.swift in Sources */,
@@ -997,6 +1019,7 @@
 				5EB754DF22ABE136006D636B /* ForgetPasswordTableViewCell.swift in Sources */,
 				90881EF62341FB0F00023450 /* ContactTableViewCell.swift in Sources */,
 				5E2A0E2F22DF83EE009033E7 /* PostDetailTableViewCell.swift in Sources */,
+				90B54ADC235F0524000574FF /* UpdatePhoneNumberViewController.swift in Sources */,
 				90881EFB23420CB400023450 /* UserContactItem.swift in Sources */,
 				5EEC6B6122A6842F005B1C34 /* SignupScreenTableViewCell.swift in Sources */,
 				FAFCE3C3228E8F0000AB6DB5 /* SocialPlatform.swift in Sources */,
@@ -1016,6 +1039,7 @@
 				FAD5015622AE895C00D21F57 /* NotificationTableViewCell.swift in Sources */,
 				FA7A3644227AD0A900689E27 /* multiExtension.swift in Sources */,
 				90B611AF235623410060255D /* CountryTableViewCell.swift in Sources */,
+				90C8F561235B26CA00ECD8B1 /* CastContactTableViewCell.swift in Sources */,
 				FA291B0D2253ABCD0093E6CE /* HttpService.swift in Sources */,
 				908D6F3122C241F800762145 /* commonExtension.swift in Sources */,
 				5E94973B22C280FE0023F30B /* PostService.swift in Sources */,

@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.55" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina4_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14810.12" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.43"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14766.15"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -24,7 +22,7 @@
             <rect key="frame" x="0.0" y="0.0" width="407" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="407" height="666.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="407" height="667"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="n2Y-Aq-HkU">
@@ -88,7 +86,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </view>
                     <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qZM-Ov-pYf">
-                        <rect key="frame" x="0.0" y="270" width="407" height="112"/>
+                        <rect key="frame" x="0.0" y="320" width="407" height="112"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Email:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d6d-a7-MCn">
@@ -141,7 +139,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </view>
                     <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FSU-sG-x4F">
-                        <rect key="frame" x="0.0" y="390" width="407" height="38"/>
+                        <rect key="frame" x="0.0" y="440" width="407" height="38"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Change Password" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TMa-J0-TFP">
@@ -155,7 +153,7 @@
                         <color key="backgroundColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
                     <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="R8f-IF-nTu">
-                        <rect key="frame" x="0.0" y="440" width="407" height="55"/>
+                        <rect key="frame" x="0.0" y="490" width="407" height="55"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Password" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CtN-cI-Dow">
@@ -179,7 +177,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </view>
                     <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aLb-rL-azW">
-                        <rect key="frame" x="0.0" y="500" width="407" height="55"/>
+                        <rect key="frame" x="0.0" y="550" width="407" height="55"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Confirm Password" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1uw-cj-a0E">
@@ -203,7 +201,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </view>
                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="W6D-vS-Vtd">
-                        <rect key="frame" x="15" y="575" width="80" height="30"/>
+                        <rect key="frame" x="15" y="625" width="80" height="30"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" red="0.3921568627" green="0.65098039220000004" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <fontDescription key="fontDescription" name="VisbyCF-Regular" family="Visby CF" pointSize="16"/>
@@ -213,27 +211,74 @@
                             <action selector="updatePasswordBtnPressed:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="LmL-Ry-HGu"/>
                         </connections>
                     </button>
+                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BNs-xB-VRG">
+                        <rect key="frame" x="0.0" y="260" width="407" height="59"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Phone Number" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eh6-a1-vpk">
+                                <rect key="frame" x="14" y="2" width="180" height="20"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="VisbyCF-Regular" family="Visby CF" pointSize="15"/>
+                                <color key="textColor" red="0.57254901960000004" green="0.57647058819999997" blue="0.58431372550000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter Phone Number" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hyK-ll-aU1">
+                                <rect key="frame" x="80" y="24" width="325" height="25"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <color key="textColor" red="0.1333333333" green="0.1333333333" blue="0.1333333333" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" name="VisbyCF-Regular" family="Visby CF" pointSize="16"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                                <connections>
+                                    <outlet property="delegate" destination="KGk-i7-Jjw" id="Ujj-Z3-pK2"/>
+                                </connections>
+                            </textField>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nQt-XJ-kqB">
+                                <rect key="frame" x="14" y="24" width="60" height="25"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="+91" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fuG-IZ-g8h">
+                                        <rect key="frame" x="0.0" y="6" width="40" height="17"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="down_arrow" id="d6L-h0-daj">
+                                        <rect key="frame" x="44" y="6" width="15" height="15"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" xcode11CocoaTouchSystemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </view>
                 </subviews>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="cameraUIView" destination="zzY-CQ-feW" id="1RO-cV-j6G"/>
                 <outlet property="confirmPasswordTxtField" destination="2sM-qB-B2q" id="XCS-7k-PSb"/>
+                <outlet property="countryCode" destination="fuG-IZ-g8h" id="fBQ-2S-p1X"/>
+                <outlet property="countryPhoneCodeView" destination="nQt-XJ-kqB" id="h4R-wf-E5W"/>
                 <outlet property="currentPasswordTextField" destination="FhD-pZ-iWf" id="3MM-nX-Yjo"/>
                 <outlet property="emailTextLabel" destination="ZJo-h1-mkH" id="0yg-cp-2g4"/>
                 <outlet property="invitationCodeLabel" destination="h1Q-w7-hMX" id="pea-Zj-fBH"/>
                 <outlet property="invitationUIView" destination="clD-lY-Fh4" id="tua-cb-2U6"/>
                 <outlet property="nameTextField" destination="6sj-cR-YHC" id="4hh-XN-SPV"/>
                 <outlet property="nameUIView" destination="kGj-AJ-yzm" id="4Ir-hh-UaU"/>
+                <outlet property="phoneNumberTextField" destination="hyK-ll-aU1" id="Iaz-v5-P1r"/>
+                <outlet property="phoneNumberUIView" destination="BNs-xB-VRG" id="IZ3-oB-sWP"/>
                 <outlet property="profileImageView" destination="b2E-S3-dhd" id="0YG-2T-7rX"/>
                 <outlet property="updateNameButton" destination="FZv-Id-IUR" id="Ukf-p5-XrQ"/>
                 <outlet property="updatePasswordBtn" destination="W6D-vS-Vtd" id="Eww-um-G7H"/>
             </connections>
-            <point key="canvasLocation" x="102.5" y="-23.5"/>
+            <point key="canvasLocation" x="101.59999999999999" y="-23.838080959520241"/>
         </tableViewCell>
     </objects>
     <resources>
         <image name="Profile-1" width="112" height="112"/>
         <image name="camera" width="66.5" height="53.5"/>
+        <image name="down_arrow" width="12" height="7"/>
     </resources>
 </document>

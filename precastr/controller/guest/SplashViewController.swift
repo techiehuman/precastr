@@ -39,13 +39,17 @@ class SplashViewController: UIViewController {
             
             let userDefaultRole = setting.value(forKey: "default_role") as? Int8 ?? nil
             let user_cast_setting_id = setting.value(forKey: "user_cast_setting_id") as? Int32 ?? nil;
+            let phone_number = setting.value(forKey: "phone_number") as? String ?? nil;
             
-            if (userDefaultRole == nil || userDefaultRole == 0) {
+            if(phone_number == "" || phone_number == nil){
+                self.performSegue(withIdentifier: "splashUpdatePhoneSegue", sender: self)
+            }
+            else if (userDefaultRole == nil || userDefaultRole == 0) {
                 performSegue(withIdentifier: "userTypeSegue", sender: self)
                 
             } else if(userDefaultRole == 1 && (user_cast_setting_id == nil || user_cast_setting_id == 0)){
-                
-                performSegue(withIdentifier: "castTypeSegue", sender: self)
+                 UIApplication.shared.keyWindow?.rootViewController = HomeViewController.MainViewController();
+               // performSegue(withIdentifier: "castTypeSegue", sender: self)
                 
             } else {
                 // Override point for customization after application launch.

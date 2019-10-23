@@ -11,48 +11,69 @@ import UIKit
 protocol SignupScreenViewControllerDelegate {
     func countriesDoneButtonPressed(country: CountryCodeService);
 }
-
-class CountryViewController: UIViewController {
+protocol EditProfileViewControllerDelegate {
+    func countriesDoneButtonPressed(country: CountryCodeService);
+}
+protocol UpdatePhoneNumberViewControllerDelegate {
+    func countriesDoneButtonPressed(country: CountryCodeService);
+}
+class CountryViewController: UIViewController, UITextFieldDelegate {
 
     @IBOutlet weak var countryListTableView : UITableView!
     @IBOutlet weak var countryCancelLabel : UILabel!
+    @IBOutlet weak var txtSearchBox: UITextField!
+
     var countries =  [CountryCodeService]();
+    var allCountries = [CountryCodeService]();
     var signupScreenViewControllerDelegate : SignupScreenViewController!
+    var editProfileViewControllerDelegate : EditProfileViewController!
+    var updatePhoneNumberViewControllerDelegate : UpdatePhoneNumberViewController!
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationController?.navigationBar.isHidden = false
+        self.navigationController?.navigationBar.isHidden = true
         self.countryListTableView.register(UINib.init(nibName: "CountryTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "CountryTableViewCell");
          let cancelButtonTapGesture = UITapGestureRecognizer.init(target: self, action: #selector(canceltButtonPressed));
         self.countryCancelLabel.addGestureRecognizer(cancelButtonTapGesture);
+        
+        txtSearchBox.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+        
         self.loadCountriesData();
         // Do any additional setup after loading the view.
     }
     override func viewWillAppear(_ animated: Bool) {
-        self.navigationController?.navigationBar.isHidden = false
+        self.navigationController?.navigationBar.isHidden = true
     }
    
     @objc func canceltButtonPressed(){
-        
-       
-    
         self.navigationController?.popViewController(animated: true);
-        
     }
-    /*
-    // MARK: - Navigation
+    
+    @objc func textFieldDidChange(_ textField: UITextField) {
+        getFilteredCounties(searchtext: textField.text!)
+    }
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
     func loadCountriesData() {
         
         self.countries = CountryCodeService().getLibraryMasterCountriesEnglish();
-        
+        self.allCountries = CountryCodeService().getLibraryMasterCountriesEnglish();
+        countries = countries.sorted(by: { $0.getName() < $1.getName() })
         self.countryListTableView.reloadData();
         
+    }
+    
+    func getFilteredCounties(searchtext: String) {
+        self.countries = [CountryCodeService]();
+        if (searchtext.count == 0) {
+            self.countries = self.allCountries;
+        } else {
+            for countryCodeService in self.allCountries {
+                if (countryCodeService.getName().lowercased().contains(searchtext)) {
+                    self.countries.append(countryCodeService);
+                }
+            }
+        }
+        countries = countries.sorted(by: { $0.getName() < $1.getName() })
+        self.countryListTableView.reloadData();
     }
 }
 extension CountryViewController: UITableViewDelegate, UITableViewDataSource {
@@ -83,7 +104,15 @@ extension CountryViewController: UITableViewDelegate, UITableViewDataSource {
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let countryCodeService = countries[indexPath.row] as! CountryCodeService;
-        self.signupScreenViewControllerDelegate.countriesDoneButtonPressed(country: countryCodeService);
+        if(self.signupScreenViewControllerDelegate != nil){
+             self.signupScreenViewControllerDelegate.countriesDoneButtonPressed(country: countryCodeService);
+        }
+        if(self.editProfileViewControllerDelegate != nil){
+            self.editProfileViewControllerDelegate.countriesDoneButtonPressed(country: countryCodeService);
+        }
+        if(self.updatePhoneNumberViewControllerDelegate != nil){
+            self.updatePhoneNumberViewControllerDelegate.countriesDoneButtonPressed(country: countryCodeService);
+        }
         self.navigationController?.popViewController(animated: true);
         
         

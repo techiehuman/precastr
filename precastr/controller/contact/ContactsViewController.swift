@@ -81,8 +81,10 @@ class ContactsViewController: UIViewController, UITextFieldDelegate {
                         userContactItem.phone = number.stringValue;
                     }
                 }
-                self.userContactItems.append(userContactItem);
-                self.filteredContacts.append(userContactItem);
+                if(userContactItem.phone != nil){
+                    self.userContactItems.append(userContactItem);
+                    self.filteredContacts.append(userContactItem);
+                }
                 //print(contacts)
                 DispatchQueue.main.async{
                     self.contactUITableView.reloadData();
@@ -180,7 +182,7 @@ extension ContactsViewController: UITableViewDelegate, UITableViewDataSource {
         cell.contactNameLbl.text = userContactItem.name;
         cell.contactPhoneLbl.text = userContactItem.phone;
         
-        if (userContactSelected[userContactItem.phone] != nil) {
+        if (userContactItem.phone != nil && userContactSelected[userContactItem.phone] != nil) {
             cell.checkBox.backgroundColor = UIColor.green;
         } else {
             cell.checkBox.backgroundColor = UIColor.gray;

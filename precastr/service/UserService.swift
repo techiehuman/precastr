@@ -18,7 +18,7 @@ class UserService{
         
         let url = "\(ApiUrl)\(jsonURL)";
         print("API Url : \(url)")
-        
+        print(postData)
         HttpService().postMethod(url: url,postData: postData, complete: { (response ) in
             complete(response);
         });

@@ -12,6 +12,7 @@ import MobileCoreServices
 
 protocol EditProfileTableViewCellProtocol {
     func pictureSelected(selectedImage: UIImage)
+    func countryCodeValueSelected(country : CountryCodeService);
 }
 class EditProfileViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
@@ -23,6 +24,7 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
     var editProfileTableViewCellProtocolDelegate: EditProfileTableViewCellProtocol!
     
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView();
+    var editProfileTableViewCellProtocol: EditProfileTableViewCellProtocol!;
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -98,7 +100,7 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
         
         if (self.uploadImageStatus == true) {
             UserService().postMultipartImageForUpdateProfile(jsonURL: jsonURL,image : self.uploadImage, postData:postData, complete:{(response) in
-                
+                print(response)
                 self.activityIndicator.stopAnimating();
                 
                 let success = Int(response.value(forKey: "status") as! String)!
@@ -115,6 +117,8 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
                     var dateToUpdate = [String: String]();
                     dateToUpdate["name"] = data.value(forKey: "name") as! String;
                     dateToUpdate["profile_pic"] = data.value(forKey: "profile_pic") as! String;
+                    dateToUpdate["country_code"] = data.value(forKey: "country_code") as! String;
+                     dateToUpdate["phone_number"] = data.value(forKey: "phone_number") as! String;
                     User().updateUserData(userData: dateToUpdate);
                 }
             });
@@ -232,6 +236,14 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
         
         picker.dismiss(animated: true, completion: nil);
     }
+    func countriesDoneButtonPressed(country: CountryCodeService){
+        self.editProfileTableViewCellProtocolDelegate.countryCodeValueSelected(country: country);
+    }
+    func openCountryCodeList(){
+        let viewController = storyboard?.instantiateViewController(withIdentifier: "CountryViewController") as! CountryViewController;
+        viewController.editProfileViewControllerDelegate = self;
+        self.navigationController?.pushViewController(viewController, animated: true);
+    }
 }
 extension EditProfileViewController: UITableViewDelegate, UITableViewDataSource {
     
@@ -251,6 +263,16 @@ extension EditProfileViewController: UITableViewDelegate, UITableViewDataSource 
         
         cell.emailTextLabel.text = loggedInUser.username!;
         cell.nameTextField.text = loggedInUser.name!;
+        cell.phoneNumberTextField.text = loggedInUser.phoneNumber!;
+        if(loggedInUser.countryCode != nil){
+           cell.countryCode.text = loggedInUser.countryCode!;
+            let locale = Locale.current
+            print(locale.regionCode)
+        }else{
+            let locale = Locale.current
+            print(locale.regionCode)
+        }
+        
         cell.invitationCodeLabel.text = loggedInUser.casterReferalCode!;
         
         if (loggedInUser.profilePic != nil) {
