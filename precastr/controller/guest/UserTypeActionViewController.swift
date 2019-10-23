@@ -16,6 +16,8 @@ class UserTypeActionViewController: UIViewController {
     
     var loggedInUser : User!
     
+    var userRoleVar = 0;
+    
     @IBOutlet weak var loggedInNameUser: UILabel!
     
     @IBOutlet weak var userProfilePic: UIImageView!
@@ -62,6 +64,7 @@ class UserTypeActionViewController: UIViewController {
     */
 
     @IBAction func casterButtonAction(_ sender: Any) {
+        self.userRoleVar = 1
        self.updateUserType(userRole: 1)
         /*let viewController: UINavigationController = self.storyboard?.instantiateViewController(withIdentifier: "precastTypeNav") as! UINavigationController;
         UIApplication.shared.keyWindow?.rootViewController = viewController;*/
@@ -69,6 +72,7 @@ class UserTypeActionViewController: UIViewController {
     }
     
     @IBAction func moderatorButtonAction(_ sender: Any) {
+        self.userRoleVar = 2
         self.updateUserType(userRole: 2)
         let viewController: VerificationModeratorViewController = self.storyboard?.instantiateViewController(withIdentifier: "VerificationModeratorViewController") as! VerificationModeratorViewController;
         self.navigationController?.pushViewController(viewController, animated: true);
@@ -90,7 +94,9 @@ class UserTypeActionViewController: UIViewController {
                 self.loggedInUser.isCastr  = userRole
                 self.loggedInUser.loadUserDefaults();
                 
-                self.castType();
+                
+                    self.castType();
+                
             }
             
         });
@@ -116,8 +122,9 @@ class UserTypeActionViewController: UIViewController {
                 print(userDict)
                 let user = User().getUserData(userDataDict: userDict);
                 user.loadUserDefaults();
-                
+                if(self.userRoleVar == 1){
                 UIApplication.shared.keyWindow?.rootViewController = HomeViewController.MainViewController();
+                }
             }
         });
     }
