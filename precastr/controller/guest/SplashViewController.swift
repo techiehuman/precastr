@@ -35,7 +35,7 @@ class SplashViewController: UIViewController {
 
     @objc func navigateUser() {
                 
-        if let user_id = setting.value(forKey: "user_id") {
+        if let user_id = setting.value(forKey: "user_id") as? Int32 {
             
             let userDefaultRole = setting.value(forKey: "default_role") as? Int8 ?? nil
             let user_cast_setting_id = setting.value(forKey: "user_cast_setting_id") as? Int32 ?? nil;
@@ -56,6 +56,7 @@ class SplashViewController: UIViewController {
                 //performSegue(withIdentifier: "homeScreenSegue", sender: self)
                 //window = UIWindow(frame: UIScreen.main.bounds)
                 //window?.rootViewController = HomeViewController.MainViewController()
+
                 UIApplication.shared.keyWindow?.rootViewController = HomeViewController.MainViewController();
             }
         }else{

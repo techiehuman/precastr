@@ -34,7 +34,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "257"
             endingLineNumber = "257"
-            landmarkName = "textFieldShouldReturn(_:)"
+            landmarkName = "getFbId()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -51,8 +51,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "121"
             endingLineNumber = "121"
-            landmarkName = "SignupScreenTableViewCell"
-            landmarkType = "3">
+            landmarkName = "setSelected(_:animated:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -86,38 +86,6 @@
             endingLineNumber = "278"
             landmarkName = "submitBtnClicked(_:)"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "066E444B-050D-4A25-A925-C30198BD7988 - 2541288cf20b3e8d"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "precastr.CommunicationViewController.submitBtnClicked(Any) -&gt; ()"
-                  moduleName = "precastr"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/cenes_dev/Desktop/Neha/ios/precastr/precastr/controller/communication/CommunicationViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "278"
-                  endingLineNumber = "278"
-                  offsetFromSymbolStart = "2464">
-               </Location>
-               <Location
-                  uuid = "066E444B-050D-4A25-A925-C30198BD7988 - a79e031c4bd1350"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (__C.NSDictionary) -&gt; () in precastr.CommunicationViewController.submitBtnClicked(Any) -&gt; ()"
-                  moduleName = "precastr"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/cenes_dev/Desktop/Neha/ios/precastr/precastr/controller/communication/CommunicationViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "279"
-                  endingLineNumber = "279"
-                  offsetFromSymbolStart = "108">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -150,21 +118,53 @@
             endingLineNumber = "238"
             landmarkName = "postMultipartImageForPostCommunication(url:image:postData:complete:)"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "6D4EB3DF-2E13-4DB8-8CAE-1ADDD00934AC - 97261dff16ea61f"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #2 (Alamofire.SessionManager.MultipartFormDataEncodingResult) -&gt; () in precastr.HttpService.postMultipartImageForPostCommunication(url: Swift.String, image: Swift.Array&lt;__C.UIImage&gt;, postData: Swift.Dictionary&lt;Swift.String, Any&gt;, complete: (__C.NSDictionary) -&gt; ()) -&gt; ()"
+                  moduleName = "precastr"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/cenes_dev/Desktop/Neha/ios/precastr/precastr/service/HttpService.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "238"
+                  endingLineNumber = "238"
+                  offsetFromSymbolStart = "649">
+               </Location>
+               <Location
+                  uuid = "6D4EB3DF-2E13-4DB8-8CAE-1ADDD00934AC - 22f580102cf88d"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #2 (Alamofire.DataResponse&lt;Any&gt;) -&gt; () in closure #2 (Alamofire.SessionManager.MultipartFormDataEncodingResult) -&gt; () in precastr.HttpService.postMultipartImageForPostCommunication(url: Swift.String, image: Swift.Array&lt;__C.UIImage&gt;, postData: Swift.Dictionary&lt;Swift.String, Any&gt;, complete: (__C.NSDictionary) -&gt; ()) -&gt; ()"
+                  moduleName = "precastr"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/cenes_dev/Desktop/Neha/ios/precastr/precastr/service/HttpService.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "229"
+                  endingLineNumber = "229"
+                  offsetFromSymbolStart = "229">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "F4641FC1-815E-43A7-BAA9-4E0854DD2FCD"
+            uuid = "DD40A8F0-1746-4A47-8ED6-475C127929CD"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "precastr/controller/guest/LoginScreenViewController.swift"
+            filePath = "precastr/controller/guest/SplashViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "63"
-            endingLineNumber = "63"
-            landmarkName = "userManage(jsonURL:user:)"
+            startingLineNumber = "38"
+            endingLineNumber = "38"
+            landmarkName = "navigateUser()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

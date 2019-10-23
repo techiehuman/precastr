@@ -15,6 +15,7 @@ class UpdatePhoneNumberTableViewCell: UITableViewCell,UITextFieldDelegate {
     
     @IBOutlet weak var countryCodeUIView: UIView!
     @IBOutlet weak var countryCodelabel: UILabel!
+    @IBOutlet weak var btnUpdatePhoneNumber: UIButton!
     
     var updatePhoneNumberViewControllerDelegate : UpdatePhoneNumberViewController!
     override func awakeFromNib() {

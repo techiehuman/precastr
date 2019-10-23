@@ -130,11 +130,15 @@ extension UpdatePhoneNumberViewController: UITableViewDelegate, UITableViewDataS
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "UpdatePhoneNumberTableViewCell") as! UpdatePhoneNumberTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "UpdatePhoneNumberTableViewCell") as! UpdatePhoneNumberTableViewCell;
         
         cell.updatePhoneNumberViewControllerDelegate = self;
         
         cell.countryCodelabel.text = countryPhoneCode;
         return cell;
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return (self.view.frame.height + 120);
     }
 }
