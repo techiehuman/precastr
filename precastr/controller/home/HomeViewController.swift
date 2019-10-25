@@ -483,7 +483,13 @@ class HomeViewController: UIViewController, EasyTipViewDelegate, SharingDelegate
         let post = sender.post;
         let viewController = storyboard?.instantiateViewController(withIdentifier: "CastContactsViewController") as! CastContactsViewController;
         
-        viewController.castContacts = post?.castModerators;
+        var contacts = [User]();
+        for userP in post!.castModerators {
+            if (userP.phoneNumber != "" && userP.phoneNumber != nil) {
+                contacts.append(userP);
+            }
+        }
+        viewController.castContacts = contacts;
         viewController.postDescription = post?.postDescription;
         self.navigationController?.pushViewController(viewController, animated: true);
     }
@@ -577,8 +583,8 @@ class HomeViewController: UIViewController, EasyTipViewDelegate, SharingDelegate
         for user in post!.castModerators {
             //print(user.countryCode!)
             print(user.phoneNumber!)
-            if(user.countryCode != nil && user.phoneNumber != nil){
-                phoneNumbers.append("\(user.countryCode)\(user.phoneNumber)");
+            if(user.countryCode != nil && user.phoneNumber != nil && user.countryCode != "" && user.phoneNumber != ""){
+                phoneNumbers.append("\(user.countryCode!)\(user.phoneNumber!)");
             }
         }
         if (MFMessageComposeViewController.canSendText()) {

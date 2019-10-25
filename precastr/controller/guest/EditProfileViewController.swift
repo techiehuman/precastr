@@ -140,6 +140,9 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
                     
                     var dateToUpdate = [String: String]();
                     dateToUpdate["name"] = data.value(forKey: "name") as! String;
+                    dateToUpdate["phone_number"] = data.value(forKey: "phone_number") as! String;
+                    dateToUpdate["country_code"] = data.value(forKey: "country_code") as! String;
+                    
                     User().updateUserData(userData: dateToUpdate);
                 }
                 

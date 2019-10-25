@@ -41,6 +41,11 @@ class PostDetailTableViewCell: UITableViewCell, UIScrollViewDelegate {
     
     @IBOutlet weak var separator: UIView!
     
+     @IBOutlet weak var pushtoSmsView: UIView!
+    
+    @IBOutlet weak var pushToSmsImage: UIImageView!
+     @IBOutlet weak var pushToSmsText: UILabel!
+    
     var currentCount : Int!
     var communicationViewControllerDelegate: CommunicationViewController!;
 

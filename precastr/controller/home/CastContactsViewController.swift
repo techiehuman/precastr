@@ -83,10 +83,11 @@ extension CastContactsViewController : UITableViewDataSource, UITableViewDelegat
             cell.moderatorProfilePic.sd_setImage(with: URL.init(string: castContact.profilePic), placeholderImage: UIImage.init(named: "Moderate Casts"),  completed: nil);
         }
         
+        cell.moderatorName.text = castContact.name;
         if (castContact.phoneNumber == nil || castContact.phoneNumber == "") {
             cell.moderatorPhone.text = "Not Available"
         } else {
-            cell.moderatorPhone.text = castContact.phoneNumber!;
+            cell.moderatorPhone.text = "\(castContact.countryCode!) \(castContact.phoneNumber!)";
         }
         return cell;
     }
@@ -96,7 +97,7 @@ extension CastContactsViewController : UITableViewDataSource, UITableViewDelegat
         let castContact = castContacts[indexPath.row];
         print(indexPath.row)
         print(castContact.phoneNumber!)
-        if let url = URL(string: "tel://"+castContact.phoneNumber! ?? "0"), UIApplication.shared.canOpenURL(url) {
+        if let url = URL(string: "tel://"+castContact.countryCode+castContact.phoneNumber! ?? "0"), UIApplication.shared.canOpenURL(url) {
             if #available(iOS 10, *) {
                 UIApplication.shared.open(url)
             } else {
@@ -107,6 +108,6 @@ extension CastContactsViewController : UITableViewDataSource, UITableViewDelegat
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 50;
+        return 80;
     }
 }

@@ -12,6 +12,7 @@ class CastContactTableViewCell: UITableViewCell {
 
     
     @IBOutlet weak var moderatorProfilePic: UIImageView!
+    @IBOutlet weak var moderatorName: UILabel!
     @IBOutlet weak var moderatorPhone: UILabel!
     @IBOutlet weak var callToModeratorView: UIView!
     

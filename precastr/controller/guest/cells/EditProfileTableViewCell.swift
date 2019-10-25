@@ -128,6 +128,8 @@ class EditProfileTableViewCell: UITableViewCell,UITextFieldDelegate, EditProfile
             confirmPasswordTxtField.becomeFirstResponder();
         } else if (textField == confirmPasswordTxtField) {
             confirmPasswordTxtField.resignFirstResponder();
+        }else if(textField == phoneNumberTextField){
+            phoneNumberTextField.resignFirstResponder();
         }
         
         return true;

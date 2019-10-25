@@ -15,12 +15,13 @@ import FBSDKCoreKit
 import EasyTipView
 import TwitterKit
 import TwitterCore
+import MessageUI
 
 protocol ImageLibProtocolC {
     func takePicture(viewC : UIViewController);
 }
 
-class CommunicationViewController: UIViewController,UITextViewDelegate, UIImagePickerControllerDelegate, EasyTipViewDelegate, SharingDelegate {
+class CommunicationViewController: UIViewController,UITextViewDelegate, UIImagePickerControllerDelegate, EasyTipViewDelegate, SharingDelegate, MFMessageComposeViewControllerDelegate {
 
     var posts = [Post]();
     var post = Post();
@@ -912,6 +913,58 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
         
         
     }
+    @objc func postToSMSPressed(sender: PostToSocialMediaGestureRecognizer) {
+        let post = sender.post;
+        self.postId = post?.postId
+        var phoneNumbers = [String]();
+        for user in post!.castModerators {
+            //print(user.countryCode!)
+            print(user.phoneNumber!)
+            if(user.countryCode != nil && user.phoneNumber != nil && user.countryCode != "" && user.phoneNumber != ""){
+                phoneNumbers.append("\(user.countryCode!)\(user.phoneNumber!)");
+            }
+        }
+        if (MFMessageComposeViewController.canSendText()) {
+            let controller = MFMessageComposeViewController()
+            controller.recipients = phoneNumbers
+            controller.body = post?.postDescription;
+            controller.messageComposeDelegate = self
+            self.present(controller, animated: true, completion: nil)
+        }
+    }
+    
+    func messageComposeViewController(_ controller: MFMessageComposeViewController, didFinishWith result: MessageComposeResult) {
+        switch (result)
+        {
+        case .sent:
+            print("sms sent.")
+            var postData = [String: Any]();
+            postData["user_id"] = self.loggedInUser.userId
+            postData["post_id"] = self.postId!
+            let jsonURL = "user/send_post_sms/format/json";
+            UserService().postDataMethod(jsonURL: jsonURL,postData:postData,complete:{(response) in
+                self.activityIndicator.stopAnimating();
+                
+                let statusCode = Int(response.value(forKey: "status") as! String)!
+                if(statusCode == 0) {
+                    self.showAlert(title: "Alert", message: response.value(forKey: "message") as! String);
+                } else {
+                    self.populatePostData();
+                }
+                
+            });
+            break
+        case .cancelled:
+            print("sms cancelled.")
+            break
+        case .failed:
+            print("failed sending email")
+            break
+        default:
+            break
+        }
+        self.dismiss(animated: true, completion: nil)
+    }
 }
 
 extension CommunicationViewController: UITableViewDelegate, UITableViewDataSource {
@@ -935,6 +988,9 @@ extension CommunicationViewController: UITableViewDelegate, UITableViewDataSourc
             
             let postToTwitterTapGesture = PostToSocialMediaGestureRecognizer.init(target: self, action: #selector(postToTwitterPressed(sender:)));
             postToTwitterTapGesture.post = post;
+            
+            let postToSMSTapGesture = PostToSocialMediaGestureRecognizer.init(target: self, action: #selector(postToSMSPressed(sender:)));
+            postToSMSTapGesture.post = post;
 
             //Lets handle the logic of Hiding and Shwoing Publish Buttons.
             //First lets check if post status is Approved/ Published.
@@ -967,8 +1023,15 @@ extension CommunicationViewController: UITableViewDelegate, UITableViewDataSourc
                         break;
                     }
                 }
+                var smsPublished = false;
+                for socialMediaId in post.socialMediaIds {
+                    if (socialMediaId == social.socialPlatformId["SMS"]) {
+                        smsPublished = true;
+                        break;
+                    }
+                }
                 
-                if (facebookPublished == true && twitterPublished == true) {
+                if (facebookPublished == true && twitterPublished == true && smsPublished == true) {
                     cell.postPrePublishView.isHidden = true;
                 } else {
                     
@@ -1014,6 +1077,28 @@ extension CommunicationViewController: UITableViewDelegate, UITableViewDataSourc
 
                             cell.publishToTwitterImage.backgroundColor = UIColor.init(red: 42/255, green: 185/255, blue: 195/255, alpha: 1);
                             cell.pushToTwitterView.isUserInteractionEnabled = true;
+                        }
+                        if (smsPublished == true) {
+                            print(post.postDescription)
+                            //cell.pushToTwitterView.isHidden = true;
+                            cell.pushToSmsText.textColor = UIColor.init(red: 34/255, green: 34/255, blue: 34/255, alpha: 1)
+                            cell.pushtoSmsView.backgroundColor = UIColor.clear;
+                            cell.pushtoSmsView.layer.borderWidth = 0.5;
+                            cell.pushtoSmsView.layer.borderColor = UIColor.init(red: 146/255, green: 147/255, blue: 149/255, alpha: 1).cgColor
+                            
+                            cell.pushToSmsImage.backgroundColor = UIColor.init(red: 237/255, green: 237/255, blue: 237/255, alpha: 1);
+                            cell.pushtoSmsView.isUserInteractionEnabled = false;
+                            
+                        } else {
+                            print("*****")
+                            print(post.postDescription)
+                            //cell.pushToTwitterView.isHidden = false;
+                            cell.pushToSmsText.textColor = UIColor.white
+                            cell.pushtoSmsView.backgroundColor = UIColor.init(red: 75/255, green: 215/255, blue: 99/255, alpha: 1);
+                            cell.pushtoSmsView.layer.borderWidth = 0;
+                            cell.pushToSmsImage.backgroundColor = UIColor.init(red: 28/255, green: 164/255, blue: 51/255, alpha: 1);
+                            cell.pushToSmsImage.isUserInteractionEnabled = true;
+                            
                         }
                     }
                 }
@@ -1069,6 +1154,7 @@ extension CommunicationViewController: UITableViewDelegate, UITableViewDataSourc
             if (cell.postPrePublishView.isHidden == false) {
                 cell.pushToTwitterView.addGestureRecognizer(postToTwitterTapGesture);
                 cell.pushToFacebookView.addGestureRecognizer(postToFacebookTapGesture);
+                cell.pushtoSmsView.addGestureRecognizer(postToSMSTapGesture);
             }
             
             //Call this function
