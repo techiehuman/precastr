@@ -30,6 +30,8 @@ class EditProfileTableViewCell: UITableViewCell,UITextFieldDelegate, EditProfile
     @IBOutlet weak var updatePasswordBtn: UIButton!
     @IBOutlet weak var emailTextLabel: UILabel!
     
+    @IBOutlet weak var facebookIDLabel: UILabel!
+    @IBOutlet weak var twitterIDLabel: UILabel!
     var editProfileViewControllerDelegate: EditProfileViewController!;
     
     override func awakeFromNib() {
