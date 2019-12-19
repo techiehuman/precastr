@@ -21,7 +21,9 @@ class moderatorTableViewCell: UITableViewCell {
     
     @IBOutlet weak var removeActionBtn: UIButton!
     
+    @IBOutlet weak var phoneNumberLabel: UILabel!
     
+    @IBOutlet weak var emailLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()

@@ -264,6 +264,56 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
         let viewController: SideMenuTableViewController = self.storyboard?.instantiateViewController(withIdentifier: "SideMenuTableViewController") as! SideMenuTableViewController;
         self.navigationController?.pushViewController(viewController, animated: true);
     }
+    @objc func postDeletePressed(sender: PostToSocialMediaGestureRecognizer){
+        
+        var postData = [String: Any]();
+        let post = sender.post;
+        postData["post_id"] = post?.postId;
+        let alert = UIAlertController.init(title: "Delete!", message: "Are you sure?", preferredStyle: .alert);
+        alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil));
+        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: {(response) in
+            
+            
+            
+            let jsonURL = "posts/delete_cast/format/json"
+            DispatchQueue.main.async {
+                self.activityIndicator.startAnimating();
+            }
+            UserService().postDataMethod(jsonURL: jsonURL, postData: postData, complete: {(response) in
+                print(response)
+                self.activityIndicator.stopAnimating();
+                
+                let statusCode = Int(response.value(forKey: "status") as! String)!
+                if(statusCode == 0) {
+                    self.showAlert(title: "Alert", message: response.value(forKey: "message") as! String);
+                } else {
+                    let viewController: HomeViewController = self.storyboard?.instantiateViewController(withIdentifier: "HomeViewController") as! HomeViewController;
+                    self.navigationController?.pushViewController(viewController, animated: true);
+                }
+            });
+            
+            
+            
+            
+            
+        }));
+        self.present(alert, animated: true)
+    }
+    
+    @objc func callInfoButtonPressed(sender: PostToSocialMediaGestureRecognizer) {
+        let post = sender.post;
+        let viewController = storyboard?.instantiateViewController(withIdentifier: "CastContactsViewController") as! CastContactsViewController;
+        
+        var contacts = [User]();
+        for userP in post!.castModerators {
+            if (userP.phoneNumber != "" && userP.phoneNumber != nil) {
+                contacts.append(userP);
+            }
+        }
+        viewController.castContacts = contacts;
+        viewController.postDescription = post?.postDescription;
+        self.navigationController?.pushViewController(viewController, animated: true);
+    }
 
     @IBAction func submitBtnClicked(_ sender: Any) {
         
@@ -279,7 +329,7 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
         }
             postData["post_id"] = self.post.postId;
             postData["user_id"] = self.loggedInUser.userId;
-            
+            postData["timestamp"] = Int64(Date().timeIntervalSince1970 * 1000.0)
             if (PhotoArray.count > 0) {
             
                 HttpService().postMultipartImageForPostCommunication(url: jsonURL, image: PhotoArray, postData: postData, complete: {(response) in
@@ -835,16 +885,16 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
         status = self.post.status
         if (status == "Pending") {
             imageStatus = "pending-review"
-            // status = "Pending review"
+            
         } else if (status == "Approved") {
             imageStatus = "approved"
-            // status = "Approved"
+            
         } else if (status == "Rejected") {
             imageStatus = "rejected"
-            // status = "Rejected"
+            
         } else if(status == "Published") {
             imageStatus = "published"
-            //  status = "Deleted"
+            
         } else if(status == ""){
             imageStatus = ""
         }
@@ -992,6 +1042,13 @@ extension CommunicationViewController: UITableViewDelegate, UITableViewDataSourc
             let postToSMSTapGesture = PostToSocialMediaGestureRecognizer.init(target: self, action: #selector(postToSMSPressed(sender:)));
             postToSMSTapGesture.post = post;
 
+            let deleteButtonTapRecognizer = PostToSocialMediaGestureRecognizer.init(target: self, action: #selector(postDeletePressed(sender:)));
+            deleteButtonTapRecognizer.post = post;
+            cell.deletePostButton.addGestureRecognizer(deleteButtonTapRecognizer);
+            
+            let callInfoButtonTapRecognizer = PostToSocialMediaGestureRecognizer.init(target: self, action: #selector(callInfoButtonPressed(sender:)));
+            callInfoButtonTapRecognizer.post = post;
+            cell.castContactsIcon.addGestureRecognizer(callInfoButtonTapRecognizer);
             //Lets handle the logic of Hiding and Shwoing Publish Buttons.
             //First lets check if post status is Approved/ Published.
             //If post status is approved, then we would have to show both buttons.
@@ -1002,12 +1059,20 @@ extension CommunicationViewController: UITableViewDelegate, UITableViewDataSourc
                     cell.postPrePublishView.isHidden = true;
                 } else {
                     cell.postPrePublishView.isHidden = false;
+                     cell.approveMessageLabel.isHidden = true;
                 }
                 
                 //If post status is Published, Then we have to check
                 //If user posted on both platforms or not
-            } else if (post.postStatusId == HomePostPublishStatusId.PUBLISHSTATUSID) {
+            }else if(post.postStatusId == HomePostPublishStatusId.PENDINGSTATUSID || post.postStatusId == HomePostPublishStatusId.REJECTEDSTATUSID){
+                cell.postPrePublishView.isHidden = false;
+                cell.approveMessageLabel.isHidden = false;
+                cell.sharePostButton.isHidden = true;
+                cell.publishInfoButton.isHidden = true;
+            }
+            else if (post.postStatusId == HomePostPublishStatusId.PUBLISHSTATUSID) {
                 
+                cell.approveMessageLabel.isHidden = true;
                 var facebookPublished = false;
                 for socialMediaId in post.socialMediaIds {
                     if (socialMediaId == social.socialPlatformId["Facebook"]) {
@@ -1119,22 +1184,22 @@ extension CommunicationViewController: UITableViewDelegate, UITableViewDataSourc
                 self.editPostBtnBottom.isHidden = true
 
                 imageStatus = "approved"
-               // status = "Approved"
+             
             } else if (post.status == "Rejected") {
                 imageStatus = "rejected"
-               // status = "Rejected"
+              
             } else if(post.status == "Pending with caster") {
                 imageStatus = "under-review"
-               // status = "Under review"
+              
             } else if(post.status == "Unread by moderator") {
                 imageStatus = "under-review"
-               // status = "Unread by moderator"
+              
             } else if(post.status == "Pending with moderator") {
                 imageStatus = "under-review"
-               // status = "Under review"
+              
             } else if(post.status == "Deleted") {
                 imageStatus = "under-review"
-               // status = "Deleted"
+               
             } else if(post.status == "Published") {
                 imageStatus = "published";
                 

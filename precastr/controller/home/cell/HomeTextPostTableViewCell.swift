@@ -46,7 +46,8 @@ class HomeTextPostTableViewCell: UITableViewCell,UIScrollViewDelegate {
     @IBOutlet weak var pushToSmsText: UILabel!
     
     @IBOutlet weak var editPostbutton: UIButton!;
-    
+    @IBOutlet weak var deletePostButton: UIButton!
+    @IBOutlet weak var deletePostButtonFirst: UIButton!
     var imagesArray : [String] = [String]();
     
     @IBOutlet weak var imageGalleryScrollView: UIScrollView!
@@ -67,6 +68,7 @@ class HomeTextPostTableViewCell: UITableViewCell,UIScrollViewDelegate {
     
     @IBOutlet weak var castContactsIcon: UIButton!
     @IBOutlet weak var castContactsIconFirst: UIButton!
+    @IBOutlet weak var sharePostButton: UIButton!
     var currentCount : Int!
     var homeViewControllerDelegate: HomeViewController!;
 
@@ -77,7 +79,13 @@ class HomeTextPostTableViewCell: UITableViewCell,UIScrollViewDelegate {
         self.imageGalleryScrollView.delegate = self
         self.imageCounterView.layer.cornerRadius = 10
         self.editPostbutton.layer.cornerRadius = 4;
-
+        
+        self.publishInfoButton.roundBtn();
+        self.castContactsIcon.roundBtn();
+        self.castContactsIconFirst.roundBtn();
+        self.deletePostButton.roundBtn();
+        self.deletePostButtonFirst.roundBtn();
+        self.sharePostButton.roundBtn();
         var predictiveIconTapGesture = UITapGestureRecognizer.init(target: self, action: #selector(publishInfoIconPressed))
     }
 

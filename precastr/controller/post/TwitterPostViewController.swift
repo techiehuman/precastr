@@ -366,6 +366,7 @@ class TwitterPostViewController: UIViewController,UITextViewDelegate, UIImagePic
         var postData : [String : Any] = [String : Any]()
         postData["post_description"] = self.postTextField.text
         postData["user_id"] = self.loggedInUser.userId
+        postData["timestamp"] = Int64(Date().timeIntervalSince1970 * 1000.0)
         //let joiner = ","
         let elements = (self.socialMediaPlatform);
         

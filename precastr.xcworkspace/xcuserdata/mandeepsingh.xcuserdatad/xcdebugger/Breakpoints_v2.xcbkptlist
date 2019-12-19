@@ -49,8 +49,8 @@
             timestampString = "592245842.693866"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "585"
-            endingLineNumber = "585"
+            startingLineNumber = "601"
+            endingLineNumber = "601"
             landmarkName = "updatePostStatus(postStatusId:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -66,9 +66,9 @@
             timestampString = "592245842.69415"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "597"
-            endingLineNumber = "597"
-            landmarkName = "getPostCommunications(postId:)"
+            startingLineNumber = "613"
+            endingLineNumber = "613"
+            landmarkName = "updatePostStatus(postStatusId:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -278,6 +278,22 @@
             startingLineNumber = "94"
             endingLineNumber = "94"
             landmarkName = "updateNameProfilePic(postData:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "738824B0-D5E4-4A86-AB90-242EDC724DD2"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "precastr/controller/communication/CommunicationViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1077"
+            endingLineNumber = "1077"
+            landmarkName = "tableView(_:cellForRowAt:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

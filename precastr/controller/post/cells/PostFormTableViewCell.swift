@@ -284,7 +284,7 @@ class PostFormTableViewCell: UITableViewCell, UITextViewDelegate, PostFormCellPr
                 postData["post_description"] = self.postTextField.text
                 postData["user_id"] = self.createPostViewControllerDelegate.loggedInUser.userId
                 //let joiner = ","
-                
+                postData["timestamp"] = Int64(Date().timeIntervalSince1970 * 1000.0);
                 var joinedStrings = "";
                 for obj in createPostViewControllerDelegate.social.socialPlatformId {
                     if (obj.key == "Facebook" && self.createPostViewControllerDelegate.facebookStatus == true) {//If user selcts facebook

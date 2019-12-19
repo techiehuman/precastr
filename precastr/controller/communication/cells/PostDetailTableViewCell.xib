@@ -29,16 +29,16 @@
                         <rect key="frame" x="15" y="16" width="296" height="25"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WfR-OJ-zz2">
-                                <rect key="frame" x="35" y="0.0" width="85" height="25"/>
+                            <view hidden="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WfR-OJ-zz2">
+                                <rect key="frame" x="150" y="0.0" width="10" height="25"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="publishto_facebook" translatesAutoresizingMaskIntoConstraints="NO" id="9vq-hy-ze8">
-                                        <rect key="frame" x="64" y="0.0" width="20" height="25"/>
+                                        <rect key="frame" x="-11" y="0.0" width="20" height="25"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" red="0.32156862749999998" green="0.45882352939999999" blue="0.76078431369999999" alpha="1" colorSpace="calibratedRGB"/>
                                     </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Push to" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kAA-90-ko0">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="P" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kAA-90-ko0">
                                         <rect key="frame" x="0.0" y="2" width="65" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="VisbyCF-Regular" family="Visby CF" pointSize="14"/>
@@ -48,11 +48,11 @@
                                 </subviews>
                                 <color key="backgroundColor" red="0.18823529410000001" green="0.30196078430000001" blue="0.55294117649999996" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eFt-wN-EPB">
-                                <rect key="frame" x="125" y="0.0" width="85" height="25"/>
+                            <view hidden="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eFt-wN-EPB">
+                                <rect key="frame" x="125" y="0.0" width="10" height="25"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Push to" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dWb-GD-qS0">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="P" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dWb-GD-qS0">
                                         <rect key="frame" x="0.0" y="2" width="65" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="VisbyCF-Regular" family="Visby CF" pointSize="14"/>
@@ -60,27 +60,52 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="publishto_twitter" translatesAutoresizingMaskIntoConstraints="NO" id="KVE-Rk-mWg">
-                                        <rect key="frame" x="65" y="0.0" width="20" height="25"/>
+                                        <rect key="frame" x="-10" y="0.0" width="20" height="25"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" red="0.1647058824" green="0.72549019609999998" blue="0.76078431369999999" alpha="1" colorSpace="calibratedRGB"/>
                                     </imageView>
                                 </subviews>
                                 <color key="backgroundColor" red="0.0" green="0.59999999999999998" blue="0.85882352939999995" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iHw-Xd-cnI">
-                                <rect key="frame" x="0.0" y="0.0" width="30" height="25"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="whf-Bj-7Sh">
+                                <rect key="frame" x="0.0" y="0.0" width="30" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.89803921568627454" green="0.011764705882352941" blue="0.011764705882352941" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" image="delete"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ad2-fy-nON">
+                                <rect key="frame" x="40" y="0.0" width="30" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.047058823530000002" green="0.43529411759999997" blue="0.91372549020000005" alpha="1" colorSpace="calibratedRGB"/>
-                                <state key="normal" image="publish_info"/>
+                                <state key="normal" image="telephone_icon"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iHw-Xd-cnI">
+                                <rect key="frame" x="80" y="0.0" width="30" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.047058823530000002" green="0.43529411759999997" blue="0.91372549020000005" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" image="info"/>
                                 <connections>
                                     <action selector="publishInfoButtonPressed:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="9pk-1q-cdC"/>
                                 </connections>
                             </button>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FeZ-59-Qvv">
-                                <rect key="frame" x="215" y="0.0" width="85" height="25"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="I1D-tT-E1A">
+                                <rect key="frame" x="250" y="0.0" width="30" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.047058823530000002" green="0.43529411759999997" blue="0.91372549020000005" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" image="share-group"/>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Social media options will be available once the cast is approved." lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v3p-ch-ZEk">
+                                <rect key="frame" x="80" y="0.0" width="200" height="35"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="VisbyCF-Regular" family="Visby CF" pointSize="14"/>
+                                <color key="textColor" red="0.83529411760000005" green="0.0078431372550000003" blue="0.039215686270000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view hidden="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FeZ-59-Qvv">
+                                <rect key="frame" x="215" y="0.0" width="10" height="25"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Push to" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Zc-I3-ATf">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="P" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Zc-I3-ATf">
                                         <rect key="frame" x="0.0" y="2" width="65" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="VisbyCF-Regular" family="Visby CF" pointSize="14"/>
@@ -88,7 +113,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="message" translatesAutoresizingMaskIntoConstraints="NO" id="Bdd-Qb-sQN">
-                                        <rect key="frame" x="65" y="0.0" width="20" height="25"/>
+                                        <rect key="frame" x="-10" y="0.0" width="20" height="25"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" red="0.10980392156862745" green="0.64313725490196072" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                     </imageView>
@@ -146,7 +171,10 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
+                <outlet property="approveMessageLabel" destination="v3p-ch-ZEk" id="niG-El-3Pz"/>
+                <outlet property="castContactsIcon" destination="ad2-fy-nON" id="N1s-MV-m31"/>
                 <outlet property="currentCountImageLbl" destination="gR0-n5-Np9" id="Awo-Mz-e87"/>
+                <outlet property="deletePostButton" destination="whf-Bj-7Sh" id="EiG-Uz-DXQ"/>
                 <outlet property="descriptionView" destination="4FQ-oz-P2T" id="4lN-gs-riY"/>
                 <outlet property="imageCounterView" destination="7Vh-wU-6ah" id="i1n-lf-6QU"/>
                 <outlet property="imageGalleryScrollView" destination="1BS-ZQ-3Yh" id="1Fp-Zm-iCO"/>
@@ -163,15 +191,19 @@
                 <outlet property="pushToTwitterView" destination="eFt-wN-EPB" id="GIy-Ty-wkt"/>
                 <outlet property="pushtoSmsView" destination="FeZ-59-Qvv" id="g5D-6b-jKn"/>
                 <outlet property="separator" destination="G8N-3B-qgc" id="2FC-s9-Hcq"/>
+                <outlet property="sharePostButton" destination="I1D-tT-E1A" id="Tai-sI-YIm"/>
                 <outlet property="totalCountImageLbl" destination="6y6-64-NZE" id="Xjr-UZ-tNj"/>
             </connections>
             <point key="canvasLocation" x="137.68115942028987" y="149.66517857142856"/>
         </tableViewCell>
     </objects>
     <resources>
+        <image name="delete" width="17" height="18.5"/>
+        <image name="info" width="9.5" height="18"/>
         <image name="message" width="20" height="20"/>
-        <image name="publish_info" width="20" height="20"/>
         <image name="publishto_facebook" width="20" height="20"/>
         <image name="publishto_twitter" width="20" height="20"/>
+        <image name="share-group" width="16.5" height="18"/>
+        <image name="telephone_icon" width="18" height="18"/>
     </resources>
 </document>

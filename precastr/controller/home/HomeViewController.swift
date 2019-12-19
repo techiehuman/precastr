@@ -81,6 +81,9 @@ class HomeViewController: UIViewController, EasyTipViewDelegate, SharingDelegate
             viewController.postId = postIdFromPush
             self.navigationController?.pushViewController(viewController, animated: true);
         }
+        
+        
+       
 
         isAppKilled = false;
     }
@@ -341,13 +344,60 @@ class HomeViewController: UIViewController, EasyTipViewDelegate, SharingDelegate
         self.navigationController?.pushViewController(viewController, animated: true);
 
     }
-
+    @objc func sharePostButtonPressed(sender: PostToSocialMediaGestureRecognizer){
+        let dropDownView = UIView();
+        print("Ÿ co-ordinate")
+        print(sender.postPrePublishView.frame.origin.y);
+        dropDownView.frame = CGRect.init(x: sender.sharePostButton.frame.origin.x, y: self.navigationController!.navigationBar.frame.size.height + sender.postPrePublishView.frame.origin.y + 70, width: 400, height: 200);
+        
+        let facebookItem: UIView = UIView();
+        facebookItem.frame = CGRect.init(x: 0, y: 0, width: 100, height: 300);
+        facebookItem.backgroundColor = UIColor.red;
+        
+        dropDownView.addSubview(facebookItem);
+        
+        self.view.addSubview(dropDownView);
+    }
     
     @objc func postDescriptionPressed(sender: MyTapRecognizer){
        
         let viewController = self.storyboard?.instantiateViewController(withIdentifier: "CommunicationViewController") as! CommunicationViewController;
         viewController.post = self.posts[sender.rowId];
         self.navigationController?.pushViewController(viewController, animated: true);
+    }
+    @objc func postDeletePressed(sender: PostToSocialMediaGestureRecognizer){
+        
+        var postData = [String: Any]();
+        let post = sender.post;
+        postData["post_id"] = post?.postId;
+        let alert = UIAlertController.init(title: "Delete!", message: "Are you sure?", preferredStyle: .alert);
+        alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil));
+        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: {(response) in
+       
+            
+            
+            let jsonURL = "posts/delete_cast/format/json"
+            DispatchQueue.main.async {
+                self.activityIndicator.startAnimating();
+            }
+            UserService().postDataMethod(jsonURL: jsonURL, postData: postData, complete: {(response) in
+                print(response)
+                self.activityIndicator.stopAnimating();
+                
+                let statusCode = Int(response.value(forKey: "status") as! String)!
+                if(statusCode == 0) {
+                    self.showAlert(title: "Alert", message: response.value(forKey: "message") as! String);
+                } else {
+                    self.loadUserPosts();
+                }
+            });
+            
+            
+            
+            
+            
+             }));
+             self.present(alert, animated: true)
     }
     
     @objc func postToFacebookPressed(sender: PostToSocialMediaGestureRecognizer) {
@@ -638,6 +688,8 @@ class MyTapRecognizer : UITapGestureRecognizer {
 class PostToSocialMediaGestureRecognizer: UITapGestureRecognizer {
     var rowId: Int!;
     var post: Post!;
+    var postPrePublishView: UIView!;
+    var sharePostButton: UIButton!;
 }
 
 class FacebookPublishInfoGestureRecognizer: UIGestureRecognizer {
@@ -769,38 +821,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             
             let postToSMSTapGesture = PostToSocialMediaGestureRecognizer.init(target: self, action: #selector(postToSMSPressed(sender:)));
             postToSMSTapGesture.post = post;
-            /*var facebookIconHidden = true;
-            var twitterIconHidden = true;
-            if (post.socialMediaIds.count > 0) {
-                
-                for sourcePlatformId in post.socialMediaIds {
-                    if(Int(sourcePlatformId) == social.socialPlatformId["Facebook"]){
-                        facebookIconHidden = false;
-                    }  else if(Int(sourcePlatformId) == social.socialPlatformId["Twitter"]) {
-                        twitterIconHidden = false;
-                    }
-                }
-            }
-            
-            if (twitterIconHidden == false && facebookIconHidden == false) {
-                cell.sourceImageTwitter.isHidden = false;
-                cell.sourceImageFacebook.isHidden = false;
-                cell.sourceImageTwitter.image = UIImage.init(named: "twitter-group");
-                cell.sourceImageFacebook.image = UIImage.init(named: "facebook-group");
-            } else if (facebookIconHidden == false && twitterIconHidden == true) {
-                //If twitter is not present then we will replace sourceImageTwitter image with facebook
-                cell.sourceImageTwitter.isHidden = false;
-                cell.sourceImageFacebook.isHidden = true;
-                cell.sourceImageTwitter.image = UIImage.init(named: "facebook-group");
-            } else if (twitterIconHidden == false && facebookIconHidden == true) {
-                cell.sourceImageTwitter.isHidden = false;
-                cell.sourceImageFacebook.isHidden = true;
-                cell.sourceImageTwitter.image = UIImage.init(named: "twitter-group");
-            } else {
-                cell.sourceImageTwitter.isHidden = true;
-                cell.sourceImageFacebook.isHidden = true;
-            }*/
-            
+         
             /***** CODE TO SHOW HIDE PUSH TO TWITTER/FACEBOOK BUTTONS  *********/
             //Lets handle the logic of Hiding and Shwoing Publish Buttons.
             //First lets check if post status is Approved/ Published.
@@ -948,6 +969,20 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             let editButtonTapRecognizer = MyTapRecognizer.init(target: self, action: #selector(postDescriptionPressed(sender:)));
             editButtonTapRecognizer.rowId = indexPath.row;
             cell.editPostbutton.addGestureRecognizer(editButtonTapRecognizer);
+            
+            let deleteButtonTapRecognizer = PostToSocialMediaGestureRecognizer.init(target: self, action: #selector(postDeletePressed(sender:)));
+            deleteButtonTapRecognizer.post = post;
+            cell.deletePostButton.addGestureRecognizer(deleteButtonTapRecognizer);
+            
+            let deleteButtonFirstTapRecognizer = PostToSocialMediaGestureRecognizer.init(target: self, action: #selector(postDeletePressed(sender:)));
+            deleteButtonFirstTapRecognizer.post = post;
+           cell.deletePostButtonFirst.addGestureRecognizer(deleteButtonFirstTapRecognizer);
+            
+            let sharePostButtonTapRecognizer = PostToSocialMediaGestureRecognizer.init(target: self, action: #selector(sharePostButtonPressed(sender:)));
+            sharePostButtonTapRecognizer.post = post;
+            sharePostButtonTapRecognizer.postPrePublishView = cell.postPrePublishView;
+            sharePostButtonTapRecognizer.sharePostButton = cell.sharePostButton;
+            cell.sharePostButton.addGestureRecognizer(sharePostButtonTapRecognizer);
             
             var imageStatus = ""
             var status = "";
@@ -1108,7 +1143,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             
             activityIndicator.center = cell.center;
             activityIndicator.hidesWhenStopped = true;
-            activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.whiteLarge;
+            activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.gray;
             cell.addSubview(activityIndicator);
 
             return cell;

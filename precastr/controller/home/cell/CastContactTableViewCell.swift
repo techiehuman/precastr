@@ -19,6 +19,7 @@ class CastContactTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        self.callToModeratorView.roundView();
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

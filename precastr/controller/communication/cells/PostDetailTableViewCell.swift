@@ -46,6 +46,11 @@ class PostDetailTableViewCell: UITableViewCell, UIScrollViewDelegate {
     @IBOutlet weak var pushToSmsImage: UIImageView!
      @IBOutlet weak var pushToSmsText: UILabel!
     
+    @IBOutlet weak var deletePostButton: UIButton!
+    @IBOutlet weak var castContactsIcon : UIButton!
+    @IBOutlet weak var sharePostButton : UIButton!
+    @IBOutlet weak var approveMessageLabel: UILabel!
+    
     var currentCount : Int!
     var communicationViewControllerDelegate: CommunicationViewController!;
 
@@ -56,6 +61,10 @@ class PostDetailTableViewCell: UITableViewCell, UIScrollViewDelegate {
         
         self.imageGalleryScrollView.delegate = self
         self.imageCounterView.layer.cornerRadius = 1;
+        self.publishInfoButton.roundBtn();
+        self.castContactsIcon.roundBtn();
+        self.deletePostButton.roundBtn();
+        self.sharePostButton.roundBtn();
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

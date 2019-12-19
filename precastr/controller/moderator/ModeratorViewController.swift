@@ -187,6 +187,7 @@ class ModeratorViewController: UIViewController, CNContactPickerDelegate, MFMess
                     user.name = modeDict.value(forKey: "name") as! String
                     user.username = modeDict.value(forKey: "username") as! String
                     user.profilePic = modeDict.value(forKey: "profile_pic") as! String
+                    user.phoneNumber = modeDict.value(forKey: "phone_number") as! String
                     user.userId = Int32(((modeDict.value(forKey: "moderator_id") as? NSString)?.doubleValue)!)
                     let statusModerator = Int(((modeDict.value(forKey: "is_approved")as? NSString)?.doubleValue)!)
                     user.miscStatus = statusModerator as! Int
@@ -223,7 +224,7 @@ extension ModeratorViewController: UITableViewDelegate, UITableViewDataSource {
         return self.moderatorDto[section].sectionObjects.count;
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 60;
+        return 120;
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -242,7 +243,16 @@ extension ModeratorViewController: UITableViewDelegate, UITableViewDataSource {
        
         cell.profileImageView.roundImageView();
         cell.profileImageView.clipsToBounds = true
-        
+        if(moderatorObject.username != nil) {
+        cell.emailLabel.text = String(moderatorObject.username)
+        }else{
+             cell.emailLabel.text = ""
+        }
+        if(moderatorObject.phoneNumber != nil) {
+        cell.phoneNumberLabel.text = String(moderatorObject.phoneNumber)
+        }else{
+            cell.phoneNumberLabel.text = "";
+        }
         if(moderatorObject.miscStatus == 1){
             cell.acceptActionBtn.isHidden = true
             cell.removeActionBtn.isHidden = false
