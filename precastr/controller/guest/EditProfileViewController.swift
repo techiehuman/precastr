@@ -265,6 +265,9 @@ extension EditProfileViewController: UITableViewDelegate, UITableViewDataSource 
         cell.editProfileViewControllerDelegate = self;
         
         cell.emailTextLabel.text = loggedInUser.username!;
+     var nameInitials = getNameInitials(name: loggedInUser.name!)
+        print("getNameInitials : ")
+        print(nameInitials)
         cell.nameTextField.text = loggedInUser.name!;
         cell.phoneNumberTextField.text = loggedInUser.phoneNumber!;
         if(loggedInUser.countryCode != nil){

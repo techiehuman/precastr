@@ -255,6 +255,26 @@ extension UIViewController {
         alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil));
         self.present(alert, animated: true)
     }
+    
+    func showAlphabetsView(frame: CGRect, name: String, rowId: Int) -> UIView {
+        
+        let uiLettersView = UIView();
+        uiLettersView.frame = frame;
+        uiLettersView.roundView();
+        uiLettersView.backgroundColor = UIColor(red: 221/255, green: 223/255, blue: 226/255, alpha: 1);
+        uiLettersView.tag = rowId;
+        
+        let textViewLabel = UITextView();
+        textViewLabel.frame = CGRect.init(x: 0, y: (uiLettersView.frame.height/2 - 20), width: uiLettersView.frame.width, height: 32);
+        textViewLabel.textAlignment = .center;
+        textViewLabel.text = getNameInitials(name: name);
+        textViewLabel.backgroundColor = .clear
+        textViewLabel.font = UIFont(name: "VisbyCF-Bold", size: 18)
+        
+        uiLettersView.addSubview(textViewLabel);
+        
+        return uiLettersView;
+    }
 }
 
 // This syntax reflects changes made to the Swift language as of Aug. '16

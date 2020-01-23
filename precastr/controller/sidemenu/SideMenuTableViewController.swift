@@ -13,11 +13,15 @@ class SideMenuTableViewController: UITableViewController {
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var profilePic: UIImageView!
     @IBOutlet weak var moderatorRoleSwitch: UISwitch!
+    @IBOutlet weak var casterRoleSwitch: UISwitch!
+    @IBOutlet weak var moderatorTableCell : UITableViewCell!
+    @IBOutlet weak var casterTableCell : UITableViewCell!
 
     private var dateCellExpanded: Bool = false
     var rowTypeVar : Bool = false
     var loggedInUser: User!;
     var sideMenuOpenedFromScreen = "";
+     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView();
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,16 +41,25 @@ class SideMenuTableViewController: UITableViewController {
     
         if (self.loggedInUser.isCastr == 1) {
             moderatorRoleSwitch.setOn(false, animated: false);
-           
+            casterRoleSwitch.setOn(true, animated: false);
+            moderatorTableCell.backgroundColor = UIColor.white
+            casterTableCell.backgroundColor = UIColor(red: 221/255, green: 223/255, blue: 226/255, alpha: 1)
             
         } else if (self.loggedInUser.isCastr == 2) {
             moderatorRoleSwitch.setOn(true, animated: false);
+            casterRoleSwitch.setOn(false, animated: false);
+            moderatorTableCell.backgroundColor = UIColor(red: 221/255, green: 223/255, blue: 226/255, alpha: 1)
+            casterTableCell.backgroundColor = UIColor.white
             
         }
         //moderatorRoleSwitch.isEnabled = false;
         profilePic.sd_setImage(with: URL(string: self.loggedInUser.profilePic), placeholderImage: UIImage.init(named: "Moderate Casts"));
         
         print("Table Reloadedddd...");
+        activityIndicator.center = self.view.center;
+        activityIndicator.hidesWhenStopped = true;
+        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.gray;
+        self.view.addSubview(activityIndicator);
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -70,27 +83,52 @@ class SideMenuTableViewController: UITableViewController {
     }
     
     @IBAction func moderatorSwitchChanged(_ sender: Any) {
-        if (moderatorRoleSwitch.isOn == true) {
-            self.loggedInUser.isCastr = 2;
-            User().updateUserRole(roleId: 2);
-            //let tabBarContro = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MadTabBar") as! UITabBarController
-            //tabBarContro.viewControllers?.remove(at: 1)
+        moderatorRoleSwitch.setOn(true, animated: false)
+        casterRoleSwitch.setOn(false, animated: false)
+       changeAccountStatus();
+    }
+    
+    @IBAction func casterSwitchChanged(_ sender: Any) {
+        casterRoleSwitch.setOn(true, animated: false)
+        moderatorRoleSwitch.setOn(false, animated: false)
+
+        changeAccountStatus();
+    }
+    
+    func changeAccountStatus(){
+        self.activityIndicator.startAnimating();
+        if (casterRoleSwitch.isOn == true) {
+            self.loggedInUser.isCastr = 1;
+            User().updateUserRole(roleId: 1);
             
             var vewContrs = UIApplication.shared.keyWindow?.rootViewController?.tabBarController?.viewControllers
             vewContrs?.remove(at: 1);
             UIApplication.shared.keyWindow?.rootViewController?.tabBarController?.viewControllers = vewContrs;
-            
-            self.showToastMultipleLines(message: "You have turned ON the \"MODERATOR MODE\".\nPlease go on the \"Home Screen\" and moderate the casts..");
-        } else {
-            self.loggedInUser.isCastr = 1;
-            User().updateUserRole(roleId: 1);
-            
             self.showToastMultipleLines(message: "You have turned ON the \"CASTER MODE\".\nPlease go on the \"Home Screen\" and manage your casts.")
-
+            moderatorRoleSwitch.setOn(false, animated: false)
+            casterRoleSwitch.setOn(true, animated: false)
+            moderatorTableCell.backgroundColor = UIColor.white
+            casterTableCell.backgroundColor = UIColor(red: 221/255, green: 223/255, blue: 226/255, alpha: 1)
+        } else if(moderatorRoleSwitch.isOn == true) {
+            self.loggedInUser.isCastr = 2;
+            User().updateUserRole(roleId: 2);
+            self.showToastMultipleLines(message: "You have turned ON the \"MODERATOR MODE\".\nPlease go on the \"Home Screen\" and moderate the casts..");
+            moderatorRoleSwitch.setOn(true, animated: false)
+            casterRoleSwitch.setOn(false, animated: false)
+            moderatorTableCell.backgroundColor = UIColor(red: 221/255, green: 223/255, blue: 226/255, alpha: 1)
+            casterTableCell.backgroundColor = UIColor.white
+            
         }
-          self.tableView.reloadData()
+        self.tableView.reloadData()
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(5), execute:  {
+//            self.showAlert(title: "alert", message: "ruk jao")
+            self.activityIndicator.stopAnimating();
+            UIApplication.shared.keyWindow?.rootViewController = HomeViewController.MainViewController();
+        })
+        
+        
+        
     }
-    
     
     func logout() {
         

@@ -77,9 +77,17 @@ extension CastContactsViewController : UITableViewDataSource, UITableViewDelegat
         
         let cell: CastContactTableViewCell = tableView.dequeueReusableCell(withIdentifier: "CastContactTableViewCell", for: indexPath) as! CastContactTableViewCell;
         
-        if (castContact.profilePic == nil) {
+        for uiTextNameView in cell.subviews {
+            if (uiTextNameView.tag == indexPath.row) {
+                uiTextNameView.removeFromSuperview();
+            }
+        }
+        if (castContact.profilePic == nil || castContact.profilePic == "") {
             cell.moderatorProfilePic.image = UIImage.init(named: "Moderate Casts");
+            cell.moderatorProfilePic.isHidden = true;
+            cell.addSubview(self.showAlphabetsView(frame: cell.moderatorProfilePic.frame, name: castContact.name, rowId: indexPath.row));
         } else {
+            cell.moderatorProfilePic.isHidden = false;
             cell.moderatorProfilePic.sd_setImage(with: URL.init(string: castContact.profilePic), placeholderImage: UIImage.init(named: "Moderate Casts"),  completed: nil);
         }
         

@@ -20,6 +20,7 @@ class CastContactTableViewCell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
         self.callToModeratorView.roundView();
+        self.moderatorProfilePic.roundImageView();
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

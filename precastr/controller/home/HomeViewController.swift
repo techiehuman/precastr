@@ -167,6 +167,8 @@ class HomeViewController: UIViewController, EasyTipViewDelegate, SharingDelegate
        
     }
     
+    
+    
    class func showBadgeCount() {
         let loggedInUser = User().loadUserDataFromUserDefaults(userDataDict: setting);
     let jsonURL = "posts/get_notifications_count/format/json";
@@ -1105,6 +1107,9 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
                 cell.imageGalleryScrollView.frame = CGRect.init(x: 0, y: y, width: Int(cell.imageGalleryScrollView.frame.width), height: HomePostCellHeight.ScrollViewHeight)
                 
                 cell.setupSlideScrollView()
+                
+              
+                
                 if(cell.imagesArray.count > 1){
                     
                     cell.pageControl.numberOfPages = cell.imagesArray.count

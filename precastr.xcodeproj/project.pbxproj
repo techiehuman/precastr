@@ -47,6 +47,7 @@
 		90B611AF235623410060255D /* CountryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90B611AD235623410060255D /* CountryTableViewCell.swift */; };
 		90B611B0235623410060255D /* CountryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90B611AE235623410060255D /* CountryTableViewCell.xib */; };
 		90B611B2235623840060255D /* CountryCodeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90B611B1235623830060255D /* CountryCodeService.swift */; };
+		90B7FFC423BE0E9A00CB7278 /* ImageViewerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90B7FFC323BE0E9A00CB7278 /* ImageViewerViewController.swift */; };
 		90C8F55E235B267B00ECD8B1 /* CastContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90C8F55D235B267B00ECD8B1 /* CastContactsViewController.swift */; };
 		90C8F561235B26CA00ECD8B1 /* CastContactTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90C8F55F235B26CA00ECD8B1 /* CastContactTableViewCell.swift */; };
 		90C8F562235B26CA00ECD8B1 /* CastContactTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90C8F560235B26CA00ECD8B1 /* CastContactTableViewCell.xib */; };
@@ -182,6 +183,7 @@
 		90B611AD235623410060255D /* CountryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryTableViewCell.swift; sourceTree = "<group>"; };
 		90B611AE235623410060255D /* CountryTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CountryTableViewCell.xib; sourceTree = "<group>"; };
 		90B611B1235623830060255D /* CountryCodeService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountryCodeService.swift; sourceTree = "<group>"; };
+		90B7FFC323BE0E9A00CB7278 /* ImageViewerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewerViewController.swift; sourceTree = "<group>"; };
 		90C8F55D235B267B00ECD8B1 /* CastContactsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CastContactsViewController.swift; sourceTree = "<group>"; };
 		90C8F55F235B26CA00ECD8B1 /* CastContactTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CastContactTableViewCell.swift; sourceTree = "<group>"; };
 		90C8F560235B26CA00ECD8B1 /* CastContactTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CastContactTableViewCell.xib; sourceTree = "<group>"; };
@@ -553,6 +555,7 @@
 				5EB754DB22ABE125006D636B /* ForgetPasswordViewController.swift */,
 				9010B4AB22CF2AB70083A468 /* TermsPageViewController.swift */,
 				90B54ADB235F0524000574FF /* UpdatePhoneNumberViewController.swift */,
+				90B7FFC323BE0E9A00CB7278 /* ImageViewerViewController.swift */,
 			);
 			path = guest;
 			sourceTree = "<group>";
@@ -1016,6 +1019,7 @@
 				FAD5015322AA6F3100D21F57 /* EditProfileViewController.swift in Sources */,
 				90B611AA2356205D0060255D /* CountryViewController.swift in Sources */,
 				FA4D544C2260F7F200E9589B /* UserTypeActionViewController.swift in Sources */,
+				90B7FFC423BE0E9A00CB7278 /* ImageViewerViewController.swift in Sources */,
 				5EB754DF22ABE136006D636B /* ForgetPasswordTableViewCell.swift in Sources */,
 				90881EF62341FB0F00023450 /* ContactTableViewCell.swift in Sources */,
 				5E2A0E2F22DF83EE009033E7 /* PostDetailTableViewCell.swift in Sources */,

@@ -167,9 +167,13 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </view>
+                    <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="cast_pagination_arrow" translatesAutoresizingMaskIntoConstraints="NO" id="Nae-nz-xd1">
+                        <rect key="frame" x="336" y="70" width="20" height="20"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                    </imageView>
                     <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="h2e-jP-uD5">
-                        <rect key="frame" x="16" y="87" width="350" height="23"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                        <rect key="frame" x="16" y="107" width="350" height="23"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </view>
                     <pageControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" hidesForSinglePage="YES" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="kmg-Py-FWc">
@@ -223,10 +227,6 @@
                         <inset key="imageEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
                         <state key="normal" title="View Details"/>
                     </button>
-                    <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="cast_pagination_arrow" translatesAutoresizingMaskIntoConstraints="NO" id="Nae-nz-xd1">
-                        <rect key="frame" x="186" y="111" width="20" height="19"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    </imageView>
                 </subviews>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
@@ -266,7 +266,7 @@
     </objects>
     <resources>
         <image name="approved" width="20" height="20"/>
-        <image name="cast_pagination_arrow" width="19.666666030883789" height="19"/>
+        <image name="cast_pagination_arrow" width="32" height="32"/>
         <image name="delete" width="17" height="18.5"/>
         <image name="info" width="9.5" height="18"/>
         <image name="message" width="20" height="20"/>

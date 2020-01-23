@@ -130,7 +130,19 @@ class HomeTextPostTableViewCell: UITableViewCell,UIScrollViewDelegate {
             print("imageGalleryScrollView", imageGalleryScrollView.frame.width)
             
             print("X Position : ", xposition, "width", imageGalleryScrollView.frame.width * CGFloat(i + 1));
-
+            /* code for double tapping */
+            
+            
+            
+            let tapGesture = ImageTapRecognizer.init(target: self, action: #selector(doubleTapped(sender:)));
+            tapGesture.imageView = imagesArray
+            tapGesture.imagePosition = i;
+            tapGesture.numberOfTapsRequired = 2
+            setupSlideScrollView.isUserInteractionEnabled = true
+            setupSlideScrollView.addGestureRecognizer(tapGesture)
+        
+            
+            /* code for double tapping */
             imageGalleryScrollView.addSubview(setupSlideScrollView)
             self.currentCount = i as! Int
         }
@@ -179,5 +191,15 @@ class HomeTextPostTableViewCell: UITableViewCell,UIScrollViewDelegate {
     }
     @objc func publishInfoIconPressed() {
         print("clicked");
+    }
+    @objc func doubleTapped(sender: ImageTapRecognizer) {
+        // do something here
+       print("i ma here")
+        print(sender.imagePosition)
+        
+    }
+    class ImageTapRecognizer : UITapGestureRecognizer {
+        var imageView: [String]!;
+        var imagePosition: Int!;
     }
 }

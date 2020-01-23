@@ -19,3 +19,13 @@ func loadPostStatus()->[PostStatus]{
     });
     return postData;
 }
+
+func getNameInitials(name: String ) -> String {
+    
+    let nameArray = name.split(separator: " ");
+    var initialString = "";
+    for array in nameArray{
+        initialString += String(array.prefix(1))
+    }
+    return initialString.uppercased();
+}
