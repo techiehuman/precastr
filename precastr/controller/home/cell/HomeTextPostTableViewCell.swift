@@ -69,6 +69,9 @@ class HomeTextPostTableViewCell: UITableViewCell,UIScrollViewDelegate {
     @IBOutlet weak var castContactsIcon: UIButton!
     @IBOutlet weak var castContactsIconFirst: UIButton!
     @IBOutlet weak var sharePostButton: UIButton!
+    
+    @IBOutlet weak var postMenuView: UIView!
+
     var currentCount : Int!
     var homeViewControllerDelegate: HomeViewController!;
 
@@ -86,8 +89,8 @@ class HomeTextPostTableViewCell: UITableViewCell,UIScrollViewDelegate {
         self.deletePostButton.roundBtn();
         self.deletePostButtonFirst.roundBtn();
         self.sharePostButton.roundBtn();
-        var predictiveIconTapGesture = UITapGestureRecognizer.init(target: self, action: #selector(publishInfoIconPressed))
-    }
+        var predictiveIconTapGesture = UITapGestureRecognizer.init(target: self, action: #selector(publishInfoIconPressed));
+            }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)

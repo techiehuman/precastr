@@ -681,6 +681,124 @@ class HomeViewController: UIViewController, EasyTipViewDelegate, SharingDelegate
         self.dismiss(animated: true, completion: nil)
     }
 
+    func adapterCasterCreateProNameLabel(cell: HomeTextPostTableViewCell, height: CGFloat, post: Post) -> UILabel {
+        
+        //This is your label
+         for view in cell.descriptionView.subviews {
+             view.removeFromSuperview();
+         }
+         let proNameLbl = UILabel(frame: CGRect(x: 0, y: 0, width: cell.contentView.frame.width - 30, height: height))
+         var lblToShow = "\(post.postDescription)";
+        
+        // proNameLbl.lineBreakMode = .byTruncatingTail
+         let paragraphStyle = NSMutableParagraphStyle()
+         //line height size
+         paragraphStyle.lineSpacing = 2
+         paragraphStyle.lineBreakMode = .byTruncatingTail
+         let attributes = [
+             NSAttributedStringKey.font : UIFont(name: "VisbyCF-Regular", size: 16.0)!,
+             NSAttributedStringKey.foregroundColor : UIColor.init(red: 34/255, green: 34/255, blue: 34/255, alpha: 1),
+             NSAttributedStringKey.paragraphStyle: paragraphStyle]
+         
+         let attrString = NSMutableAttributedString(string: lblToShow)
+         attrString.addAttributes(attributes, range: NSMakeRange(0, attrString.length));
+         proNameLbl.attributedText = attrString;
+         proNameLbl.isUserInteractionEnabled = true;
+         //proNameLbl.addGestureRecognizer(postDescTap);
+         if (height > 100) {
+             proNameLbl.numberOfLines = 4
+         } else {
+             proNameLbl.numberOfLines = 0
+         }
+        return proNameLbl;
+    }
+
+    func adapterCasterGetPostStatusImage(status: String) -> String {
+        
+        var imageStatus = "";
+        if (status == "Pending") {
+            imageStatus = "pending-review"
+        } else if (status == "Approved") {
+            imageStatus = "approved"
+        } else if (status == "Rejected") {
+            imageStatus = "rejected"
+        } else if(status == "Published") {
+            imageStatus = "published"
+        } else if(status == ""){
+            imageStatus = ""
+        }
+        return imageStatus;
+    }
+
+    func createPublishPostMenu(cell: HomeTextPostTableViewCell, post: Post) {
+        
+        let postToFacebookTapGesture = PostToSocialMediaGestureRecognizer.init(target: self, action: #selector(postToFacebookPressed(sender:)));
+        postToFacebookTapGesture.post = post;
+        
+        let postToTwitterTapGesture = PostToSocialMediaGestureRecognizer.init(target: self, action: #selector(postToTwitterPressed(sender:)));
+           postToTwitterTapGesture.post = post;
+           
+        let postToSMSTapGesture = PostToSocialMediaGestureRecognizer.init(target: self, action: #selector(postToSMSPressed(sender:)));
+           postToSMSTapGesture.post = post;
+        
+        let postCastMenu: PostCastMenu = PostCastMenu.instanceFromNib() as! PostCastMenu;
+        postCastMenu.facebookItem.addGestureRecognizer(postToFacebookTapGesture);
+        postCastMenu.twitterItem.addGestureRecognizer(postToTwitterTapGesture);
+        postCastMenu.messageItem.addGestureRecognizer(postToSMSTapGesture);
+        
+        if (post.postStatusId == HomePostPublishStatusId.PUBLISHSTATUSID) {
+            
+            var facebookPublished = false;
+            for socialMediaId in post.socialMediaIds {
+                if (socialMediaId == social.socialPlatformId["Facebook"]) {
+                    facebookPublished = true;
+                    break;
+                }else{
+                    facebookPublished = false;
+                }
+            }
+            
+            var twitterPublished = false;
+            for socialMediaId in post.socialMediaIds {
+                if (socialMediaId == social.socialPlatformId["Twitter"]) {
+                    twitterPublished = true;
+                    break;
+                }else{
+                    twitterPublished = false;
+                }
+            }
+
+            var smsPublished = false;
+            for socialMediaId in post.socialMediaIds {
+                if (socialMediaId == social.socialPlatformId["SMS"]) {
+                    smsPublished = true;
+                    break;
+                }else{
+                    smsPublished = false;
+                }
+            }
+            
+            if (facebookPublished == true) {
+                postCastMenu.facebookChecked.isHidden = false;
+            } else {
+                postCastMenu.facebookChecked.isHidden = true;
+            }
+            
+            if (twitterPublished == true) {
+                postCastMenu.twitterItem.isHidden = false;
+            } else {
+                postCastMenu.twitterItem.isHidden = true;
+            }
+            
+            if (smsPublished == true) {
+                postCastMenu.messageChecked.isHidden = false;
+            } else {
+                postCastMenu.messageChecked.isHidden = true;
+            }
+        }
+        cell.postMenuView.addSubview(postCastMenu);
+
+    }
 }
 
 class MyTapRecognizer : UITapGestureRecognizer {
@@ -812,6 +930,9 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             //cell.sourceImageFacebook.isHidden = false;
             //cell.sourceImageTwitter.isHidden = false;
             cell.homeViewControllerDelegate = self;
+            
+            createPublishPostMenu(cell: cell, post: post);
+            
             let postDescTap = MyTapRecognizer.init(target: self, action: #selector(postDescriptionPressed(sender:)));
             postDescTap.rowId = indexPath.row;
             
@@ -841,7 +962,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
                 cell.pushToFacebookView.layer.borderWidth = 0;
                 cell.pushToFacebookView.backgroundColor = UIColor.init(red: 82/255, green: 117/255, blue: 194/255, alpha: 1);
                 cell.pushToFacebookView.isUserInteractionEnabled = true;
-                
+                    
                 cell.pushToTwitterText.textColor = UIColor.white
                 cell.pushToTwitterView.backgroundColor = UIColor.init(red: 0, green: 153/255, blue: 219/255, alpha: 1);
                 cell.pushToTwitterView.layer.borderWidth = 0;
@@ -986,35 +1107,18 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             sharePostButtonTapRecognizer.sharePostButton = cell.sharePostButton;
             cell.sharePostButton.addGestureRecognizer(sharePostButtonTapRecognizer);
             
-            var imageStatus = ""
             var status = "";
-
             for postStatus in postStatusList {
                 if (postStatus.postStatusId == post.postStatusId) {
                     status = postStatus.title;
                 }
             }
-            
-            if (status == "Pending") {
-                imageStatus = "pending-review"
-               // status = "Pending review"
-            } else if (status == "Approved") {
-                imageStatus = "approved"
-              //  status = "Approved"
-            cell.editPostbutton.isHidden = false
-
-            } else if (status == "Rejected") {
-                imageStatus = "rejected"
-              //  status = "Rejected"
-            } else if(status == "Published") {
-                imageStatus = "published"
-               // status = "Deleted"
+            let imageStatus = adapterCasterGetPostStatusImage(status: status);
+            if (imageStatus == "approved") {
                 cell.editPostbutton.isHidden = false
-                
-            } else if(status == ""){
-                imageStatus = ""
+            } else if(imageStatus == "published") {
+                cell.editPostbutton.isHidden = false
             }
-            
             // status = "dfsdf fdsdfs dsfsdfsdf"
             cell.statusImage.image = UIImage.init(named: imageStatus)
             let pipe = " |"
@@ -1042,34 +1146,8 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
                 height = 100;
             }
 
-            //This is your label
-            for view in cell.descriptionView.subviews {
-                view.removeFromSuperview();
-            }
-            let proNameLbl = UILabel(frame: CGRect(x: 0, y: 0, width: cell.contentView.frame.width - 30, height: height))
-            var lblToShow = "\(post.postDescription)";
-           
-           // proNameLbl.lineBreakMode = .byTruncatingTail
-            let paragraphStyle = NSMutableParagraphStyle()
-            //line height size
-            paragraphStyle.lineSpacing = 2
-            paragraphStyle.lineBreakMode = .byTruncatingTail
-            let attributes = [
-                NSAttributedStringKey.font : UIFont(name: "VisbyCF-Regular", size: 16.0)!,
-                NSAttributedStringKey.foregroundColor : UIColor.init(red: 34/255, green: 34/255, blue: 34/255, alpha: 1),
-                NSAttributedStringKey.paragraphStyle: paragraphStyle]
+            cell.descriptionView.addSubview(adapterCasterCreateProNameLabel(cell: cell, height: height, post: post));
             
-            let attrString = NSMutableAttributedString(string: lblToShow)
-            attrString.addAttributes(attributes, range: NSMakeRange(0, attrString.length));
-            proNameLbl.attributedText = attrString;
-            proNameLbl.isUserInteractionEnabled = true;
-            //proNameLbl.addGestureRecognizer(postDescTap);
-            if (height > 100) {
-                proNameLbl.numberOfLines = 4
-            } else {
-                proNameLbl.numberOfLines = 0
-            }
-            cell.descriptionView.addSubview(proNameLbl)
             if (indexPath.row == (self.posts.count - 1)) {
                 cell.castPaginationArrow.isHidden = true;
             } else {
@@ -1107,8 +1185,6 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
                 cell.imageGalleryScrollView.frame = CGRect.init(x: 0, y: y, width: Int(cell.imageGalleryScrollView.frame.width), height: HomePostCellHeight.ScrollViewHeight)
                 
                 cell.setupSlideScrollView()
-                
-              
                 
                 if(cell.imagesArray.count > 1){
                     

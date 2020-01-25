@@ -19,6 +19,8 @@
 		5EB754E022ABE136006D636B /* ForgetPasswordTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5EB754DE22ABE136006D636B /* ForgetPasswordTableViewCell.xib */; };
 		5EC1B0C32316656B0017CDCB /* PostImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EC1B0C12316656B0017CDCB /* PostImageCollectionViewCell.swift */; };
 		5EC1B0C42316656B0017CDCB /* PostImageCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5EC1B0C22316656B0017CDCB /* PostImageCollectionViewCell.xib */; };
+		5EC1B79F23DB38D600F32C40 /* PostCastMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5EC1B79E23DB38D600F32C40 /* PostCastMenu.xib */; };
+		5EC1B7A123DB3D7100F32C40 /* PostCastMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EC1B7A023DB3D7100F32C40 /* PostCastMenu.swift */; };
 		5EC919A822DCA002002E9A3A /* PostManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EC919A722DCA002002E9A3A /* PostManager.swift */; };
 		5ED3A32A22BF3EE400F65CF2 /* PostCommunication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED3A32922BF3EE400F65CF2 /* PostCommunication.swift */; };
 		5EE9EBFF22B803C300FD04B6 /* HomeDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EE9EBFE22B803C300FD04B6 /* HomeDto.swift */; };
@@ -156,6 +158,8 @@
 		5EB754DE22ABE136006D636B /* ForgetPasswordTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ForgetPasswordTableViewCell.xib; sourceTree = "<group>"; };
 		5EC1B0C12316656B0017CDCB /* PostImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		5EC1B0C22316656B0017CDCB /* PostImageCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PostImageCollectionViewCell.xib; sourceTree = "<group>"; };
+		5EC1B79E23DB38D600F32C40 /* PostCastMenu.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PostCastMenu.xib; sourceTree = "<group>"; };
+		5EC1B7A023DB3D7100F32C40 /* PostCastMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCastMenu.swift; sourceTree = "<group>"; };
 		5EC919A722DCA002002E9A3A /* PostManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostManager.swift; sourceTree = "<group>"; };
 		5ED3A32922BF3EE400F65CF2 /* PostCommunication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCommunication.swift; sourceTree = "<group>"; };
 		5EE9EBFE22B803C300FD04B6 /* HomeDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeDto.swift; sourceTree = "<group>"; };
@@ -576,6 +580,8 @@
 			children = (
 				FA84F18422A03289007796A3 /* SlideUIView.swift */,
 				FA84F18622A0329D007796A3 /* Slide.xib */,
+				5EC1B79E23DB38D600F32C40 /* PostCastMenu.xib */,
+				5EC1B7A023DB3D7100F32C40 /* PostCastMenu.swift */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -843,6 +849,7 @@
 				FADFEAF822A51A46006E3CD2 /* VisbyCF-ExtraBoldOblique.otf in Resources */,
 				FA84F18C22A0E511007796A3 /* moderatorTableViewCell.xib in Resources */,
 				FAFCE3CB22999F1000AB6DB5 /* HomeTextPostTableViewCell.xib in Resources */,
+				5EC1B79F23DB38D600F32C40 /* PostCastMenu.xib in Resources */,
 				FAE6173B22B3B07E00A8B2F3 /* LeftCommunicationTableViewCell.xib in Resources */,
 				FADFEAF322A51A46006E3CD2 /* VisbyCF-Bold.otf in Resources */,
 				FADFEAFC22A51A46006E3CD2 /* VisbyCF-LightOblique.otf in Resources */,
@@ -1018,6 +1025,7 @@
 				5EEC6B5E22A67052005B1C34 /* LoginScreenViewController.swift in Sources */,
 				FAD5015322AA6F3100D21F57 /* EditProfileViewController.swift in Sources */,
 				90B611AA2356205D0060255D /* CountryViewController.swift in Sources */,
+				5EC1B7A123DB3D7100F32C40 /* PostCastMenu.swift in Sources */,
 				FA4D544C2260F7F200E9589B /* UserTypeActionViewController.swift in Sources */,
 				90B7FFC423BE0E9A00CB7278 /* ImageViewerViewController.swift in Sources */,
 				5EB754DF22ABE136006D636B /* ForgetPasswordTableViewCell.swift in Sources */,

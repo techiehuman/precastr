@@ -155,16 +155,32 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "DD40A8F0-1746-4A47-8ED6-475C127929CD"
+            uuid = "536D246C-8D7D-4EEE-BBD6-3B7C392BDE32"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "precastr/controller/guest/LoginScreenViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "90"
+            endingLineNumber = "90"
+            landmarkName = "userManage(jsonURL:user:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "5CC5A104-66E1-4ED5-BEA8-766B61431F79"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "precastr/controller/guest/SplashViewController.swift"
+            filePath = "CoreData/UserSocialMediaModel+CoreDataManager.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "38"
-            endingLineNumber = "38"
-            landmarkName = "navigateUser()"
+            startingLineNumber = "30"
+            endingLineNumber = "30"
+            landmarkName = "saveUserSocialMedias(socialMediaDict:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

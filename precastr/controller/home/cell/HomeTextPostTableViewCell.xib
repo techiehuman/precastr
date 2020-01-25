@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14810.12" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14766.15"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -25,6 +25,11 @@
                 <rect key="frame" x="0.0" y="0.0" width="382" height="590"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
+                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dcS-FK-fqJ">
+                        <rect key="frame" x="260" y="100" width="100" height="150"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                    </view>
                     <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DRm-aE-LGs">
                         <rect key="frame" x="120" y="15" width="257" height="25"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
@@ -244,6 +249,7 @@
                 <outlet property="imageGalleryScrollView" destination="DAD-Le-9Ur" id="VZT-cB-gwl"/>
                 <outlet property="pageControl" destination="kmg-Py-FWc" id="MZP-Xw-frJ"/>
                 <outlet property="pendingInfoView" destination="BfF-db-NRE" id="M7y-uo-sAo"/>
+                <outlet property="postMenuView" destination="dcS-FK-fqJ" id="54F-g1-kvb"/>
                 <outlet property="postPrePublishView" destination="9SE-4e-McF" id="rIo-B0-Zqd"/>
                 <outlet property="postStatusDateView" destination="DRm-aE-LGs" id="alz-IX-ImM"/>
                 <outlet property="profileLabel" destination="vi0-ky-EEw" id="pK9-sv-uvp"/>
@@ -261,7 +267,7 @@
                 <outlet property="statusImage" destination="Kbq-2p-8e2" id="t18-GW-yTc"/>
                 <outlet property="totalCountImageLbl" destination="eDX-MY-CWn" id="KdA-BQ-qZz"/>
             </connections>
-            <point key="canvasLocation" x="67.200000000000003" y="-69.265367316341838"/>
+            <point key="canvasLocation" x="44.799999999999997" y="-69.265367316341838"/>
         </tableViewCell>
     </objects>
     <resources>
