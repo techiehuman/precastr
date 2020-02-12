@@ -10,7 +10,14 @@
 		5E203CBA2349C5EA00EFFC2D /* ModeratorPhoneNumberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E203CB92349C5EA00EFFC2D /* ModeratorPhoneNumberViewController.swift */; };
 		5E2A0E2F22DF83EE009033E7 /* PostDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E2A0E2D22DF83EE009033E7 /* PostDetailTableViewCell.swift */; };
 		5E2A0E3022DF83EE009033E7 /* PostDetailTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5E2A0E2E22DF83EE009033E7 /* PostDetailTableViewCell.xib */; };
+		5E62E23023F2DCDA00A95C06 /* ArchieveViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E62E22F23F2DCDA00A95C06 /* ArchieveViewController.swift */; };
 		5E6BB7B222B530F500D92681 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E6BB7B122B530F500D92681 /* Post.swift */; };
+		5E8869BD23F30F3900D82A44 /* CasterPostTopView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5E8869BC23F30F3900D82A44 /* CasterPostTopView.xib */; };
+		5E8869BF23F30F4A00D82A44 /* ModeratorPostTopView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5E8869BE23F30F4A00D82A44 /* ModeratorPostTopView.xib */; };
+		5E8869C123F30F5E00D82A44 /* CasterPostTopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8869C023F30F5E00D82A44 /* CasterPostTopView.swift */; };
+		5E8869C323F30F6F00D82A44 /* ModeratorPostTopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8869C223F30F6F00D82A44 /* ModeratorPostTopView.swift */; };
+		5E8869C623F3102900D82A44 /* CasterViewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8869C423F3102900D82A44 /* CasterViewTableViewCell.swift */; };
+		5E8869C723F3102900D82A44 /* CasterViewTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5E8869C523F3102900D82A44 /* CasterViewTableViewCell.xib */; };
 		5E93313022D70ED300980BF5 /* SideMenuDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E93312F22D70ED300980BF5 /* SideMenuDto.swift */; };
 		5E94973B22C280FE0023F30B /* PostService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E94973A22C280FE0023F30B /* PostService.swift */; };
 		5E9A18F22318001A00AC5E79 /* PostImageDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E9A18F12318001A00AC5E79 /* PostImageDto.swift */; };
@@ -30,6 +37,9 @@
 		5EEC6B6122A6842F005B1C34 /* SignupScreenTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EEC6B5F22A6842F005B1C34 /* SignupScreenTableViewCell.swift */; };
 		5EEC6B6222A6842F005B1C34 /* SignupScreenTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5EEC6B6022A6842F005B1C34 /* SignupScreenTableViewCell.xib */; };
 		5EEC6B6422A68450005B1C34 /* SignupScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EEC6B6322A68450005B1C34 /* SignupScreenViewController.swift */; };
+		5EEFB61823F429EB00524082 /* SharePostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EEFB61723F429EB00524082 /* SharePostViewController.swift */; };
+		5EEFB61A23F43CC100524082 /* CastOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EEFB61923F43CC100524082 /* CastOptionsView.swift */; };
+		5EEFB61C23F43CD100524082 /* CastOptionsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5EEFB61B23F43CD100524082 /* CastOptionsView.xib */; };
 		5EF623F522A588E900124C55 /* PostFormTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF623F322A588E900124C55 /* PostFormTableViewCell.swift */; };
 		5EF623F622A588E900124C55 /* PostFormTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5EF623F422A588E900124C55 /* PostFormTableViewCell.xib */; };
 		5EF623F822A58ADB00124C55 /* CreatePostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF623F722A58ADB00124C55 /* CreatePostViewController.swift */; };
@@ -146,7 +156,14 @@
 		5E203CB92349C5EA00EFFC2D /* ModeratorPhoneNumberViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModeratorPhoneNumberViewController.swift; sourceTree = "<group>"; };
 		5E2A0E2D22DF83EE009033E7 /* PostDetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailTableViewCell.swift; sourceTree = "<group>"; };
 		5E2A0E2E22DF83EE009033E7 /* PostDetailTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PostDetailTableViewCell.xib; sourceTree = "<group>"; };
+		5E62E22F23F2DCDA00A95C06 /* ArchieveViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchieveViewController.swift; sourceTree = "<group>"; };
 		5E6BB7B122B530F500D92681 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
+		5E8869BC23F30F3900D82A44 /* CasterPostTopView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CasterPostTopView.xib; sourceTree = "<group>"; };
+		5E8869BE23F30F4A00D82A44 /* ModeratorPostTopView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ModeratorPostTopView.xib; sourceTree = "<group>"; };
+		5E8869C023F30F5E00D82A44 /* CasterPostTopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CasterPostTopView.swift; sourceTree = "<group>"; };
+		5E8869C223F30F6F00D82A44 /* ModeratorPostTopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModeratorPostTopView.swift; sourceTree = "<group>"; };
+		5E8869C423F3102900D82A44 /* CasterViewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CasterViewTableViewCell.swift; sourceTree = "<group>"; };
+		5E8869C523F3102900D82A44 /* CasterViewTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CasterViewTableViewCell.xib; sourceTree = "<group>"; };
 		5E93312F22D70ED300980BF5 /* SideMenuDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuDto.swift; sourceTree = "<group>"; };
 		5E93313122DB900200980BF5 /* FacebookCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = FacebookCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5E93313322DB900200980BF5 /* FacebookLogin.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = FacebookLogin.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -169,6 +186,9 @@
 		5EEC6B5F22A6842F005B1C34 /* SignupScreenTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupScreenTableViewCell.swift; sourceTree = "<group>"; };
 		5EEC6B6022A6842F005B1C34 /* SignupScreenTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SignupScreenTableViewCell.xib; sourceTree = "<group>"; };
 		5EEC6B6322A68450005B1C34 /* SignupScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupScreenViewController.swift; sourceTree = "<group>"; };
+		5EEFB61723F429EB00524082 /* SharePostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharePostViewController.swift; sourceTree = "<group>"; };
+		5EEFB61923F43CC100524082 /* CastOptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CastOptionsView.swift; sourceTree = "<group>"; };
+		5EEFB61B23F43CD100524082 /* CastOptionsView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CastOptionsView.xib; sourceTree = "<group>"; };
 		5EF623F322A588E900124C55 /* PostFormTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostFormTableViewCell.swift; sourceTree = "<group>"; };
 		5EF623F422A588E900124C55 /* PostFormTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PostFormTableViewCell.xib; sourceTree = "<group>"; };
 		5EF623F722A58ADB00124C55 /* CreatePostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePostViewController.swift; sourceTree = "<group>"; };
@@ -459,6 +479,8 @@
 				FAD5015522AE895C00D21F57 /* NotificationTableViewCell.xib */,
 				90C8F55F235B26CA00ECD8B1 /* CastContactTableViewCell.swift */,
 				90C8F560235B26CA00ECD8B1 /* CastContactTableViewCell.xib */,
+				5E8869C423F3102900D82A44 /* CasterViewTableViewCell.swift */,
+				5E8869C523F3102900D82A44 /* CasterViewTableViewCell.xib */,
 			);
 			path = cell;
 			sourceTree = "<group>";
@@ -582,6 +604,12 @@
 				FA84F18622A0329D007796A3 /* Slide.xib */,
 				5EC1B79E23DB38D600F32C40 /* PostCastMenu.xib */,
 				5EC1B7A023DB3D7100F32C40 /* PostCastMenu.swift */,
+				5E8869BC23F30F3900D82A44 /* CasterPostTopView.xib */,
+				5E8869BE23F30F4A00D82A44 /* ModeratorPostTopView.xib */,
+				5E8869C023F30F5E00D82A44 /* CasterPostTopView.swift */,
+				5E8869C223F30F6F00D82A44 /* ModeratorPostTopView.swift */,
+				5EEFB61923F43CC100524082 /* CastOptionsView.swift */,
+				5EEFB61B23F43CD100524082 /* CastOptionsView.xib */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -614,6 +642,8 @@
 				FAD5015822AE8E4600D21F57 /* NotificationViewController.swift */,
 				5E203CB92349C5EA00EFFC2D /* ModeratorPhoneNumberViewController.swift */,
 				90C8F55D235B267B00ECD8B1 /* CastContactsViewController.swift */,
+				5E62E22F23F2DCDA00A95C06 /* ArchieveViewController.swift */,
+				5EEFB61723F429EB00524082 /* SharePostViewController.swift */,
 			);
 			path = home;
 			sourceTree = "<group>";
@@ -828,6 +858,7 @@
 			files = (
 				90881EF72341FB0F00023450 /* ContactTableViewCell.xib in Resources */,
 				FA6AB58622531E8200C5491F /* LaunchScreen.storyboard in Resources */,
+				5E8869BD23F30F3900D82A44 /* CasterPostTopView.xib in Resources */,
 				FADFEAFE22A51A46006E3CD2 /* VisbyCF-MediumOblique.otf in Resources */,
 				90C8F562235B26CA00ECD8B1 /* CastContactTableViewCell.xib in Resources */,
 				FADFEB0022A51A46006E3CD2 /* VisbyCF-RegularOblique.otf in Resources */,
@@ -843,8 +874,11 @@
 				FA84F18722A0329D007796A3 /* Slide.xib in Resources */,
 				FAD5014D22A97B0400D21F57 /* ModeratorCastsTableViewCell.xib in Resources */,
 				90B611B0235623410060255D /* CountryTableViewCell.xib in Resources */,
+				5E8869C723F3102900D82A44 /* CasterViewTableViewCell.xib in Resources */,
 				5EF623F622A588E900124C55 /* PostFormTableViewCell.xib in Resources */,
 				FADFEAF622A51A46006E3CD2 /* VisbyCF-DemiBoldOblique.otf in Resources */,
+				5E8869BF23F30F4A00D82A44 /* ModeratorPostTopView.xib in Resources */,
+				5EEFB61C23F43CD100524082 /* CastOptionsView.xib in Resources */,
 				FAD5015122AA6B1700D21F57 /* EditProfileTableViewCell.xib in Resources */,
 				FADFEAF822A51A46006E3CD2 /* VisbyCF-ExtraBoldOblique.otf in Resources */,
 				FA84F18C22A0E511007796A3 /* moderatorTableViewCell.xib in Resources */,
@@ -999,8 +1033,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				5EC1B0C32316656B0017CDCB /* PostImageCollectionViewCell.swift in Sources */,
+				5E62E23023F2DCDA00A95C06 /* ArchieveViewController.swift in Sources */,
 				FAE6173E22B3B09800A8B2F3 /* RightCommunicationTableViewCell.swift in Sources */,
 				FA0372E222605A3800C3B3C9 /* UserManager.swift in Sources */,
+				5E8869C123F30F5E00D82A44 /* CasterPostTopView.swift in Sources */,
 				90B611B2235623840060255D /* CountryCodeService.swift in Sources */,
 				FAE6173A22B3B07E00A8B2F3 /* LeftCommunicationTableViewCell.swift in Sources */,
 				5E6BB7B222B530F500D92681 /* Post.swift in Sources */,
@@ -1014,6 +1050,7 @@
 				FA6AB57E22531E7300C5491F /* ViewController.swift in Sources */,
 				90C8F55E235B267B00ECD8B1 /* CastContactsViewController.swift in Sources */,
 				9010B4AF22CF6D070083A468 /* CastersViewController.swift in Sources */,
+				5EEFB61A23F43CC100524082 /* CastOptionsView.swift in Sources */,
 				5E93313022D70ED300980BF5 /* SideMenuDto.swift in Sources */,
 				5E9A18F22318001A00AC5E79 /* PostImageDto.swift in Sources */,
 				FA72E17922624DC500A259A1 /* CastModeratorViewController.swift in Sources */,
@@ -1027,6 +1064,7 @@
 				90B611AA2356205D0060255D /* CountryViewController.swift in Sources */,
 				5EC1B7A123DB3D7100F32C40 /* PostCastMenu.swift in Sources */,
 				FA4D544C2260F7F200E9589B /* UserTypeActionViewController.swift in Sources */,
+				5EEFB61823F429EB00524082 /* SharePostViewController.swift in Sources */,
 				90B7FFC423BE0E9A00CB7278 /* ImageViewerViewController.swift in Sources */,
 				5EB754DF22ABE136006D636B /* ForgetPasswordTableViewCell.swift in Sources */,
 				90881EF62341FB0F00023450 /* ContactTableViewCell.swift in Sources */,
@@ -1057,10 +1095,12 @@
 				5E94973B22C280FE0023F30B /* PostService.swift in Sources */,
 				5EB754DC22ABE125006D636B /* ForgetPasswordViewController.swift in Sources */,
 				FA84F178229C5E7A007796A3 /* ModeratorsDto.swift in Sources */,
+				5E8869C323F30F6F00D82A44 /* ModeratorPostTopView.swift in Sources */,
 				FAF601CC228AAE6800B54F9B /* VerificationModeratorViewController.swift in Sources */,
 				908D6F3322C243D800762145 /* PostStatus.swift in Sources */,
 				FABF02482264EF650067960C /* HomeViewController.swift in Sources */,
 				5EF623F822A58ADB00124C55 /* CreatePostViewController.swift in Sources */,
+				5E8869C623F3102900D82A44 /* CasterViewTableViewCell.swift in Sources */,
 				FAE4DF64225F155C008875C3 /* AppUtil.swift in Sources */,
 				FABF025B226DBE650067960C /* ModeratorViewController.swift in Sources */,
 				5EF623F522A588E900124C55 /* PostFormTableViewCell.swift in Sources */,

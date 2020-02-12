@@ -277,6 +277,12 @@ extension UIViewController {
     }
 }
 
+extension UITableViewCell {
+    class MyTapRecognizer : UITapGestureRecognizer {
+        var rowId: Int!;
+        var post: Post!;
+    }
+}
 // This syntax reflects changes made to the Swift language as of Aug. '16
 extension UIView {
     
