@@ -64,6 +64,18 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
     var easyToolTip: EasyTipView!
     var placeholderText = "Communicate with your Moderator.\nP.S. - This won't edit the post. In order to edit the post, please click on the \"Edit Post\" button.";
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView();
+    
+    class func MainViewController() -> UITabBarController{
+        
+        let tabBarContro = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MadTabBar") as! UITabBarController
+        let loggedInUser = User().loadUserDataFromUserDefaults(userDataDict: setting);
+        if (loggedInUser.isCastr == 2) {
+            tabBarContro.viewControllers?.remove(at: 1)
+        }
+        return tabBarContro;
+        //return UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MadTabBar") as! UITabBarController
+        
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
 

@@ -16,7 +16,7 @@ import FBSDKCoreKit
 import EasyTipView
 import MessageUI
 
-class HomeViewController: UIViewController, EasyTipViewDelegate, SharingDelegate,MFMessageComposeViewControllerDelegate {
+class HomeViewController: SharePostViewController, EasyTipViewDelegate, SharingDelegate,MFMessageComposeViewControllerDelegate {
 
     @IBOutlet weak var socialPostList: UITableView!
     
@@ -713,22 +713,6 @@ class HomeViewController: UIViewController, EasyTipViewDelegate, SharingDelegate
         return proNameLbl;
     }
 
-    func adapterCasterGetPostStatusImage(status: String) -> String {
-        
-        var imageStatus = "";
-        if (status == "Pending") {
-            imageStatus = "pending-review"
-        } else if (status == "Approved") {
-            imageStatus = "approved"
-        } else if (status == "Rejected") {
-            imageStatus = "rejected"
-        } else if(status == "Published") {
-            imageStatus = "published"
-        } else if(status == ""){
-            imageStatus = ""
-        }
-        return imageStatus;
-    }
 
     func createPublishPostMenu(cell: HomeTextPostTableViewCell, post: Post) {
         
