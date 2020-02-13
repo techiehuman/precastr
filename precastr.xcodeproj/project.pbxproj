@@ -40,6 +40,7 @@
 		5EEFB61823F429EB00524082 /* SharePostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EEFB61723F429EB00524082 /* SharePostViewController.swift */; };
 		5EEFB61A23F43CC100524082 /* CastOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EEFB61923F43CC100524082 /* CastOptionsView.swift */; };
 		5EEFB61C23F43CD100524082 /* CastOptionsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5EEFB61B23F43CD100524082 /* CastOptionsView.xib */; };
+		5EEFB61E23F52EFF00524082 /* CastOptionApprovedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EEFB61D23F52EFF00524082 /* CastOptionApprovedView.swift */; };
 		5EF623F522A588E900124C55 /* PostFormTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF623F322A588E900124C55 /* PostFormTableViewCell.swift */; };
 		5EF623F622A588E900124C55 /* PostFormTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5EF623F422A588E900124C55 /* PostFormTableViewCell.xib */; };
 		5EF623F822A58ADB00124C55 /* CreatePostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF623F722A58ADB00124C55 /* CreatePostViewController.swift */; };
@@ -189,6 +190,7 @@
 		5EEFB61723F429EB00524082 /* SharePostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharePostViewController.swift; sourceTree = "<group>"; };
 		5EEFB61923F43CC100524082 /* CastOptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CastOptionsView.swift; sourceTree = "<group>"; };
 		5EEFB61B23F43CD100524082 /* CastOptionsView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CastOptionsView.xib; sourceTree = "<group>"; };
+		5EEFB61D23F52EFF00524082 /* CastOptionApprovedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CastOptionApprovedView.swift; sourceTree = "<group>"; };
 		5EF623F322A588E900124C55 /* PostFormTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostFormTableViewCell.swift; sourceTree = "<group>"; };
 		5EF623F422A588E900124C55 /* PostFormTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PostFormTableViewCell.xib; sourceTree = "<group>"; };
 		5EF623F722A58ADB00124C55 /* CreatePostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePostViewController.swift; sourceTree = "<group>"; };
@@ -610,6 +612,7 @@
 				5E8869C223F30F6F00D82A44 /* ModeratorPostTopView.swift */,
 				5EEFB61923F43CC100524082 /* CastOptionsView.swift */,
 				5EEFB61B23F43CD100524082 /* CastOptionsView.xib */,
+				5EEFB61D23F52EFF00524082 /* CastOptionApprovedView.swift */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -1065,6 +1068,7 @@
 				5EC1B7A123DB3D7100F32C40 /* PostCastMenu.swift in Sources */,
 				FA4D544C2260F7F200E9589B /* UserTypeActionViewController.swift in Sources */,
 				5EEFB61823F429EB00524082 /* SharePostViewController.swift in Sources */,
+				5EEFB61E23F52EFF00524082 /* CastOptionApprovedView.swift in Sources */,
 				90B7FFC423BE0E9A00CB7278 /* ImageViewerViewController.swift in Sources */,
 				5EB754DF22ABE136006D636B /* ForgetPasswordTableViewCell.swift in Sources */,
 				90881EF62341FB0F00023450 /* ContactTableViewCell.swift in Sources */,
