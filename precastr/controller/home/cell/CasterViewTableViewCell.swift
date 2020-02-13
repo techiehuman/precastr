@@ -11,7 +11,8 @@ import UIKit
 class CasterViewTableViewCell: UITableViewCell {
 
     @IBOutlet weak var postTopView: UIView!
-    
+    @IBOutlet weak var castOptionsView: UIView!
+
     var pushViewController: UIViewController!;
     
     override func awakeFromNib() {
@@ -33,6 +34,11 @@ class CasterViewTableViewCell: UITableViewCell {
          pushViewController.navigationController?.pushViewController(viewController, animated: true);
     }
     
+    @objc func deleteButtonPressed(sender: MyTapRecognizer){
+    
+        (pushViewController as! HomeViewController).deleteButtonPresses(post: sender.post);
+    }
+    
     func populateCasterTopView(post: Post) -> CasterPostTopView {
         
         let editButtonTapRecognizer = MyTapRecognizer.init(target: self, action: #selector(postDescriptionPressed(sender:)));
@@ -52,6 +58,7 @@ class CasterViewTableViewCell: UITableViewCell {
         for postStatus in postStatusList {
             if (postStatus.postStatusId == post.postStatusId) {
                 status = postStatus.title;
+                break;
             }
         }
         
@@ -73,4 +80,37 @@ class CasterViewTableViewCell: UITableViewCell {
         return casterPostTopView;
     }
     
+    
+    func populateCastOptionsView(post: Post) -> UIView {
+        //Setting Status of Post
+        var status = "";
+        for postStatus in postStatusList {
+            if (postStatus.postStatusId == post.postStatusId) {
+                status = postStatus.title;
+                break;
+            }
+        }
+        
+        if (status == "Pending") {
+            
+            let castOptions:CastOptionsView = Bundle.main.loadNibNamed("CastOptionsView", owner: self, options: nil)![0] as! CastOptionsView;
+            
+            let deleteButtonTapRecognizer = MyTapRecognizer.init(target: self, action: #selector(deleteButtonPressed(sender:)));
+            deleteButtonTapRecognizer.post = post;
+            castOptions.deleteBtn.addGestureRecognizer(deleteButtonTapRecognizer);
+            
+            return castOptions;
+            
+        } else {
+            let castOptions:CastOptionApprovedView = Bundle.main.loadNibNamed("CastOptionsView", owner: self, options: nil)![1] as! CastOptionApprovedView;
+                                   
+               let deleteButtonTapRecognizer = MyTapRecognizer.init(target: self, action: #selector(deleteButtonPressed(sender:)));
+               deleteButtonTapRecognizer.post = post;
+               castOptions.deleteBtn.addGestureRecognizer(deleteButtonTapRecognizer);
+         
+            return castOptions;
+        }
+        
+        return UIView();
+    }
 }

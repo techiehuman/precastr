@@ -17,5 +17,16 @@ class CastOptionApprovedView: UIView {
         // Drawing code
     }
     */
+    @IBOutlet weak var deleteBtn: UIButton!;
+    @IBOutlet weak var callButtonBtn: UIButton!;
+    @IBOutlet weak var facebookInfoBtn: UIButton!;
+    @IBOutlet weak var sharePostBtn: UIButton!;
+    
+    override func draw(_ rect: CGRect) {
+        deleteBtn.roundBtn();
+        callButtonBtn.roundBtn();
+        facebookInfoBtn.roundBtn();
+        sharePostBtn.roundBtn();
+    }
 
 }

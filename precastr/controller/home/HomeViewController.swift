@@ -339,6 +339,33 @@ class HomeViewController: SharePostViewController, EasyTipViewDelegate, SharingD
         });
     }
     
+    func deleteButtonPresses(post: Post) {
+        var postData = [String: Any]();
+         postData["post_id"] = post.postId;
+         let alert = UIAlertController.init(title: "Delete this cast.", message: "", preferredStyle: .alert);
+         alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil));
+         alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: {(response) in
+        
+             
+             
+             let jsonURL = "posts/delete_cast/format/json"
+             DispatchQueue.main.async {
+                 self.activityIndicator.startAnimating();
+             }
+             UserService().postDataMethod(jsonURL: jsonURL, postData: postData, complete: {(response) in
+                 print(response)
+                 self.activityIndicator.stopAnimating();
+                 
+                 let statusCode = Int(response.value(forKey: "status") as! String)!
+                 if(statusCode == 0) {
+                     self.showAlert(title: "Alert", message: response.value(forKey: "message") as! String);
+                 } else {
+                     self.loadUserPosts();
+                 }
+             });
+              }));
+              self.present(alert, animated: true)
+    }
     @objc func editPostButtonPressed(sender: EditButtonTapRecognizer){
         
         let viewController = self.storyboard?.instantiateViewController(withIdentifier: "CreatePostViewController") as! CreatePostViewController;
@@ -367,7 +394,7 @@ class HomeViewController: SharePostViewController, EasyTipViewDelegate, SharingD
         viewController.post = self.posts[sender.rowId];
         self.navigationController?.pushViewController(viewController, animated: true);
     }
-    @objc func postDeletePressed(sender: PostToSocialMediaGestureRecognizer){
+    @objc func postDeletePressed(sender: PostToSocialMediaGestureRecognizer) {
         
         var postData = [String: Any]();
         let post = sender.post;
@@ -393,11 +420,6 @@ class HomeViewController: SharePostViewController, EasyTipViewDelegate, SharingD
                     self.loadUserPosts();
                 }
             });
-            
-            
-            
-            
-            
              }));
              self.present(alert, animated: true)
     }

@@ -22,10 +22,16 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                     </view>
+                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fZT-RP-tDo">
+                        <rect key="frame" x="0.0" y="71" width="407" height="63"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                    </view>
                 </subviews>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
+                <outlet property="castOptionsView" destination="fZT-RP-tDo" id="yar-5Y-5Ek"/>
                 <outlet property="postTopView" destination="xHe-B7-i7v" id="ioc-fc-orM"/>
             </connections>
             <point key="canvasLocation" x="107.97101449275362" y="153.01339285714286"/>

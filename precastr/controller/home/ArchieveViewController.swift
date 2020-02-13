@@ -82,7 +82,7 @@ extension ArchieveViewController: UITableViewDelegate, UITableViewDataSource {
         let cell: CasterViewTableViewCell = tableView.dequeueReusableCell(withIdentifier: "CasterViewTableViewCell", for: indexPath) as! CasterViewTableViewCell;
         cell.pushViewController = self;
         cell.postTopView.addSubview(cell.populateCasterTopView(post: post));
-        
+        cell.castOptionsView.addSubview(cell.populateCastOptionsView(post: post));
         return cell;
     }
     
