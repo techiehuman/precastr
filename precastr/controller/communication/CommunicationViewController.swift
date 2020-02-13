@@ -47,7 +47,7 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
     
     var loggedInUser : User!
     var uploadImage : [UIImage] = [UIImage]()
-    var imageDelegate : ImageLibProtocolT!
+    var imageDelegate : ImageLibProtocolC!
     var socialMediaPlatform : [Int]!
     var uploadImageStatus = false
     var facebookExists = false
@@ -62,7 +62,7 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
     var postArray : [String:Any] = [String:Any]()
     var postToPublish: Post!;
     var easyToolTip: EasyTipView!
-    var placeholderText = "Communicate with your Moderator.\nP.S. - This won't edit the post. In order to edit the post, please click on the \"Edit Post\" button.";
+    var placeholderText = "Communicate with your Moderator.\nTo edit post click on the \"Edit Post\" button at top.";
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView();
     
     class func MainViewController() -> UITabBarController{
@@ -281,9 +281,9 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
         var postData = [String: Any]();
         let post = sender.post;
         postData["post_id"] = post?.postId;
-        let alert = UIAlertController.init(title: "Delete!", message: "Are you sure?", preferredStyle: .alert);
-        alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil));
-        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: {(response) in
+        let alert = UIAlertController.init(title: "Delete this cast.", message: "", preferredStyle: .alert);
+        alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil));
+        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: {(response) in
             
             
             
