@@ -65,7 +65,6 @@
 		90C8F562235B26CA00ECD8B1 /* CastContactTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90C8F560235B26CA00ECD8B1 /* CastContactTableViewCell.xib */; };
 		90F14680236058770096D56C /* UpdatePhoneNumberTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90F1467E236058770096D56C /* UpdatePhoneNumberTableViewCell.swift */; };
 		90F14681236058770096D56C /* UpdatePhoneNumberTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90F1467F236058770096D56C /* UpdatePhoneNumberTableViewCell.xib */; };
-		FA0294E3227315F300465318 /* TwitterPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0294E2227315F300465318 /* TwitterPostViewController.swift */; };
 		FA0372E222605A3800C3B3C9 /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0372E122605A3700C3B3C9 /* UserManager.swift */; };
 		FA1C1CDD228400A800583E1B /* Reusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1C1CDC228400A800583E1B /* Reusable.swift */; };
 		FA291B0A225380830093E6CE /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA291B09225380830093E6CE /* User.swift */; };
@@ -217,7 +216,6 @@
 		A62D95851A596AF11E67E59A /* Pods_precastrTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_precastrTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B549B4DD788D08952FB6A04F /* Pods-precastrTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-precastrTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-precastrTests/Pods-precastrTests.release.xcconfig"; sourceTree = "<group>"; };
 		C4DCE75455249966F5BD18FA /* Pods-precastr.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-precastr.release.xcconfig"; path = "Pods/Target Support Files/Pods-precastr/Pods-precastr.release.xcconfig"; sourceTree = "<group>"; };
-		FA0294E2227315F300465318 /* TwitterPostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwitterPostViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FA0372E122605A3700C3B3C9 /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
 		FA1C1CDC228400A800583E1B /* Reusable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reusable.swift; sourceTree = "<group>"; };
 		FA291B09225380830093E6CE /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -335,7 +333,6 @@
 		5EF623F122A5889A00124C55 /* post */ = {
 			isa = PBXGroup;
 			children = (
-				FA0294E2227315F300465318 /* TwitterPostViewController.swift */,
 				5EF623F722A58ADB00124C55 /* CreatePostViewController.swift */,
 				5EF623F222A588AC00124C55 /* cells */,
 			);
@@ -1082,7 +1079,6 @@
 				90881EF92341FC2100023450 /* ContactsViewController.swift in Sources */,
 				FA1C1CDD228400A800583E1B /* Reusable.swift in Sources */,
 				FAF601CA2286A3C700B54F9B /* SplashViewController.swift in Sources */,
-				FA0294E3227315F300465318 /* TwitterPostViewController.swift in Sources */,
 				5EE9EBFF22B803C300FD04B6 /* HomeDto.swift in Sources */,
 				FAD5015022AA6B1700D21F57 /* EditProfileTableViewCell.swift in Sources */,
 				5EEC6B5B22A66EAA005B1C34 /* LoginScreenTableViewCell.swift in Sources */,

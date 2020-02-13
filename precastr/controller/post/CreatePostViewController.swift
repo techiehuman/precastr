@@ -30,7 +30,7 @@ class CreatePostViewController: UIViewController, UIImagePickerControllerDelegat
     var post: Post!;
     var social : SocialPlatform!
     var uploadImage : [UIImage] = [UIImage]()
-    var imageDelegate : ImageLibProtocolT!
+    var imageDelegate : ImageLibProtocol!
     var socialMediaPlatform : [Int]!
     var uploadImageStatus = false
     var facebookExists = false
@@ -268,7 +268,11 @@ extension CreatePostViewController: UITableViewDelegate, UITableViewDataSource {
         cell.createPostViewControllerDelegate = self;
         
         if (post != nil) {
-            cell.postTextField.text = post.postDescription
+            if(post.postDescription != ""){
+               cell.postTextField.text = post.postDescription
+                cell.postTextField.textColor = UIColor.black
+            }
+            
             cell.charaterCountLabel.text = "\(post.postDescription.count) Characters";
             if (post.postImages.count > 0) {
                 cell.filesUploadedtext.isHidden = false;

@@ -32,7 +32,8 @@ class PostFormTableViewCell: UITableViewCell, UITextViewDelegate, PostFormCellPr
     var createPostViewControllerDelegate: CreatePostViewController!;
     var descriptionMsg : String = "";
     var selectedPostStatusId : Int = 0;
-     var loggedInUser : User!
+    var loggedInUser : User!
+    var textPlaceholder : String = "Type your post here and attach any files using the icon below";
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -69,7 +70,9 @@ class PostFormTableViewCell: UITableViewCell, UITextViewDelegate, PostFormCellPr
     
     func textViewDidBeginEditing(_ textView: UITextView) {
         print("A")
-        if self.postTextField.textColor == UIColor(red: 118/255, green: 118/255, blue: 119/255, alpha: 1) {
+        print(self.postTextField.textColor!)
+        if (/*self.postTextField.textColor == UIColor(red: 118/255, green: 118/255, blue: 119/255, alpha: 1) && */ self.postTextField.text == self.textPlaceholder) {
+            print("C")
             self.postTextField.text = ""
             self.postTextField.textColor = UIColor.black
         }
@@ -77,7 +80,7 @@ class PostFormTableViewCell: UITableViewCell, UITextViewDelegate, PostFormCellPr
     func textViewDidEndEditing(_ textView: UITextView) {
         print("B")
         if self.postTextField.text == "" {
-            self.postTextField.text = "Write Something..."
+            self.postTextField.text = textPlaceholder
             self.postTextField.textColor = UIColor(red: 118/255, green: 118/255, blue: 119/255, alpha: 1);
         }
     }

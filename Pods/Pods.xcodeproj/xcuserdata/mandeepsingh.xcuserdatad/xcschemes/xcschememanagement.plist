@@ -207,6 +207,11 @@
 			<key>orderHint</key>
 			<integer>28</integer>
 		</dict>
+		<key>ImageSlideshow.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>37</integer>
+		</dict>
 		<key>Pods-precastr.xcscheme</key>
 		<dict>
 			<key>isShown</key>

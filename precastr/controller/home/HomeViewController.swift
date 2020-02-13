@@ -250,7 +250,7 @@ class HomeViewController: SharePostViewController, EasyTipViewDelegate, SharingD
 
 
             } else {
-                self.noPostsText.text = "You do not have any casts, please click on \"Add New\" in order to create a new Cast !";
+                self.noPostsText.text = "You do not have any casts.\n Please click \"Add New\" to create a Cast!";
                 self.noPostsText.frame = CGRect.init(x: self.noPostsText.frame.origin.x, y: self.noPostsText.frame.origin.y, width: self.noPostsText.frame.width, height: 70)
                 self.noPostsText.numberOfLines = 3;
                 
@@ -372,9 +372,9 @@ class HomeViewController: SharePostViewController, EasyTipViewDelegate, SharingD
         var postData = [String: Any]();
         let post = sender.post;
         postData["post_id"] = post?.postId;
-        let alert = UIAlertController.init(title: "Delete!", message: "Are you sure?", preferredStyle: .alert);
-        alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil));
-        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: {(response) in
+        let alert = UIAlertController.init(title: "Delete this cast.", message: "", preferredStyle: .alert);
+        alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil));
+        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: {(response) in
        
             
             
