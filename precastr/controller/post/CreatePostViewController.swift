@@ -19,7 +19,9 @@ protocol PostFormCellProtocol {
     func upadedSelectedImageCounts(counts: String);
     func reloadCollctionView();
 }
-
+protocol ImageLibProtocolIT {
+    func takePicture(viewController : UIViewController);
+}
 class CreatePostViewController: UIViewController, UIImagePickerControllerDelegate {
 
     @IBOutlet weak var createPostTableView: UITableView!
@@ -30,7 +32,7 @@ class CreatePostViewController: UIViewController, UIImagePickerControllerDelegat
     var post: Post!;
     var social : SocialPlatform!
     var uploadImage : [UIImage] = [UIImage]()
-    var imageDelegate : ImageLibProtocol!
+    var imageDelegate : ImageLibProtocolIT!
     var socialMediaPlatform : [Int]!
     var uploadImageStatus = false
     var facebookExists = false
@@ -117,16 +119,16 @@ class CreatePostViewController: UIViewController, UIImagePickerControllerDelegat
             self.selectMultipleImages();
         }
         //uploadPhotoAction.setValue(selectedColor, forKey: "titleTextColor")
-        //let takePhotoAction: UIAlertAction = UIAlertAction(title: "Take Photo", style: .default) { action -> Void in
-        //    self.imageDelegate.takePicture(viewC: self);
-        //}
+        let takePhotoAction: UIAlertAction = UIAlertAction(title: "Take Photo", style: .default) { action -> Void in
+            self.imageDelegate.takePicture(viewController : self);
+        }
         //takePhotoAction.setValue(cenesLabelBlue, forKey: "titleTextColor")
         
         let cancelAction: UIAlertAction = UIAlertAction(title: "Cancel", style: .cancel) { action -> Void in }
         cancelAction.setValue(UIColor.black, forKey: "titleTextColor")
         
         actionSheetController.addAction(uploadPhotoAction)
-        //actionSheetController.addAction(takePhotoAction)
+        actionSheetController.addAction(takePhotoAction)
         actionSheetController.addAction(cancelAction)
         
         // present an actionSheet...
@@ -268,11 +270,7 @@ extension CreatePostViewController: UITableViewDelegate, UITableViewDataSource {
         cell.createPostViewControllerDelegate = self;
         
         if (post != nil) {
-            if(post.postDescription != ""){
-               cell.postTextField.text = post.postDescription
-                cell.postTextField.textColor = UIColor.black
-            }
-            
+            cell.postTextField.text = post.postDescription
             cell.charaterCountLabel.text = "\(post.postDescription.count) Characters";
             if (post.postImages.count > 0) {
                 cell.filesUploadedtext.isHidden = false;
