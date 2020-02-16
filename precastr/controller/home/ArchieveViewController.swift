@@ -39,6 +39,10 @@ class ArchieveViewController: SharePostViewController {
     }
     */
     
+    func scrollTableToPosition(indexPath: IndexPath) {
+        postsTableView.scrollToRow(at: indexPath, at: .top, animated: true);
+    }
+    
     func loadArchievePosts() {
         
         var postArray : [String:Any] = [String:Any]();
@@ -91,6 +95,8 @@ extension ArchieveViewController: UITableViewDelegate, UITableViewDataSource {
         let cell: PostItemTableViewCell = tableView.dequeueReusableCell(withIdentifier: "PostItemTableViewCell", for: indexPath) as! PostItemTableViewCell;
         cell.pushViewController = self;
         cell.post = post
+        cell.postRowIndex = indexPath.row;
+        cell.totalPosts = posts.count;
         return cell;
     }
     
@@ -100,7 +106,7 @@ extension ArchieveViewController: UITableViewDelegate, UITableViewDataSource {
 
         var height: CGFloat = CGFloat(PostRowsHeight.Post_Status_Row_Height + PostRowsHeight.Post_Action_Row_Height);
         
-        height = height + heightForView(text: post.postDescription, font: UIFont.init(name: "VisbyCF-Regular", size: 16.0)!, width: self.view.frame.width - 30) + CGFloat(PostRowsHeight.Post_Description_Row_Height);
+        height = height + getHeightOfPostDescripiton(contentView: self.view, postDescription: post.postDescription) + CGFloat(PostRowsHeight.Post_Description_Row_Height);
 
         if (post.postImages.count != 0) {
             height = height + CGFloat(PostRowsHeight.Post_Gallery_Row_Height);

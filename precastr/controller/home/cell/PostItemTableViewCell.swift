@@ -13,14 +13,16 @@ class PostItemTableViewCell: UITableViewCell {
     @IBOutlet weak var postItemsTableView: UITableView!
     var pushViewController: UIViewController!;
     var post: Post!;
-    
+    var postRowIndex: Int!;
+    var totalPosts: Int!;
+
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
         
         // Do any additional setup after loading the view.
         postItemsTableView.register(UINib(nibName: "CasterPostStatusTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "CasterPostStatusTableViewCell");
-        postItemsTableView.register(UINib(nibName: "BeforeApprovedTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "BeforeApprovedTableViewCell");
+        postItemsTableView.register(UINib(nibName: "BeforeApprovedButtonsTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "BeforeApprovedButtonsTableViewCell");
         postItemsTableView.register(UINib(nibName: "AfterApprovedButtonsTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "AfterApprovedButtonsTableViewCell");
         postItemsTableView.register(UINib(nibName: "PostDescriptionTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "PostDescriptionTableViewCell");
         postItemsTableView.register(UINib(nibName: "PostGalleryTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "PostGalleryTableViewCell");
@@ -40,8 +42,9 @@ class PostItemTableViewCell: UITableViewCell {
     }
     
     @objc func deleteButtonPressed(sender: MyTapRecognizer){
-    
-        (pushViewController as! HomeViewController).deleteButtonPresses(post: sender.post);
+        if (pushViewController is HomeViewController) {
+            (pushViewController as! HomeViewController).deleteButtonPresses(post: sender.post);
+        }
     }
     
     @objc func callInfoButtonPressed(sender: MyTapRecognizer) {
@@ -109,7 +112,7 @@ class PostItemTableViewCell: UITableViewCell {
         
         if (status == "Pending") {
             
-            let cell: BeforeApprovedButtonsTableViewCell = tableView.dequeueReusableCell(withIdentifier: "BeforeApprovedTableViewCell", for: indexPath) as! BeforeApprovedButtonsTableViewCell;
+            let cell: BeforeApprovedButtonsTableViewCell = tableView.dequeueReusableCell(withIdentifier: "BeforeApprovedButtonsTableViewCell", for: indexPath) as! BeforeApprovedButtonsTableViewCell;
             
             let deleteButtonTapRecognizer = MyTapRecognizer.init(target: self, action: #selector(deleteButtonPressed(sender:)));
             deleteButtonTapRecognizer.post = post;
@@ -168,6 +171,13 @@ extension PostItemTableViewCell: UITableViewDataSource, UITableViewDelegate {
                 let cell: PostDescriptionTableViewCell = tableView.dequeueReusableCell(withIdentifier: "PostDescriptionTableViewCell", for: indexPath) as! PostDescriptionTableViewCell;
                     cell.pushViewController = pushViewController;
                     cell.addLabelToPost(post: post);
+                    cell.addTapGestureToArrow(rowId: postRowIndex);
+                    
+                    if (postRowIndex == totalPosts - 1) {
+                        cell.castPaginationArrow.isHidden = true;
+                    } else {
+                        cell.castPaginationArrow.isHidden = false;
+                    }
                     return cell;
             }  else if (indexPath.row == PostRows.Post_Gallery_Row) {
                                
@@ -186,7 +196,7 @@ extension PostItemTableViewCell: UITableViewDataSource, UITableViewDelegate {
         } else if (PostRows.Post_Action_Row == indexPath.row) {
             return CGFloat(PostRowsHeight.Post_Action_Row_Height);
         } else if (PostRows.Post_Description_Row == indexPath.row) {
-            let height =  pushViewController.heightForView(text: post.postDescription, font: UIFont.init(name: "VisbyCF-Regular", size: 16.0)!, width: self.pushViewController.view.frame.width - 30) + CGFloat(PostRowsHeight.Post_Description_Row_Height);
+            let height =  pushViewController.getHeightOfPostDescripiton(contentView: self.contentView, postDescription: post.postDescription);
             return height;
         } else if (PostRows.Post_Gallery_Row == indexPath.row) {
             if (post.postImages.count == 0) {

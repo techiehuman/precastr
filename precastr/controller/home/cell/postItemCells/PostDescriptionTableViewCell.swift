@@ -11,6 +11,8 @@ import UIKit
 class PostDescriptionTableViewCell: UITableViewCell {
 
     @IBOutlet weak var postDescription: UILabel!
+    @IBOutlet weak var castPaginationArrow: UIImageView!
+    
     var pushViewController: UIViewController!;
     
     override func awakeFromNib() {
@@ -24,10 +26,21 @@ class PostDescriptionTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
+    @objc func paginationArrowTapped(sender: MyTapRecognizer) {
+        
+        var indexPath = IndexPath.init(row: (sender.rowId + 1), section: 0);
+        if (pushViewController is HomeViewController) {
+            (pushViewController as! HomeViewController).scrollTableToPosition(indexPath: indexPath);
+        } else if (pushViewController is ArchieveViewController) {
+            (pushViewController as! ArchieveViewController).scrollTableToPosition(indexPath: indexPath);
+        }
+        
+    }
+    
     func addLabelToPost(post: Post) {
         
         //Call this function
-        var height = pushViewController.heightForView(text: post.postDescription, font: UIFont.init(name: "VisbyCF-Regular", size: 16.0)!, width: self.pushViewController.view.frame.width - 30)
+        var height = pushViewController.getHeightOfPostDescripiton(contentView: self.contentView, postDescription: post.postDescription);
         
         var heightOflabel = height;
         if (height > 100) {
@@ -51,5 +64,11 @@ class PostDescriptionTableViewCell: UITableViewCell {
            attrString.addAttributes(attributes, range: NSMakeRange(0, attrString.length));
            postDescription.attributedText = attrString;
         postDescription.frame = CGRect.init(x: postDescription.frame.origin.x, y: postDescription.frame.origin.y, width: postDescription.frame.width, height: heightOflabel)
+    }
+    
+    func addTapGestureToArrow(rowId: Int) {
+        let paginationArrowTapGuesture = MyTapRecognizer.init(target: self, action: #selector(paginationArrowTapped(sender: )));
+        paginationArrowTapGuesture.rowId = rowId;
+        castPaginationArrow.addGestureRecognizer(paginationArrowTapGuesture)
     }
 }

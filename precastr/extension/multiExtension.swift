@@ -197,6 +197,10 @@ extension UIViewController {
         return (label.frame.height)
     }
     
+    func getHeightOfPostDescripiton(contentView: UIView, postDescription: String) -> CGFloat {
+        let height =  heightForView(text: postDescription, font: UIFont.init(name: "VisbyCF-Regular", size: 16.0)!, width: contentView.frame.width - 40) + CGFloat(PostRowsHeight.Post_Description_Row_Height);
+        return CGFloat(height);
+    }
     
     //Calls this function when the tap is recognized.
     @objc func dismissKeyboard() {
