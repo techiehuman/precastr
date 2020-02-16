@@ -19,8 +19,10 @@ class ArchieveViewController: SharePostViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        postsTableView.register(UINib(nibName: "CasterViewTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "CasterViewTableViewCell");
+        //postsTableView.register(UINib(nibName: "CasterViewTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "CasterViewTableViewCell");
         
+        
+        postsTableView.register(UINib(nibName: "PostItemTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "PostItemTableViewCell");
         loggedInUser = User().loadUserDataFromUserDefaults(userDataDict : setting);
 
         loadArchievePosts();
@@ -79,14 +81,28 @@ extension ArchieveViewController: UITableViewDelegate, UITableViewDataSource {
         
         let post = self.posts[indexPath.row];
         
-        let cell: CasterViewTableViewCell = tableView.dequeueReusableCell(withIdentifier: "CasterViewTableViewCell", for: indexPath) as! CasterViewTableViewCell;
+        /*let cell: CasterViewTableViewCell = tableView.dequeueReusableCell(withIdentifier: "CasterViewTableViewCell", for: indexPath) as! CasterViewTableViewCell;
         cell.pushViewController = self;
         cell.postTopView.addSubview(cell.populateCasterTopView(post: post));
         cell.castOptionsView.addSubview(cell.populateCastOptionsView(post: post));
+        cell.addLabelToPost(post: post);
+        cell.createGalleryScrollView(post: post);*/
+        
+        let cell: PostItemTableViewCell = tableView.dequeueReusableCell(withIdentifier: "PostItemTableViewCell", for: indexPath) as! PostItemTableViewCell;
+        cell.pushViewController = self;
+        cell.post = post
         return cell;
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 200;
+        
+        let post = self.posts[indexPath.row];
+
+        var height: CGFloat = CGFloat(PostRowsHeight.Post_Status_Row_Height + PostRowsHeight.Post_Action_Row_Height);
+        
+        height = height + heightForView(text: post.postDescription, font: UIFont.init(name: "VisbyCF-Regular", size: 16.0)!, width: self.view.frame.width - 30);
+
+        height = height + CGFloat(PostRowsHeight.Post_Gallery_Row_Height);
+        return CGFloat(height);
     }
 }

@@ -201,8 +201,4 @@ class HomeTextPostTableViewCell: UITableViewCell,UIScrollViewDelegate {
         print(sender.imagePosition)
         
     }
-    class ImageTapRecognizer : UITapGestureRecognizer {
-        var imageView: [String]!;
-        var imagePosition: Int!;
-    }
 }

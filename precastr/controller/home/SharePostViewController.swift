@@ -27,3 +27,17 @@ class SharePostViewController: UIViewController {
         return imageStatus;
     }
 }
+
+class PostRows {
+    static var Post_Status_Row: Int = 0;
+    static var Post_Action_Row: Int = 1;
+    static var Post_Description_Row: Int = 2;
+    static var Post_Gallery_Row: Int = 3;
+}
+
+class PostRowsHeight {
+    static var Post_Status_Row_Height: Int = 40;
+    static var Post_Action_Row_Height: Int = 40;
+    static var Post_Description_Row: Int = 2;
+    static var Post_Gallery_Row_Height: Int = 418;
+}
