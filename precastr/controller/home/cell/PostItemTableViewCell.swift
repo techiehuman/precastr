@@ -21,11 +21,9 @@ class PostItemTableViewCell: UITableViewCell {
         // Do any additional setup after loading the view.
         postItemsTableView.register(UINib(nibName: "CasterPostStatusTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "CasterPostStatusTableViewCell");
         postItemsTableView.register(UINib(nibName: "BeforeApprovedTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "BeforeApprovedTableViewCell");
+        postItemsTableView.register(UINib(nibName: "AfterApprovedButtonsTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "AfterApprovedButtonsTableViewCell");
         postItemsTableView.register(UINib(nibName: "PostDescriptionTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "PostDescriptionTableViewCell");
         postItemsTableView.register(UINib(nibName: "PostGalleryTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "PostGalleryTableViewCell");
-
-        
-        
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -111,7 +109,7 @@ class PostItemTableViewCell: UITableViewCell {
         
         if (status == "Pending") {
             
-            let cell: BeforeApprovedTableViewCell = tableView.dequeueReusableCell(withIdentifier: "BeforeApprovedTableViewCell", for: indexPath) as! BeforeApprovedTableViewCell;
+            let cell: BeforeApprovedButtonsTableViewCell = tableView.dequeueReusableCell(withIdentifier: "BeforeApprovedTableViewCell", for: indexPath) as! BeforeApprovedButtonsTableViewCell;
             
             let deleteButtonTapRecognizer = MyTapRecognizer.init(target: self, action: #selector(deleteButtonPressed(sender:)));
             deleteButtonTapRecognizer.post = post;
@@ -124,7 +122,7 @@ class PostItemTableViewCell: UITableViewCell {
             
         } else {
             
-            let cell: BeforeApprovedTableViewCell = tableView.dequeueReusableCell(withIdentifier: "BeforeApprovedTableViewCell", for: indexPath) as! BeforeApprovedTableViewCell;
+            let cell: AfterApprovedButtonsTableViewCell = tableView.dequeueReusableCell(withIdentifier: "AfterApprovedButtonsTableViewCell", for: indexPath) as! AfterApprovedButtonsTableViewCell;
             
             let deleteButtonTapRecognizer = MyTapRecognizer.init(target: self, action: #selector(deleteButtonPressed(sender:)));
             deleteButtonTapRecognizer.post = post;
@@ -191,6 +189,9 @@ extension PostItemTableViewCell: UITableViewDataSource, UITableViewDelegate {
             let height =  pushViewController.heightForView(text: post.postDescription, font: UIFont.init(name: "VisbyCF-Regular", size: 16.0)!, width: self.pushViewController.view.frame.width - 30) + CGFloat(PostRowsHeight.Post_Description_Row_Height);
             return height;
         } else if (PostRows.Post_Gallery_Row == indexPath.row) {
+            if (post.postImages.count == 0) {
+                return 0;
+            }
                    return CGFloat(PostRowsHeight.Post_Gallery_Row_Height);
                }
         return 0;
