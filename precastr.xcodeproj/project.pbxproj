@@ -23,9 +23,7 @@
 		5E62E23023F2DCDA00A95C06 /* ArchieveViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E62E22F23F2DCDA00A95C06 /* ArchieveViewController.swift */; };
 		5E6BB7B222B530F500D92681 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E6BB7B122B530F500D92681 /* Post.swift */; };
 		5E8869BD23F30F3900D82A44 /* CasterPostTopView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5E8869BC23F30F3900D82A44 /* CasterPostTopView.xib */; };
-		5E8869BF23F30F4A00D82A44 /* ModeratorPostTopView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5E8869BE23F30F4A00D82A44 /* ModeratorPostTopView.xib */; };
 		5E8869C123F30F5E00D82A44 /* CasterPostTopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8869C023F30F5E00D82A44 /* CasterPostTopView.swift */; };
-		5E8869C323F30F6F00D82A44 /* ModeratorPostTopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8869C223F30F6F00D82A44 /* ModeratorPostTopView.swift */; };
 		5E8869C623F3102900D82A44 /* CasterViewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8869C423F3102900D82A44 /* CasterViewTableViewCell.swift */; };
 		5E8869C723F3102900D82A44 /* CasterViewTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5E8869C523F3102900D82A44 /* CasterViewTableViewCell.xib */; };
 		5E93313022D70ED300980BF5 /* SideMenuDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E93312F22D70ED300980BF5 /* SideMenuDto.swift */; };
@@ -179,9 +177,7 @@
 		5E62E22F23F2DCDA00A95C06 /* ArchieveViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchieveViewController.swift; sourceTree = "<group>"; };
 		5E6BB7B122B530F500D92681 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		5E8869BC23F30F3900D82A44 /* CasterPostTopView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CasterPostTopView.xib; sourceTree = "<group>"; };
-		5E8869BE23F30F4A00D82A44 /* ModeratorPostTopView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ModeratorPostTopView.xib; sourceTree = "<group>"; };
 		5E8869C023F30F5E00D82A44 /* CasterPostTopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CasterPostTopView.swift; sourceTree = "<group>"; };
-		5E8869C223F30F6F00D82A44 /* ModeratorPostTopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModeratorPostTopView.swift; sourceTree = "<group>"; };
 		5E8869C423F3102900D82A44 /* CasterViewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CasterViewTableViewCell.swift; sourceTree = "<group>"; };
 		5E8869C523F3102900D82A44 /* CasterViewTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CasterViewTableViewCell.xib; sourceTree = "<group>"; };
 		5E93312F22D70ED300980BF5 /* SideMenuDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuDto.swift; sourceTree = "<group>"; };
@@ -642,9 +638,7 @@
 				5EC1B79E23DB38D600F32C40 /* PostCastMenu.xib */,
 				5EC1B7A023DB3D7100F32C40 /* PostCastMenu.swift */,
 				5E8869BC23F30F3900D82A44 /* CasterPostTopView.xib */,
-				5E8869BE23F30F4A00D82A44 /* ModeratorPostTopView.xib */,
 				5E8869C023F30F5E00D82A44 /* CasterPostTopView.swift */,
-				5E8869C223F30F6F00D82A44 /* ModeratorPostTopView.swift */,
 				5EEFB61923F43CC100524082 /* CastOptionsView.swift */,
 				5EEFB61B23F43CD100524082 /* CastOptionsView.xib */,
 				5EEFB61D23F52EFF00524082 /* CastOptionApprovedView.swift */,
@@ -917,7 +911,6 @@
 				5E8869C723F3102900D82A44 /* CasterViewTableViewCell.xib in Resources */,
 				5EF623F622A588E900124C55 /* PostFormTableViewCell.xib in Resources */,
 				FADFEAF622A51A46006E3CD2 /* VisbyCF-DemiBoldOblique.otf in Resources */,
-				5E8869BF23F30F4A00D82A44 /* ModeratorPostTopView.xib in Resources */,
 				5E48B90C23F8505F0078F07E /* PostItemTableViewCell.xib in Resources */,
 				5E48B91923F913ED0078F07E /* BeforeApprovedTableViewCell.xib in Resources */,
 				5EEFB61C23F43CD100524082 /* CastOptionsView.xib in Resources */,
@@ -1142,7 +1135,6 @@
 				5E94973B22C280FE0023F30B /* PostService.swift in Sources */,
 				5EB754DC22ABE125006D636B /* ForgetPasswordViewController.swift in Sources */,
 				FA84F178229C5E7A007796A3 /* ModeratorsDto.swift in Sources */,
-				5E8869C323F30F6F00D82A44 /* ModeratorPostTopView.swift in Sources */,
 				FAF601CC228AAE6800B54F9B /* VerificationModeratorViewController.swift in Sources */,
 				5E48B92023F963780078F07E /* PostGalleryTableViewCell.swift in Sources */,
 				908D6F3322C243D800762145 /* PostStatus.swift in Sources */,

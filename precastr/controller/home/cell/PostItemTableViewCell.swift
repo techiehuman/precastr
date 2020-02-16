@@ -170,7 +170,7 @@ extension PostItemTableViewCell: UITableViewDataSource, UITableViewDelegate {
                 let cell: PostDescriptionTableViewCell = tableView.dequeueReusableCell(withIdentifier: "PostDescriptionTableViewCell", for: indexPath) as! PostDescriptionTableViewCell;
                     cell.pushViewController = pushViewController;
                     cell.addLabelToPost(post: post);
-                            return cell;
+                    return cell;
             }  else if (indexPath.row == PostRows.Post_Gallery_Row) {
                                
                    let cell: PostGalleryTableViewCell = tableView.dequeueReusableCell(withIdentifier: "PostGalleryTableViewCell", for: indexPath) as! PostGalleryTableViewCell;
@@ -188,7 +188,7 @@ extension PostItemTableViewCell: UITableViewDataSource, UITableViewDelegate {
         } else if (PostRows.Post_Action_Row == indexPath.row) {
             return CGFloat(PostRowsHeight.Post_Action_Row_Height);
         } else if (PostRows.Post_Description_Row == indexPath.row) {
-            let height =  pushViewController.heightForView(text: post.postDescription, font: UIFont.init(name: "VisbyCF-Regular", size: 16.0)!, width: self.pushViewController.view.frame.width - 30);
+            let height =  pushViewController.heightForView(text: post.postDescription, font: UIFont.init(name: "VisbyCF-Regular", size: 16.0)!, width: self.pushViewController.view.frame.width - 30) + CGFloat(PostRowsHeight.Post_Description_Row_Height);
             return height;
         } else if (PostRows.Post_Gallery_Row == indexPath.row) {
                    return CGFloat(PostRowsHeight.Post_Gallery_Row_Height);

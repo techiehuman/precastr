@@ -29,8 +29,10 @@ class PostDescriptionTableViewCell: UITableViewCell {
         //Call this function
         var height = pushViewController.heightForView(text: post.postDescription, font: UIFont.init(name: "VisbyCF-Regular", size: 16.0)!, width: self.pushViewController.view.frame.width - 30)
         
+        var heightOflabel = height;
         if (height > 100) {
                postDescription.numberOfLines = 4
+                heightOflabel = 100;
            } else {
                postDescription.numberOfLines = 0
            }
@@ -48,5 +50,6 @@ class PostDescriptionTableViewCell: UITableViewCell {
         let attrString = NSMutableAttributedString(string: post.postDescription)
            attrString.addAttributes(attributes, range: NSMakeRange(0, attrString.length));
            postDescription.attributedText = attrString;
+        postDescription.frame = CGRect.init(x: postDescription.frame.origin.x, y: postDescription.frame.origin.y, width: postDescription.frame.width, height: heightOflabel)
     }
 }

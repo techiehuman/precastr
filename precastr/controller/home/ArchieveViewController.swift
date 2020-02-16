@@ -100,7 +100,7 @@ extension ArchieveViewController: UITableViewDelegate, UITableViewDataSource {
 
         var height: CGFloat = CGFloat(PostRowsHeight.Post_Status_Row_Height + PostRowsHeight.Post_Action_Row_Height);
         
-        height = height + heightForView(text: post.postDescription, font: UIFont.init(name: "VisbyCF-Regular", size: 16.0)!, width: self.view.frame.width - 30);
+        height = height + heightForView(text: post.postDescription, font: UIFont.init(name: "VisbyCF-Regular", size: 16.0)!, width: self.view.frame.width - 30) + CGFloat(PostRowsHeight.Post_Description_Row_Height);
 
         height = height + CGFloat(PostRowsHeight.Post_Gallery_Row_Height);
         return CGFloat(height);
