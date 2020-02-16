@@ -15,7 +15,8 @@ class PostItemTableViewCell: UITableViewCell {
     var post: Post!;
     var postRowIndex: Int!;
     var totalPosts: Int!;
-
+    var isShareMenuOpened: Bool = false;
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -45,6 +46,11 @@ class PostItemTableViewCell: UITableViewCell {
         if (pushViewController is HomeViewController) {
             (pushViewController as! HomeViewController).deleteButtonPresses(post: sender.post);
         }
+    }
+    
+    @objc func shareIconPressed(sender: MyTapRecognizer){
+        createPublishPostMenu(post: sender.post);
+        postItemsTableView.reloadData();
     }
     
     @objc func callInfoButtonPressed(sender: MyTapRecognizer) {
@@ -110,7 +116,7 @@ class PostItemTableViewCell: UITableViewCell {
             }
         }
         
-        if (status == "Pending") {
+        if (status != "Pending") {
             
             let cell: BeforeApprovedButtonsTableViewCell = tableView.dequeueReusableCell(withIdentifier: "BeforeApprovedButtonsTableViewCell", for: indexPath) as! BeforeApprovedButtonsTableViewCell;
             
@@ -126,7 +132,7 @@ class PostItemTableViewCell: UITableViewCell {
         } else {
             
             let cell: AfterApprovedButtonsTableViewCell = tableView.dequeueReusableCell(withIdentifier: "AfterApprovedButtonsTableViewCell", for: indexPath) as! AfterApprovedButtonsTableViewCell;
-            
+
             let deleteButtonTapRecognizer = MyTapRecognizer.init(target: self, action: #selector(deleteButtonPressed(sender:)));
             deleteButtonTapRecognizer.post = post;
             cell.deleteBtn.addGestureRecognizer(deleteButtonTapRecognizer);
@@ -134,12 +140,97 @@ class PostItemTableViewCell: UITableViewCell {
             let callButtonTapRecognizer = MyTapRecognizer.init(target: self, action: #selector(callInfoButtonPressed(sender:)));
                        callButtonTapRecognizer.post = post;
             cell.callButtonBtn.addGestureRecognizer(callButtonTapRecognizer);
+            
+            let shareButtonTapRecognizer = MyTapRecognizer.init(target: self, action: #selector(shareIconPressed(sender:)));
+            shareButtonTapRecognizer.post = post;
+            cell.sharePostBtn.addGestureRecognizer(shareButtonTapRecognizer);
             return cell;
         }
         
         return UITableViewCell();
     }
     
+    func createPublishPostMenu(post: Post) {
+        
+        if (isShareMenuOpened == true) {
+            isShareMenuOpened = false;
+            for view in self.contentView.subviews {
+                if (view is PostCastMenu) {
+                    view.removeFromSuperview();
+                    break;
+                }
+            }
+            return;
+        }
+        
+        let postToFacebookTapGesture = PostToSocialMediaGestureRecognizer.init(target: self, action: #selector((pushViewController as! HomeViewController).postToFacebookPressed(sender:)));
+        postToFacebookTapGesture.post = post;
+        
+        let postToTwitterTapGesture = PostToSocialMediaGestureRecognizer.init(target: self, action: #selector((pushViewController as! HomeViewController).postToTwitterPressed(sender:)));
+           postToTwitterTapGesture.post = post;
+           
+        let postToSMSTapGesture = PostToSocialMediaGestureRecognizer.init(target: self, action: #selector((pushViewController as! HomeViewController).postToSMSPressed(sender:)));
+           postToSMSTapGesture.post = post;
+        
+        let postCastMenu: PostCastMenu = PostCastMenu.instanceFromNib() as! PostCastMenu;
+        postCastMenu.frame = CGRect.init(x: pushViewController.view.frame.width - 90, y: 80, width: 80, height: 150)
+        postCastMenu.facebookItem.addGestureRecognizer(postToFacebookTapGesture);
+        postCastMenu.twitterItem.addGestureRecognizer(postToTwitterTapGesture);
+        postCastMenu.messageItem.addGestureRecognizer(postToSMSTapGesture);
+        
+        if (post.postStatusId == HomePostPublishStatusId.PUBLISHSTATUSID) {
+            
+            var facebookPublished = false;
+            for socialMediaId in post.socialMediaIds {
+                if (socialMediaId == social.socialPlatformId["Facebook"]) {
+                    facebookPublished = true;
+                    break;
+                }else{
+                    facebookPublished = false;
+                }
+            }
+            
+            var twitterPublished = false;
+            for socialMediaId in post.socialMediaIds {
+                if (socialMediaId == social.socialPlatformId["Twitter"]) {
+                    twitterPublished = true;
+                    break;
+                }else{
+                    twitterPublished = false;
+                }
+            }
+
+            var smsPublished = false;
+            for socialMediaId in post.socialMediaIds {
+                if (socialMediaId == social.socialPlatformId["SMS"]) {
+                    smsPublished = true;
+                    break;
+                }else{
+                    smsPublished = false;
+                }
+            }
+            
+            if (facebookPublished == true) {
+                postCastMenu.facebookChecked.isHidden = false;
+            } else {
+                postCastMenu.facebookChecked.isHidden = true;
+            }
+            
+            if (twitterPublished == true) {
+                postCastMenu.twitterItem.isHidden = false;
+            } else {
+                postCastMenu.twitterItem.isHidden = true;
+            }
+            
+            if (smsPublished == true) {
+                postCastMenu.messageChecked.isHidden = false;
+            } else {
+                postCastMenu.messageChecked.isHidden = true;
+            }
+        }
+        self.contentView.addSubview(postCastMenu);
+        isShareMenuOpened = true;
+    }
 }
 
 extension PostItemTableViewCell: UITableViewDataSource, UITableViewDelegate {
@@ -196,14 +287,14 @@ extension PostItemTableViewCell: UITableViewDataSource, UITableViewDelegate {
         } else if (PostRows.Post_Action_Row == indexPath.row) {
             return CGFloat(PostRowsHeight.Post_Action_Row_Height);
         } else if (PostRows.Post_Description_Row == indexPath.row) {
-            let height =  pushViewController.getHeightOfPostDescripiton(contentView: self.contentView, postDescription: post.postDescription);
+            var height =  pushViewController.getHeightOfPostDescripiton(contentView: self.contentView, postDescription: post.postDescription);
             return height;
         } else if (PostRows.Post_Gallery_Row == indexPath.row) {
             if (post.postImages.count == 0) {
                 return 0;
             }
-                   return CGFloat(PostRowsHeight.Post_Gallery_Row_Height);
-               }
+            return CGFloat(PostRowsHeight.Post_Gallery_Row_Height);
+        }
         return 0;
     }
 }

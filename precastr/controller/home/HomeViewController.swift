@@ -803,7 +803,6 @@ class HomeViewController: SharePostViewController, EasyTipViewDelegate, SharingD
             }
         }
         cell.postMenuView.addSubview(postCastMenu);
-
     }
 }
 
