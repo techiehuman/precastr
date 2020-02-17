@@ -7,20 +7,27 @@
 //
 
 import UIKit
+import ImageSlideshow
+import SDWebImage
 
-class ImageViewerViewController: UIViewController, UIScrollViewDelegate {
+class ImageViewerViewController: UIViewController, UIScrollViewDelegate, ImageSlideshowDelegate {
     
-    @IBOutlet weak var imageGalleryScrollView: UIScrollView!
+    open override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return .portrait
+    }
     
-    @IBOutlet weak var pageControl: UIPageControl!
+    @IBOutlet weak var slideshow: ImageSlideshow!
     
     var imagesArray : [String] = [String]();
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.imageGalleryScrollView.delegate = self
+        
         // Do any additional setup after loading the view.
-        self.setupSlideScrollView();
+        
+        //let localSource = [BundleImageSource(imageString: "img1"), BundleImageSource(imageString: "img2"), BundleImageSource(imageString: "img3"), BundleImageSource(imageString: "img4")]
+        beginImage();
+      
     }
     
 
@@ -34,44 +41,38 @@ class ImageViewerViewController: UIViewController, UIScrollViewDelegate {
     }
     */
 
-    func setupSlideScrollView() {
-        imageGalleryScrollView.isPagingEnabled = true
-        for view in imageGalleryScrollView.subviews {
-            view.removeFromSuperview();
-        }
-        imageGalleryScrollView.contentSize.width = imageGalleryScrollView.frame.width * CGFloat(imagesArray.count);
+    func beginImage() {
+        slideshow.slideshowInterval = 5.0
+        slideshow.pageIndicatorPosition = .init(horizontal: .center, vertical: .under)
+        slideshow.contentScaleMode = UIViewContentMode.scaleAspectFill
         
-        for i in 0 ..< imagesArray.count {
-            
-            let setupSlideScrollView = UIImageView();
-            
-            let xposition = self.imageGalleryScrollView.frame.width * CGFloat(i);
-            setupSlideScrollView.frame = CGRect.init(x: xposition, y: 0, width: imageGalleryScrollView.frame.width, height: imageGalleryScrollView.frame.height);
-            
-            setupSlideScrollView.sd_setImage(with: URL(string: imagesArray[i]), placeholderImage: UIImage.init(named: "post-image-placeholder"));
-            setupSlideScrollView.contentMode = .scaleAspectFill;
-            setupSlideScrollView.clipsToBounds = true
-            print("imageGalleryScrollView", imageGalleryScrollView.frame.width)
-            
-            print("X Position : ", xposition, "width", imageGalleryScrollView.frame.width * CGFloat(i + 1));
-           
-            imageGalleryScrollView.addSubview(setupSlideScrollView)
-           
+        let pageControl = UIPageControl()
+        pageControl.currentPageIndicatorTintColor = UIColor.lightGray
+        pageControl.pageIndicatorTintColor = UIColor.black
+        slideshow.pageIndicator = pageControl
+        
+        // optional way to show activity indicator during image load (skipping the line will show no activity indicator)
+        slideshow.activityIndicator = DefaultActivityIndicator()
+        slideshow.delegate = self;
+        
+        // can be used with other sample sources as `afNetworkingSource`, `alamofireSource` or `sdWebImageSource` or `kingfisherSource`
+        
+        var inputSource = [InputSource]();
+        for img in imagesArray {
+            inputSource.append(SDWebImageSource(urlString: img)!);
         }
         
-        //imageGalleryScrollView.addSubview(imageCounterView);
+        slideshow.setImageInputs(inputSource)
+        
+        let recognizer = UITapGestureRecognizer(target: self, action: #selector(ImageViewerViewController.didTap))
+        slideshow.addGestureRecognizer(recognizer)
     }
-    
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        
-        let maximumHorizontalOffset: CGFloat = scrollView.contentSize.width - scrollView.frame.width
-        let currentHorizontalOffset: CGFloat = scrollView.contentOffset.x
-        
-        // vertical
-        let maximumVerticalOffset: CGFloat = scrollView.contentSize.height - scrollView.frame.height
-        let currentVerticalOffset: CGFloat = scrollView.contentOffset.y
-        
-        let percentageHorizontalOffset: CGFloat = currentHorizontalOffset / maximumHorizontalOffset
-        let percentageVerticalOffset: CGFloat = currentVerticalOffset / maximumVerticalOffset
+  
+    @objc func didTap() {
+        let fullScreenController = slideshow.presentFullScreenController(from: self)
+        // set the activity indicator for full screen controller (skipping the line will show no activity indicator)
+        fullScreenController.slideshow.activityIndicator = DefaultActivityIndicator(style: .white, color: nil)
     }
+
 }
+

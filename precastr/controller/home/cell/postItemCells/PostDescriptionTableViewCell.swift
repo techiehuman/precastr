@@ -29,10 +29,10 @@ class PostDescriptionTableViewCell: UITableViewCell {
     @objc func paginationArrowTapped(sender: MyTapRecognizer) {
         
         var indexPath = IndexPath.init(row: (sender.rowId + 1), section: 0);
-        if (pushViewController is HomeViewController) {
-            (pushViewController as! HomeViewController).scrollTableToPosition(indexPath: indexPath);
+        if (pushViewController is HomeV2ViewController) {
+            (pushViewController as! HomeV2ViewController).scrollTableToPosition(indexPath: indexPath,postsTableView: (pushViewController as! HomeV2ViewController).postsTableView);
         } else if (pushViewController is ArchieveViewController) {
-            (pushViewController as! ArchieveViewController).scrollTableToPosition(indexPath: indexPath);
+            (pushViewController as! ArchieveViewController).scrollTableToPosition(indexPath: indexPath, postsTableView: (pushViewController as! ArchieveViewController).postsTableView);
         }
         
     }

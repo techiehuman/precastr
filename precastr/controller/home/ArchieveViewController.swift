@@ -38,15 +38,11 @@ class ArchieveViewController: SharePostViewController {
         // Pass the selected object to the new view controller.
     }
     */
-    
-    func scrollTableToPosition(indexPath: IndexPath) {
-        postsTableView.scrollToRow(at: indexPath, at: .top, animated: true);
-    }
-    
+
     func loadArchievePosts() {
         
         var postArray : [String:Any] = [String:Any]();
-        let jsonURL = "posts/all_caster_posts/format/json";
+        let jsonURL = "posts/all_caster_archive_posts/format/json";
         postArray["user_id"] = String(loggedInUser.userId);
         
         UserService().postDataMethod(jsonURL: jsonURL, postData: postArray, complete: {(response) in

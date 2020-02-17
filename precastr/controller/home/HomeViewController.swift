@@ -609,7 +609,7 @@ class HomeViewController: SharePostViewController, EasyTipViewDelegate, SharingD
     }
     
     
-    func showFacebookFailAlert() {
+    override func showFacebookFailAlert() {
         
         var refreshAlert = UIAlertController(title: "Facebook Not Installed", message: "It looks like the Facebook app is not installed on your iPhone. Click \"OK\" to download, after installing please \"LOG IN\" to the \"FB App\" and come back to the same screen on \"PreCastr\" and hit the \"Push to FB\" button", preferredStyle: UIAlertControllerStyle.alert)
         
@@ -640,7 +640,7 @@ class HomeViewController: SharePostViewController, EasyTipViewDelegate, SharingD
 
     }
     
-    func schemeAvailable(scheme: String) -> Bool {
+    override func schemeAvailable(scheme: String) -> Bool {
         if let url = URL(string: scheme) {
             return UIApplication.shared.canOpenURL(url)
         }

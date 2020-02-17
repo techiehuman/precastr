@@ -26,6 +26,33 @@ class SharePostViewController: UIViewController {
         }
         return imageStatus;
     }
+    
+    func scrollTableToPosition(indexPath: IndexPath, postsTableView : UITableView) {
+        postsTableView.scrollToRow(at: indexPath, at: .top, animated: true);
+    }
+    func schemeAvailable(scheme: String) -> Bool {
+        if let url = URL(string: scheme) {
+            return UIApplication.shared.canOpenURL(url)
+        }
+        return false
+    }
+    func showFacebookFailAlert() {
+        
+        var refreshAlert = UIAlertController(title: "Facebook Not Installed", message: "It looks like the Facebook app is not installed on your iPhone. Click \"OK\" to download, after installing please \"LOG IN\" to the \"FB App\" and come back to the same screen on \"PreCastr\" and hit the \"Push to FB\" button", preferredStyle: UIAlertControllerStyle.alert)
+        
+        refreshAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (action: UIAlertAction!) in
+            if let url = URL(string: "https://apps.apple.com/in/app/facebook/id284882215") {
+                UIApplication.shared.open(url)
+            }
+        }));
+        
+        refreshAlert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: { (action: UIAlertAction!) in
+            
+            
+        }));
+        self.present(refreshAlert, animated: true, completion: nil)
+        
+    }
 }
 
 class PostRows {

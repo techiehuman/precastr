@@ -123,7 +123,7 @@ class SideMenuTableViewController: UITableViewController {
         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(5), execute:  {
 //            self.showAlert(title: "alert", message: "ruk jao")
             self.activityIndicator.stopAnimating();
-            UIApplication.shared.keyWindow?.rootViewController = HomeViewController.MainViewController();
+            UIApplication.shared.keyWindow?.rootViewController = HomeV2ViewController.MainViewController();
         })
         
         
@@ -172,14 +172,14 @@ class SideMenuTableViewController: UITableViewController {
     
     @objc func backButtonPressed() {
         if (sideMenuOpenedFromScreen == SideMenuSource.CREATE) {
-            UIApplication.shared.keyWindow?.rootViewController = HomeViewController.MainViewController();
+            UIApplication.shared.keyWindow?.rootViewController = HomeV2ViewController.MainViewController();
         } else {
             self.navigationController?.popViewController(animated: true);
         }
     }
     
     @objc func homeButtonPressed() {
-        UIApplication.shared.keyWindow?.rootViewController = HomeViewController.MainViewController();
+        UIApplication.shared.keyWindow?.rootViewController = HomeV2ViewController.MainViewController();
     }
     
     
@@ -201,11 +201,14 @@ class SideMenuTableViewController: UITableViewController {
             
         case 5://FAQ
             print("")
+            
+        case 6://FAQ
+            print("")
            
-        case 6://Terms ANd Conds
+        case 7://Terms ANd Conds
            self.performSegue(withIdentifier: "termSetting", sender: self)
             print("")
-        case 7:
+        case 8:
             self.logout();
 
         default:

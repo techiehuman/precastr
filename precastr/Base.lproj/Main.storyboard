@@ -1528,24 +1528,17 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AGw-om-hvW">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="598"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                            </scrollView>
-                            <pageControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" hidesForSinglePage="YES" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="nC8-E4-3YU">
-                                <rect key="frame" x="138" y="610" width="76" height="37"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="tintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <color key="pageIndicatorTintColor" red="0.57254901960000004" green="0.57647058819999997" blue="0.58431372550000005" alpha="1" colorSpace="calibratedRGB"/>
-                                <color key="currentPageIndicatorTintColor" red="0.047058823530000002" green="0.43529411759999997" blue="0.91372549020000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            </pageControl>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="z08-GI-HJy" customClass="ImageSlideshow" customModule="ImageSlideshow">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" xcode11CocoaTouchSystemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="Xnh-zh-OYB"/>
                     </view>
                     <connections>
-                        <outlet property="imageGalleryScrollView" destination="AGw-om-hvW" id="lvu-j6-ayc"/>
-                        <outlet property="pageControl" destination="nC8-E4-3YU" id="VCu-CL-V8K"/>
+                        <outlet property="slideshow" destination="z08-GI-HJy" id="pQo-YF-KdL"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hdI-hc-HIZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -1808,7 +1801,7 @@
         <!--My Casts-->
         <scene sceneID="cPI-Yr-h5U">
             <objects>
-                <viewController storyboardIdentifier="HomeViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Uot-g3-E5O" customClass="HomeViewController" customModule="precastr" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="HomeV2ViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Uot-g3-E5O" customClass="HomeV2ViewController" customModule="precastr" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="0X9-9D-hVX">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1830,8 +1823,8 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <connections>
-                                    <outlet property="dataSource" destination="Uot-g3-E5O" id="8iv-fl-BBZ"/>
-                                    <outlet property="delegate" destination="Uot-g3-E5O" id="gDZ-AI-DEC"/>
+                                    <outlet property="dataSource" destination="Uot-g3-E5O" id="9zC-PB-6yq"/>
+                                    <outlet property="delegate" destination="Uot-g3-E5O" id="dKM-8O-kuJ"/>
                                 </connections>
                             </tableView>
                         </subviews>
@@ -1845,7 +1838,7 @@
                     <connections>
                         <outlet property="noPostsIcon" destination="m2U-zb-Jxv" id="gRY-o4-eHq"/>
                         <outlet property="noPostsText" destination="zcJ-FG-BB7" id="avG-bC-xia"/>
-                        <outlet property="socialPostList" destination="qFE-ao-mEh" id="Tjf-j0-S0u"/>
+                        <outlet property="postsTableView" destination="qFE-ao-mEh" id="UTS-ns-awE"/>
                         <segue destination="iuz-ul-Vai" kind="show" id="flT-e9-Wvh"/>
                         <segue destination="tod-km-QSJ" kind="show" id="lyx-do-Uo5"/>
                         <segue destination="DdO-Iz-7eE" kind="show" id="wvF-NG-bMM"/>

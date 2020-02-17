@@ -79,6 +79,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
             }
         }
         UNUserNotificationCenter.current().delegate = self
+        
+        getAllPostStatuses();
+        
         return true
 
     }
@@ -194,7 +197,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
             postIdFromPush = (Int)(userInfo.value(forKey: "gcm.notification.id") as! String)!
             pushNotificationId = (Int)(userInfo.value(forKey: "gcm.notification.notification_id") as! String)!
             if (!isAppKilled) {
-                self.window?.rootViewController = HomeViewController.MainViewController();
+                self.window?.rootViewController = HomeV2ViewController.MainViewController();
             }
         //}
         print(userInfo)
@@ -251,6 +254,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
                     }
                     
                 }
+            }
+        });
+    }
+    
+    func getAllPostStatuses() {
+        
+        let jsonURL = "home/get_all_post_status/format/json"
+        UserService().getDataMethod(jsonURL: jsonURL, complete: {(response) in
+            print(response)
+            let status = Int(response.value(forKey: "status") as! String)!
+            if (status == 0) {
+                let message = response.value(forKey: "message") as! String;
+                
+            } else {
+                let modeArray = response.value(forKey: "data") as! NSArray
+                postStatusList = PostStatus().loadPostStatusFromNSArray(postStatusArr: modeArray);
             }
         });
     }

@@ -24,10 +24,6 @@
 		5E6BB7B222B530F500D92681 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E6BB7B122B530F500D92681 /* Post.swift */; };
 		5E6E94E723F98E7D00DBA4F3 /* AfterApprovedButtonsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E6E94E523F98E7D00DBA4F3 /* AfterApprovedButtonsTableViewCell.swift */; };
 		5E6E94E823F98E7D00DBA4F3 /* AfterApprovedButtonsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5E6E94E623F98E7D00DBA4F3 /* AfterApprovedButtonsTableViewCell.xib */; };
-		5E8869BD23F30F3900D82A44 /* CasterPostTopView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5E8869BC23F30F3900D82A44 /* CasterPostTopView.xib */; };
-		5E8869C123F30F5E00D82A44 /* CasterPostTopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8869C023F30F5E00D82A44 /* CasterPostTopView.swift */; };
-		5E8869C623F3102900D82A44 /* CasterViewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8869C423F3102900D82A44 /* CasterViewTableViewCell.swift */; };
-		5E8869C723F3102900D82A44 /* CasterViewTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5E8869C523F3102900D82A44 /* CasterViewTableViewCell.xib */; };
 		5E93313022D70ED300980BF5 /* SideMenuDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E93312F22D70ED300980BF5 /* SideMenuDto.swift */; };
 		5E94973B22C280FE0023F30B /* PostService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E94973A22C280FE0023F30B /* PostService.swift */; };
 		5E9A18F22318001A00AC5E79 /* PostImageDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E9A18F12318001A00AC5E79 /* PostImageDto.swift */; };
@@ -48,14 +44,12 @@
 		5EEC6B6222A6842F005B1C34 /* SignupScreenTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5EEC6B6022A6842F005B1C34 /* SignupScreenTableViewCell.xib */; };
 		5EEC6B6422A68450005B1C34 /* SignupScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EEC6B6322A68450005B1C34 /* SignupScreenViewController.swift */; };
 		5EEFB61823F429EB00524082 /* SharePostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EEFB61723F429EB00524082 /* SharePostViewController.swift */; };
-		5EEFB61A23F43CC100524082 /* CastOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EEFB61923F43CC100524082 /* CastOptionsView.swift */; };
-		5EEFB61C23F43CD100524082 /* CastOptionsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5EEFB61B23F43CD100524082 /* CastOptionsView.xib */; };
-		5EEFB61E23F52EFF00524082 /* CastOptionApprovedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EEFB61D23F52EFF00524082 /* CastOptionApprovedView.swift */; };
 		5EF623F522A588E900124C55 /* PostFormTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF623F322A588E900124C55 /* PostFormTableViewCell.swift */; };
 		5EF623F622A588E900124C55 /* PostFormTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5EF623F422A588E900124C55 /* PostFormTableViewCell.xib */; };
 		5EF623F822A58ADB00124C55 /* CreatePostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF623F722A58ADB00124C55 /* CreatePostViewController.swift */; };
 		5F7380ED63B94D468C59736D /* Pods_precastrTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A62D95851A596AF11E67E59A /* Pods_precastrTests.framework */; };
 		73FE8E1E355632927979AE72 /* Pods_precastr.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 220036CD76F7644A5FF36C62 /* Pods_precastr.framework */; };
+		900F798B23FAC75F00827ECA /* HomeV2ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 900F798A23FAC75F00827ECA /* HomeV2ViewController.swift */; };
 		9010B4AC22CF2AB70083A468 /* TermsPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9010B4AB22CF2AB70083A468 /* TermsPageViewController.swift */; };
 		9010B4AF22CF6D070083A468 /* CastersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9010B4AE22CF6D070083A468 /* CastersViewController.swift */; };
 		902FDE4122D7250F002D1601 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 902FDE4022D7250F002D1601 /* GoogleService-Info.plist */; };
@@ -180,10 +174,6 @@
 		5E6BB7B122B530F500D92681 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		5E6E94E523F98E7D00DBA4F3 /* AfterApprovedButtonsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AfterApprovedButtonsTableViewCell.swift; sourceTree = "<group>"; };
 		5E6E94E623F98E7D00DBA4F3 /* AfterApprovedButtonsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AfterApprovedButtonsTableViewCell.xib; sourceTree = "<group>"; };
-		5E8869BC23F30F3900D82A44 /* CasterPostTopView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CasterPostTopView.xib; sourceTree = "<group>"; };
-		5E8869C023F30F5E00D82A44 /* CasterPostTopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CasterPostTopView.swift; sourceTree = "<group>"; };
-		5E8869C423F3102900D82A44 /* CasterViewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CasterViewTableViewCell.swift; sourceTree = "<group>"; };
-		5E8869C523F3102900D82A44 /* CasterViewTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CasterViewTableViewCell.xib; sourceTree = "<group>"; };
 		5E93312F22D70ED300980BF5 /* SideMenuDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuDto.swift; sourceTree = "<group>"; };
 		5E93313122DB900200980BF5 /* FacebookCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = FacebookCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5E93313322DB900200980BF5 /* FacebookLogin.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = FacebookLogin.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -207,13 +197,11 @@
 		5EEC6B6022A6842F005B1C34 /* SignupScreenTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SignupScreenTableViewCell.xib; sourceTree = "<group>"; };
 		5EEC6B6322A68450005B1C34 /* SignupScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupScreenViewController.swift; sourceTree = "<group>"; };
 		5EEFB61723F429EB00524082 /* SharePostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharePostViewController.swift; sourceTree = "<group>"; };
-		5EEFB61923F43CC100524082 /* CastOptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CastOptionsView.swift; sourceTree = "<group>"; };
-		5EEFB61B23F43CD100524082 /* CastOptionsView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CastOptionsView.xib; sourceTree = "<group>"; };
-		5EEFB61D23F52EFF00524082 /* CastOptionApprovedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CastOptionApprovedView.swift; sourceTree = "<group>"; };
 		5EF623F322A588E900124C55 /* PostFormTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostFormTableViewCell.swift; sourceTree = "<group>"; };
 		5EF623F422A588E900124C55 /* PostFormTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PostFormTableViewCell.xib; sourceTree = "<group>"; };
 		5EF623F722A58ADB00124C55 /* CreatePostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePostViewController.swift; sourceTree = "<group>"; };
 		6577135BB253B3BD32B16155 /* Pods-precastrTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-precastrTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-precastrTests/Pods-precastrTests.debug.xcconfig"; sourceTree = "<group>"; };
+		900F798A23FAC75F00827ECA /* HomeV2ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeV2ViewController.swift; sourceTree = "<group>"; };
 		9010B4AB22CF2AB70083A468 /* TermsPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsPageViewController.swift; sourceTree = "<group>"; };
 		9010B4AE22CF6D070083A468 /* CastersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CastersViewController.swift; sourceTree = "<group>"; };
 		902FDE4022D7250F002D1601 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -516,8 +504,6 @@
 				FAD5015522AE895C00D21F57 /* NotificationTableViewCell.xib */,
 				90C8F55F235B26CA00ECD8B1 /* CastContactTableViewCell.swift */,
 				90C8F560235B26CA00ECD8B1 /* CastContactTableViewCell.xib */,
-				5E8869C423F3102900D82A44 /* CasterViewTableViewCell.swift */,
-				5E8869C523F3102900D82A44 /* CasterViewTableViewCell.xib */,
 				5E48B90923F8505F0078F07E /* PostItemTableViewCell.swift */,
 				5E48B90A23F8505F0078F07E /* PostItemTableViewCell.xib */,
 			);
@@ -643,11 +629,6 @@
 				FA84F18622A0329D007796A3 /* Slide.xib */,
 				5EC1B79E23DB38D600F32C40 /* PostCastMenu.xib */,
 				5EC1B7A023DB3D7100F32C40 /* PostCastMenu.swift */,
-				5E8869BC23F30F3900D82A44 /* CasterPostTopView.xib */,
-				5E8869C023F30F5E00D82A44 /* CasterPostTopView.swift */,
-				5EEFB61923F43CC100524082 /* CastOptionsView.swift */,
-				5EEFB61B23F43CD100524082 /* CastOptionsView.xib */,
-				5EEFB61D23F52EFF00524082 /* CastOptionApprovedView.swift */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -682,6 +663,7 @@
 				90C8F55D235B267B00ECD8B1 /* CastContactsViewController.swift */,
 				5E62E22F23F2DCDA00A95C06 /* ArchieveViewController.swift */,
 				5EEFB61723F429EB00524082 /* SharePostViewController.swift */,
+				900F798A23FAC75F00827ECA /* HomeV2ViewController.swift */,
 			);
 			path = home;
 			sourceTree = "<group>";
@@ -896,7 +878,6 @@
 			files = (
 				90881EF72341FB0F00023450 /* ContactTableViewCell.xib in Resources */,
 				FA6AB58622531E8200C5491F /* LaunchScreen.storyboard in Resources */,
-				5E8869BD23F30F3900D82A44 /* CasterPostTopView.xib in Resources */,
 				FADFEAFE22A51A46006E3CD2 /* VisbyCF-MediumOblique.otf in Resources */,
 				90C8F562235B26CA00ECD8B1 /* CastContactTableViewCell.xib in Resources */,
 				FADFEB0022A51A46006E3CD2 /* VisbyCF-RegularOblique.otf in Resources */,
@@ -914,12 +895,10 @@
 				5E48B92123F963780078F07E /* PostGalleryTableViewCell.xib in Resources */,
 				FAD5014D22A97B0400D21F57 /* ModeratorCastsTableViewCell.xib in Resources */,
 				90B611B0235623410060255D /* CountryTableViewCell.xib in Resources */,
-				5E8869C723F3102900D82A44 /* CasterViewTableViewCell.xib in Resources */,
 				5EF623F622A588E900124C55 /* PostFormTableViewCell.xib in Resources */,
 				FADFEAF622A51A46006E3CD2 /* VisbyCF-DemiBoldOblique.otf in Resources */,
 				5E48B90C23F8505F0078F07E /* PostItemTableViewCell.xib in Resources */,
 				5E48B91923F913ED0078F07E /* BeforeApprovedButtonsTableViewCell.xib in Resources */,
-				5EEFB61C23F43CD100524082 /* CastOptionsView.xib in Resources */,
 				FAD5015122AA6B1700D21F57 /* EditProfileTableViewCell.xib in Resources */,
 				FADFEAF822A51A46006E3CD2 /* VisbyCF-ExtraBoldOblique.otf in Resources */,
 				FA84F18C22A0E511007796A3 /* moderatorTableViewCell.xib in Resources */,
@@ -1079,7 +1058,6 @@
 				5E62E23023F2DCDA00A95C06 /* ArchieveViewController.swift in Sources */,
 				FAE6173E22B3B09800A8B2F3 /* RightCommunicationTableViewCell.swift in Sources */,
 				FA0372E222605A3800C3B3C9 /* UserManager.swift in Sources */,
-				5E8869C123F30F5E00D82A44 /* CasterPostTopView.swift in Sources */,
 				90B611B2235623840060255D /* CountryCodeService.swift in Sources */,
 				FAE6173A22B3B07E00A8B2F3 /* LeftCommunicationTableViewCell.swift in Sources */,
 				5E6BB7B222B530F500D92681 /* Post.swift in Sources */,
@@ -1095,13 +1073,13 @@
 				90C8F55E235B267B00ECD8B1 /* CastContactsViewController.swift in Sources */,
 				5E48B91C23F94E960078F07E /* PostDescriptionTableViewCell.swift in Sources */,
 				9010B4AF22CF6D070083A468 /* CastersViewController.swift in Sources */,
-				5EEFB61A23F43CC100524082 /* CastOptionsView.swift in Sources */,
 				5E93313022D70ED300980BF5 /* SideMenuDto.swift in Sources */,
 				5E9A18F22318001A00AC5E79 /* PostImageDto.swift in Sources */,
 				FA72E17922624DC500A259A1 /* CastModeratorViewController.swift in Sources */,
 				5EEC6B6422A68450005B1C34 /* SignupScreenViewController.swift in Sources */,
 				FABF02502265DFBB0067960C /* SideMenuTableViewController.swift in Sources */,
 				FAD5015922AE8E4600D21F57 /* NotificationViewController.swift in Sources */,
+				900F798B23FAC75F00827ECA /* HomeV2ViewController.swift in Sources */,
 				9010B4AC22CF2AB70083A468 /* TermsPageViewController.swift in Sources */,
 				5EC919A822DCA002002E9A3A /* PostManager.swift in Sources */,
 				5EEC6B5E22A67052005B1C34 /* LoginScreenViewController.swift in Sources */,
@@ -1110,7 +1088,6 @@
 				5EC1B7A123DB3D7100F32C40 /* PostCastMenu.swift in Sources */,
 				FA4D544C2260F7F200E9589B /* UserTypeActionViewController.swift in Sources */,
 				5EEFB61823F429EB00524082 /* SharePostViewController.swift in Sources */,
-				5EEFB61E23F52EFF00524082 /* CastOptionApprovedView.swift in Sources */,
 				90B7FFC423BE0E9A00CB7278 /* ImageViewerViewController.swift in Sources */,
 				5E48B91823F913ED0078F07E /* BeforeApprovedButtonsTableViewCell.swift in Sources */,
 				5EB754DF22ABE136006D636B /* ForgetPasswordTableViewCell.swift in Sources */,
@@ -1148,7 +1125,6 @@
 				908D6F3322C243D800762145 /* PostStatus.swift in Sources */,
 				FABF02482264EF650067960C /* HomeViewController.swift in Sources */,
 				5EF623F822A58ADB00124C55 /* CreatePostViewController.swift in Sources */,
-				5E8869C623F3102900D82A44 /* CasterViewTableViewCell.swift in Sources */,
 				FAE4DF64225F155C008875C3 /* AppUtil.swift in Sources */,
 				FABF025B226DBE650067960C /* ModeratorViewController.swift in Sources */,
 				5EF623F522A588E900124C55 /* PostFormTableViewCell.swift in Sources */,

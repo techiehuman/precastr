@@ -43,8 +43,8 @@ class PostItemTableViewCell: UITableViewCell {
     }
     
     @objc func deleteButtonPressed(sender: MyTapRecognizer){
-        if (pushViewController is HomeViewController) {
-            (pushViewController as! HomeViewController).deleteButtonPresses(post: sender.post);
+        if (pushViewController is HomeV2ViewController) {
+            (pushViewController as! HomeV2ViewController).deleteButtonPresses(post: sender.post);
         }
     }
     
@@ -95,8 +95,8 @@ class PostItemTableViewCell: UITableViewCell {
         
         //Setting Status Image of Post
         var imageStatus = "";
-        if (pushViewController is HomeViewController) {
-            imageStatus = (pushViewController as! HomeViewController).adapterCasterGetPostStatusImage(status: status);
+        if (pushViewController is HomeV2ViewController) {
+            imageStatus = (pushViewController as! HomeV2ViewController).adapterCasterGetPostStatusImage(status: status);
         } else if (pushViewController is ArchieveViewController) {
             imageStatus = (pushViewController as! ArchieveViewController).adapterCasterGetPostStatusImage(status: status);
         }
@@ -163,13 +163,13 @@ class PostItemTableViewCell: UITableViewCell {
             return;
         }
         
-        let postToFacebookTapGesture = PostToSocialMediaGestureRecognizer.init(target: self, action: #selector((pushViewController as! HomeViewController).postToFacebookPressed(sender:)));
+        let postToFacebookTapGesture = PostToSocialMediaGestureRecognizer.init(target: self, action: #selector((pushViewController as! HomeV2ViewController).postToFacebookPressed(sender:)));
         postToFacebookTapGesture.post = post;
         
-        let postToTwitterTapGesture = PostToSocialMediaGestureRecognizer.init(target: self, action: #selector((pushViewController as! HomeViewController).postToTwitterPressed(sender:)));
+        let postToTwitterTapGesture = PostToSocialMediaGestureRecognizer.init(target: self, action: #selector((pushViewController as! HomeV2ViewController).postToTwitterPressed(sender:)));
            postToTwitterTapGesture.post = post;
            
-        let postToSMSTapGesture = PostToSocialMediaGestureRecognizer.init(target: self, action: #selector((pushViewController as! HomeViewController).postToSMSPressed(sender:)));
+        let postToSMSTapGesture = PostToSocialMediaGestureRecognizer.init(target: self, action: #selector((pushViewController as! HomeV2ViewController).postToSMSPressed(sender:)));
            postToSMSTapGesture.post = post;
         
         let postCastMenu: PostCastMenu = PostCastMenu.instanceFromNib() as! PostCastMenu;
@@ -255,7 +255,12 @@ extension PostItemTableViewCell: UITableViewDataSource, UITableViewDelegate {
                 
             } else if (indexPath.row == PostRows.Post_Action_Row) {
             
+            if (pushViewController is ArchieveViewController) {
+                return UITableViewCell();
+            } else {
                 return populateCastActionsCell(indexPath: indexPath, tableView: tableView)
+            }
+            
             
             } else if (indexPath.row == PostRows.Post_Description_Row) {
                     
@@ -273,6 +278,7 @@ extension PostItemTableViewCell: UITableViewDataSource, UITableViewDelegate {
             }  else if (indexPath.row == PostRows.Post_Gallery_Row) {
                                
                    let cell: PostGalleryTableViewCell = tableView.dequeueReusableCell(withIdentifier: "PostGalleryTableViewCell", for: indexPath) as! PostGalleryTableViewCell;
+            cell.pushViewController = pushViewController;
                        cell.createGalleryScrollView(post: post);
             
                     return cell;
@@ -285,6 +291,9 @@ extension PostItemTableViewCell: UITableViewDataSource, UITableViewDelegate {
         if (PostRows.Post_Status_Row == indexPath.row) {
             return CGFloat(PostRowsHeight.Post_Status_Row_Height);
         } else if (PostRows.Post_Action_Row == indexPath.row) {
+            if (pushViewController is ArchieveViewController) {
+                return 0;
+            }
             return CGFloat(PostRowsHeight.Post_Action_Row_Height);
         } else if (PostRows.Post_Description_Row == indexPath.row) {
             var height =  pushViewController.getHeightOfPostDescripiton(contentView: self.contentView, postDescription: post.postDescription);

@@ -140,7 +140,7 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
         
         PostService().markNotificationAsRead(notificationId: pushNotificationId, complete: {(response) in
             pushNotificationId = 0;
-            HomeViewController.showBadgeCount();
+            HomeV2ViewController.showBadgeCount();
             
         });
    //  postStatusList = loadPostStatus()
@@ -299,7 +299,7 @@ class CommunicationViewController: UIViewController,UITextViewDelegate, UIImageP
                 if(statusCode == 0) {
                     self.showAlert(title: "Alert", message: response.value(forKey: "message") as! String);
                 } else {
-                    let viewController: HomeViewController = self.storyboard?.instantiateViewController(withIdentifier: "HomeViewController") as! HomeViewController;
+                    let viewController: HomeV2ViewController = self.storyboard?.instantiateViewController(withIdentifier: "HomeV2ViewController") as! HomeV2ViewController;
                     self.navigationController?.pushViewController(viewController, animated: true);
                 }
             });

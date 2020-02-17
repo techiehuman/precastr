@@ -262,7 +262,7 @@ class PostFormTableViewCell: UITableViewCell, UITextViewDelegate, PostFormCellPr
                             self.createPostViewControllerDelegate.showAlert(title: "Error", message: message);
                         }else{
                         self.createPostViewControllerDelegate.activityIndicator.stopAnimating();
-                        UIApplication.shared.keyWindow?.rootViewController = HomeViewController.MainViewController();
+                        UIApplication.shared.keyWindow?.rootViewController = HomeV2ViewController.MainViewController();
                     }
                     })
                 } else {
@@ -274,7 +274,7 @@ class PostFormTableViewCell: UITableViewCell, UITextViewDelegate, PostFormCellPr
                             self.createPostViewControllerDelegate.showAlert(title: "Error", message: message);
                         }else{
                         self.createPostViewControllerDelegate.activityIndicator.stopAnimating();
-                        UIApplication.shared.keyWindow?.rootViewController = HomeViewController.MainViewController();
+                        UIApplication.shared.keyWindow?.rootViewController = HomeV2ViewController.MainViewController();
                     }
                     })
                 }
@@ -320,7 +320,7 @@ class PostFormTableViewCell: UITableViewCell, UITextViewDelegate, PostFormCellPr
                         } else {
                            
                         self.createPostViewControllerDelegate.activityIndicator.stopAnimating();
-                        UIApplication.shared.keyWindow?.rootViewController = HomeViewController.MainViewController();
+                        UIApplication.shared.keyWindow?.rootViewController = HomeV2ViewController.MainViewController();
                     }
                     })
                 }else{
@@ -336,7 +336,7 @@ class PostFormTableViewCell: UITableViewCell, UITextViewDelegate, PostFormCellPr
                         } else {
                            
                         self.createPostViewControllerDelegate.activityIndicator.stopAnimating();
-                        UIApplication.shared.keyWindow?.rootViewController = HomeViewController.MainViewController();
+                        UIApplication.shared.keyWindow?.rootViewController = HomeV2ViewController.MainViewController();
                     }
                     })
                 }

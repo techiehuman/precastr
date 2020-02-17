@@ -23,7 +23,7 @@ target 'precastr' do
   pod 'EasyTipView', '~> 2.0.4'
   
   pod 'ImageSlideshow', '~> 1.8.3'
-
+  pod "ImageSlideshow/SDWebImage"
   # Pods for precastr
 
   target 'precastrTests' do

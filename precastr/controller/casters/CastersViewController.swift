@@ -136,7 +136,7 @@ class CastersViewController: UIViewController,UITextFieldDelegate {
     }
     
     @objc func homeButtonPressed() {
-        UIApplication.shared.keyWindow?.rootViewController = HomeViewController.MainViewController();
+        UIApplication.shared.keyWindow?.rootViewController = HomeV2ViewController.MainViewController();
     }
     override func viewWillAppear(_ animated: Bool) {
         self.title = "Casters";

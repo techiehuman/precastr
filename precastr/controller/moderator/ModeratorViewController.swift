@@ -61,7 +61,7 @@ class ModeratorViewController: UIViewController, CNContactPickerDelegate, MFMess
             let jsonURL = "user/select_moderator/format/json";
             
             UserService().postDataMethod(jsonURL:jsonURL,postData: postData, complete:{(response) in
-                UIApplication.shared.keyWindow?.rootViewController = HomeViewController.MainViewController();
+                UIApplication.shared.keyWindow?.rootViewController = HomeV2ViewController.MainViewController();
             });
             self.dismiss(animated: true, completion: nil)
         default:
@@ -128,7 +128,7 @@ class ModeratorViewController: UIViewController, CNContactPickerDelegate, MFMess
     }
     
     @objc func homeButtonPressed() {
-        UIApplication.shared.keyWindow?.rootViewController = HomeViewController.MainViewController();
+        UIApplication.shared.keyWindow?.rootViewController = HomeV2ViewController.MainViewController();
     }
     func contactsDoneButtonPressed(userContactItems: [UserContactItem]) {
         
