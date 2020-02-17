@@ -21,6 +21,8 @@ target 'precastr' do
   pod 'Crashlytics'
   pod 'BSImagePicker', '~> 2.8'
   pod 'EasyTipView', '~> 2.0.4'
+  
+  pod 'ImageSlideshow', '~> 1.8.3'
 
   # Pods for precastr
 

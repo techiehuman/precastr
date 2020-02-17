@@ -107,11 +107,6 @@ extension ArchieveViewController: UITableViewDelegate, UITableViewDataSource {
         var height: CGFloat = CGFloat(PostRowsHeight.Post_Status_Row_Height + PostRowsHeight.Post_Action_Row_Height);
         
         height = height + getHeightOfPostDescripiton(contentView: self.view, postDescription: post.postDescription) + CGFloat(PostRowsHeight.Post_Description_Row_Height);
-
-        let cell = tableView.cellForRow(at: indexPath) as! PostItemTableViewCell;
-        if (cell.isShareMenuOpened == true) {
-            
-        }
         if (post.postImages.count != 0) {
             height = height + CGFloat(PostRowsHeight.Post_Gallery_Row_Height);
         }

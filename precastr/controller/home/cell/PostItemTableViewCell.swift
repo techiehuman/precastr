@@ -116,7 +116,7 @@ class PostItemTableViewCell: UITableViewCell {
             }
         }
         
-        if (status != "Pending") {
+        if (status == "Pending") {
             
             let cell: BeforeApprovedButtonsTableViewCell = tableView.dequeueReusableCell(withIdentifier: "BeforeApprovedButtonsTableViewCell", for: indexPath) as! BeforeApprovedButtonsTableViewCell;
             

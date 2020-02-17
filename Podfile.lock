@@ -115,6 +115,9 @@ PODS:
     - GoogleUtilities/Logger
   - GoogleUtilities/UserDefaults (6.3.0):
     - GoogleUtilities/Logger
+  - ImageSlideshow (1.8.3):
+    - ImageSlideshow/Core (= 1.8.3)
+  - ImageSlideshow/Core (1.8.3)
   - nanopb (0.3.901):
     - nanopb/decode (= 0.3.901)
     - nanopb/encode (= 0.3.901)
@@ -141,6 +144,7 @@ DEPENDENCIES:
   - FBSDKPlacesKit
   - Firebase/Core
   - Firebase/Messaging
+  - ImageSlideshow (~> 1.8.3)
   - SDWebImage (~> 4.0)
   - TwitterKit
 
@@ -174,6 +178,7 @@ SPEC REPOS:
     - GoogleDataTransport
     - GoogleDataTransportCCTSupport
     - GoogleUtilities
+    - ImageSlideshow
     - nanopb
     - Protobuf
     - SDWebImage
@@ -209,12 +214,13 @@ SPEC CHECKSUMS:
   GoogleDataTransport: c8617c00e4f3eb9418e42ac0e8ac5241a9d555dd
   GoogleDataTransportCCTSupport: 9f352523e8785a71f6754f51eeff09f49ec19268
   GoogleUtilities: 9c2c544202301110b29f7974a82e77fdcf12bf51
+  ImageSlideshow: 4694d7d699a1549582e7cc631fb392d8f91630f3
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
   Protobuf: 67fb42ba613def994e61854de2b3164f13790cc4
   SDWebImage: c10d14a8883ebd89664f02a422006f66a85c0c5d
   TwitterCore: 8cbc9ad34d91c63a0035ea05bfbfc0d7ca72a28c
   TwitterKit: 5e4f41d70b9abdb41df5467f52d7aa2c0fd26ebb
 
-PODFILE CHECKSUM: 27f37cdda932653d3fbd950004631e2d44a0c161
+PODFILE CHECKSUM: 3d1b56b882c78ee4040fb54ea32095f02e1bc1e8
 
 COCOAPODS: 1.7.3
