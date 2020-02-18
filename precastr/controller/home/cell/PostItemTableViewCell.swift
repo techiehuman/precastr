@@ -144,6 +144,8 @@ class PostItemTableViewCell: UITableViewCell {
             let shareButtonTapRecognizer = MyTapRecognizer.init(target: self, action: #selector(shareIconPressed(sender:)));
             shareButtonTapRecognizer.post = post;
             cell.sharePostBtn.addGestureRecognizer(shareButtonTapRecognizer);
+            
+            cell.viewController = pushViewController;
             return cell;
         }
         
