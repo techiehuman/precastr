@@ -285,6 +285,8 @@ extension UITableViewCell {
     class MyTapRecognizer : UITapGestureRecognizer {
         var rowId: Int!;
         var post: Post!;
+        var uiButton: UIButton!;
+
     }
     class ImageTapRecognizer : UITapGestureRecognizer {
         var imageView: [String]!;

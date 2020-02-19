@@ -16,6 +16,7 @@ class PostItemTableViewCell: UITableViewCell {
     var postRowIndex: Int!;
     var totalPosts: Int!;
     var isShareMenuOpened: Bool = false;
+    var shareButtonGlobal: UIButton!;
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -49,6 +50,7 @@ class PostItemTableViewCell: UITableViewCell {
     }
     
     @objc func shareIconPressed(sender: MyTapRecognizer){
+        shareButtonGlobal = sender.uiButton;
         createPublishPostMenu(post: sender.post);
         postItemsTableView.reloadData();
     }
@@ -143,6 +145,7 @@ class PostItemTableViewCell: UITableViewCell {
             
             let shareButtonTapRecognizer = MyTapRecognizer.init(target: self, action: #selector(shareIconPressed(sender:)));
             shareButtonTapRecognizer.post = post;
+            shareButtonTapRecognizer.uiButton = cell.sharePostBtn;
             cell.sharePostBtn.addGestureRecognizer(shareButtonTapRecognizer);
             
             cell.viewController = pushViewController;
@@ -156,7 +159,7 @@ class PostItemTableViewCell: UITableViewCell {
         
         if (isShareMenuOpened == true) {
             isShareMenuOpened = false;
-            for view in self.contentView.subviews {
+            for view in self.pushViewController.view.subviews {
                 if (view is PostCastMenu) {
                     view.removeFromSuperview();
                     break;
@@ -175,7 +178,10 @@ class PostItemTableViewCell: UITableViewCell {
            postToSMSTapGesture.post = post;
         
         let postCastMenu: PostCastMenu = PostCastMenu.instanceFromNib() as! PostCastMenu;
-        postCastMenu.frame = CGRect.init(x: pushViewController.view.frame.width - 90, y: 80, width: 80, height: 150)
+        
+        let buttonAbsoluteFrame = shareButtonGlobal.convert(shareButtonGlobal.bounds, to: self.pushViewController.view)
+
+        postCastMenu.frame = CGRect.init(x: buttonAbsoluteFrame.origin.x - 60, y: buttonAbsoluteFrame.origin.y + 30, width: 80, height: 150)
         postCastMenu.facebookItem.addGestureRecognizer(postToFacebookTapGesture);
         postCastMenu.twitterItem.addGestureRecognizer(postToTwitterTapGesture);
         postCastMenu.messageItem.addGestureRecognizer(postToSMSTapGesture);
@@ -230,7 +236,7 @@ class PostItemTableViewCell: UITableViewCell {
                 postCastMenu.messageChecked.isHidden = true;
             }
         }
-        self.contentView.addSubview(postCastMenu);
+        self.pushViewController.view.addSubview(postCastMenu);
         isShareMenuOpened = true;
     }
 }
