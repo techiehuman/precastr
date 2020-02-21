@@ -19,13 +19,15 @@ class PostCastMenu: UIView {
     @IBOutlet weak var twitterChecked: UIImageView!;
     @IBOutlet weak var messageChecked: UIImageView!;
 
-    /*
+    
     // Only override draw() if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.
     override func draw(_ rect: CGRect) {
         // Drawing code
+        facebookItem.roundEdgesTopView();
+        messageItem.roundEdgesBottomView();
     }
-    */
+    
     class func instanceFromNib() -> UIView {
         return UINib(nibName: "PostCastMenu", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! UIView
     }

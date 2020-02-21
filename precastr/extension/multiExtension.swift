@@ -27,7 +27,19 @@ extension UIView{
         self.layer.cornerRadius = self.frame.height/2
         self.layer.masksToBounds = true
     }
-
+    func roundEdgesTopView(){
+        let maskPath = UIBezierPath(roundedRect: self.bounds, byRoundingCorners: [.topLeft, .topRight], cornerRadii: CGSize(width: 4.0, height: 4.0))
+        let shape = CAShapeLayer()
+        shape.path = maskPath.cgPath
+        self.layer.mask = shape
+    }
+    
+    func roundEdgesBottomView(){
+        let maskPath = UIBezierPath(roundedRect: self.bounds, byRoundingCorners: [.bottomLeft, .bottomRight], cornerRadii: CGSize(width: 4.0, height: 4.0))
+        let shape = CAShapeLayer()
+        shape.path = maskPath.cgPath
+        self.layer.mask = shape
+    }
 }
 
 extension UIImageView{

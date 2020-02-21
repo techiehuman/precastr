@@ -564,7 +564,7 @@ class HomeViewController: SharePostViewController, EasyTipViewDelegate, SharingD
             }
         }
         viewController.castContacts = contacts;
-        viewController.postDescription = post?.postDescription;
+        //viewController.postDescription = post?.postDescription;
         self.navigationController?.pushViewController(viewController, animated: true);
     }
     
@@ -573,7 +573,7 @@ class HomeViewController: SharePostViewController, EasyTipViewDelegate, SharingD
         let viewController = storyboard?.instantiateViewController(withIdentifier: "CastContactsViewController") as! CastContactsViewController;
        
         viewController.castContacts = post?.castModerators;
-        viewController.postDescription = post?.postDescription;
+        //viewController.postDescription = post?.postDescription;
         self.navigationController?.pushViewController(viewController, animated: true);
     }
     

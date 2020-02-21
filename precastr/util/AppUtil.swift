@@ -16,3 +16,10 @@ import UIKit
 
 
 let blueLinkColor = UIColor.init(red: 100/255, green: 166/255, blue: 247/255, alpha: 1);//#64A6F7
+
+class PrecasterColors {
+    
+    static var themeColor: UIColor = UIColor.init(red: 12/255, green: 101/255, blue: 233/255, alpha: 1); //#0C65E9
+    static var darkBlueButtonColor: UIColor = UIColor.init(red: 10/255, green: 88/255, blue: 184/255, alpha: 1); //#0a58b8
+
+}

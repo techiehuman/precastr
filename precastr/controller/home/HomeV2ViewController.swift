@@ -74,6 +74,7 @@ class HomeV2ViewController: SharePostViewController,EasyTipViewDelegate, Sharing
             loadModeratorUserPosts();
         }
         
+        SocialPlatform().fetchSocialPlatformData();
         HomeV2ViewController.showBadgeCount();
         
         if (postIdFromPush != 0) {
@@ -153,20 +154,17 @@ class HomeV2ViewController: SharePostViewController,EasyTipViewDelegate, Sharing
         
     }
     
-    @objc func postToFacebookPressed(sender: PostToSocialMediaGestureRecognizer) {
+    func postToFacebookPressed(post: Post) {
         
-        print(sender.post.postDescription);
+        print(post.postDescription);
         
         DispatchQueue.main.async {
             //self.activityIndicator.startAnimating();
         }
         
-        let post = sender.post!;
-        self.postToPublish = sender.post;
         if (post.postDescription != "") {
             
             if (post.postImages.count == 0) {
-                
                 
                 let content = ShareLinkContent();
                 content.quote = post.postDescription;
@@ -194,8 +192,7 @@ class HomeV2ViewController: SharePostViewController,EasyTipViewDelegate, Sharing
             } else {
                 
                 //self.showToast(message: "Text Copied to clipboard");
-                UIPasteboard.general.string = "\(sender.post.postDescription)";
-                
+                UIPasteboard.general.string = "\(post.postDescription)";
                 
                 let sharePhotoContent = SharePhotoContent();
                 for photoStr in post.postImages {
@@ -211,11 +208,7 @@ class HomeV2ViewController: SharePostViewController,EasyTipViewDelegate, Sharing
                     sharePhotoContent.photos.append(sharePhoto);
                 }
                 
-                
-                
                 //self.activityIndicator.stopAnimating();
-                
-                
                 let shareDialog = ShareDialog()
                 shareDialog.shareContent = sharePhotoContent;
                 shareDialog.mode = .automatic;
@@ -259,6 +252,7 @@ class HomeV2ViewController: SharePostViewController,EasyTipViewDelegate, Sharing
             }
         }
     }
+    
     //This method will be called when user post feed on facebook.
     func sharer(_ sharer: Sharing, didCompleteWithResults results: [String : Any]) {
         
@@ -304,26 +298,6 @@ class HomeV2ViewController: SharePostViewController,EasyTipViewDelegate, Sharing
                 self.loadUserPosts();
             }
         });
-    }
-    
-    @objc func postToSMSPressed(sender: PostToSocialMediaGestureRecognizer) {
-        let post = sender.post;
-        self.postId = post?.postId
-        var phoneNumbers = [String]();
-        for user in post!.castModerators {
-            //print(user.countryCode!)
-            print(user.phoneNumber!)
-            if(user.countryCode != nil && user.phoneNumber != nil && user.countryCode != "" && user.phoneNumber != ""){
-                phoneNumbers.append("\(user.countryCode!)\(user.phoneNumber!)");
-            }
-        }
-        if (MFMessageComposeViewController.canSendText()) {
-            let controller = MFMessageComposeViewController()
-            controller.recipients = phoneNumbers
-            controller.body = post?.postDescription;
-            controller.messageComposeDelegate = self
-            self.present(controller, animated: true, completion: nil)
-        }
     }
     
     func messageComposeViewController(_ controller: MFMessageComposeViewController, didFinishWith result: MessageComposeResult) {
@@ -429,9 +403,9 @@ class HomeV2ViewController: SharePostViewController,EasyTipViewDelegate, Sharing
     
     
     func loadUserPosts() {
-        var postArray : [String:Any] = [String:Any]();
+        social = SocialPlatform().loadSocialDataFromUserDefaults();
 
-        
+        var postArray : [String:Any] = [String:Any]();
         let jsonURL = "posts/all_caster_posts/format/json";
         
         postArray["user_id"] = String(loggedInUser.userId)
@@ -484,8 +458,9 @@ class HomeV2ViewController: SharePostViewController,EasyTipViewDelegate, Sharing
     
     
     func loadModeratorUserPosts() {
-        var postArray : [String:Any] = [String:Any]();
+        social = SocialPlatform().loadSocialDataFromUserDefaults();
 
+        var postArray : [String:Any] = [String:Any]();
         // Do any additional setup after loading the view.
         let jsonURL = "posts/all_moderator_caster_posts/format/json";
         

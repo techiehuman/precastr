@@ -11,6 +11,7 @@ import EasyTipView
 
 class AfterApprovedButtonsTableViewCell: UITableViewCell, EasyTipViewDelegate {
 
+    @IBOutlet weak var postModeratorsBtn: UIButton!;
     @IBOutlet weak var deleteBtn: UIButton!;
     @IBOutlet weak var callButtonBtn: UIButton!;
     @IBOutlet weak var facebookInfoBtn: UIButton!;

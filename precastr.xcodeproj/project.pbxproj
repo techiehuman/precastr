@@ -36,6 +36,10 @@
 		5EC1B7A123DB3D7100F32C40 /* PostCastMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EC1B7A023DB3D7100F32C40 /* PostCastMenu.swift */; };
 		5EC919A822DCA002002E9A3A /* PostManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EC919A722DCA002002E9A3A /* PostManager.swift */; };
 		5ED3A32A22BF3EE400F65CF2 /* PostCommunication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED3A32922BF3EE400F65CF2 /* PostCommunication.swift */; };
+		5EDF8B4323FE599D009FC646 /* CastDetailPostStatusTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EDF8B4123FE599D009FC646 /* CastDetailPostStatusTableViewCell.swift */; };
+		5EDF8B4423FE599D009FC646 /* CastDetailPostStatusTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5EDF8B4223FE599D009FC646 /* CastDetailPostStatusTableViewCell.xib */; };
+		5EDF8B4B23FEE048009FC646 /* CastModeratorTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EDF8B4923FEE048009FC646 /* CastModeratorTableViewCell.swift */; };
+		5EDF8B4C23FEE048009FC646 /* CastModeratorTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5EDF8B4A23FEE048009FC646 /* CastModeratorTableViewCell.xib */; };
 		5EE9EBFF22B803C300FD04B6 /* HomeDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EE9EBFE22B803C300FD04B6 /* HomeDto.swift */; };
 		5EEC6B5B22A66EAA005B1C34 /* LoginScreenTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EEC6B5922A66EAA005B1C34 /* LoginScreenTableViewCell.swift */; };
 		5EEC6B5C22A66EAA005B1C34 /* LoginScreenTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5EEC6B5A22A66EAA005B1C34 /* LoginScreenTableViewCell.xib */; };
@@ -189,6 +193,10 @@
 		5EC1B7A023DB3D7100F32C40 /* PostCastMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCastMenu.swift; sourceTree = "<group>"; };
 		5EC919A722DCA002002E9A3A /* PostManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostManager.swift; sourceTree = "<group>"; };
 		5ED3A32922BF3EE400F65CF2 /* PostCommunication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCommunication.swift; sourceTree = "<group>"; };
+		5EDF8B4123FE599D009FC646 /* CastDetailPostStatusTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CastDetailPostStatusTableViewCell.swift; sourceTree = "<group>"; };
+		5EDF8B4223FE599D009FC646 /* CastDetailPostStatusTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CastDetailPostStatusTableViewCell.xib; sourceTree = "<group>"; };
+		5EDF8B4923FEE048009FC646 /* CastModeratorTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CastModeratorTableViewCell.swift; sourceTree = "<group>"; };
+		5EDF8B4A23FEE048009FC646 /* CastModeratorTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CastModeratorTableViewCell.xib; sourceTree = "<group>"; };
 		5EE9EBFE22B803C300FD04B6 /* HomeDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeDto.swift; sourceTree = "<group>"; };
 		5EEC6B5922A66EAA005B1C34 /* LoginScreenTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginScreenTableViewCell.swift; sourceTree = "<group>"; };
 		5EEC6B5A22A66EAA005B1C34 /* LoginScreenTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoginScreenTableViewCell.xib; sourceTree = "<group>"; };
@@ -506,6 +514,8 @@
 				90C8F560235B26CA00ECD8B1 /* CastContactTableViewCell.xib */,
 				5E48B90923F8505F0078F07E /* PostItemTableViewCell.swift */,
 				5E48B90A23F8505F0078F07E /* PostItemTableViewCell.xib */,
+				5EDF8B4923FEE048009FC646 /* CastModeratorTableViewCell.swift */,
+				5EDF8B4A23FEE048009FC646 /* CastModeratorTableViewCell.xib */,
 			);
 			path = cell;
 			sourceTree = "<group>";
@@ -741,6 +751,8 @@
 				FAE6173D22B3B09800A8B2F3 /* RightCommunicationTableViewCell.xib */,
 				5E2A0E2D22DF83EE009033E7 /* PostDetailTableViewCell.swift */,
 				5E2A0E2E22DF83EE009033E7 /* PostDetailTableViewCell.xib */,
+				5EDF8B4123FE599D009FC646 /* CastDetailPostStatusTableViewCell.swift */,
+				5EDF8B4223FE599D009FC646 /* CastDetailPostStatusTableViewCell.xib */,
 			);
 			path = cells;
 			sourceTree = "<group>";
@@ -886,6 +898,7 @@
 				FADFEAFD22A51A46006E3CD2 /* VisbyCF-Medium.otf in Resources */,
 				5E2A0E3022DF83EE009033E7 /* PostDetailTableViewCell.xib in Resources */,
 				FA6AB58322531E8200C5491F /* Assets.xcassets in Resources */,
+				5EDF8B4C23FEE048009FC646 /* CastModeratorTableViewCell.xib in Resources */,
 				FADFEB0122A51A46006E3CD2 /* VisbyCF-Thin.otf in Resources */,
 				5E48B91D23F94E960078F07E /* PostDescriptionTableViewCell.xib in Resources */,
 				902FDE4122D7250F002D1601 /* GoogleService-Info.plist in Resources */,
@@ -917,6 +930,7 @@
 				5E48B91523F852050078F07E /* CasterPostStatusTableViewCell.xib in Resources */,
 				FA84F19522A1355A007796A3 /* HeaderViewTableViewCell.xib in Resources */,
 				FADFEB0222A51A46006E3CD2 /* VisbyCF-ThinOblique.otf in Resources */,
+				5EDF8B4423FE599D009FC646 /* CastDetailPostStatusTableViewCell.xib in Resources */,
 				5E6E94E823F98E7D00DBA4F3 /* AfterApprovedButtonsTableViewCell.xib in Resources */,
 				FAD5015722AE895C00D21F57 /* NotificationTableViewCell.xib in Resources */,
 				5EC1B0C42316656B0017CDCB /* PostImageCollectionViewCell.xib in Resources */,
@@ -1065,10 +1079,12 @@
 				FA291B0A225380830093E6CE /* User.swift in Sources */,
 				90F14680236058770096D56C /* UpdatePhoneNumberTableViewCell.swift in Sources */,
 				FA84F19422A1355A007796A3 /* HeaderViewTableViewCell.swift in Sources */,
+				5EDF8B4323FE599D009FC646 /* CastDetailPostStatusTableViewCell.swift in Sources */,
 				FAD5014C22A97B0400D21F57 /* ModeratorCastsTableViewCell.swift in Sources */,
 				FA4D544E2260F95200E9589B /* PrecastTypeSectionViewController.swift in Sources */,
 				5E203CBA2349C5EA00EFFC2D /* ModeratorPhoneNumberViewController.swift in Sources */,
 				FA6AB57E22531E7300C5491F /* ViewController.swift in Sources */,
+				5EDF8B4B23FEE048009FC646 /* CastModeratorTableViewCell.swift in Sources */,
 				5E48B90B23F8505F0078F07E /* PostItemTableViewCell.swift in Sources */,
 				90C8F55E235B267B00ECD8B1 /* CastContactsViewController.swift in Sources */,
 				5E48B91C23F94E960078F07E /* PostDescriptionTableViewCell.swift in Sources */,

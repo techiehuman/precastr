@@ -22,6 +22,7 @@ class Post {
     var postCommunications = [PostCommunication]();
     var castModerators = [User]();
     var postUserId : Int = 0;
+    var approvedByUserId: Int = 0;
     
     func loadPostFromDict(postDict: NSDictionary) -> Post {
         
@@ -66,6 +67,8 @@ class Post {
                 post.castModerators.append(User().loadCastModeratorsFromDict(castModeratorDict: castModeratorDict));
             }
         }
+        post.approvedByUserId = Int(postDict.value(forKey: "approved_by_user_id") as! String)!;
+
         return post;
     }
     
