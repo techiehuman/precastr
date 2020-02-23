@@ -24,6 +24,8 @@ target 'precastr' do
   
   pod 'ImageSlideshow', '~> 1.8.3'
   pod "ImageSlideshow/SDWebImage"
+  pod 'ReadabilityKit'
+
   # Pods for precastr
 
   target 'precastrTests' do

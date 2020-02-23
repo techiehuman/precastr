@@ -13,7 +13,7 @@ import FBSDKLoginKit
 import FacebookShare
 import FBSDKCoreKit
 
-class PostItemTableViewCell: UITableViewCell, SharingDelegate, MFMessageComposeViewControllerDelegate {
+class PostItemTableViewCell: UITableViewCell, SharingDelegate, MFMessageComposeViewControllerDelegate, PostItemTableViewDelegate {
 
     @IBOutlet weak var postItemsTableView: UITableView!
     var pushViewController: UIViewController!;
@@ -22,6 +22,8 @@ class PostItemTableViewCell: UITableViewCell, SharingDelegate, MFMessageComposeV
     var totalPosts: Int!;
     var isShareMenuOpened: Bool = false;
     var shareButtonGlobal: UIButton!;
+    var isDescriptionFullView: Bool = false;
+    var parentTableIndexPath: IndexPath!;
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -63,7 +65,7 @@ class PostItemTableViewCell: UITableViewCell, SharingDelegate, MFMessageComposeV
     @objc func shareIconPressed(sender: MyTapRecognizer){
         shareButtonGlobal = sender.uiButton;
         createPublishPostMenu(post: sender.post);
-        postItemsTableView.reloadData();
+        //postItemsTableView.reloadData();
     }
     
     @objc func callInfoButtonPressed(sender: MyTapRecognizer) {
@@ -345,6 +347,8 @@ class PostItemTableViewCell: UITableViewCell, SharingDelegate, MFMessageComposeV
     
     @objc func postToSMSPressed(sender: PostToSocialMediaGestureRecognizer) {
         let viewController = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ContactsViewController") as! ContactsViewController;
+        viewController.requestFrom = ContactsViewController.ContactsViewRequestFrom.PostMenuRequest;
+        viewController.postItemTableViewDelegate = self;
         //viewController.moderatorViewControllerDelegte = self;
         self.pushViewController.navigationController?.pushViewController(viewController, animated: true);
 
@@ -547,7 +551,8 @@ class PostItemTableViewCell: UITableViewCell, SharingDelegate, MFMessageComposeV
             } else {
                 if (self.pushViewController is HomeV2ViewController) {
                     (self.pushViewController as! HomeV2ViewController).loadUserPosts();
-                }            }
+                }
+            }
         });
     }
     
@@ -567,6 +572,21 @@ class PostItemTableViewCell: UITableViewCell, SharingDelegate, MFMessageComposeV
         print("Cancel")
     }
     
+    func onSelectingContacts(userContacts: [UserContactItem]) {
+        
+           var phoneNumbers = [String]();
+           for userContact in userContacts {
+                print(userContact.phone!)
+                phoneNumbers.append("\(userContact.phone!)");
+           }
+           if (MFMessageComposeViewController.canSendText()) {
+               let controller = MFMessageComposeViewController()
+               controller.recipients = phoneNumbers
+               controller.body = post?.postDescription;
+               controller.messageComposeDelegate = self
+               self.pushViewController.present(controller, animated: true, completion: nil)
+           }
+    }
     func messageComposeViewController(_ controller: MFMessageComposeViewController, didFinishWith result: MessageComposeResult) {
         
         var loggedInUser: User!;
@@ -583,7 +603,8 @@ class PostItemTableViewCell: UITableViewCell, SharingDelegate, MFMessageComposeV
                var postData = [String: Any]();
                postData["user_id"] = loggedInUser.userId
                postData["post_id"] = post.postId
-               let jsonURL = "user/send_post_sms/format/json";
+               postData["timestamp"] = Date().timeIntervalMilliSeconds();
+               let jsonURL = "posts/send_post_sms/format/json";
                UserService().postDataMethod(jsonURL: jsonURL,postData:postData,complete:{(response) in
                    //self.activityIndicator.stopAnimating();
                    
@@ -594,6 +615,20 @@ class PostItemTableViewCell: UITableViewCell, SharingDelegate, MFMessageComposeV
                         if (self.pushViewController is HomeV2ViewController) {
                             (self.pushViewController as! HomeV2ViewController).loadUserPosts();
                         }
+                    if (self.isShareMenuOpened == true) {
+                        self.isShareMenuOpened = false;
+                            if (self.pushViewController is HomeV2ViewController) {
+                                (self.pushViewController as! HomeV2ViewController).postsTableView.isScrollEnabled = true;
+                            }
+                            for view in self.pushViewController.view.subviews {
+                                if (view is PostCastMenu) {
+                                    view.removeFromSuperview();
+                                    
+                                }
+                            }
+                        self.createPublishPostMenu(post: self.post);
+                        }
+                        
                    }
                    
                });
@@ -609,6 +644,13 @@ class PostItemTableViewCell: UITableViewCell, SharingDelegate, MFMessageComposeV
            }
         self.pushViewController.dismiss(animated: true, completion: nil)
        }
+    
+    func contentChanged() {
+        //(pushViewController as! HomeV2ViewController).postsTableView.beginUpdates();
+        //(pushViewController as! HomeV2ViewController).postsTableView.endUpdates();
+        
+        (pushViewController as! HomeV2ViewController).postsTableView.reloadRows(at: [parentTableIndexPath], with: .automatic);
+    }
 }
 
 extension PostItemTableViewCell: UITableViewDataSource, UITableViewDelegate {
@@ -641,9 +683,11 @@ extension PostItemTableViewCell: UITableViewDataSource, UITableViewDelegate {
             
             
             } else if (indexPath.row == PostRows.Post_Description_Row) {
-                    
+                
                 let cell: PostDescriptionTableViewCell = tableView.dequeueReusableCell(withIdentifier: "PostDescriptionTableViewCell", for: indexPath) as! PostDescriptionTableViewCell;
+            
                     cell.pushViewController = pushViewController;
+                    cell.postItemTableViewCellDelegate = self;
                     cell.addLabelToPost(post: post);
                     cell.addTapGestureToArrow(rowId: postRowIndex);
                     
@@ -653,12 +697,12 @@ extension PostItemTableViewCell: UITableViewDataSource, UITableViewDelegate {
                         cell.castPaginationArrow.isHidden = false;
                     }
                     return cell;
+            
             }  else if (indexPath.row == PostRows.Post_Gallery_Row) {
                                
                    let cell: PostGalleryTableViewCell = tableView.dequeueReusableCell(withIdentifier: "PostGalleryTableViewCell", for: indexPath) as! PostGalleryTableViewCell;
-            cell.pushViewController = pushViewController;
-                       cell.createGalleryScrollView(post: post);
-            
+                    cell.pushViewController = pushViewController;
+                    cell.createGalleryScrollView(post: post);
                     return cell;
             }
 
@@ -683,7 +727,12 @@ extension PostItemTableViewCell: UITableViewDataSource, UITableViewDelegate {
             }
             return CGFloat(PostRowsHeight.Post_Action_Row_Height);
         } else if (PostRows.Post_Description_Row == indexPath.row) {
-            var height =  pushViewController.getHeightOfPostDescripiton(contentView: self.contentView, postDescription: post.postDescription);
+            let height =  pushViewController.getHeightOfPostDescripiton(contentView: self.contentView, postDescription: post.postDescription);
+            if ((pushViewController as! HomeV2ViewController).postIdDescExpansionMap[post.postId] == nil || (pushViewController as! HomeV2ViewController).postIdDescExpansionMap[post.postId] == false) {
+                if (height > 100) {
+                    return 100;
+                }
+            }
             return height;
         } else if (PostRows.Post_Gallery_Row == indexPath.row) {
             if (post.postImages.count == 0) {

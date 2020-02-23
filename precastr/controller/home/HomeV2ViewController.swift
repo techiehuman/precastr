@@ -38,7 +38,7 @@ class HomeV2ViewController: SharePostViewController,EasyTipViewDelegate, Sharing
     var postToPublish: Post!;
     var postId: Int!;
     var easyToolTip: EasyTipView!
-
+    var postIdDescExpansionMap = [Int: Bool]();
 
 
     private let refreshControl = UIRefreshControl()
@@ -431,6 +431,7 @@ class HomeV2ViewController: SharePostViewController,EasyTipViewDelegate, Sharing
                     self.postsTableView.isHidden = false;
                     //self.homePosts = modeArray as! [Any]
                     self.posts = Post().loadPostsFromNSArray(postsArr: modeArray);
+                    self.posts = self.posts.sorted {$0.postId > $1.postId};
                     self.postsTableView.reloadData();
                     
                     
@@ -520,6 +521,9 @@ class HomeV2ViewController: SharePostViewController,EasyTipViewDelegate, Sharing
 
 extension HomeV2ViewController: UITableViewDelegate, UITableViewDataSource {
     
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1;
+    }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.posts.count;
     }
@@ -540,6 +544,10 @@ extension HomeV2ViewController: UITableViewDelegate, UITableViewDataSource {
         cell.post = post
         cell.postRowIndex = indexPath.row;
         cell.totalPosts = posts.count;
+        //self.postIdDescExpansionMap[post.postId] = cell.isDescriptionFullView;
+        cell.parentTableIndexPath = indexPath;
+        cell.postItemsTableView.reloadData();
+        
         return cell;
     }
     
@@ -549,7 +557,16 @@ extension HomeV2ViewController: UITableViewDelegate, UITableViewDataSource {
         
         var height: CGFloat = CGFloat(PostRowsHeight.Post_Status_Row_Height + PostRowsHeight.Post_Action_Row_Height);
         
-        height = height + getHeightOfPostDescripiton(contentView: self.view, postDescription: post.postDescription) + CGFloat(PostRowsHeight.Post_Description_Row_Height);
+        var heightOfDesc: CGFloat = getHeightOfPostDescripiton(contentView: self.view, postDescription: post.postDescription);
+        if (heightOfDesc > 100) {
+            print(postIdDescExpansionMap);
+            if (!(postIdDescExpansionMap[post.postId] != nil && postIdDescExpansionMap[post.postId] == true)) {
+                heightOfDesc = 100;
+            }
+            //heightOfDesc = 100;
+        }
+        print("Height of Descriptiojn :  ",heightOfDesc, "POst Id : ", post.postId);
+        height = height + heightOfDesc + CGFloat(PostRowsHeight.Post_Description_Row_Height);
         if (post.postImages.count != 0) {
             height = height + CGFloat(PostRowsHeight.Post_Gallery_Row_Height);
         }

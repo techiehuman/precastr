@@ -681,17 +681,9 @@
 		FABF02492264FB500067960C /* sidemenu */ = {
 			isa = PBXGroup;
 			children = (
-				FABF02532269D35D0067960C /* cell */,
 				FABF024F2265DFBB0067960C /* SideMenuTableViewController.swift */,
 			);
 			path = sidemenu;
-			sourceTree = "<group>";
-		};
-		FABF02532269D35D0067960C /* cell */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = cell;
 			sourceTree = "<group>";
 		};
 		FADFEAE122A519A7006E3CD2 /* fonts */ = {

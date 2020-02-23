@@ -31,6 +31,7 @@ class PostGalleryTableViewCell: UITableViewCell, ImageSlideshowDelegate {
     func createGalleryScrollView(post: Post) {
         
         if (post.postImages.count > 0) {
+            self.imageSlideShow.isHidden = false;
             beginImageFunc(imagesArray: post.postImages);
             
             /*imageGalleryScrollView.isHidden = false;

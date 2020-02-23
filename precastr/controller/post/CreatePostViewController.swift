@@ -74,7 +74,11 @@ class CreatePostViewController: UIViewController, UIImagePickerControllerDelegat
     
     override func viewWillAppear(_ animated: Bool) {
         
-        
+        if (post == nil) {
+            postImageDtos = [PostImageDto]();
+            self.PhotoArray = [UIImage]();
+        }
+        createPostTableView.reloadData();
         let menuButton = UIButton();
         menuButton.setImage(UIImage.init(named: "menu"), for: .normal);
         menuButton.addTarget(self, action: #selector(menuButtonClicked), for: UIControlEvents.touchUpInside)
@@ -110,7 +114,10 @@ class CreatePostViewController: UIViewController, UIImagePickerControllerDelegat
     */
 
     func imageUploadClicked(){
-        // create an actionSheet
+        
+        self.selectMultipleImages();
+        
+        /*// create an actionSheet
         let actionSheetController: UIAlertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
         // create an action
@@ -132,7 +139,7 @@ class CreatePostViewController: UIViewController, UIImagePickerControllerDelegat
         actionSheetController.addAction(cancelAction)
         
         // present an actionSheet...
-        self.present(actionSheetController, animated: true, completion: nil)
+        self.present(actionSheetController, animated: true, completion: nil)*/
     }
     
     
@@ -268,7 +275,7 @@ extension CreatePostViewController: UITableViewDelegate, UITableViewDataSource {
         
         let cell: PostFormTableViewCell = tableView.dequeueReusableCell(withIdentifier: "PostFormTableViewCell") as! PostFormTableViewCell;
         cell.createPostViewControllerDelegate = self;
-        
+        cell.reloadCollctionView();
         if (post != nil) {
             cell.postTextField.text = post.postDescription
             cell.charaterCountLabel.text = "\(post.postDescription.count) Characters";
@@ -278,37 +285,9 @@ extension CreatePostViewController: UITableViewDelegate, UITableViewDataSource {
                 cell.reloadCollctionView();
             }
             
-            /*var facebookIconHidden = true;
-            var twitterIconHidden = true;
-            if (post.socialMediaIds.count > 0) {
-                
-                for sourcePlatformId in post.socialMediaIds {
-                    if(Int(sourcePlatformId) == social.socialPlatformId["Facebook"]){
-                        facebookIconHidden = false;
-                    }  else if(Int(sourcePlatformId) == social.socialPlatformId["Twitter"]) {
-                        twitterIconHidden = false;
-                    }
-                }
-            }
-            
-            if (facebookIconHidden == false && twitterIconHidden == true) {
-                //If twitter is not present then we will replace sourceImageTwitter image with facebook
-                cell.activeFacebookIcon();
-                cell.charaterCountLabel.isHidden = true;
-                
-            } else if (twitterIconHidden == false && facebookIconHidden == true) {
-                cell.activeTwitterIcon();
-                cell.charaterCountLabel.isHidden = false;
-
-            } else if (facebookIconHidden == false  && twitterIconHidden == false) {
-                cell.activeFacebookIcon();
-                cell.activeTwitterIcon();
-                cell.charaterCountLabel.isHidden = false;
-
-            }*/
+           
             for postStatus in postStatusList {
                 if (postStatus.postStatusId == self.post.postStatusId) {
-                    cell.changeStatusBtn.setTitle(postStatus.title, for: .normal);
                     cell.selectedPostStatusId = self.post.postStatusId
                     // Lets add ui labels in width.
                   //  let totalWidthOfUIView = cell.changeStatusBtn.intrinsicContentSize.width + 20;
@@ -321,48 +300,14 @@ extension CreatePostViewController: UITableViewDelegate, UITableViewDataSource {
             
         }
         
-        /*if (post == nil) {
-            if (PhotoArray.count == 0) {
-                
-                cell.sendViewArea.frame = CGRect.init(x: cell.sendViewArea.frame.origin.x, y: (cell.sendViewArea.frame.origin.y - 100), width: cell.sendViewArea.frame.width, height: cell.sendViewArea.frame.height);
-                cell.changeStatusBtn.frame = CGRect.init(x: cell.changeStatusBtn.frame.origin.x, y: (cell.changeStatusBtn.frame.origin.y - 100), width: cell.changeStatusBtn.frame.width, height: cell.changeStatusBtn.frame.height);
-                cell.filesUploadedtext.frame = CGRect.init(x: cell.filesUploadedtext.frame.origin.x, y: (cell.filesUploadedtext.frame.origin.y - 100), width: cell.filesUploadedtext.frame.width, height: cell.filesUploadedtext.frame.height);
-            } else {
-                
-                cell.sendViewArea.frame = CGRect.init(x: cell.sendViewArea.frame.origin.x, y: (cell.sendViewArea.frame.origin.y + 100), width: cell.sendViewArea.frame.width, height: cell.sendViewArea.frame.height);
-                cell.changeStatusBtn.frame = CGRect.init(x: cell.changeStatusBtn.frame.origin.x, y: (cell.changeStatusBtn.frame.origin.y + 100), width: cell.changeStatusBtn.frame.width, height: cell.changeStatusBtn.frame.height);
-                cell.filesUploadedtext.frame = CGRect.init(x: cell.filesUploadedtext.frame.origin.x, y: (cell.filesUploadedtext.frame.origin.y + 100), width: cell.filesUploadedtext.frame.width, height: cell.filesUploadedtext.frame.height);
-
-            }
-            
-        } else {
-            
-            if (post != nil) {
-                if (post.postImages.count > 0 || PhotoArray.count > 0) {
-                
-                    cell.sendViewArea.frame = CGRect.init(x: cell.sendViewArea.frame.origin.x, y: cell.sendViewArea.frame.origin.y, width: cell.sendViewArea.frame.width, height: cell.sendViewArea.frame.height);
-                    cell.changeStatusBtn.frame = CGRect.init(x: cell.changeStatusBtn.frame.origin.x, y: cell.changeStatusBtn.frame.origin.y, width: cell.changeStatusBtn.frame.width, height: cell.changeStatusBtn.frame.height);
-                    cell.filesUploadedtext.frame = CGRect.init(x: cell.filesUploadedtext.frame.origin.x, y: cell.filesUploadedtext.frame.origin.y, width: cell.filesUploadedtext.frame.width, height: cell.filesUploadedtext.frame.height);
-
-                } else {
-                    
-                    cell.sendViewArea.frame = CGRect.init(x: cell.sendViewArea.frame.origin.x, y: (cell.sendViewArea.frame.origin.y + 100), width: cell.sendViewArea.frame.width, height: cell.sendViewArea.frame.height);
-                    cell.changeStatusBtn.frame = CGRect.init(x: cell.changeStatusBtn.frame.origin.x, y: (cell.changeStatusBtn.frame.origin.y + 100), width: cell.changeStatusBtn.frame.width, height: cell.changeStatusBtn.frame.height);
-                    cell.filesUploadedtext.frame = CGRect.init(x: cell.filesUploadedtext.frame.origin.x, y: (cell.filesUploadedtext.frame.origin.y + 100), width: cell.filesUploadedtext.frame.width, height: cell.filesUploadedtext.frame.height);
-
-                }
-            }
-        }*/
-            
+        
         if (self.isSubmitAlreadyAdjustedUp == false && self.postImageDtos.count == 0) {
             cell.sendViewArea.frame = CGRect.init(x: cell.sendViewArea.frame.origin.x, y: (cell.sendViewArea.frame.origin.y - 100), width: cell.sendViewArea.frame.width, height: cell.sendViewArea.frame.height);
-            cell.changeStatusBtn.frame = CGRect.init(x: cell.changeStatusBtn.frame.origin.x, y: (cell.changeStatusBtn.frame.origin.y - 100), width: cell.changeStatusBtn.frame.width, height: cell.changeStatusBtn.frame.height);
             cell.filesUploadedtext.frame = CGRect.init(x: cell.filesUploadedtext.frame.origin.x, y: (cell.filesUploadedtext.frame.origin.y - 100), width: cell.filesUploadedtext.frame.width, height: cell.filesUploadedtext.frame.height);
             self.isSubmitAlreadyAdjustedUp = true;
         } else {
             if (self.isSubmitAlreadyAdjustedUp == true) {
                 cell.sendViewArea.frame = CGRect.init(x: cell.sendViewArea.frame.origin.x, y: (cell.sendViewArea.frame.origin.y + 100), width: cell.sendViewArea.frame.width, height: cell.sendViewArea.frame.height);
-                cell.changeStatusBtn.frame = CGRect.init(x: cell.changeStatusBtn.frame.origin.x, y: (cell.changeStatusBtn.frame.origin.y + 100), width: cell.changeStatusBtn.frame.width, height: cell.changeStatusBtn.frame.height);
                 cell.filesUploadedtext.frame = CGRect.init(x: cell.filesUploadedtext.frame.origin.x, y: (cell.filesUploadedtext.frame.origin.y + 100), width: cell.filesUploadedtext.frame.width, height: cell.filesUploadedtext.frame.height);
                 self.isSubmitAlreadyAdjustedUp = false
             }

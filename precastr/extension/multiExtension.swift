@@ -136,6 +136,11 @@ extension Date {
         }
         return "\(dateFormatter.string(from: fDate!)) \(hourDateFormatter.string(from: fDate!).uppercased())";
     }
+    
+    func timeIntervalMilliSeconds() -> Int {
+        return Int(self.timeIntervalSince1970*1000);
+    }
+    
 }
 extension UIButton {
     func blueBorderWrap(){

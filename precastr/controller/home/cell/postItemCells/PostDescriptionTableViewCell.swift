@@ -13,6 +13,7 @@ class PostDescriptionTableViewCell: UITableViewCell {
     @IBOutlet weak var postDescription: UILabel!
     @IBOutlet weak var castPaginationArrow: UIImageView!
     
+    var postItemTableViewCellDelegate: PostItemTableViewCell!
     var pushViewController: UIViewController!;
     
     override func awakeFromNib() {
@@ -37,15 +38,71 @@ class PostDescriptionTableViewCell: UITableViewCell {
         
     }
     
-    func addLabelToPost(post: Post) {
+    @objc func postDescPressed(sender: MyTapRecognizer) {
+    
+        //Call this function
+        if ((postItemTableViewCellDelegate.pushViewController as! HomeV2ViewController).postIdDescExpansionMap[postItemTableViewCellDelegate.post.postId] != nil && (postItemTableViewCellDelegate.pushViewController as! HomeV2ViewController).postIdDescExpansionMap[postItemTableViewCellDelegate.post.postId] == true) {
+            
+            //postItemTableViewCellDelegate.isDescriptionFullView = false;
+                (postItemTableViewCellDelegate.pushViewController as! HomeV2ViewController).postIdDescExpansionMap[postItemTableViewCellDelegate.post.postId] = false
         
+        } else {
+            //postItemTableViewCellDelegate.isDescriptionFullView = true;
+            (postItemTableViewCellDelegate.pushViewController as! HomeV2ViewController).postIdDescExpansionMap[postItemTableViewCellDelegate.post.postId] = true
+        
+        }
+        
+        print("When clicked Desc : ",(postItemTableViewCellDelegate.pushViewController as! HomeV2ViewController).postIdDescExpansionMap);
+        var height = pushViewController.getHeightOfPostDescripiton(contentView: self.contentView, postDescription: sender.post.postDescription);
+               
+               var heightOflabel = height;
+               if (height > 100) {
+                   if (postItemTableViewCellDelegate.isDescriptionFullView == true) {
+                       postDescription.numberOfLines = 0
+                   } else {
+                       postDescription.numberOfLines = 4
+                        heightOflabel = 100;
+                   }
+              } else {
+                  postDescription.numberOfLines = 0
+              }
+        //   proNameLbl.lineBreakMode = .byTruncatingTail
+           let paragraphStyle = NSMutableParagraphStyle()
+           paragraphStyle.lineBreakMode = .byTruncatingTail
+           //line height size
+           paragraphStyle.lineSpacing = 2
+           let attributes = [
+               NSAttributedStringKey.font : UIFont(name: "VisbyCF-Regular", size: 16.0)!,
+               NSAttributedStringKey.foregroundColor : UIColor.init(red: 34/255, green: 34/255, blue: 34/255, alpha: 1),
+               NSAttributedStringKey.paragraphStyle: paragraphStyle]
+           
+        let attrString = NSMutableAttributedString(string: sender.post.postDescription)
+           attrString.addAttributes(attributes, range: NSMakeRange(0, attrString.length));
+            postDescription.attributedText = attrString;
+        //self.postItemTableViewCellDelegate.postItemsTableView.reloadData();
+        //self.postItemTableViewCellDelegate.postItemsTableView.beginUpdates()
+        //self.postItemTableViewCellDelegate.postItemsTableView.endUpdates()
+       
+        self.postItemTableViewCellDelegate.contentChanged();
+        //postItemTableViewCellDelegate.postItemsTableView.reloadData();
+        if (postItemTableViewCellDelegate.pushViewController is HomeV2ViewController) {
+            //(postItemTableViewCellDelegate.pushViewController as! HomeV2ViewController).postsTableView.reloadData();
+        }
+    }
+    
+    func addLabelToPost(post: Post) {
+        postDescription.isUserInteractionEnabled = true;
         //Call this function
         var height = pushViewController.getHeightOfPostDescripiton(contentView: self.contentView, postDescription: post.postDescription);
         
         var heightOflabel = height;
-        if (height > 100) {
-               postDescription.numberOfLines = 4
-                heightOflabel = 100;
+        if (heightOflabel > 100) {
+            if ((postItemTableViewCellDelegate.pushViewController as! HomeV2ViewController).postIdDescExpansionMap[postItemTableViewCellDelegate.post.postId] != nil && (postItemTableViewCellDelegate.pushViewController as! HomeV2ViewController).postIdDescExpansionMap[postItemTableViewCellDelegate.post.postId] == true) {
+                postDescription.numberOfLines = 0
+            } else {
+                postDescription.numberOfLines = 4
+                 heightOflabel = 100;
+            }
            } else {
                postDescription.numberOfLines = 0
            }
@@ -63,7 +120,13 @@ class PostDescriptionTableViewCell: UITableViewCell {
         let attrString = NSMutableAttributedString(string: post.postDescription)
            attrString.addAttributes(attributes, range: NSMakeRange(0, attrString.length));
            postDescription.attributedText = attrString;
-        postDescription.frame = CGRect.init(x: postDescription.frame.origin.x, y: postDescription.frame.origin.y, width: postDescription.frame.width, height: heightOflabel)
+        postDescription.frame = CGRect.init(x: postDescription.frame.origin.x, y: postDescription.frame.origin.y, width: postDescription.frame.width, height: heightOflabel);
+        
+        let descTapGesture = MyTapRecognizer.init(target: self, action: #selector(postDescPressed(sender:)));
+        descTapGesture.post = post;
+        postDescription.addGestureRecognizer(descTapGesture);
+        
+        print(post.postDescription);
     }
     
     func addTapGestureToArrow(rowId: Int) {

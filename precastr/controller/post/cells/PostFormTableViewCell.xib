@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14810.12" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14766.15"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -63,7 +63,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="hoz-FQ-Fod">
-                        <rect key="frame" x="0.0" y="310" width="378" height="110"/>
+                        <rect key="frame" x="0.0" y="260" width="378" height="110"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="YjF-cQ-PSn">
@@ -107,20 +107,8 @@
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </view>
-                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qxz-XI-f4I">
-                        <rect key="frame" x="15" y="435" width="107" height="30"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <fontDescription key="fontDescription" name="VisbyCF-Regular" family="Visby CF" pointSize="14"/>
-                        <inset key="imageEdgeInsets" minX="10" minY="3" maxX="0.0" maxY="0.0"/>
-                        <state key="normal" title="Pending" image="down_arrow">
-                            <color key="titleColor" red="0.13333333333333333" green="0.13333333333333333" blue="0.13333333333333333" alpha="1" colorSpace="calibratedRGB"/>
-                        </state>
-                        <connections>
-                            <action selector="changeStatusButtonClicked:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="5U0-Hr-Ooz"/>
-                        </connections>
-                    </button>
                     <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="20 files uploaded successfully" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8s1-1h-jeB">
                         <rect key="frame" x="92" y="410" width="266" height="21"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
@@ -133,7 +121,6 @@
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="attachmentBtn" destination="qeh-EM-aKZ" id="Ltq-tZ-l0J"/>
-                <outlet property="changeStatusBtn" destination="qxz-XI-f4I" id="7QR-We-wSI"/>
                 <outlet property="charaterCountLabel" destination="beK-LK-CcY" id="heE-g7-3tz"/>
                 <outlet property="filesUploadedtext" destination="8s1-1h-jeB" id="WMJ-wK-uUd"/>
                 <outlet property="imageCollectionView" destination="hoz-FQ-Fod" id="p2N-Sq-hJe"/>
@@ -147,7 +134,6 @@
     </objects>
     <resources>
         <image name="clips" width="16" height="14"/>
-        <image name="down_arrow" width="12" height="7"/>
         <image name="sent-email" width="16" height="14.5"/>
     </resources>
 </document>

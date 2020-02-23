@@ -34,14 +34,12 @@ class CastContactsViewController: UIViewController {
     }
     func setUpNavigationBarItems() {
         
-        let cancelButton = UIButton();
+        let backButton = UIButton();
+        backButton.setImage(UIImage.init(named: "left-arrow"), for: .normal);
+        backButton.addTarget(self, action: #selector(backButtonPressed), for: UIControlEvents.touchUpInside)
+        backButton.frame = CGRect.init(x: 0, y:0, width: 20, height: 15);
         
-        cancelButton.setTitle("Cancel", for: .normal)
-        cancelButton.setTitleColor(UIColor.white, for: .normal)
-        cancelButton.addTarget(self, action: #selector(cancelButtonPressed), for: UIControlEvents.touchUpInside)
-        cancelButton.frame = CGRect.init(x: 0, y:0, width: 16.73, height: 10.89);
-        
-        let barButton = UIBarButtonItem(customView: cancelButton)
+        let barButton = UIBarButtonItem(customView: backButton)
         navigationItem.leftBarButtonItem = barButton;
         
         if (castContactListType == CastContactListType.CallList) {
@@ -50,7 +48,7 @@ class CastContactsViewController: UIViewController {
             self.title = "Moderator List";
         }
     }
-    @objc func cancelButtonPressed(){
+    @objc func backButtonPressed(){
         self.navigationController?.popViewController(animated: true);
     }
 }

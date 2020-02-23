@@ -26,6 +26,7 @@ class ArchieveViewController: SharePostViewController {
         loggedInUser = User().loadUserDataFromUserDefaults(userDataDict : setting);
 
         loadArchievePosts();
+        self.navigationItem.title = "My Casts";
     }
     
 
@@ -67,8 +68,6 @@ class ArchieveViewController: SharePostViewController {
             }
         });
     }
-    
-    
 }
 
 extension ArchieveViewController: UITableViewDelegate, UITableViewDataSource {
@@ -87,12 +86,12 @@ extension ArchieveViewController: UITableViewDelegate, UITableViewDataSource {
         cell.castOptionsView.addSubview(cell.populateCastOptionsView(post: post));
         cell.addLabelToPost(post: post);
         cell.createGalleryScrollView(post: post);*/
-        
         let cell: PostItemTableViewCell = tableView.dequeueReusableCell(withIdentifier: "PostItemTableViewCell", for: indexPath) as! PostItemTableViewCell;
         cell.pushViewController = self;
         cell.post = post
         cell.postRowIndex = indexPath.row;
         cell.totalPosts = posts.count;
+        cell.parentTableIndexPath = indexPath;
         return cell;
     }
     

@@ -190,23 +190,32 @@ class SideMenuTableViewController: UITableViewController {
             print("")
         case 1://Moderator
             print("")
-        case 2://Membership
+        case 2://Caster Switch
             print("")
 
-        case 3://Moderators
-            self.performSegue(withIdentifier: "moderatorSegue", sender: self);
-        case 4://Casters
-            self.performSegue(withIdentifier: "casterSegue", sender: self);
-        
+        case 3://Membership
+            print("");
             
-        case 5://FAQ
+        case 4://Moderators
+            self.performSegue(withIdentifier: "moderatorSegue", sender: self);
+
+        case 5://Casters
+            self.performSegue(withIdentifier: "casterSegue", sender: self);
             print("")
             
         case 6://FAQ
+            //self.performSegue(withIdentifier: "termSetting", sender: self)
+            var tandCViewControlller = storyboard?.instantiateViewController(withIdentifier: "TermsPageViewController") as! TermsPageViewController;
+            tandCViewControlller.webViewRequest = TermsPageViewController.WebViewRequest.FQA;
+            self.navigationController?.pushViewController(tandCViewControlller, animated: true);
+
             print("")
            
         case 7://Terms ANd Conds
-           self.performSegue(withIdentifier: "termSetting", sender: self)
+           //self.performSegue(withIdentifier: "termSetting", sender: self)
+           var tandCViewControlller = storyboard?.instantiateViewController(withIdentifier: "TermsPageViewController") as! TermsPageViewController;
+           tandCViewControlller.webViewRequest = TermsPageViewController.WebViewRequest.TermsAndConds;
+           self.navigationController?.pushViewController(tandCViewControlller, animated: true);
             print("")
         case 8:
             self.logout();
@@ -222,23 +231,27 @@ class SideMenuTableViewController: UITableViewController {
             return 70;
         case 1://Moderator
             return 50;
-        case 2:
+        case 2://Caster Switch
             return 50;
-        case 3://Moderators
+        case 3://Membership
+            return 50;
+        case 4://Moderators
             if (loggedInUser.isCastr == 1) {//If Logged In User is Caster We will show Moderators Row
                 return 50
             } else {
                 return 0;//If Logged In User is Moderator We will hide Moderators Row
             }
-        case 4://Casters
+        case 5://Casters
             if (loggedInUser.isCastr == 2) {//If Logged In User is Caster We will show Moderators Row
                 return 50
             } else {
                 return 0;//If Logged In User is Moderator We will hide Moderators Row
             }
-        case 5:
-            return 50;
         case 6:
+            return 50;
+        case 7:
+            return 50;
+        case 8:
             return 50;
         default:
             return 50;

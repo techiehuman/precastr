@@ -65,6 +65,6 @@ class PostRows {
 class PostRowsHeight {
     static var Post_Status_Row_Height: Int = 40;
     static var Post_Action_Row_Height: Int = 40;
-    static var Post_Description_Row_Height: Int = 10;
+    static var Post_Description_Row_Height: Int = 15;
     static var Post_Gallery_Row_Height: Int = 418;
 }

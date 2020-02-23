@@ -12,13 +12,20 @@ import ContactsUI
 protocol ModeratorViewControllerDelegate {
     func contactsDoneButtonPressed(userContactItems: [UserContactItem]);
 }
+protocol PostItemTableViewDelegate {
+    func onSelectingContacts(userContacts: [UserContactItem]);
+}
 class ContactsViewController: UIViewController, UITextFieldDelegate {
 
+    enum ContactsViewRequestFrom {case PostMenuRequest, ModeratorRequest};
+    
     private var userContactItems: [UserContactItem] = [UserContactItem]();
     private var filteredContacts: [UserContactItem] = [UserContactItem]();
     private var userContactSelected = [String: UserContactItem]();
-    var moderatorViewControllerDelegte: ModeratorViewControllerDelegate!;
+    var requestFrom: ContactsViewRequestFrom!;
     
+    var moderatorViewControllerDelegte: ModeratorViewControllerDelegate!;
+    var postItemTableViewDelegate: PostItemTableViewDelegate!;
     @IBOutlet weak var contactUITableView: UITableView!
 
     @IBOutlet weak var txtSearchBox: UITextField!
@@ -59,6 +66,7 @@ class ContactsViewController: UIViewController, UITextFieldDelegate {
     }
 
     func retrieveContactsWithStore(contactStore: CNContactStore) {
+        var userContactItemsTemp = [UserContactItem]();
         let keys = [
             CNContactFormatter.descriptorForRequiredKeys(for: .fullName),
             CNContactPhoneNumbersKey,
@@ -81,11 +89,15 @@ class ContactsViewController: UIViewController, UITextFieldDelegate {
                         userContactItem.phone = number.stringValue;
                     }
                 }
-                if(userContactItem.phone != nil){
-                    self.userContactItems.append(userContactItem);
+                if(userContactItem.phone != nil) {
+                    userContactItemsTemp.append(userContactItem);
                     self.filteredContacts.append(userContactItem);
                 }
                 //print(contacts)
+                self.userContactItems = userContactItemsTemp.sorted {  $0.name < $1.name;
+                };
+                self.filteredContacts = self.filteredContacts.sorted {  $0.name < $1.name;
+                };
                 DispatchQueue.main.async{
                     self.contactUITableView.reloadData();
                 }
@@ -103,7 +115,7 @@ class ContactsViewController: UIViewController, UITextFieldDelegate {
             self.filteredContacts = [UserContactItem]();
             for userContactItem in self.userContactItems {
                 
-                if (userContactItem.name.contains(searchtext)) {
+                if (userContactItem.name.lowercased().contains(searchtext.lowercased())) {
                     self.filteredContacts.append(userContactItem);
                 }
             }
@@ -156,7 +168,11 @@ class ContactsViewController: UIViewController, UITextFieldDelegate {
         for phoneKey in userContactSelected.keys {
             contactsList.append(userContactSelected[phoneKey]!)
         }
-        moderatorViewControllerDelegte.contactsDoneButtonPressed(userContactItems: contactsList);
+        if (requestFrom == ContactsViewRequestFrom.PostMenuRequest) {
+            postItemTableViewDelegate.onSelectingContacts(userContacts: contactsList);
+        } else {
+            moderatorViewControllerDelegte.contactsDoneButtonPressed(userContactItems: contactsList);
+        }
         
         self.navigationController?.popViewController(animated: true);
     }
