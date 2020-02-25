@@ -277,7 +277,7 @@ extension UIViewController {
         self.present(alert, animated: true)
     }
     
-    func showAlphabetsView(frame: CGRect, name: String, rowId: Int) -> UIView {
+    func showAlphabetsView(frame: CGRect, userContact: User, rowId: Int) -> UIView {
         
         let uiLettersView = UIView();
         uiLettersView.frame = frame;
@@ -288,7 +288,7 @@ extension UIViewController {
         let textViewLabel = UITextView();
         textViewLabel.frame = CGRect.init(x: 0, y: (uiLettersView.frame.height/2 - 20), width: uiLettersView.frame.width, height: 32);
         textViewLabel.textAlignment = .center;
-        textViewLabel.text = getNameInitials(name: name);
+        textViewLabel.text = getNameInitials(name: userContact.name);
         textViewLabel.backgroundColor = .clear
         textViewLabel.font = UIFont(name: "VisbyCF-Bold", size: 18)
         

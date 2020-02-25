@@ -53,18 +53,36 @@ class SharePostViewController: UIViewController {
         self.present(refreshAlert, animated: true, completion: nil)
         
     }
+    
+    func extractWebsiteFromText(text: String) -> String {
+        //let input = "This is a test with the URL https://www.hackingwithswift.com to be detected."
+        
+        var websiteUrl = "";
+        let detector = try! NSDataDetector(types: NSTextCheckingResult.CheckingType.link.rawValue)
+        let matches = detector.matches(in: text, options: [], range: NSRange(location: 0, length: text.utf16.count))
+
+        var finalUrl = "";
+        for match in matches {
+            guard let range = Range(match.range, in: text) else { continue }
+            websiteUrl = text.substring(with: range);
+            print(websiteUrl)
+        }
+        return websiteUrl;
+    }
 }
 
 class PostRows {
     static var Post_Status_Row: Int = 0;
     static var Post_Action_Row: Int = 1;
     static var Post_Description_Row: Int = 2;
-    static var Post_Gallery_Row: Int = 3;
+    static var Post_WebsiteInfo_Row: Int = 3;
+    static var Post_Gallery_Row: Int = 4;
 }
 
 class PostRowsHeight {
     static var Post_Status_Row_Height: Int = 40;
     static var Post_Action_Row_Height: Int = 40;
     static var Post_Description_Row_Height: Int = 15;
+    static var Post_WebsiteInfo_Row_Height: Int = 100;
     static var Post_Gallery_Row_Height: Int = 418;
 }

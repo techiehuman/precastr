@@ -12,6 +12,7 @@ import FBSDKCoreKit
 import FBSDKLoginKit
 import FacebookShare
 import FBSDKCoreKit
+import ReadabilityKit
 
 class PostItemTableViewCell: UITableViewCell, SharingDelegate, MFMessageComposeViewControllerDelegate, PostItemTableViewDelegate {
 
@@ -35,6 +36,9 @@ class PostItemTableViewCell: UITableViewCell, SharingDelegate, MFMessageComposeV
         postItemsTableView.register(UINib(nibName: "AfterApprovedButtonsTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "AfterApprovedButtonsTableViewCell");
         postItemsTableView.register(UINib(nibName: "PostDescriptionTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "PostDescriptionTableViewCell");
         postItemsTableView.register(UINib(nibName: "PostGalleryTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "PostGalleryTableViewCell");
+        
+        postItemsTableView.register(UINib(nibName: "WebsiteInfoTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "WebsiteInfoTableViewCell");
+
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -138,7 +142,7 @@ class PostItemTableViewCell: UITableViewCell, SharingDelegate, MFMessageComposeV
                 cell.viewDetailsBtn.isHidden = true;
             } else {
                 cell.viewDetailsBtn.setTitle("Edit Post", for: .normal);
-                cell.viewDetailsBtn.setImage(UIImage.init(named: "pencil"), for: .normal);
+                cell.viewDetailsBtn.setImage(UIImage.init(named: "edit_pencil"), for: .normal);
                 cell.viewDetailsBtn.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 10);
                 cell.viewDetailsBtn.backgroundColor = PrecasterColors.themeColor;
                 
@@ -414,7 +418,7 @@ class PostItemTableViewCell: UITableViewCell, SharingDelegate, MFMessageComposeV
                 if (pushViewController is HomeV2ViewController) {
                     (pushViewController as! HomeV2ViewController).schemeAvailable(scheme: "fb://");
                 } else if (pushViewController is CommunicationViewController) {
-                    (pushViewController as! HomeV2ViewController).schemeAvailable(scheme: "fb://");
+                    (pushViewController as! CommunicationViewController).schemeAvailable(scheme: "fb://");
                 } else if (pushViewController is ArchieveViewController) {
                     (pushViewController as! ArchieveViewController).schemeAvailable(scheme: "fb://");
                 }
@@ -659,7 +663,7 @@ extension PostItemTableViewCell: UITableViewDataSource, UITableViewDelegate {
         return 1;
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 4;
+        return 5;
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -698,7 +702,13 @@ extension PostItemTableViewCell: UITableViewDataSource, UITableViewDelegate {
                     }
                     return cell;
             
-            }  else if (indexPath.row == PostRows.Post_Gallery_Row) {
+            } else if (indexPath.row == PostRows.Post_WebsiteInfo_Row) {
+                                         
+                let cell: WebsiteInfoTableViewCell = tableView.dequeueReusableCell(withIdentifier: "WebsiteInfoTableViewCell", for: indexPath) as! WebsiteInfoTableViewCell;
+                    cell.pushViewController = pushViewController;
+                    cell.fetchWebsiteLinkFromUrl(desc: post.postDescription);
+                      return cell;
+              } else if (indexPath.row == PostRows.Post_Gallery_Row) {
                                
                    let cell: PostGalleryTableViewCell = tableView.dequeueReusableCell(withIdentifier: "PostGalleryTableViewCell", for: indexPath) as! PostGalleryTableViewCell;
                     cell.pushViewController = pushViewController;
@@ -728,12 +738,32 @@ extension PostItemTableViewCell: UITableViewDataSource, UITableViewDelegate {
             return CGFloat(PostRowsHeight.Post_Action_Row_Height);
         } else if (PostRows.Post_Description_Row == indexPath.row) {
             let height =  pushViewController.getHeightOfPostDescripiton(contentView: self.contentView, postDescription: post.postDescription);
-            if ((pushViewController as! HomeV2ViewController).postIdDescExpansionMap[post.postId] == nil || (pushViewController as! HomeV2ViewController).postIdDescExpansionMap[post.postId] == false) {
-                if (height > 100) {
-                    return 100;
+            if (pushViewController is HomeV2ViewController) {
+                if ((pushViewController as! HomeV2ViewController).postIdDescExpansionMap[post.postId] == nil || (pushViewController as! HomeV2ViewController).postIdDescExpansionMap[post.postId] == false) {
+                    if (height > 100) {
+                        return 100;
+                    }
                 }
             }
+            
             return height;
+        }  else if (PostRows.Post_WebsiteInfo_Row == indexPath.row) {
+
+            var websiteUrl = "";
+            if (pushViewController is HomeV2ViewController) {
+                websiteUrl = (pushViewController as! HomeV2ViewController).extractWebsiteFromText(text: post.postDescription);
+            } else if (pushViewController is CommunicationViewController) {
+                websiteUrl = (pushViewController as! CommunicationViewController).extractWebsiteFromText(text: post.postDescription);
+            } else if (pushViewController is ArchieveViewController) {
+                websiteUrl = (pushViewController as! ArchieveViewController).extractWebsiteFromText(text: post.postDescription);
+            } else if (pushViewController is CastContactsViewController) {
+                websiteUrl = (pushViewController as! CastContactsViewController).extractWebsiteFromText(text: post.postDescription);
+            }
+            if (websiteUrl == "") {
+                return 0;
+            } else {
+                return CGFloat(PostRowsHeight.Post_WebsiteInfo_Row_Height);
+            }
         } else if (PostRows.Post_Gallery_Row == indexPath.row) {
             if (post.postImages.count == 0) {
                 return 0;
@@ -741,5 +771,24 @@ extension PostItemTableViewCell: UITableViewDataSource, UITableViewDelegate {
             return CGFloat(PostRowsHeight.Post_Gallery_Row_Height);
         }
         return 0;
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if (indexPath.row == PostRows.Post_WebsiteInfo_Row) {
+            
+            var websiteUrl = "";
+           if (pushViewController is HomeV2ViewController) {
+               websiteUrl = (pushViewController as! HomeV2ViewController).extractWebsiteFromText(text: post.postDescription);
+           } else if (pushViewController is CommunicationViewController) {
+               websiteUrl = (pushViewController as! CommunicationViewController).extractWebsiteFromText(text: post.postDescription);
+           } else if (pushViewController is ArchieveViewController) {
+               websiteUrl = (pushViewController as! ArchieveViewController).extractWebsiteFromText(text: post.postDescription);
+           } else if (pushViewController is CastContactsViewController) {
+               websiteUrl = (pushViewController as! CastContactsViewController).extractWebsiteFromText(text: post.postDescription);
+           }
+           if (websiteUrl != "") {
+            UIApplication.shared.openURL(URL(string: websiteUrl)!)
+            }
+        }
     }
 }

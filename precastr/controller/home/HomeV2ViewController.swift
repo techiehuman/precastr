@@ -567,6 +567,11 @@ extension HomeV2ViewController: UITableViewDelegate, UITableViewDataSource {
         }
         print("Height of Descriptiojn :  ",heightOfDesc, "POst Id : ", post.postId);
         height = height + heightOfDesc + CGFloat(PostRowsHeight.Post_Description_Row_Height);
+        
+        let websiteUrl = extractWebsiteFromText(text: post.postDescription);
+        if (websiteUrl != "") {
+            height = height + CGFloat(PostRowsHeight.Post_WebsiteInfo_Row_Height);
+        }
         if (post.postImages.count != 0) {
             height = height + CGFloat(PostRowsHeight.Post_Gallery_Row_Height);
         }

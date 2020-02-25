@@ -27,6 +27,8 @@
 		5E93313022D70ED300980BF5 /* SideMenuDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E93312F22D70ED300980BF5 /* SideMenuDto.swift */; };
 		5E94973B22C280FE0023F30B /* PostService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E94973A22C280FE0023F30B /* PostService.swift */; };
 		5E9A18F22318001A00AC5E79 /* PostImageDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E9A18F12318001A00AC5E79 /* PostImageDto.swift */; };
+		5E9A36E124027FC30001CCB3 /* WebsiteInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E9A36DF24027FC30001CCB3 /* WebsiteInfoTableViewCell.swift */; };
+		5E9A36E224027FC30001CCB3 /* WebsiteInfoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5E9A36E024027FC30001CCB3 /* WebsiteInfoTableViewCell.xib */; };
 		5EB754DC22ABE125006D636B /* ForgetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EB754DB22ABE125006D636B /* ForgetPasswordViewController.swift */; };
 		5EB754DF22ABE136006D636B /* ForgetPasswordTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EB754DD22ABE136006D636B /* ForgetPasswordTableViewCell.swift */; };
 		5EB754E022ABE136006D636B /* ForgetPasswordTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5EB754DE22ABE136006D636B /* ForgetPasswordTableViewCell.xib */; };
@@ -184,6 +186,8 @@
 		5E93313522DB900200980BF5 /* FacebookShare.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = FacebookShare.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5E94973A22C280FE0023F30B /* PostService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostService.swift; sourceTree = "<group>"; };
 		5E9A18F12318001A00AC5E79 /* PostImageDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostImageDto.swift; sourceTree = "<group>"; };
+		5E9A36DF24027FC30001CCB3 /* WebsiteInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebsiteInfoTableViewCell.swift; sourceTree = "<group>"; };
+		5E9A36E024027FC30001CCB3 /* WebsiteInfoTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WebsiteInfoTableViewCell.xib; sourceTree = "<group>"; };
 		5EB754DB22ABE125006D636B /* ForgetPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgetPasswordViewController.swift; sourceTree = "<group>"; };
 		5EB754DD22ABE136006D636B /* ForgetPasswordTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgetPasswordTableViewCell.swift; sourceTree = "<group>"; };
 		5EB754DE22ABE136006D636B /* ForgetPasswordTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ForgetPasswordTableViewCell.xib; sourceTree = "<group>"; };
@@ -344,6 +348,8 @@
 				5E48B91F23F963780078F07E /* PostGalleryTableViewCell.xib */,
 				5E6E94E523F98E7D00DBA4F3 /* AfterApprovedButtonsTableViewCell.swift */,
 				5E6E94E623F98E7D00DBA4F3 /* AfterApprovedButtonsTableViewCell.xib */,
+				5E9A36DF24027FC30001CCB3 /* WebsiteInfoTableViewCell.swift */,
+				5E9A36E024027FC30001CCB3 /* WebsiteInfoTableViewCell.xib */,
 			);
 			path = postItemCells;
 			sourceTree = "<group>";
@@ -904,6 +910,7 @@
 				FADFEAF622A51A46006E3CD2 /* VisbyCF-DemiBoldOblique.otf in Resources */,
 				5E48B90C23F8505F0078F07E /* PostItemTableViewCell.xib in Resources */,
 				5E48B91923F913ED0078F07E /* BeforeApprovedButtonsTableViewCell.xib in Resources */,
+				5E9A36E224027FC30001CCB3 /* WebsiteInfoTableViewCell.xib in Resources */,
 				FAD5015122AA6B1700D21F57 /* EditProfileTableViewCell.xib in Resources */,
 				FADFEAF822A51A46006E3CD2 /* VisbyCF-ExtraBoldOblique.otf in Resources */,
 				FA84F18C22A0E511007796A3 /* moderatorTableViewCell.xib in Resources */,
@@ -974,13 +981,19 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-precastr/Pods-precastr-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-precastr/Pods-precastr-resources.sh",
+				"${PODS_ROOT}/TwitterKit/iOS/TwitterKit.framework/TwitterKitResources.bundle",
+			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-precastr/Pods-precastr-resources-${CONFIGURATION}-output-files.xcfilelist",
 			);
+			outputPaths = (
+			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-precastr/Pods-precastr-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-precastr/Pods-precastr-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		638C72B6999D93A5877C189F /* [CP] Embed Pods Frameworks */ = {
@@ -991,13 +1004,39 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-precastr/Pods-precastr-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-precastr/Pods-precastr-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/BSGridCollectionViewLayout/BSGridCollectionViewLayout.framework",
+				"${BUILT_PRODUCTS_DIR}/BSImagePicker/BSImagePicker.framework",
+				"${BUILT_PRODUCTS_DIR}/BSImageView/BSImageView.framework",
+				"${BUILT_PRODUCTS_DIR}/EasyTipView/EasyTipView.framework",
+				"${BUILT_PRODUCTS_DIR}/FBSDKCoreKit/FBSDKCoreKit.framework",
+				"${BUILT_PRODUCTS_DIR}/FBSDKLoginKit/FBSDKLoginKit.framework",
+				"${BUILT_PRODUCTS_DIR}/FBSDKPlacesKit/FBSDKPlacesKit.framework",
+				"${BUILT_PRODUCTS_DIR}/FBSDKShareKit/FBSDKShareKit.framework",
+				"${BUILT_PRODUCTS_DIR}/FacebookCore/FacebookCore.framework",
+				"${BUILT_PRODUCTS_DIR}/FacebookLogin/FacebookLogin.framework",
+				"${BUILT_PRODUCTS_DIR}/FacebookShare/FacebookShare.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
+				"${BUILT_PRODUCTS_DIR}/ImageSlideshow/ImageSlideshow.framework",
+				"${BUILT_PRODUCTS_DIR}/Ji/Ji.framework",
+				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
+				"${BUILT_PRODUCTS_DIR}/ReadabilityKit/ReadabilityKit.framework",
+				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
+				"${PODS_ROOT}/TwitterCore/iOS/TwitterCore.framework",
+				"${PODS_ROOT}/TwitterKit/iOS/TwitterKit.framework",
+				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-precastr/Pods-precastr-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
+			outputPaths = (
+			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-precastr/Pods-precastr-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-precastr/Pods-precastr-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		873523AA3116ACA59C4D3761 /* [CP] Check Pods Manifest.lock */ = {
@@ -1125,6 +1164,7 @@
 				90C8F561235B26CA00ECD8B1 /* CastContactTableViewCell.swift in Sources */,
 				FA291B0D2253ABCD0093E6CE /* HttpService.swift in Sources */,
 				908D6F3122C241F800762145 /* commonExtension.swift in Sources */,
+				5E9A36E124027FC30001CCB3 /* WebsiteInfoTableViewCell.swift in Sources */,
 				5E94973B22C280FE0023F30B /* PostService.swift in Sources */,
 				5EB754DC22ABE125006D636B /* ForgetPasswordViewController.swift in Sources */,
 				FA84F178229C5E7A007796A3 /* ModeratorsDto.swift in Sources */,

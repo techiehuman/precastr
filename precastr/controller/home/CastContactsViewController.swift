@@ -10,7 +10,7 @@ import UIKit
 
 enum CastContactListType {case CallList,ModeratorList}
 
-class CastContactsViewController: UIViewController {
+class CastContactsViewController: SharePostViewController {
 
     @IBOutlet weak var moderatorContactsTableView: UITableView!
     
@@ -81,14 +81,14 @@ extension CastContactsViewController : UITableViewDataSource, UITableViewDelegat
             let cell: CastContactTableViewCell = tableView.dequeueReusableCell(withIdentifier: "CastContactTableViewCell", for: indexPath) as! CastContactTableViewCell;
             
             for uiTextNameView in cell.subviews {
-                if (uiTextNameView.tag == indexPath.row) {
+                if (uiTextNameView.tag == castContact.userId) {
                     uiTextNameView.removeFromSuperview();
                 }
             }
             if (castContact.profilePic == nil || castContact.profilePic == "") {
                 cell.moderatorProfilePic.image = UIImage.init(named: "Moderate Casts");
                 cell.moderatorProfilePic.isHidden = true;
-                cell.addSubview(self.showAlphabetsView(frame: cell.moderatorProfilePic.frame, name: castContact.name, rowId: indexPath.row));
+                cell.addSubview(self.showAlphabetsView(frame: cell.moderatorProfilePic.frame, userContact: castContact, rowId: indexPath.row));
             } else {
                 cell.moderatorProfilePic.isHidden = false;
                 cell.moderatorProfilePic.sd_setImage(with: URL.init(string: castContact.profilePic), placeholderImage: UIImage.init(named: "Moderate Casts"),  completed: nil);
@@ -109,7 +109,7 @@ extension CastContactsViewController : UITableViewDataSource, UITableViewDelegat
             let cell: CastModeratorTableViewCell = tableView.dequeueReusableCell(withIdentifier: "CastModeratorTableViewCell", for: indexPath) as! CastModeratorTableViewCell;
             
             for uiTextNameView in cell.subviews {
-                if (uiTextNameView.tag == indexPath.row) {
+                if (uiTextNameView.tag == castContact.userId) {
                     uiTextNameView.removeFromSuperview();
                 }
             }
@@ -122,7 +122,7 @@ extension CastContactsViewController : UITableViewDataSource, UITableViewDelegat
             if (!isApprovedByModerator) {
                 if (castContact.profilePic == nil || castContact.profilePic == "") {
                     cell.moderatorProfilePic.isHidden = true;
-                    cell.addSubview(self.showAlphabetsView(frame: cell.moderatorProfilePic.frame, name: castContact.name, rowId: indexPath.row));
+                    cell.addSubview(self.showAlphabetsView(frame: cell.moderatorProfilePic.frame, userContact: castContact, rowId: indexPath.row));
                 } else {
                     cell.moderatorProfilePic.isHidden = false;
                     cell.moderatorProfilePic.sd_setImage(with: URL.init(string: castContact.profilePic), placeholderImage: UIImage.init(named: "Moderate Casts"),  completed: nil);
@@ -130,7 +130,7 @@ extension CastContactsViewController : UITableViewDataSource, UITableViewDelegat
             } else {
                 if (castContact.profilePic == nil || castContact.profilePic == "") {
                     cell.moderatorProfilePic.isHidden = true;
-                    let aphabetView = self.showAlphabetsView(frame: cell.moderatorProfilePic.frame, name: castContact.name, rowId: indexPath.row);
+                    let aphabetView = self.showAlphabetsView(frame: cell.moderatorProfilePic.frame, userContact: castContact, rowId: indexPath.row);
                     aphabetView.layer.borderColor = PrecasterColors.themeColor.cgColor;
                     aphabetView.layer.borderWidth = 2;
                     aphabetView.layer.masksToBounds = true;
@@ -177,6 +177,11 @@ extension CastContactsViewController : UITableViewDataSource, UITableViewDelegat
             if (indexPath.row == 0) {
                 var height: CGFloat = 0;
                 height = height + getHeightOfPostDescripiton(contentView: self.view, postDescription: post.postDescription) + CGFloat(PostRowsHeight.Post_Description_Row_Height);
+                
+                let websiteUrl = extractWebsiteFromText(text: post.postDescription);
+                if (websiteUrl != "") {
+                    height = height + CGFloat(PostRowsHeight.Post_WebsiteInfo_Row_Height);
+                }
                 if (post.postImages.count != 0) {
                     height = height + CGFloat(PostRowsHeight.Post_Gallery_Row_Height);
                 }
