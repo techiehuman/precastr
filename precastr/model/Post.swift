@@ -23,6 +23,7 @@ class Post {
     var castModerators = [User]();
     var postUserId : Int = 0;
     var approvedByUserId: Int = 0;
+    var createdOnTimestamp: Int = 0;
     
     func loadPostFromDict(postDict: NSDictionary) -> Post {
         
@@ -59,7 +60,12 @@ class Post {
         post.name = postDict.value(forKey: "name") as? String ?? "";
         post.postStatusId = Int(postDict.value(forKey: "post_status_id") as! String)!;
         post.postUserId = Int(postDict.value(forKey: "caster_user_id") as! String)!;
-        
+        let createdTimestamp = postDict.value(forKey: "created_on_timestamp") as! String;
+        if (createdTimestamp == "") {
+            post.createdOnTimestamp = 0;
+        } else {
+            post.createdOnTimestamp = Int(createdTimestamp)!;
+        }
         if let castModerators = postDict.value(forKey: "cast_moderators") as?  NSArray {
             
             for castModerator in castModerators {

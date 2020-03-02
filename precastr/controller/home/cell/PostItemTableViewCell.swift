@@ -36,7 +36,6 @@ class PostItemTableViewCell: UITableViewCell, SharingDelegate, MFMessageComposeV
         postItemsTableView.register(UINib(nibName: "AfterApprovedButtonsTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "AfterApprovedButtonsTableViewCell");
         postItemsTableView.register(UINib(nibName: "PostDescriptionTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "PostDescriptionTableViewCell");
         postItemsTableView.register(UINib(nibName: "PostGalleryTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "PostGalleryTableViewCell");
-        
         postItemsTableView.register(UINib(nibName: "WebsiteInfoTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "WebsiteInfoTableViewCell");
 
     }
@@ -63,6 +62,8 @@ class PostItemTableViewCell: UITableViewCell, SharingDelegate, MFMessageComposeV
     @objc func deleteButtonPressed(sender: MyTapRecognizer){
         if (pushViewController is HomeV2ViewController) {
             (pushViewController as! HomeV2ViewController).deleteButtonPresses(post: sender.post);
+        } else if (pushViewController is CommunicationViewController) {
+            (pushViewController as! CommunicationViewController).deleteButtonPresses(post: sender.post);
         }
     }
     
@@ -108,7 +109,14 @@ class PostItemTableViewCell: UITableViewCell, SharingDelegate, MFMessageComposeV
         cell.viewDetailsBtn.backgroundColor = blueLinkColor;
         
         //Setting Date of Post
-        cell.postDateLbl.text = Date().ddspEEEEcmyyyy(dateStr: post.createdOn);
+        if (post.createdOnTimestamp == 0) {
+            cell.postDateLbl.text = Date().ddspEEEEcmyyyy(dateStr: post.createdOn);
+        } else {
+            var date = Date(timeIntervalSince1970: (Double(post.createdOnTimestamp) / 1000.0));
+            var dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "dd-MM-yyyy hh:mm:ss"
+            cell.postDateLbl.text = Date().ddspEEEEcmyyyy(dateStr: dateFormatter.string(from: date));
+        }
         cell.postDateLbl.frame = CGRect.init(x: (self.contentView.frame.width -  cell.postDateLbl.intrinsicContentSize.width - 15), y: cell.postDateLbl.frame.origin.y, width: cell.postDateLbl.intrinsicContentSize.width, height: cell.postDateLbl.frame.height);
         
         //Setting Status of Post
@@ -204,13 +212,18 @@ class PostItemTableViewCell: UITableViewCell, SharingDelegate, MFMessageComposeV
                 postModeratorsButtonVisible = true;
             }
     
-            let gapBetweenButtons: CGFloat = 23;
+            var gapBetweenButtons: CGFloat = 23;
+            if (pushViewController is CommunicationViewController) {
+                gapBetweenButtons = 10;
+            }
             let buttonsHeightWidth: CGFloat = 30;
             
             var deleteButtonVisible = true;
             if (status == "Published") {
                 deleteButtonVisible = false;
                 cell.deleteBtn.isHidden = true;
+            } else {
+                cell.deleteBtn.isHidden = false;
             }
             
             if (deleteButtonVisible == true) {
@@ -346,6 +359,11 @@ class PostItemTableViewCell: UITableViewCell, SharingDelegate, MFMessageComposeV
         isShareMenuOpened = true;
         if (self.pushViewController is HomeV2ViewController) {
             (self.pushViewController as! HomeV2ViewController).postsTableView.isScrollEnabled = false;
+        }
+        
+        var descHeight = pushViewController.getHeightOfPostDescripiton(contentView: contentView, postDescription: post.postDescription);
+        if (descHeight < 150 && pushViewController is HomeV2ViewController && postRowIndex == (totalPosts - 1)) {
+            postCastMenu.frame = CGRect.init(x: buttonAbsoluteFrame.origin.x - 60, y: buttonAbsoluteFrame.origin.y - 150, width: 80, height: 150)
         }
     }
     
@@ -653,7 +671,10 @@ class PostItemTableViewCell: UITableViewCell, SharingDelegate, MFMessageComposeV
         //(pushViewController as! HomeV2ViewController).postsTableView.beginUpdates();
         //(pushViewController as! HomeV2ViewController).postsTableView.endUpdates();
         
-        (pushViewController as! HomeV2ViewController).postsTableView.reloadRows(at: [parentTableIndexPath], with: .automatic);
+        if (pushViewController is HomeV2ViewController) {
+            (pushViewController as! HomeV2ViewController).postsTableView.reloadRows(at: [parentTableIndexPath], with: .automatic);
+        }
+        
     }
 }
 
@@ -670,10 +691,12 @@ extension PostItemTableViewCell: UITableViewDataSource, UITableViewDelegate {
         
         if (indexPath.row == PostRows.Post_Status_Row) {
                 
-                let cell: CasterPostStatusTableViewCell = tableView.dequeueReusableCell(withIdentifier: "CasterPostStatusTableViewCell", for: indexPath) as! CasterPostStatusTableViewCell;
-            
-                    //Populating Status
-                    populateCasterTopView(cell: cell);
+            if (pushViewController is CastContactsViewController) {
+                return UITableViewCell();
+            }
+            let cell: CasterPostStatusTableViewCell = tableView.dequeueReusableCell(withIdentifier: "CasterPostStatusTableViewCell", for: indexPath) as! CasterPostStatusTableViewCell;
+                //Populating Status
+                populateCasterTopView(cell: cell);
                 return cell;
 
                 
@@ -703,11 +726,25 @@ extension PostItemTableViewCell: UITableViewDataSource, UITableViewDelegate {
                     return cell;
             
             } else if (indexPath.row == PostRows.Post_WebsiteInfo_Row) {
-                                         
-                let cell: WebsiteInfoTableViewCell = tableView.dequeueReusableCell(withIdentifier: "WebsiteInfoTableViewCell", for: indexPath) as! WebsiteInfoTableViewCell;
-                    cell.pushViewController = pushViewController;
-                    cell.fetchWebsiteLinkFromUrl(desc: post.postDescription);
-                      return cell;
+                 var websiteUrl = "";
+                 if (pushViewController is HomeV2ViewController) {
+                     websiteUrl = (pushViewController as! HomeV2ViewController).extractWebsiteFromText(text: post.postDescription);
+                 } else if (pushViewController is CommunicationViewController) {
+                     websiteUrl = (pushViewController as! CommunicationViewController).extractWebsiteFromText(text: post.postDescription);
+                 } else if (pushViewController is ArchieveViewController) {
+                     websiteUrl = (pushViewController as! ArchieveViewController).extractWebsiteFromText(text: post.postDescription);
+                 } else if (pushViewController is CastContactsViewController) {
+                     websiteUrl = (pushViewController as! CastContactsViewController).extractWebsiteFromText(text: post.postDescription);
+                 }
+                 if (websiteUrl == "") {
+                     return UITableViewCell();
+                 } else {
+                     let cell: WebsiteInfoTableViewCell = tableView.dequeueReusableCell(withIdentifier: "WebsiteInfoTableViewCell", for: indexPath) as! WebsiteInfoTableViewCell;
+                     cell.pushViewController = pushViewController;
+                     cell.fetchWebsiteLinkFromUrl(desc: post.postDescription);
+                       return cell;
+                 }
+                
               } else if (indexPath.row == PostRows.Post_Gallery_Row) {
                                
                    let cell: PostGalleryTableViewCell = tableView.dequeueReusableCell(withIdentifier: "PostGalleryTableViewCell", for: indexPath) as! PostGalleryTableViewCell;

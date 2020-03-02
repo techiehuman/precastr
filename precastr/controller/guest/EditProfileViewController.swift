@@ -197,12 +197,28 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
     }
     
     func takePicture() {
+        
         if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.camera) {
             self.picController.sourceType = UIImagePickerControllerSourceType.camera
             self.picController.allowsEditing = true
             self.picController.delegate = self
             self.picController.mediaTypes = [kUTTypeImage as String]
             self.present(picController, animated: true, completion: nil)
+        } else {
+            /*let alertController = UIAlertController(title: "Permission Denied", message: "Enable permission for Camera under app settings", preferredStyle: .alert)
+            
+            let OKAction = UIAlertAction(title: "OK", style: .default) { (action:UIAlertAction!) in
+                
+                // Code in this block will trigger when OK button tapped.
+                if let settingUrl = URL(string:UIApplicationOpenSettingsURLString) {
+                    UIApplication.shared.openURL(settingUrl);
+                } else {
+                    print("Setting URL invalid")
+                }
+                
+            }
+            alertController.addAction(OKAction)
+            self.present(alertController, animated: true, completion:nil);*/
         }
     }
     
@@ -215,7 +231,22 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
             self.picController.allowsEditing = true
             self.picController.mediaTypes = [kUTTypeImage as String]
             self.present(picController, animated: true, completion: nil)
-        }
+        } else {
+                   /*let alertController = UIAlertController(title: "Permission Denied", message: "Enable permission for Gallery under app settings", preferredStyle: .alert)
+                   
+                   let OKAction = UIAlertAction(title: "OK", style: .default) { (action:UIAlertAction!) in
+                       
+                       // Code in this block will trigger when OK button tapped.
+                       if let settingUrl = URL(string:UIApplicationOpenSettingsURLString) {
+                           UIApplication.shared.openURL(settingUrl);
+                       } else {
+                           print("Setting URL invalid")
+                       }
+                       
+                   }
+                   alertController.addAction(OKAction)
+                   self.present(alertController, animated: true, completion:nil);*/
+               }
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {

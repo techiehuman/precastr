@@ -42,12 +42,18 @@ class SideMenuTableViewController: UITableViewController {
         if (self.loggedInUser.isCastr == 1) {
             moderatorRoleSwitch.setOn(false, animated: false);
             casterRoleSwitch.setOn(true, animated: false);
+            moderatorRoleSwitch.tintColor = UIColor.lightGray;
+            moderatorRoleSwitch.backgroundColor = UIColor.lightGray;
+            moderatorRoleSwitch.layer.cornerRadius = 16.0;
             moderatorTableCell.backgroundColor = UIColor.white
             casterTableCell.backgroundColor = UIColor(red: 221/255, green: 223/255, blue: 226/255, alpha: 1)
             
         } else if (self.loggedInUser.isCastr == 2) {
             moderatorRoleSwitch.setOn(true, animated: false);
             casterRoleSwitch.setOn(false, animated: false);
+            casterRoleSwitch.tintColor = UIColor.lightGray;
+            casterRoleSwitch.backgroundColor = UIColor.lightGray;
+            casterRoleSwitch.layer.cornerRadius = 16.0;
             moderatorTableCell.backgroundColor = UIColor(red: 221/255, green: 223/255, blue: 226/255, alpha: 1)
             casterTableCell.backgroundColor = UIColor.white
             
@@ -83,20 +89,31 @@ class SideMenuTableViewController: UITableViewController {
     }
     
     @IBAction func moderatorSwitchChanged(_ sender: Any) {
-        moderatorRoleSwitch.setOn(true, animated: false)
-        casterRoleSwitch.setOn(false, animated: false)
+        if (moderatorRoleSwitch.isOn == true) {
+            moderatorRoleSwitch.setOn(false, animated: false)
+            casterRoleSwitch.setOn(true, animated: false)
+        } else {
+            moderatorRoleSwitch.setOn(true, animated: false)
+            casterRoleSwitch.setOn(false, animated: false)
+        }
        changeAccountStatus();
     }
     
     @IBAction func casterSwitchChanged(_ sender: Any) {
-        casterRoleSwitch.setOn(true, animated: false)
-        moderatorRoleSwitch.setOn(false, animated: false)
+        if (casterRoleSwitch.isOn == true) {
+            moderatorRoleSwitch.setOn(true, animated: false)
+            casterRoleSwitch.setOn(false, animated: false)
+        } else {
+            casterRoleSwitch.setOn(true, animated: false)
+            moderatorRoleSwitch.setOn(false, animated: false)
+        }
 
         changeAccountStatus();
     }
     
     func changeAccountStatus(){
         self.activityIndicator.startAnimating();
+        
         if (casterRoleSwitch.isOn == true) {
             self.loggedInUser.isCastr = 1;
             User().updateUserRole(roleId: 1);
@@ -108,6 +125,11 @@ class SideMenuTableViewController: UITableViewController {
             moderatorRoleSwitch.setOn(false, animated: false)
             casterRoleSwitch.setOn(true, animated: false)
             moderatorTableCell.backgroundColor = UIColor.white
+            moderatorRoleSwitch.tintColor = UIColor.lightGray;
+            moderatorRoleSwitch.backgroundColor = UIColor.lightGray;
+            moderatorRoleSwitch.layer.cornerRadius = 16.0;
+            moderatorTableCell.backgroundColor = UIColor.white
+            
             casterTableCell.backgroundColor = UIColor(red: 221/255, green: 223/255, blue: 226/255, alpha: 1)
         } else if(moderatorRoleSwitch.isOn == true) {
             self.loggedInUser.isCastr = 2;
@@ -115,6 +137,10 @@ class SideMenuTableViewController: UITableViewController {
             self.showToastMultipleLines(message: "You have turned ON the \"MODERATOR MODE\".\nPlease go on the \"Home Screen\" and moderate the casts..");
             moderatorRoleSwitch.setOn(true, animated: false)
             casterRoleSwitch.setOn(false, animated: false)
+            casterRoleSwitch.tintColor = UIColor.lightGray;
+            casterRoleSwitch.backgroundColor = UIColor.lightGray;
+            casterRoleSwitch.layer.cornerRadius = 16.0;
+            
             moderatorTableCell.backgroundColor = UIColor(red: 221/255, green: 223/255, blue: 226/255, alpha: 1)
             casterTableCell.backgroundColor = UIColor.white
             

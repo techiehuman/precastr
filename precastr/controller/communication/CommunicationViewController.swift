@@ -305,6 +305,34 @@ class CommunicationViewController: SharePostViewController,UITextViewDelegate, U
         self.present(alert, animated: true)
     }
     
+    func deleteButtonPresses(post : Post) {
+        
+        var postData = [String: Any]();
+        postData["post_id"] = post.postId;
+        let alert = UIAlertController.init(title: "Delete this cast.", message: "", preferredStyle: .alert);
+        alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil));
+        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: {(response) in
+            
+            let jsonURL = "posts/delete_cast/format/json"
+            DispatchQueue.main.async {
+                self.activityIndicator.startAnimating();
+            }
+            UserService().postDataMethod(jsonURL: jsonURL, postData: postData, complete: {(response) in
+                print(response)
+                self.activityIndicator.stopAnimating();
+                
+                let statusCode = Int(response.value(forKey: "status") as! String)!
+                if(statusCode == 0) {
+                    self.showAlert(title: "Alert", message: response.value(forKey: "message") as! String);
+                } else {
+                    let viewController: HomeV2ViewController = self.storyboard?.instantiateViewController(withIdentifier: "HomeV2ViewController") as! HomeV2ViewController;
+                    self.navigationController?.pushViewController(viewController, animated: true);
+                }
+            });
+        }));
+        self.present(alert, animated: true)
+    }
+    
     /*@objc func callInfoButtonPressed(sender: PostToSocialMediaGestureRecognizer) {
         let post = sender.post;
         let viewController = storyboard?.instantiateViewController(withIdentifier: "CastContactsViewController") as! CastContactsViewController;
@@ -370,6 +398,26 @@ class CommunicationViewController: SharePostViewController,UITextViewDelegate, U
     }
     
     @IBAction func mediaAttachmentBtnClicked(_ sender: Any) {
+        if (PHPhotoLibrary.authorizationStatus() == .denied) {
+            let alertController = UIAlertController(title: "Permission Denied", message: "Enable permission for gallery under app settings", preferredStyle: .alert)
+            
+            let OKAction = UIAlertAction(title: "OK", style: .default) { (action:UIAlertAction!) in
+                
+                // Code in this block will trigger when OK button tapped.
+                if let settingUrl = URL(string:UIApplicationOpenSettingsURLString) {
+                    UIApplication.shared.openURL(settingUrl);
+                } else {
+                    print("Setting URL invalid")
+                }
+                
+            }
+            alertController.addAction(OKAction)
+            self.present(alertController, animated: true, completion:nil);
+        } else {
+            self.selectMultipleImages();
+        }
+
+        /*
         // create an actionSheet
         let actionSheetController: UIAlertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
@@ -392,7 +440,7 @@ class CommunicationViewController: SharePostViewController,UITextViewDelegate, U
         actionSheetController.addAction(cancelAction)
         
         // present an actionSheet...
-        present(actionSheetController, animated: true, completion: nil)
+        present(actionSheetController, animated: true, completion: nil)*/
     }
     
     
@@ -577,6 +625,7 @@ class CommunicationViewController: SharePostViewController,UITextViewDelegate, U
             postData["post_id"] = self.post.postId;
             postData["user_id"] = self.loggedInUser.userId;
             postData["post_status_id"] = postStatusId;
+            postData["timestamp"] = Date().timeIntervalMilliSeconds();
             PostService().postDataMethod(jsonURL: jsonURL, postData: postData, complete: {(response) in
                 
                 print(response);
@@ -970,6 +1019,7 @@ class CommunicationViewController: SharePostViewController,UITextViewDelegate, U
             var postData = [String: Any]();
             postData["user_id"] = self.loggedInUser.userId
             postData["post_id"] = self.postId!
+            postData["timestamp"] = Date().timeIntervalMilliSeconds()
             let jsonURL = "user/send_post_sms/format/json";
             UserService().postDataMethod(jsonURL: jsonURL,postData:postData,complete:{(response) in
                 self.activityIndicator.stopAnimating();
@@ -1108,7 +1158,15 @@ extension CommunicationViewController: UITableViewDelegate, UITableViewDataSourc
                     
                     let cell: RightCommunicationTableViewCell = tableView.dequeueReusableCell(withIdentifier: "RightCommunicationTableViewCell") as! RightCommunicationTableViewCell;
 
-                    cell.commentedDate.text = Date().ddspEEEEcmyyyyspHHclmmclaa(dateStr: communication.commentedOn);
+            if (communication.commentedOnTimestamp != 0) {
+                let date = Date(timeIntervalSince1970: Double(communication.commentedOnTimestamp) / 1000.0);
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "dd-MM-yyyy hh:mm:ss"
+                cell.commentedDate.text = Date().ddspEEEEcmyyyyspHHclmmclaa(dateStr: dateFormatter.string(from: date));
+            } else {
+                cell.commentedDate.text = Date().ddspEEEEcmyyyyspHHclmmclaa(dateStr: communication.commentedOn);
+            }
+                    
                     
                     cell.commentorPic.sd_setImage(with: URL.init(string: communication.communicatedProfilePic), placeholderImage: UIImage.init(named: "Profile-1"));
                     

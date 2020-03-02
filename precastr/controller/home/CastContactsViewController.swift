@@ -157,7 +157,7 @@ extension CastContactsViewController : UITableViewDataSource, UITableViewDelegat
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         if (castContactListType == CastContactListType.CallList) {
-            let castContact = castContacts[indexPath.row];
+            let castContact = castContacts[indexPath.row - 1];
             print(indexPath.row)
             print(castContact.phoneNumber!)
             if let url = URL(string: "tel://"+castContact.countryCode!+castContact.phoneNumber! ?? "0"), UIApplication.shared.canOpenURL(url) {

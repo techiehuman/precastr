@@ -111,7 +111,7 @@
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Location is needed by precastr</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>precastr photo use</string>
+	<string>Click OK to add image to the post.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>VisbyCF-ThinOblique.otf</string>

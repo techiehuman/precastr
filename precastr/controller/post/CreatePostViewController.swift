@@ -75,8 +75,8 @@ class CreatePostViewController: UIViewController, UIImagePickerControllerDelegat
     override func viewWillAppear(_ animated: Bool) {
         
         if (post == nil) {
-            postImageDtos = [PostImageDto]();
-            self.PhotoArray = [UIImage]();
+            //postImageDtos = [PostImageDto]();
+            //self.PhotoArray = [UIImage]();
         }
         createPostTableView.reloadData();
         let menuButton = UIButton();
@@ -115,7 +115,24 @@ class CreatePostViewController: UIViewController, UIImagePickerControllerDelegat
 
     func imageUploadClicked(){
         
-        self.selectMultipleImages();
+        if (PHPhotoLibrary.authorizationStatus() == .denied) {
+            let alertController = UIAlertController(title: "Permission Denied", message: "Enable permission for gallery under app settings", preferredStyle: .alert)
+            
+            let OKAction = UIAlertAction(title: "OK", style: .default) { (action:UIAlertAction!) in
+                
+                // Code in this block will trigger when OK button tapped.
+                if let settingUrl = URL(string:UIApplicationOpenSettingsURLString) {
+                    UIApplication.shared.openURL(settingUrl);
+                } else {
+                    print("Setting URL invalid")
+                }
+                
+            }
+            alertController.addAction(OKAction)
+            self.present(alertController, animated: true, completion:nil);
+        } else {
+            self.selectMultipleImages();
+        }
         
         /*// create an actionSheet
         let actionSheetController: UIAlertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)

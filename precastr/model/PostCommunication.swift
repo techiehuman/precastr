@@ -13,6 +13,7 @@ class PostCommunication {
     var postId: Int = 0;
     var communicatedByUserId: Int = 0;
     var commentedOn: String = "";
+    var commentedOnTimestamp: Int = 0;
     var postCommunicationDescription: String = "";
     var postStatusId: Int = 0;
     var commentStatus: String = "";
@@ -33,6 +34,12 @@ class PostCommunication {
         postCommunication.communicatedProfilePic = commDict.value(forKey: "communicated_profile_pic") as! String;
         postCommunication.communicatedName = commDict.value(forKey: "communicated_name") as! String;
         postCommunication.commentedOn = commDict.value(forKey: "created_on") as! String;
+        let createdTimestamp = commDict.value(forKey: "created_on_timestamp") as! String;
+        if (createdTimestamp == "") {
+            postCommunication.commentedOnTimestamp = 0;
+        } else {
+            postCommunication.commentedOnTimestamp = Int(createdTimestamp)!;
+        }
         postCommunication.attachments = loadCommunicationAttachmentsFromNSArray(attachmentsArr: commDict.value(forKey: "attachments") as!NSArray)
         
         return postCommunication;

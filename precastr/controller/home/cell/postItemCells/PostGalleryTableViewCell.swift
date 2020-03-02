@@ -81,7 +81,7 @@ class PostGalleryTableViewCell: UITableViewCell, ImageSlideshowDelegate {
     }
     
     func beginImageFunc(imagesArray: [String]) {
-        self.imageSlideShow.slideshowInterval = 5.0
+        self.imageSlideShow.slideshowInterval = 0
         self.imageSlideShow.pageIndicatorPosition = .init(horizontal: .center, vertical: .under)
         self.imageSlideShow.contentScaleMode = UIViewContentMode.scaleAspectFill
         

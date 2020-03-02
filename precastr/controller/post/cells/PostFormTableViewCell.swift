@@ -47,6 +47,7 @@ class PostFormTableViewCell: UITableViewCell, UITextViewDelegate, PostFormCellPr
         self.postTextField.layer.borderColor =  UIColor(red: 146/255, green: 147/255, blue: 149/255, alpha: 1).cgColor;
         self.postTextField.layer.borderWidth = 0.5
         self.postTextField.textColor = UIColor(red: 34/255, green: 34/255, blue: 34/255, alpha: 1);
+        self.postTextField.autocorrectionType = .yes
         self.attachmentBtn.roundEdgesLeftBtn();
         self.attachmentBtn.backgroundColor = PrecasterColors.darkBlueButtonColor;
         self.submitBtn.roundEdgesRightBtn();
@@ -99,7 +100,8 @@ class PostFormTableViewCell: UITableViewCell, UITextViewDelegate, PostFormCellPr
                 postData["post_description"] = self.postTextField.text
                 postData["user_id"] = self.createPostViewControllerDelegate.loggedInUser.userId
                 postData["post_id"] = self.createPostViewControllerDelegate.post.postId
-               
+                postData["timestamp"] = Int64(Date().timeIntervalSince1970 * 1000.0);
+
                 if(loggedInUser.isCastr == 2){
                     postData["post_status_id"] = self.selectedPostStatusId
                 }

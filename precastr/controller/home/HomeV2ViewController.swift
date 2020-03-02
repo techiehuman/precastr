@@ -123,11 +123,11 @@ class HomeV2ViewController: SharePostViewController,EasyTipViewDelegate, Sharing
         noPostsText.frame = CGRect.init(x: noPostsText.frame.origin.x, y: noPostsText.frame.origin.y, width: noPostsText.frame.width, height: 25)
         noPostsText.numberOfLines = 1;
         
-        if (loggedInUser.isCastr == 1) {
+        /*if (loggedInUser.isCastr == 1) {
             self.loadUserPosts();
         } else if (loggedInUser.isCastr == 2) {
             loadModeratorUserPosts();
-        }
+        }*/
         //self.showBadgeCount();
     }
     override func didReceiveMemoryWarning() {
@@ -567,7 +567,7 @@ extension HomeV2ViewController: UITableViewDelegate, UITableViewDataSource {
         }
         print("Height of Descriptiojn :  ",heightOfDesc, "POst Id : ", post.postId);
         height = height + heightOfDesc + CGFloat(PostRowsHeight.Post_Description_Row_Height);
-        
+    
         let websiteUrl = extractWebsiteFromText(text: post.postDescription);
         if (websiteUrl != "") {
             height = height + CGFloat(PostRowsHeight.Post_WebsiteInfo_Row_Height);

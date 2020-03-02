@@ -50,14 +50,23 @@ class AfterApprovedButtonsTableViewCell: UITableViewCell, EasyTipViewDelegate {
             
             self.easyToolTip = EasyTipView(text: text, preferences: preferences, delegate: self)
             self.easyToolTip.show(animated: true, forView: facebookInfoBtn, withinSuperview: self.viewController.view)
+            
+            if (viewController is HomeV2ViewController) {
+                (viewController as! HomeV2ViewController).postsTableView.isScrollEnabled = false;
+            }
+            
         } else {
             self.easyToolTip.dismiss();
             self.easyToolTip = nil;
+            if (viewController is HomeV2ViewController) {
+                (viewController as! HomeV2ViewController).postsTableView.isScrollEnabled = true;
+            }
         }
     }
     
     func easyTipViewDidDismiss(_ tipView: EasyTipView) {
         tipView.dismiss();
+        
     }
     
 }

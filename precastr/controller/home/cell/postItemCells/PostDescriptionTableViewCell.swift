@@ -41,18 +41,19 @@ class PostDescriptionTableViewCell: UITableViewCell {
     @objc func postDescPressed(sender: MyTapRecognizer) {
     
         //Call this function
-        if ((postItemTableViewCellDelegate.pushViewController as! HomeV2ViewController).postIdDescExpansionMap[postItemTableViewCellDelegate.post.postId] != nil && (postItemTableViewCellDelegate.pushViewController as! HomeV2ViewController).postIdDescExpansionMap[postItemTableViewCellDelegate.post.postId] == true) {
+        if (pushViewController is HomeV2ViewController) {
+            if ((postItemTableViewCellDelegate.pushViewController as! HomeV2ViewController).postIdDescExpansionMap[postItemTableViewCellDelegate.post.postId] != nil && (postItemTableViewCellDelegate.pushViewController as! HomeV2ViewController).postIdDescExpansionMap[postItemTableViewCellDelegate.post.postId] == true) {
+                
+                //postItemTableViewCellDelegate.isDescriptionFullView = false;
+                    (postItemTableViewCellDelegate.pushViewController as! HomeV2ViewController).postIdDescExpansionMap[postItemTableViewCellDelegate.post.postId] = false
             
-            //postItemTableViewCellDelegate.isDescriptionFullView = false;
-                (postItemTableViewCellDelegate.pushViewController as! HomeV2ViewController).postIdDescExpansionMap[postItemTableViewCellDelegate.post.postId] = false
-        
-        } else {
-            //postItemTableViewCellDelegate.isDescriptionFullView = true;
-            (postItemTableViewCellDelegate.pushViewController as! HomeV2ViewController).postIdDescExpansionMap[postItemTableViewCellDelegate.post.postId] = true
-        
+            } else {
+                //postItemTableViewCellDelegate.isDescriptionFullView = true;
+                (postItemTableViewCellDelegate.pushViewController as! HomeV2ViewController).postIdDescExpansionMap[postItemTableViewCellDelegate.post.postId] = true
+            
+            }
         }
         
-        print("When clicked Desc : ",(postItemTableViewCellDelegate.pushViewController as! HomeV2ViewController).postIdDescExpansionMap);
         var height = pushViewController.getHeightOfPostDescripiton(contentView: self.contentView, postDescription: sender.post.postDescription);
                
                var heightOflabel = height;
@@ -97,12 +98,15 @@ class PostDescriptionTableViewCell: UITableViewCell {
         
         var heightOflabel = height;
         if (heightOflabel > 100) {
-            if ((postItemTableViewCellDelegate.pushViewController as! HomeV2ViewController).postIdDescExpansionMap[postItemTableViewCellDelegate.post.postId] != nil && (postItemTableViewCellDelegate.pushViewController as! HomeV2ViewController).postIdDescExpansionMap[postItemTableViewCellDelegate.post.postId] == true) {
-                postDescription.numberOfLines = 0
-            } else {
-                postDescription.numberOfLines = 4
-                 heightOflabel = 100;
+            if (pushViewController is HomeV2ViewController) {
+                if ((postItemTableViewCellDelegate.pushViewController as! HomeV2ViewController).postIdDescExpansionMap[postItemTableViewCellDelegate.post.postId] != nil && (postItemTableViewCellDelegate.pushViewController as! HomeV2ViewController).postIdDescExpansionMap[postItemTableViewCellDelegate.post.postId] == true) {
+                               postDescription.numberOfLines = 0
+                           } else {
+                               postDescription.numberOfLines = 4
+                                heightOflabel = 100;
+                           }
             }
+           
            } else {
                postDescription.numberOfLines = 0
            }
@@ -122,9 +126,16 @@ class PostDescriptionTableViewCell: UITableViewCell {
            postDescription.attributedText = attrString;
         postDescription.frame = CGRect.init(x: postDescription.frame.origin.x, y: postDescription.frame.origin.y, width: postDescription.frame.width, height: heightOflabel);
         
-        let descTapGesture = MyTapRecognizer.init(target: self, action: #selector(postDescPressed(sender:)));
-        descTapGesture.post = post;
-        postDescription.addGestureRecognizer(descTapGesture);
+        if (pushViewController is HomeV2ViewController) {
+            let descTapGesture = MyTapRecognizer.init(target: self, action: #selector(postDescPressed(sender:)));
+            descTapGesture.post = post;
+            postDescription.addGestureRecognizer(descTapGesture);
+        } else if (pushViewController is ArchieveViewController) {
+            let descTapGesture = MyTapRecognizer.init(target: self, action: #selector(postDescPressed(sender:)));
+            descTapGesture.post = post;
+            postDescription.addGestureRecognizer(descTapGesture);
+
+        }
         
         print(post.postDescription);
     }
