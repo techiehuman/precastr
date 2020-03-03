@@ -37,13 +37,18 @@ class PostItemTableViewCell: UITableViewCell, SharingDelegate, MFMessageComposeV
         postItemsTableView.register(UINib(nibName: "PostDescriptionTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "PostDescriptionTableViewCell");
         postItemsTableView.register(UINib(nibName: "PostGalleryTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "PostGalleryTableViewCell");
         postItemsTableView.register(UINib(nibName: "WebsiteInfoTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "WebsiteInfoTableViewCell");
-
+        postItemsTableView.register(UINib(nibName: "ModeratorHomeTopTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "ModeratorHomeTopTableViewCell");
+        
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
+    }
+    
+    @objc func postStatusLabelPressed() {
+        (pushViewController as! CommunicationViewController).changeStatusButtonClicked();
     }
     
     @objc func postDescriptionPressed(sender: MyTapRecognizer){
@@ -111,11 +116,19 @@ class PostItemTableViewCell: UITableViewCell, SharingDelegate, MFMessageComposeV
         //Setting Date of Post
         if (post.createdOnTimestamp == 0) {
             cell.postDateLbl.text = Date().ddspEEEEcmyyyy(dateStr: post.createdOn);
+
+            if (pushViewController is CommunicationViewController) {
+                cell.postDateLbl.text = Date().ddspEEEEcmyyyyspHHclmmclaa(dateStr: post.createdOn);
+            }
         } else {
             var date = Date(timeIntervalSince1970: (Double(post.createdOnTimestamp) / 1000.0));
             var dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "dd-MM-yyyy hh:mm:ss"
             cell.postDateLbl.text = Date().ddspEEEEcmyyyy(dateStr: dateFormatter.string(from: date));
+            
+            if (pushViewController is CommunicationViewController) {
+                cell.postDateLbl.text = Date().ddspEEEEcmyyyyspHHclmmclaa(dateStr: dateFormatter.string(from: date));
+            }
         }
         cell.postDateLbl.frame = CGRect.init(x: (self.contentView.frame.width -  cell.postDateLbl.intrinsicContentSize.width - 15), y: cell.postDateLbl.frame.origin.y, width: cell.postDateLbl.intrinsicContentSize.width, height: cell.postDateLbl.frame.height);
         
@@ -129,7 +142,36 @@ class PostItemTableViewCell: UITableViewCell, SharingDelegate, MFMessageComposeV
         }
         
         let pipe = " |"
+        
+        //This line will run if the status is not Approved/Published
         cell.postStatusLbl.text = "\((status))\(pipe)"
+
+        //This code will run when user is Moderator
+        //And the status of post has to be updated.
+        if (pushViewController is CommunicationViewController) {
+            if ((pushViewController as! CommunicationViewController).loggedInUser.isCastr == 2 && status != "Approved" && status != "Published") {
+                // create an NSMutableAttributedString that we'll append everything to
+                let fullString = NSMutableAttributedString(string: " \((status)) ")
+
+                // create our NSTextAttachment
+                let image1Attachment = NSTextAttachment()
+                image1Attachment.image = UIImage(named: "down_arrow")
+                // wrap the attachment in its own attributed string so we can append it
+                let image1String = NSAttributedString(attachment: image1Attachment)
+
+                // add the NSTextAttachment wrapper to our full string, then add some more text.
+                fullString.append(image1String)
+                fullString.append(NSAttributedString(string: " \(pipe)"))
+                cell.postStatusLbl.attributedText = fullString;
+                cell.postStatusLbl.layer.cornerRadius = 4;
+                cell.postStatusLbl.layer.borderWidth = 0.5;
+                
+                cell.postStatusLbl.isUserInteractionEnabled = true;
+                let postStatusTapGuesture = UITapGestureRecognizer.init(target: self, action: #selector(postStatusLabelPressed));
+                cell.postStatusLbl.addGestureRecognizer(postStatusTapGuesture);
+            }
+        }
+    
         cell.postStatusLbl.frame = CGRect.init(x: cell.postDateLbl.frame.origin.x - (cell.postStatusLbl.intrinsicContentSize.width + 5), y: cell.postStatusLbl.frame.origin.y, width: cell.postStatusLbl.intrinsicContentSize.width, height: cell.postStatusLbl.frame.height);
         
         //Setting Status Image of Post
@@ -162,7 +204,6 @@ class PostItemTableViewCell: UITableViewCell, SharingDelegate, MFMessageComposeV
             let editButtonTapRecognizer = MyTapRecognizer.init(target: self, action: #selector(postDescriptionPressed(sender:)));
                    editButtonTapRecognizer.post = post;
             cell.viewDetailsBtn.addGestureRecognizer(editButtonTapRecognizer);
-
         }
     }
     
@@ -690,24 +731,44 @@ extension PostItemTableViewCell: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         if (indexPath.row == PostRows.Post_Status_Row) {
-                
+            
             if (pushViewController is CastContactsViewController) {
                 return UITableViewCell();
             }
+            
+            //If Mooderator is at Home Controller
+            if (pushViewController is HomeV2ViewController) {
+                if ((pushViewController as! HomeV2ViewController).loggedInUser.isCastr == 2) {
+                    let moderatorCell: ModeratorHomeTopTableViewCell = tableView.dequeueReusableCell(withIdentifier: "ModeratorHomeTopTableViewCell", for: indexPath) as! ModeratorHomeTopTableViewCell;
+                    moderatorCell.pushViewController = pushViewController;
+                    //Populating Status
+                    moderatorCell.populateModeratorTopView(cell: moderatorCell, post: post);
+                    return moderatorCell;
+                }
+            }
+        
             let cell: CasterPostStatusTableViewCell = tableView.dequeueReusableCell(withIdentifier: "CasterPostStatusTableViewCell", for: indexPath) as! CasterPostStatusTableViewCell;
                 //Populating Status
                 populateCasterTopView(cell: cell);
                 return cell;
-
-                
             } else if (indexPath.row == PostRows.Post_Action_Row) {
             
-            if (pushViewController is ArchieveViewController || pushViewController is CastContactsViewController) {
-                return UITableViewCell();
-            } else {
-                return populateCastActionsCell(indexPath: indexPath, tableView: tableView)
-            }
-            
+                //We will hide action row if its an Archieve Tab/ Cast Contacts Page or
+                //If the user is moderator, then we wil hide this row at HomeScreen and Cast Detail Screen
+                if (pushViewController is ArchieveViewController || pushViewController is CastContactsViewController) {
+                    return UITableViewCell();
+                } else {
+                    if (pushViewController is HomeV2ViewController) {
+                        if ((pushViewController as! HomeV2ViewController).loggedInUser.isCastr == 2) {
+                            return UITableViewCell();
+                        }
+                    } else if (pushViewController is CommunicationViewController) {
+                        if ((pushViewController as! CommunicationViewController).loggedInUser.isCastr == 2) {
+                            return UITableViewCell();
+                        }
+                    }
+                    return populateCastActionsCell(indexPath: indexPath, tableView: tableView)
+                }
             
             } else if (indexPath.row == PostRows.Post_Description_Row) {
                 
@@ -763,6 +824,11 @@ extension PostItemTableViewCell: UITableViewDataSource, UITableViewDelegate {
             if (pushViewController is CastContactsViewController) {
                 return 0;
             }
+            if (pushViewController is HomeV2ViewController) {
+                if ((pushViewController as! HomeV2ViewController).loggedInUser.isCastr == 2) {
+                    return CGFloat(PostRowsHeight.Post_Moderator_Status_Row_Height);
+                }
+            }
             return CGFloat(PostRowsHeight.Post_Status_Row_Height);
         } else if (PostRows.Post_Action_Row == indexPath.row) {
             if (pushViewController is ArchieveViewController) {
@@ -771,6 +837,15 @@ extension PostItemTableViewCell: UITableViewDataSource, UITableViewDelegate {
             //We will hide the bar in cast contacts screen
             if (pushViewController is CastContactsViewController) {
                 return 0;
+            }
+            if (pushViewController is HomeV2ViewController) {
+                if ((pushViewController as! HomeV2ViewController).loggedInUser.isCastr == 2) {
+                    return 0;
+                }
+            } else if (pushViewController is CommunicationViewController) {
+                if ((pushViewController as! CommunicationViewController).loggedInUser.isCastr == 2) {
+                    return 0;
+                }
             }
             return CGFloat(PostRowsHeight.Post_Action_Row_Height);
         } else if (PostRows.Post_Description_Row == indexPath.row) {

@@ -85,4 +85,6 @@ class PostRowsHeight {
     static var Post_Description_Row_Height: Int = 15;
     static var Post_WebsiteInfo_Row_Height: Int = 100;
     static var Post_Gallery_Row_Height: Int = 418;
+    static var Post_Moderator_Status_Row_Height: Int = 70;
+
 }

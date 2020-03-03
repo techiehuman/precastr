@@ -417,38 +417,13 @@ class CommunicationViewController: SharePostViewController,UITextViewDelegate, U
             self.selectMultipleImages();
         }
 
-        /*
-        // create an actionSheet
-        let actionSheetController: UIAlertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        
-        // create an action
-        let uploadPhotoAction: UIAlertAction = UIAlertAction(title: "Upload Photo", style: .default) { action -> Void in
-            //self.imageUploadClicked();
-            self.selectMultipleImages();
-        }
-        //uploadPhotoAction.setValue(selectedColor, forKey: "titleTextColor")
-        let takePhotoAction: UIAlertAction = UIAlertAction(title: "Take Photo", style: .default) { action -> Void in
-            self.imageDelegate.takePicture(viewC: self);
-        }
-        //takePhotoAction.setValue(cenesLabelBlue, forKey: "titleTextColor")
-        
-        let cancelAction: UIAlertAction = UIAlertAction(title: "Cancel", style: .cancel) { action -> Void in }
-        cancelAction.setValue(UIColor.black, forKey: "titleTextColor")
-        
-        actionSheetController.addAction(uploadPhotoAction)
-        actionSheetController.addAction(takePhotoAction)
-        actionSheetController.addAction(cancelAction)
-        
-        // present an actionSheet...
-        present(actionSheetController, animated: true, completion: nil)*/
+       
     }
     
     
-    @IBAction func changeStatusButtonClicked(_ sender: Any) {
-        
+    func changeStatusButtonClicked() {
         // create an actionSheet
         let actionSheetController: UIAlertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        
         // create an action
         for postStatus in postStatusList {
                 //We will not moderator to Publish post
@@ -462,7 +437,6 @@ class CommunicationViewController: SharePostViewController,UITextViewDelegate, U
                 actionSheetController.addAction(pendingReviewAction)
         }
         
-
         let cancelAction: UIAlertAction = UIAlertAction(title: "Cancel", style: .cancel) { action -> Void in }
         cancelAction.setValue(UIColor.black, forKey: "titleTextColor")
         
@@ -474,7 +448,6 @@ class CommunicationViewController: SharePostViewController,UITextViewDelegate, U
             //self.changeStatusFunction();
             present(actionSheetController, animated: true, completion: nil)
         }
-        
     }
     
     @IBAction func editPostBtnClicked(_ sender: Any) {
@@ -617,6 +590,11 @@ class CommunicationViewController: SharePostViewController,UITextViewDelegate, U
             self.present(alert, animated: true);
             
         } else {
+            
+            DispatchQueue.main.async {
+                self.activityIndicator.startAnimating();
+            }
+            
             let tempPostTitle = self.post.status;
             let tempPostStatusId = postStatusId;
             let jsonURL = "posts/update_post_status/format/json";
@@ -627,7 +605,7 @@ class CommunicationViewController: SharePostViewController,UITextViewDelegate, U
             postData["post_status_id"] = postStatusId;
             postData["timestamp"] = Date().timeIntervalMilliSeconds();
             PostService().postDataMethod(jsonURL: jsonURL, postData: postData, complete: {(response) in
-                
+                self.activityIndicator.stopAnimating();
                 print(response);
                 let statusResponse = Int(response.value(forKey: "status") as! String)!
                 for postStatus in postStatusList {
@@ -642,12 +620,12 @@ class CommunicationViewController: SharePostViewController,UITextViewDelegate, U
                         self.post.postStatusId = postStatusId;
                         self.post.status = postStatus.title;
                         self.communicationTableView.reloadData();
-                        
+                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "reloadHomeScreen"), object: nil);
                         // Lets add ui labels in width.
                         //self.changeStatusBtn.frame = CGRect.init(x:  self.view.frame.width - (self.lblPostDate.intrinsicContentSize.width + self.changeStatusBtn.intrinsicContentSize.width + 40), y: self.changeStatusBtn.frame.origin.y, width: totalWidthOfUIView, height: self.changeStatusBtn.frame.height);
                         
                         
-                        self.changeStatusFunction();
+                        //self.changeStatusFunction();
                         /*if(self.post.status == "Published"){
                             
                          
@@ -1065,6 +1043,7 @@ extension CommunicationViewController: UITableViewDelegate, UITableViewDataSourc
             cell.post = post
             cell.postRowIndex = indexPath.row;
             cell.totalPosts = 1;
+            cell.postItemsTableView.reloadData();
             return cell;
             
         } else {
@@ -1073,88 +1052,6 @@ extension CommunicationViewController: UITableViewDelegate, UITableViewDataSourc
                 
                 let communication = post.postCommunications[indexPath.row - 1];
 
-                //We will show logged in user comments on right side and other users comment on
-                //left side.
-            /*    if (communication.communicatedByUserId == loggedInUser.userId) { //left side
-                    
-                    let cell: LeftCommunicationTableViewCell = tableView.dequeueReusableCell(withIdentifier: "LeftCommunicationTableViewCell") as! LeftCommunicationTableViewCell;
-                    
-                    cell.commentedDate.text = Date().ddspEEEEcmyyyyspHHclmmclaa(dateStr: communication.commentedOn);
-                    
-                    cell.commentorPic.sd_setImage(with: URL.init(string: communication.communicatedProfilePic), placeholderImage: UIImage.init(named: "Profile-1"));
-                    
-                    //Call this function
-                    let height = self.heightForView(text: communication.postCommunicationDescription, font: UIFont.init(name: "VisbyCF-Regular", size: 16.0)!, width: self.view.frame.width - 100)
-                    
-                    //This is your label
-                    for view in cell.descriptionView.subviews {
-                        view.removeFromSuperview();
-                    }
-
-                    let proNameLbl = UILabel(frame: CGRect(x: 10, y: 35, width: self.view.frame.width - 100, height: height))
-                    var lblToShow = "\(communication.postCommunicationDescription)"
-                    proNameLbl.numberOfLines = 0
-                    proNameLbl.lineBreakMode = .byWordWrapping
-                    let paragraphStyle = NSMutableParagraphStyle()
-                    //line height size
-                    paragraphStyle.lineSpacing = 2
-                    
-                    let attributes = [
-                        NSAttributedStringKey.font : UIFont(name: "VisbyCF-Regular", size: 16.0)!,
-                        NSAttributedStringKey.foregroundColor : UIColor.init(red: 34/255, green: 34/255, blue: 34/255, alpha: 1),
-                        NSAttributedStringKey.paragraphStyle: paragraphStyle]
-                    
-                    let attrString = NSMutableAttributedString(string: lblToShow)
-                    attrString.addAttributes(attributes, range: NSMakeRange(0, attrString.length));
-                    proNameLbl.attributedText = attrString;
-                    
-                    cell.descriptionView.addSubview(proNameLbl)
-                    cell.descriptionView.backgroundColor = UIColor(red: 245/255, green: 245/255, blue: 245/255, alpha: 1);
-
-                    print("width")
-                    print(cell.descriptionView.frame.width)
-                    
-                    if (communication.attachments.count > 0) {
-                        
-                        cell.imageScrollView.isHidden = false;
-                        cell.imagesArray = [String]();
-                        for attachment in communication.attachments {
-                            cell.imagesArray.append(attachment.image);
-                        }
-                        cell.setupSlideScrollView();
-                        cell.imageScrollView.frame = CGRect.init(x: cell.imageScrollView.frame.origin.x, y: cell.descriptionView.frame.origin.y + 50 + height, width: cell.imageScrollView.frame.width, height: cell.imageScrollView.frame.height);
-                        
-                        if (communication.attachments.count == 1) {
-                            cell.pageControl.isHidden = true;
-                            
-                            //50 Top Height, height: Label height, imasge scroll view height, Gap below image scroll view.
-                            let totalDescriptionHeight = 50 + height + cell.imageScrollView.frame.height + 10;
-                            cell.descriptionView.frame = CGRect.init(x: 15, y: 10, width: self.view.frame.width - 70, height: totalDescriptionHeight);
-
-                        } else {
-                            
-                            cell.pageControl.numberOfPages = cell.imagesArray.count
-                            cell.pageControl.currentPage = 0
-                            cell.contentView.bringSubview(toFront: cell.pageControl)
-
-                            cell.pageControl.isHidden = false;
-                            cell.pageControl.frame = CGRect.init(x: cell.imageScrollView.frame.width/2 - cell.pageControl.frame.width/4, y: cell.imageScrollView.frame.origin.y + cell.imageScrollView.frame.height - 10, width: cell.pageControl.frame.width, height: cell.pageControl.frame.height)
-                            
-                            let totalDescriptionHeight = 40 + height + cell.imageScrollView.frame.height + cell.pageControl.frame.height;
-                            cell.descriptionView.frame = CGRect.init(x: 15, y: 10, width: self.view.frame.width - 70, height: totalDescriptionHeight);
-
-                        }
-                    } else {
-                        cell.imageScrollView.isHidden = true;
-                        cell.pageControl.isHidden = true;
-                        
-                        cell.descriptionView.frame = CGRect.init(x: 15, y: 10, width: self.view.frame.width - 70, height: 50 + height);
-
-                    }
-                    return cell;
-                    
-               } else { //right side */
-                    
                     
                     let cell: RightCommunicationTableViewCell = tableView.dequeueReusableCell(withIdentifier: "RightCommunicationTableViewCell") as! RightCommunicationTableViewCell;
 
@@ -1245,8 +1142,13 @@ extension CommunicationViewController: UITableViewDelegate, UITableViewDataSourc
         
         if (indexPath.row == 0) {
             
-            var height: CGFloat = CGFloat(PostRowsHeight.Post_Status_Row_Height + PostRowsHeight.Post_Action_Row_Height);
-            
+            var height: CGFloat = 0
+            if (loggedInUser.isCastr == 2) {
+                height += CGFloat(PostRowsHeight.Post_Status_Row_Height);
+            } else {
+                height += CGFloat(PostRowsHeight.Post_Status_Row_Height + PostRowsHeight.Post_Action_Row_Height);
+            }
+
             height = height + getHeightOfPostDescripiton(contentView: self.view, postDescription: post.postDescription) + CGFloat(PostRowsHeight.Post_Description_Row_Height);
             
             let websiteUrl = extractWebsiteFromText(text: post.postDescription);

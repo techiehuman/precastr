@@ -102,7 +102,7 @@ class PostFormTableViewCell: UITableViewCell, UITextViewDelegate, PostFormCellPr
                 postData["post_id"] = self.createPostViewControllerDelegate.post.postId
                 postData["timestamp"] = Int64(Date().timeIntervalSince1970 * 1000.0);
 
-                if(loggedInUser.isCastr == 2){
+                if (loggedInUser.isCastr == 2) {
                     postData["post_status_id"] = self.selectedPostStatusId
                 }
                 
@@ -118,8 +118,10 @@ class PostFormTableViewCell: UITableViewCell, UITextViewDelegate, PostFormCellPr
                         }
                     }
                     
-                    //This is neeeded if we are updating and we have alreay image urls.
-                    postData["old_image_path"] = imagesStr.prefix(imagesStr.count-1);
+                    if (imagesStr != "") {
+                        //This is neeeded if we are updating and we have alreay image urls.
+                        postData["old_image_path"] = imagesStr.prefix(imagesStr.count-1);
+                    }
                 }
 
                 //let joiner = ","

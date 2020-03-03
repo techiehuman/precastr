@@ -50,9 +50,6 @@ class HomeV2ViewController: SharePostViewController,EasyTipViewDelegate, Sharing
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        
-       
-        
         postsTableView.register(UINib(nibName: "PostItemTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "PostItemTableViewCell");
         loggedInUser = User().loadUserDataFromUserDefaults(userDataDict : setting);
         
@@ -555,7 +552,12 @@ extension HomeV2ViewController: UITableViewDelegate, UITableViewDataSource {
         
         let post = self.posts[indexPath.row];
         
-        var height: CGFloat = CGFloat(PostRowsHeight.Post_Status_Row_Height + PostRowsHeight.Post_Action_Row_Height);
+        var height: CGFloat = 0
+        if (loggedInUser.isCastr == 2) {
+            height += CGFloat(PostRowsHeight.Post_Moderator_Status_Row_Height);
+        } else {
+            height += CGFloat(PostRowsHeight.Post_Status_Row_Height + PostRowsHeight.Post_Action_Row_Height);
+        }
         
         var heightOfDesc: CGFloat = getHeightOfPostDescripiton(contentView: self.view, postDescription: post.postDescription);
         if (heightOfDesc > 100) {

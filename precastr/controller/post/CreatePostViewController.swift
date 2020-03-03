@@ -70,6 +70,11 @@ class CreatePostViewController: UIViewController, UIImagePickerControllerDelegat
                 index = index + 1;
             }
         }
+        
+        activityIndicator.center = view.center;
+        activityIndicator.hidesWhenStopped = true;
+        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.gray;
+        self.view.addSubview(activityIndicator);
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -334,11 +339,6 @@ extension CreatePostViewController: UITableViewDelegate, UITableViewDataSource {
             //self.showToast(message: "\(self.SelectedAssets.count) Images Uploaded")
             self.postFormCellProtocolDelegate.upadedSelectedImageCounts(counts: "\(self.postImageDtos.count)");
         }
-            
-        activityIndicator.center = view.center;
-        activityIndicator.hidesWhenStopped = true;
-        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.gray;
-        cell.addSubview(activityIndicator);
         
         postFormCellProtocolDelegate = cell;
         return cell;

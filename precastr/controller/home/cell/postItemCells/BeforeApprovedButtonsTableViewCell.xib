@@ -34,10 +34,10 @@
                         <color key="backgroundColor" red="0.047058823530000002" green="0.43529411759999997" blue="0.91372549020000005" alpha="1" colorSpace="calibratedRGB"/>
                         <state key="normal" image="telephone_icon"/>
                     </button>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Sharing options available when approved." textAlignment="right" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nfd-wh-LNH">
-                        <rect key="frame" x="107" y="5" width="297" height="30"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                        <fontDescription key="fontDescription" name="VisbyCF-Regular" family="Visby CF" pointSize="14"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Sharing options available when approved." textAlignment="right" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="7" translatesAutoresizingMaskIntoConstraints="NO" id="Nfd-wh-LNH">
+                        <rect key="frame" x="110" y="5" width="294" height="30"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                        <fontDescription key="fontDescription" name="VisbyCF-Regular" family="Visby CF" pointSize="12"/>
                         <color key="textColor" red="0.83529411760000005" green="0.0078431372550000003" blue="0.039215686270000001" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>

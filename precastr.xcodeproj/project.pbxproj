@@ -10,6 +10,8 @@
 		5E203CBA2349C5EA00EFFC2D /* ModeratorPhoneNumberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E203CB92349C5EA00EFFC2D /* ModeratorPhoneNumberViewController.swift */; };
 		5E2A0E2F22DF83EE009033E7 /* PostDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E2A0E2D22DF83EE009033E7 /* PostDetailTableViewCell.swift */; };
 		5E2A0E3022DF83EE009033E7 /* PostDetailTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5E2A0E2E22DF83EE009033E7 /* PostDetailTableViewCell.xib */; };
+		5E45B2CF240D54D800F5EB31 /* ModeratorHomeTopTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E45B2CD240D54D800F5EB31 /* ModeratorHomeTopTableViewCell.swift */; };
+		5E45B2D0240D54D800F5EB31 /* ModeratorHomeTopTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5E45B2CE240D54D800F5EB31 /* ModeratorHomeTopTableViewCell.xib */; };
 		5E48B90B23F8505F0078F07E /* PostItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E48B90923F8505F0078F07E /* PostItemTableViewCell.swift */; };
 		5E48B90C23F8505F0078F07E /* PostItemTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5E48B90A23F8505F0078F07E /* PostItemTableViewCell.xib */; };
 		5E48B91423F852050078F07E /* CasterPostStatusTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E48B91223F852050078F07E /* CasterPostStatusTableViewCell.swift */; };
@@ -166,6 +168,8 @@
 		5E203CB92349C5EA00EFFC2D /* ModeratorPhoneNumberViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModeratorPhoneNumberViewController.swift; sourceTree = "<group>"; };
 		5E2A0E2D22DF83EE009033E7 /* PostDetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailTableViewCell.swift; sourceTree = "<group>"; };
 		5E2A0E2E22DF83EE009033E7 /* PostDetailTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PostDetailTableViewCell.xib; sourceTree = "<group>"; };
+		5E45B2CD240D54D800F5EB31 /* ModeratorHomeTopTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModeratorHomeTopTableViewCell.swift; sourceTree = "<group>"; };
+		5E45B2CE240D54D800F5EB31 /* ModeratorHomeTopTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ModeratorHomeTopTableViewCell.xib; sourceTree = "<group>"; };
 		5E48B90923F8505F0078F07E /* PostItemTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostItemTableViewCell.swift; sourceTree = "<group>"; };
 		5E48B90A23F8505F0078F07E /* PostItemTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PostItemTableViewCell.xib; sourceTree = "<group>"; };
 		5E48B91223F852050078F07E /* CasterPostStatusTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CasterPostStatusTableViewCell.swift; sourceTree = "<group>"; };
@@ -350,6 +354,8 @@
 				5E6E94E623F98E7D00DBA4F3 /* AfterApprovedButtonsTableViewCell.xib */,
 				5E9A36DF24027FC30001CCB3 /* WebsiteInfoTableViewCell.swift */,
 				5E9A36E024027FC30001CCB3 /* WebsiteInfoTableViewCell.xib */,
+				5E45B2CD240D54D800F5EB31 /* ModeratorHomeTopTableViewCell.swift */,
+				5E45B2CE240D54D800F5EB31 /* ModeratorHomeTopTableViewCell.xib */,
 			);
 			path = postItemCells;
 			sourceTree = "<group>";
@@ -902,6 +908,7 @@
 				902FDE4122D7250F002D1601 /* GoogleService-Info.plist in Resources */,
 				90F14681236058770096D56C /* UpdatePhoneNumberTableViewCell.xib in Resources */,
 				5EB754E022ABE136006D636B /* ForgetPasswordTableViewCell.xib in Resources */,
+				5E45B2D0240D54D800F5EB31 /* ModeratorHomeTopTableViewCell.xib in Resources */,
 				FA84F18722A0329D007796A3 /* Slide.xib in Resources */,
 				5E48B92123F963780078F07E /* PostGalleryTableViewCell.xib in Resources */,
 				FAD5014D22A97B0400D21F57 /* ModeratorCastsTableViewCell.xib in Resources */,
@@ -1153,6 +1160,7 @@
 				FAFCE3CA22999F1000AB6DB5 /* HomeTextPostTableViewCell.swift in Sources */,
 				90881EF92341FC2100023450 /* ContactsViewController.swift in Sources */,
 				FA1C1CDD228400A800583E1B /* Reusable.swift in Sources */,
+				5E45B2CF240D54D800F5EB31 /* ModeratorHomeTopTableViewCell.swift in Sources */,
 				5E48B91423F852050078F07E /* CasterPostStatusTableViewCell.swift in Sources */,
 				FAF601CA2286A3C700B54F9B /* SplashViewController.swift in Sources */,
 				5EE9EBFF22B803C300FD04B6 /* HomeDto.swift in Sources */,
