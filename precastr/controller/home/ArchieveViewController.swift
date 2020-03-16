@@ -27,8 +27,15 @@ class ArchieveViewController: SharePostViewController {
 
         loadArchievePosts();
         self.navigationItem.title = "My Casts";
+        
+        self.setupNavBar();
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        self.tabBarController?.tabBar.isHidden = false;
+        self.navigationController?.navigationBar.isHidden = false
+
+    }
 
     /*
     // MARK: - Navigation
@@ -39,7 +46,23 @@ class ArchieveViewController: SharePostViewController {
         // Pass the selected object to the new view controller.
     }
     */
+    
+    @objc func menuButtonClicked() {
+        let viewController: SideMenuTableViewController = self.storyboard?.instantiateViewController(withIdentifier: "SideMenuTableViewController") as! SideMenuTableViewController;
+        self.navigationController?.pushViewController(viewController, animated: true);
+    }
 
+    func setupNavBar() {
+        let menuButton = UIButton();
+               menuButton.setImage(UIImage.init(named: "menu"), for: .normal);
+               menuButton.addTarget(self, action: #selector(menuButtonClicked), for: UIControlEvents.touchUpInside)
+               menuButton.frame = CGRect.init(x: 0, y:0, width: 24, height: 24);
+               
+               let barButton = UIBarButtonItem(customView: menuButton)
+               
+               navigationItem.rightBarButtonItem = barButton;
+               navigationItem.rightBarButtonItem?.tintColor = UIColor(red: 12/255, green: 111/255, blue: 233/255, alpha: 1)
+    }
     func loadArchievePosts() {
         
         var postArray : [String:Any] = [String:Any]();
@@ -64,6 +87,10 @@ class ArchieveViewController: SharePostViewController {
                     //self.homePosts = modeArray as! [Any]
                     self.posts = Post().loadPostsFromNSArray(postsArr: modeArray);
                     self.postsTableView.reloadData();
+                    
+                    if (self.loggedInUser.isCastr == 1) {
+                        self.navigationItem.title = "My Casts (\(response.value(forKey: "count") as! Int))";
+                    }
                 }
             }
         });
@@ -99,7 +126,7 @@ extension ArchieveViewController: UITableViewDelegate, UITableViewDataSource {
         
         let post = self.posts[indexPath.row];
 
-        var height: CGFloat = CGFloat(PostRowsHeight.Post_Status_Row_Height + PostRowsHeight.Post_Action_Row_Height);
+        var height: CGFloat = CGFloat(PostRowsHeight.Post_Status_Row_Height);
         
         height = height + getHeightOfPostDescripiton(contentView: self.view, postDescription: post.postDescription) + CGFloat(PostRowsHeight.Post_Description_Row_Height);
         

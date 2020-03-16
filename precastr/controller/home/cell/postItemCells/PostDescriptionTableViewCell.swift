@@ -123,7 +123,15 @@ class PostDescriptionTableViewCell: UITableViewCell {
            
         let attrString = NSMutableAttributedString(string: post.postDescription)
            attrString.addAttributes(attributes, range: NSMakeRange(0, attrString.length));
-           postDescription.attributedText = attrString;
+          
+         /*if (height > 100) {
+            let readmoreFont = UIFont(name: "VisbyCF-Regular", size: 16.0)!
+            let readmoreFontColor = PrecasterColors.themeColor;
+            let attrReadMoreStr = NSAttributedString.init(string: "...Show Less", attributes: [NSAttributedStringKey.foregroundColor: readmoreFontColor,NSAttributedStringKey.font: readmoreFont]);
+            attrString.append(attrReadMoreStr);
+          }*/
+        
+        postDescription.attributedText = attrString;
         postDescription.frame = CGRect.init(x: postDescription.frame.origin.x, y: postDescription.frame.origin.y, width: postDescription.frame.width, height: heightOflabel);
         
         if (pushViewController is HomeV2ViewController) {

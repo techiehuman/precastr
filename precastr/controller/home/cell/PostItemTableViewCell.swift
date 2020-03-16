@@ -13,6 +13,8 @@ import FBSDKLoginKit
 import FacebookShare
 import FBSDKCoreKit
 import ReadabilityKit
+import TwitterKit
+import TwitterCore
 
 class PostItemTableViewCell: UITableViewCell, SharingDelegate, MFMessageComposeViewControllerDelegate, PostItemTableViewDelegate {
 
@@ -121,16 +123,14 @@ class PostItemTableViewCell: UITableViewCell, SharingDelegate, MFMessageComposeV
                 cell.postDateLbl.text = Date().ddspEEEEcmyyyyspHHclmmclaa(dateStr: post.createdOn);
             }
         } else {
-            var date = Date(timeIntervalSince1970: (Double(post.createdOnTimestamp) / 1000.0));
-            var dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "dd-MM-yyyy hh:mm:ss"
-            cell.postDateLbl.text = Date().ddspEEEEcmyyyy(dateStr: dateFormatter.string(from: date));
+            let date = Date(timeIntervalSince1970: TimeInterval.init(post.createdOnTimestamp/1000));
+            cell.postDateLbl.text = Date().ddspEEEEcmyyyyV2(dateStrDt: date);
             
             if (pushViewController is CommunicationViewController) {
-                cell.postDateLbl.text = Date().ddspEEEEcmyyyyspHHclmmclaa(dateStr: dateFormatter.string(from: date));
+                cell.postDateLbl.text = Date().ddspEEEEcmyyyyspHHclmmclaaV2(dateStrDt: date);
             }
         }
-        cell.postDateLbl.frame = CGRect.init(x: (self.contentView.frame.width -  cell.postDateLbl.intrinsicContentSize.width - 15), y: cell.postDateLbl.frame.origin.y, width: cell.postDateLbl.intrinsicContentSize.width, height: cell.postDateLbl.frame.height);
+        cell.postDateLbl.frame = CGRect.init(x: (self.contentView.frame.width -  cell.postDateLbl.intrinsicContentSize.width - 5), y: cell.postDateLbl.frame.origin.y, width: cell.postDateLbl.intrinsicContentSize.width, height: cell.postDateLbl.frame.height);
         
         //Setting Status of Post
         var status = "";
@@ -145,11 +145,12 @@ class PostItemTableViewCell: UITableViewCell, SharingDelegate, MFMessageComposeV
         
         //This line will run if the status is not Approved/Published
         cell.postStatusLbl.text = "\((status))\(pipe)"
+        cell.postStatusLbl.layer.borderWidth = 0;
 
         //This code will run when user is Moderator
         //And the status of post has to be updated.
         if (pushViewController is CommunicationViewController) {
-            if ((pushViewController as! CommunicationViewController).loggedInUser.isCastr == 2 && status != "Approved" && status != "Published") {
+            if ((pushViewController as! CommunicationViewController).loggedInUser.isCastr == 2 && status != "Published") {
                 // create an NSMutableAttributedString that we'll append everything to
                 let fullString = NSMutableAttributedString(string: " \((status)) ")
 
@@ -161,7 +162,11 @@ class PostItemTableViewCell: UITableViewCell, SharingDelegate, MFMessageComposeV
 
                 // add the NSTextAttachment wrapper to our full string, then add some more text.
                 fullString.append(image1String)
-                fullString.append(NSAttributedString(string: " \(pipe)"))
+                
+                let suffix = NSMutableAttributedString(string: " |");
+                let range = (" |" as NSString).range(of: "|")
+                suffix.addAttribute(NSAttributedStringKey.foregroundColor,value: UIColor.white , range: range)
+                fullString.append(suffix);
                 cell.postStatusLbl.attributedText = fullString;
                 cell.postStatusLbl.layer.cornerRadius = 4;
                 cell.postStatusLbl.layer.borderWidth = 0.5;
@@ -184,7 +189,7 @@ class PostItemTableViewCell: UITableViewCell, SharingDelegate, MFMessageComposeV
             imageStatus = (pushViewController as! ArchieveViewController).adapterCasterGetPostStatusImage(status: status);
         }
         cell.postStatusImg.image = UIImage.init(named: imageStatus)
-        cell.postStatusImg.frame = CGRect.init(x: cell.postStatusLbl.frame.origin.x - ( cell.postStatusImg.frame.width + 10), y: cell.postStatusImg.frame.origin.y, width: cell.postStatusImg.frame.width, height: cell.postStatusImg.frame.height)
+        cell.postStatusImg.frame = CGRect.init(x: cell.postStatusLbl.frame.origin.x - ( cell.postStatusImg.frame.width + 2), y: cell.postStatusImg.frame.origin.y, width: cell.postStatusImg.frame.width, height: cell.postStatusImg.frame.height)
         
         
         if (pushViewController is CommunicationViewController) {
@@ -217,7 +222,7 @@ class PostItemTableViewCell: UITableViewCell, SharingDelegate, MFMessageComposeV
             }
         }
         
-        if (status == "Pending") {
+        if (status == "Pending" || status == "Rejected") {
             
             let cell: BeforeApprovedButtonsTableViewCell = tableView.dequeueReusableCell(withIdentifier: "BeforeApprovedButtonsTableViewCell", for: indexPath) as! BeforeApprovedButtonsTableViewCell;
             
@@ -254,7 +259,7 @@ class PostItemTableViewCell: UITableViewCell, SharingDelegate, MFMessageComposeV
             }
     
             var gapBetweenButtons: CGFloat = 23;
-            if (pushViewController is CommunicationViewController) {
+            if (pushViewController is CommunicationViewController || post.status == "Approved") {
                 gapBetweenButtons = 10;
             }
             let buttonsHeightWidth: CGFloat = 30;
@@ -267,6 +272,20 @@ class PostItemTableViewCell: UITableViewCell, SharingDelegate, MFMessageComposeV
                 cell.deleteBtn.isHidden = false;
             }
             
+            var facebookPublished = false;
+            for socialMediaId in post.socialMediaIds {
+                if (socialMediaId == social.socialPlatformId["Facebook"]) {
+                    facebookPublished = true;
+                    break;
+                }else{
+                    facebookPublished = false;
+                }
+            }
+            if (facebookPublished == true) {
+                cell.facebookInfoBtn.isHidden = true;
+            } else {
+                cell.facebookInfoBtn.isHidden = false;
+            }
             if (deleteButtonVisible == true) {
                 //If post is published we will hide delete button
                 let deleteButtonTapRecognizer = MyTapRecognizer.init(target: self, action: #selector(deleteButtonPressed(sender:)));
@@ -328,6 +347,10 @@ class PostItemTableViewCell: UITableViewCell, SharingDelegate, MFMessageComposeV
             return;
         }
         
+        let postCastMenu: PostCastMenu = PostCastMenu.instanceFromNib() as! PostCastMenu;
+        let buttonAbsoluteFrame = shareButtonGlobal.convert(shareButtonGlobal.bounds, to: self.pushViewController.view)
+        postCastMenu.frame = CGRect.init(x: buttonAbsoluteFrame.origin.x - 60, y: buttonAbsoluteFrame.origin.y + 30, width: 80, height: 150)
+        
         let postToFacebookTapGesture = PostToSocialMediaGestureRecognizer.init(target: self, action: #selector(postToFacebookPressed(sender:)));
         postToFacebookTapGesture.post = post;
         
@@ -336,15 +359,6 @@ class PostItemTableViewCell: UITableViewCell, SharingDelegate, MFMessageComposeV
            
         let postToSMSTapGesture = PostToSocialMediaGestureRecognizer.init(target: self, action: #selector(postToSMSPressed(sender:)));
            postToSMSTapGesture.post = post;
-        
-        let postCastMenu: PostCastMenu = PostCastMenu.instanceFromNib() as! PostCastMenu;
-        
-        let buttonAbsoluteFrame = shareButtonGlobal.convert(shareButtonGlobal.bounds, to: self.pushViewController.view)
-
-        postCastMenu.frame = CGRect.init(x: buttonAbsoluteFrame.origin.x - 60, y: buttonAbsoluteFrame.origin.y + 30, width: 80, height: 150)
-        postCastMenu.facebookItem.addGestureRecognizer(postToFacebookTapGesture);
-        postCastMenu.twitterItem.addGestureRecognizer(postToTwitterTapGesture);
-        postCastMenu.messageItem.addGestureRecognizer(postToSMSTapGesture);
         
         if (post.postStatusId == HomePostPublishStatusId.PUBLISHSTATUSID) {
             
@@ -395,26 +409,116 @@ class PostItemTableViewCell: UITableViewCell, SharingDelegate, MFMessageComposeV
             } else {
                 postCastMenu.messageChecked.isHidden = true;
             }
+            
+            if (facebookPublished == false) {
+                postCastMenu.facebookItem.addGestureRecognizer(postToFacebookTapGesture);
+            }
+            if (twitterPublished == false) {
+                postCastMenu.twitterItem.addGestureRecognizer(postToTwitterTapGesture);
+            }
+            
+            postCastMenu.messageItem.addGestureRecognizer(postToSMSTapGesture);
+            
+        } else {
+            postCastMenu.facebookItem.addGestureRecognizer(postToFacebookTapGesture);
+            postCastMenu.twitterItem.addGestureRecognizer(postToTwitterTapGesture);
+            postCastMenu.messageItem.addGestureRecognizer(postToSMSTapGesture);
         }
+        
         self.pushViewController.view.addSubview(postCastMenu);
         isShareMenuOpened = true;
         if (self.pushViewController is HomeV2ViewController) {
             (self.pushViewController as! HomeV2ViewController).postsTableView.isScrollEnabled = false;
         }
         
-        var descHeight = pushViewController.getHeightOfPostDescripiton(contentView: contentView, postDescription: post.postDescription);
-        if (descHeight < 150 && pushViewController is HomeV2ViewController && postRowIndex == (totalPosts - 1)) {
+        let descHeight = pushViewController.getHeightOfPostDescripiton(contentView: contentView, postDescription: post.postDescription);
+        if (descHeight < 150 && pushViewController is HomeV2ViewController && postRowIndex == (totalPosts - 1) && totalPosts > 1) {
             postCastMenu.frame = CGRect.init(x: buttonAbsoluteFrame.origin.x - 60, y: buttonAbsoluteFrame.origin.y - 150, width: 80, height: 150)
         }
     }
     
+    func flowToCallPostToTwitter(post: Post) {
+        
+        if (self.pushViewController is HomeV2ViewController) {
+            (self.pushViewController as! HomeV2ViewController).activityIndicator.startAnimating();
+        } else if (self.pushViewController is CommunicationViewController) {
+            (self.pushViewController as! CommunicationViewController).activityIndicator.startAnimating();
+        }
+        
+        PostManager().publishPostOnTwitter(post: post, complete: {(response) in
+            if (self.pushViewController is HomeV2ViewController) {
+                (self.pushViewController as! HomeV2ViewController).activityIndicator.stopAnimating();
+            } else if (self.pushViewController is CommunicationViewController) {
+                (self.pushViewController as! CommunicationViewController).activityIndicator.stopAnimating();
+            }
+            let statusCode = Int(response.value(forKey: "status") as! String)!
+            if (statusCode == 0) {
+                self.pushViewController.showAlert(title: "Alert", message: response.value(forKey: "message") as! String);
+            } else {
+                for view in self.pushViewController.view.subviews {
+                    if (view is PostCastMenu) {
+                        view.removeFromSuperview();
+                    }
+                }
+                if (self.pushViewController is HomeV2ViewController) {
+                    (self.pushViewController as! HomeV2ViewController).postsTableView.isScrollEnabled = true;
+                    (self.pushViewController as! HomeV2ViewController).loadUserPosts();
+                }
+            }
+        });
+    }
+    
+    func postTokensToTwitter(postData: [String: Any], post: Post) {
+        
+        let userTokenUdpdateEndPoint = "\(ApiUrl)/user/upate_user_tokens/format/json";
+        UserService().postDataMethod(jsonURL: userTokenUdpdateEndPoint, postData: postData, complete: {response in
+            
+            let status: Int = Int(response.value(forKey: "status") as! String)!;
+            if (status == 1) {
+                let userDict = response.value(forKey: "data") as! NSDictionary;
+                print(userDict)
+                let user = User().getUserData(userDataDict: userDict);
+                user.loadUserDefaults();
+            }
+            self.flowToCallPostToTwitter(post: post);
+        });
+    }
+    
     @objc func postToSMSPressed(sender: PostToSocialMediaGestureRecognizer) {
-        let viewController = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ContactsViewController") as! ContactsViewController;
-        viewController.requestFrom = ContactsViewController.ContactsViewRequestFrom.PostMenuRequest;
-        viewController.postItemTableViewDelegate = self;
-        //viewController.moderatorViewControllerDelegte = self;
-        self.pushViewController.navigationController?.pushViewController(viewController, animated: true);
+        
+        if (sender.post.postDescription == "") {
+            if (pushViewController is HomeV2ViewController) {
+                (pushViewController as! HomeV2ViewController).showAlert(title: "Alert", message: "Sorry, you are not allowed to send the images via SMS.")
+            } else if (pushViewController is CommunicationViewController) {
+                (pushViewController as! CommunicationViewController).showAlert(title: "Alert", message: "Sorry, you are not allowed to send the images via SMS.")
+            }
+        } else if (sender.post.postDescription != "" && sender.post.postImages.count > 0) {
+            
+            var refreshAlert = UIAlertController(title: "Confirm!", message: "The images in the post will be removed, do you stll want to send the SMS.", preferredStyle: UIAlertControllerStyle.alert)
 
+            refreshAlert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action: UIAlertAction!) in
+              
+                let viewController = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ContactsViewController") as! ContactsViewController;
+                viewController.requestFrom = ContactsViewController.ContactsViewRequestFrom.PostMenuRequest;
+                viewController.postItemTableViewDelegate = self;
+                //viewController.moderatorViewControllerDelegte = self;
+                self.pushViewController.navigationController?.pushViewController(viewController, animated: true);
+              }))
+
+            refreshAlert.addAction(UIAlertAction(title: "No", style: .cancel, handler: { (action: UIAlertAction!) in
+              print("Handle Cancel Logic here")
+              }))
+
+            self.pushViewController.present(refreshAlert, animated: true, completion: nil)
+
+        } else {
+            let viewController = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ContactsViewController") as! ContactsViewController;
+            viewController.requestFrom = ContactsViewController.ContactsViewRequestFrom.PostMenuRequest;
+            viewController.postItemTableViewDelegate = self;
+            //viewController.moderatorViewControllerDelegte = self;
+            self.pushViewController.navigationController?.pushViewController(viewController, animated: true);
+        }
+        
         /*let post = sender.post;
         var phoneNumbers = [String]();
         for user in post!.castModerators {
@@ -436,19 +540,71 @@ class PostItemTableViewCell: UITableViewCell, SharingDelegate, MFMessageComposeV
     //This method will be called. when user pushlish on twitter.
     @objc func postToTwitterPressed(sender: PostToSocialMediaGestureRecognizer) {
         
-        //self.activityIndicator.startAnimating();
-        PostManager().publishPostOnTwitter(post: sender.post, complete: {(response) in
-            //self.activityIndicator.stopAnimating();
-            
-            let statusCode = Int(response.value(forKey: "status") as! String)!
-            if(statusCode == 0) {
-                self.pushViewController.showAlert(title: "Alert", message: response.value(forKey: "message") as! String);
-            } else {
-                if (self.pushViewController is HomeV2ViewController) {
-                    (self.pushViewController as! HomeV2ViewController).loadUserPosts();
+        var loggedInUser: User = User();
+        if (pushViewController is HomeV2ViewController) {
+            loggedInUser = (pushViewController as! HomeV2ViewController).loggedInUser
+        } else if (pushViewController is CommunicationViewController) {
+            loggedInUser = (pushViewController as! CommunicationViewController).loggedInUser;
+        }
+        
+        let userSocialMedias = UserSocialMedia().populationUserSocialMediaFromArray(socialMediaArr: loggedInUser.tokens);
+        var isTwitterSynced = false;
+        if (userSocialMedias.count > 0) {
+            for userSocialMedia in userSocialMedias {
+                if (userSocialMedia.type == "Twitter") {
+                    isTwitterSynced = true;
                 }
             }
-        });
+        }
+        
+        //If twitter already synced.. Lets post on twitter then
+        if (isTwitterSynced == true) {
+            flowToCallPostToTwitter(post: sender.post);
+        } else {
+            //Lets authenticate user for twitter
+            let store = TWTRTwitter.sharedInstance().sessionStore
+            if let userID = store.session()?.userID {
+                store.logOutUserID(userID)
+            }
+            
+            TWTRTwitter.sharedInstance().logIn { (session, error) in
+                if (session != nil) {
+                    let user = User();
+                    let name = session?.userName ?? ""
+                    
+                    print(session?.userID  ?? "")
+                    print(session?.authToken  ?? "")
+                    print(session?.authTokenSecret  ?? "")
+                    
+                    user.twitterAccessToken = session?.authToken
+                    user.twitterAccessSecret = session?.authTokenSecret
+                    user.twitterId = session?.userID
+                    user.username = name
+                    user.name = name
+                    user.isTwitter = 1;
+                
+                    var loggedInUser: User = User();
+                    if (self.pushViewController is HomeV2ViewController) {
+                        loggedInUser = (self.pushViewController as! HomeV2ViewController).loggedInUser;
+                    } else if (self.pushViewController is CommunicationViewController) {
+                        loggedInUser = (self.pushViewController as! CommunicationViewController).loggedInUser;
+                    }
+                    var postData = [String: Any]();
+                    postData["user_id"] = loggedInUser.userId;
+                    postData["social_media"] = 2;
+                    postData["twitter_id"] = user.twitterId;
+
+                    var token = [String: Any]();
+                    token["twitter_secret_success"] = session?.authTokenSecret;
+                    token["twitter_access_token"] = session?.authToken;
+                    token["email"] = user.username;
+                    postData["token"] = token;
+                    self.postTokensToTwitter(postData: postData, post: sender.post);
+                } else {
+                    print("error: \(String(describing: error?.localizedDescription))");
+                }
+            }
+        }
     }
     
     @objc func postToFacebookPressed(sender: PostToSocialMediaGestureRecognizer) {
@@ -475,11 +631,11 @@ class PostItemTableViewCell: UITableViewCell, SharingDelegate, MFMessageComposeV
                 
                 var fbInstalled = false;
                 if (pushViewController is HomeV2ViewController) {
-                    (pushViewController as! HomeV2ViewController).schemeAvailable(scheme: "fb://");
+                    fbInstalled = (pushViewController as! HomeV2ViewController).schemeAvailable(scheme: "fb://");
                 } else if (pushViewController is CommunicationViewController) {
-                    (pushViewController as! CommunicationViewController).schemeAvailable(scheme: "fb://");
+                    fbInstalled = (pushViewController as! CommunicationViewController).schemeAvailable(scheme: "fb://");
                 } else if (pushViewController is ArchieveViewController) {
-                    (pushViewController as! ArchieveViewController).schemeAvailable(scheme: "fb://");
+                    fbInstalled = (pushViewController as! ArchieveViewController).schemeAvailable(scheme: "fb://");
                 }
                     
                 
@@ -604,14 +760,25 @@ class PostItemTableViewCell: UITableViewCell, SharingDelegate, MFMessageComposeV
     func sharer(_ sharer: Sharing, didCompleteWithResults results: [String : Any]) {
         
         print("Response from facebook..")
-        //self.activityIndicator.startAnimating();
+        if (pushViewController is HomeV2ViewController) {
+            (pushViewController as! HomeV2ViewController).activityIndicator.startAnimating();
+        } else if (pushViewController is CommunicationViewController) {
+            (pushViewController as! CommunicationViewController).activityIndicator.startAnimating();
+        }
+        self.hidePostMenu();
         PostManager().publishOnFacebook(post: post, complete: {(response) in
             print(response);
-            //self.activityIndicator.stopAnimating();
+            if (self.pushViewController is HomeV2ViewController) {
+                (self.pushViewController as! HomeV2ViewController).activityIndicator.stopAnimating();
+            } else if (self.pushViewController is CommunicationViewController) {
+                (self.pushViewController as! CommunicationViewController).activityIndicator.stopAnimating();
+            };
+            
             let statusCode = Int(response.value(forKey: "status") as! String)!
             if(statusCode == 0) {
                 self.pushViewController.showAlert(title: "Alert", message: response.value(forKey: "message") as! String);
             } else {
+                
                 if (self.pushViewController is HomeV2ViewController) {
                     (self.pushViewController as! HomeV2ViewController).loadUserPosts();
                 }
@@ -621,18 +788,23 @@ class PostItemTableViewCell: UITableViewCell, SharingDelegate, MFMessageComposeV
     
     func sharer(_ sharer: Sharing, didFailWithError error: Error) {
         print("Fail")
-        //self.activityIndicator.stopAnimating();
+        self.hidePostMenu();
+        
         if (pushViewController is HomeV2ViewController) {
+            (pushViewController as! HomeV2ViewController).activityIndicator.stopAnimating();
             (pushViewController as! HomeV2ViewController).showFacebookFailAlert();
         } else if (pushViewController is CommunicationViewController) {
+            (pushViewController as! HomeV2ViewController).activityIndicator.stopAnimating();
             (pushViewController as! HomeV2ViewController).showFacebookFailAlert();
         } else if (pushViewController is ArchieveViewController) {
+            (pushViewController as! HomeV2ViewController).activityIndicator.stopAnimating();
             (pushViewController as! ArchieveViewController).showFacebookFailAlert();
         }
     }
     
     func sharerDidCancel(_ sharer: Sharing) {
-        print("Cancel")
+        print("Cancel");
+        self.hidePostMenu();
     }
     
     func onSelectingContacts(userContacts: [UserContactItem]) {
@@ -668,8 +840,21 @@ class PostItemTableViewCell: UITableViewCell, SharingDelegate, MFMessageComposeV
                postData["post_id"] = post.postId
                postData["timestamp"] = Date().timeIntervalMilliSeconds();
                let jsonURL = "posts/send_post_sms/format/json";
+               
+               if (self.pushViewController is HomeV2ViewController) {
+                   (self.pushViewController as! HomeV2ViewController).activityIndicator.startAnimating();
+               } else if (self.pushViewController is CommunicationViewController) {
+                   (self.pushViewController as! CommunicationViewController).activityIndicator.startAnimating();
+               }
+               
                UserService().postDataMethod(jsonURL: jsonURL,postData:postData,complete:{(response) in
-                   //self.activityIndicator.stopAnimating();
+                
+                self.hidePostMenu();
+                    if (self.pushViewController is HomeV2ViewController) {
+                        (self.pushViewController as! HomeV2ViewController).activityIndicator.stopAnimating();
+                    } else if (self.pushViewController is CommunicationViewController) {
+                        (self.pushViewController as! CommunicationViewController).activityIndicator.stopAnimating();
+                    }
                    
                    let statusCode = Int(response.value(forKey: "status") as! String)!
                    if(statusCode == 0) {
@@ -678,28 +863,26 @@ class PostItemTableViewCell: UITableViewCell, SharingDelegate, MFMessageComposeV
                         if (self.pushViewController is HomeV2ViewController) {
                             (self.pushViewController as! HomeV2ViewController).loadUserPosts();
                         }
-                    if (self.isShareMenuOpened == true) {
-                        self.isShareMenuOpened = false;
-                            if (self.pushViewController is HomeV2ViewController) {
-                                (self.pushViewController as! HomeV2ViewController).postsTableView.isScrollEnabled = true;
-                            }
-                            for view in self.pushViewController.view.subviews {
-                                if (view is PostCastMenu) {
-                                    view.removeFromSuperview();
-                                    
-                                }
-                            }
-                        self.createPublishPostMenu(post: self.post);
+                        if (self.pushViewController is HomeV2ViewController) {
+                            (self.pushViewController as! HomeV2ViewController).postsTableView.isScrollEnabled = true;
                         }
-                        
+                        for view in self.pushViewController.view.subviews {
+                            if (view is PostCastMenu) {
+                                view.removeFromSuperview();
+                                
+                            }
+                        }
+                        self.createPublishPostMenu(post: self.post);  
                    }
                    
                });
                break
            case .cancelled:
+                hidePostMenu();
                print("sms cancelled.")
                break
            case .failed:
+                hidePostMenu();
                print("failed sending email")
                break
            default:
@@ -715,7 +898,55 @@ class PostItemTableViewCell: UITableViewCell, SharingDelegate, MFMessageComposeV
         if (pushViewController is HomeV2ViewController) {
             (pushViewController as! HomeV2ViewController).postsTableView.reloadRows(at: [parentTableIndexPath], with: .automatic);
         }
+    }
+    
+    func hidePostMenu() {
+        for view in self.pushViewController.view.subviews {
+            if (view is PostCastMenu) {
+                view.removeFromSuperview();
+            }
+        }
+        if (self.pushViewController is HomeV2ViewController) {
+            (self.pushViewController as! HomeV2ViewController).postsTableView.isScrollEnabled = true;
+        }
+    }
+    
+    func isPostArchieved() -> Bool {
+        var facebookPublished = false;
+        for socialMediaId in post.socialMediaIds {
+            if (socialMediaId == social.socialPlatformId["Facebook"]) {
+                facebookPublished = true;
+                break;
+            }else{
+                facebookPublished = false;
+            }
+        }
         
+        var twitterPublished = false;
+        for socialMediaId in post.socialMediaIds {
+            if (socialMediaId == social.socialPlatformId["Twitter"]) {
+                twitterPublished = true;
+                break;
+            }else{
+                twitterPublished = false;
+            }
+        }
+
+        var smsPublished = false;
+        for socialMediaId in post.socialMediaIds {
+            if (socialMediaId == social.socialPlatformId["SMS"]) {
+                smsPublished = true;
+                break;
+            }else{
+                smsPublished = false;
+            }
+        }
+        
+        if (facebookPublished == true && twitterPublished == true && smsPublished == true) {
+            return true;
+        }
+        
+        return false;
     }
 }
 
@@ -755,7 +986,7 @@ extension PostItemTableViewCell: UITableViewDataSource, UITableViewDelegate {
             
                 //We will hide action row if its an Archieve Tab/ Cast Contacts Page or
                 //If the user is moderator, then we wil hide this row at HomeScreen and Cast Detail Screen
-                if (pushViewController is ArchieveViewController || pushViewController is CastContactsViewController) {
+            if (pushViewController is ArchieveViewController || pushViewController is CastContactsViewController) {
                     return UITableViewCell();
                 } else {
                     if (pushViewController is HomeV2ViewController) {
@@ -763,7 +994,7 @@ extension PostItemTableViewCell: UITableViewDataSource, UITableViewDelegate {
                             return UITableViewCell();
                         }
                     } else if (pushViewController is CommunicationViewController) {
-                        if ((pushViewController as! CommunicationViewController).loggedInUser.isCastr == 2) {
+                        if ((pushViewController as! CommunicationViewController).loggedInUser.isCastr == 2 || isPostArchieved() == true) {
                             return UITableViewCell();
                         }
                     }
@@ -831,13 +1062,11 @@ extension PostItemTableViewCell: UITableViewDataSource, UITableViewDelegate {
             }
             return CGFloat(PostRowsHeight.Post_Status_Row_Height);
         } else if (PostRows.Post_Action_Row == indexPath.row) {
-            if (pushViewController is ArchieveViewController) {
+            if (pushViewController is ArchieveViewController || pushViewController is CastContactsViewController) {
                 return 0;
             }
-            //We will hide the bar in cast contacts screen
-            if (pushViewController is CastContactsViewController) {
-                return 0;
-            }
+            //If its Cast Detail Controller and post status is published,
+            //We will then hide all the options
             if (pushViewController is HomeV2ViewController) {
                 if ((pushViewController as! HomeV2ViewController).loggedInUser.isCastr == 2) {
                     return 0;
@@ -846,11 +1075,20 @@ extension PostItemTableViewCell: UITableViewDataSource, UITableViewDelegate {
                 if ((pushViewController as! CommunicationViewController).loggedInUser.isCastr == 2) {
                     return 0;
                 }
+                if (isPostArchieved() == true) {
+                    return 0
+                }
             }
+            
+            
             return CGFloat(PostRowsHeight.Post_Action_Row_Height);
         } else if (PostRows.Post_Description_Row == indexPath.row) {
-            let height =  pushViewController.getHeightOfPostDescripiton(contentView: self.contentView, postDescription: post.postDescription);
+            print(post.postDescription);
+            var height =  pushViewController.getHeightOfPostDescripiton(contentView: self.contentView, postDescription: post.postDescription);
             if (pushViewController is HomeV2ViewController) {
+                if (height == 25) {
+                    return 35;
+                }
                 if ((pushViewController as! HomeV2ViewController).postIdDescExpansionMap[post.postId] == nil || (pushViewController as! HomeV2ViewController).postIdDescExpansionMap[post.postId] == false) {
                     if (height > 100) {
                         return 100;

@@ -47,9 +47,22 @@ class WebsiteInfoTableViewCell: UITableViewCell {
                 let videoUrl = data?.topVideo
                 let datePublished = data?.datePublished;
                 
-                self.websiteTitle.text = title;
-                self.websiteDescription.text = description;
-                self.websiteImg.sd_setImage(with: URL.init(string: imageUrl!), placeholderImage: UIImage.init(named: "post-image-placeholder"));
+                if (title != nil) {
+                    self.websiteTitle.text = title;
+                } else {
+                    self.websiteTitle.text = "";
+                }
+                
+                if (description != nil) {
+                    self.websiteDescription.text = description;
+                } else {
+                    self.websiteDescription.text = "";
+                }
+                if (imageUrl != nil) {
+                    self.websiteImg.sd_setImage(with: URL.init(string: imageUrl!), placeholderImage: UIImage.init(named: "post-image-placeholder"));
+                } else {
+                    self.websiteImg.image = UIImage.init(named: "post-image-placeholder");
+                }
             })
         }
     }

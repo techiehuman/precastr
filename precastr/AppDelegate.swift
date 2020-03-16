@@ -21,6 +21,8 @@ var social : SocialPlatform!
 var postIdFromPush = 0;
 var pushNotificationId = 0;
 var isAppKilled = true;
+var pushForScreenAt = "Home";
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUserNotificationCenterDelegate {
 
@@ -98,8 +100,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
         //let userDefaults = UserDefaults.standard
         //userDefaults.setValue(token , forKey: "tokenData")
         //userDefaults.synchronize()
-            
-
     }
 
     
@@ -161,9 +161,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
         completionHandler([.alert, .badge, .sound])
         
+        //HomeV2ViewController().showBadgeCount();
+
         let userInfo = notification.request.content.userInfo as! NSDictionary;
         //let payloadDict = convertToDictionary(from: userInfo["gcm.notification.payload"]! as! String);
-        
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "reloadCommunicationScreen"), object: nil)
+
         var screen = userInfo["gcm.notification.screen"] as! String
         if(screen == "Home") {
             
@@ -179,7 +182,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
             /*let storyBoard = UIStoryboard.init(name: "Main", bundle: nil)
             let viewContros = storyBoard.instantiateViewController(withIdentifier: "CommunicationViewController") as! CommunicationViewController;
             viewContros.refreshScreenData();*/
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "reloadCommunicationScreen"), object: nil)
+            //NotificationCenter.default.post(name: NSNotification.Name(rawValue: "reloadCommunicationScreen"), object: nil)
 
         } else {
             
@@ -190,16 +193,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
     }
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
         
+        print("***** INSIDE : didReceive ******");
         let userInfo = response.notification.request.content.userInfo as! NSDictionary
                 
         //DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {
           //  let storyBoard = UIStoryboard.init(name: "Main", bundle: nil)
             postIdFromPush = (Int)(userInfo.value(forKey: "gcm.notification.id") as! String)!
-            pushNotificationId = (Int)(userInfo.value(forKey: "gcm.notification.notification_id") as! String)!
-            if (!isAppKilled) {
-                self.window?.rootViewController = HomeV2ViewController.MainViewController();
+            if let notificationId = userInfo.value(forKey: "gcm.notification.notification_id") as? String {
+                pushNotificationId = (Int)(notificationId)!
             }
-        //}
+            pushForScreenAt = (userInfo.value(forKey: "gcm.notification.screen") as! String)
+            if (!isAppKilled) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                    self.window?.rootViewController = HomeV2ViewController.MainViewController();
+                }
+            } else {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 10) {
+                    //self.window?.rootViewController = HomeV2ViewController.MainViewController();
+                }
+            }        //}
         print(userInfo)
     }
         
@@ -208,7 +220,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
     }
     
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
-        debugPrint("Received: \(userInfo)")
+        debugPrint("Received: \(userInfo)");
+        print("***** INSIDE : didReceiveRemoteNotification ******");
+
+        let userInfoTemp = userInfo as! NSDictionary
+                
+        //DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {
+          //  let storyBoard = UIStoryboard.init(name: "Main", bundle: nil)
+            postIdFromPush = (Int)(userInfoTemp.value(forKey: "gcm.notification.id") as! String)!
+            pushNotificationId = (Int)(userInfoTemp.value(forKey: "gcm.notification.notification_id") as! String)!
+            pushForScreenAt = (userInfoTemp.value(forKey: "gcm.notification.screen") as! String)
+            if (!isAppKilled) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                    self.window?.rootViewController = HomeV2ViewController.MainViewController();
+                }
+            } else {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 10) {
+                    //self.window?.rootViewController = HomeV2ViewController.MainViewController();
+                }
+            }
+        //}
+        print(userInfoTemp)
         completionHandler(.newData)
     }
 
@@ -240,7 +272,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
                     // In this case we want to modify the badge number of the third tab:
                     var index = 0;
                     if (loggedInUser.isCastr == 1) {
-                        index =  3;
+                        index =  4;
                     } else {
                         index = 2;
                     }

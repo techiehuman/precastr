@@ -71,6 +71,7 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
                 self.tabBarController!.viewControllers?.insert(navController, at: 1);
             }
         }
+        EditProfileTableView.reloadData();
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -316,6 +317,46 @@ extension EditProfileViewController: UITableViewDelegate, UITableViewDataSource 
             cell.profileImageView.sd_setImage(with: URL(string: loggedInUser.profilePic!), placeholderImage: UIImage.init(named: "Profile-1"))
         }
 
+        var twitterIdLabel = "";
+        var facebookIdLabel = "";
+
+        if (loggedInUser.tokens != nil && loggedInUser.tokens.count > 0) {
+            
+            let userSocialMedias = UserSocialMedia().populationUserSocialMediaFromArray(socialMediaArr: loggedInUser.tokens);
+            for userSocialMedia in userSocialMedias {
+                
+                if (userSocialMedia.type == "Facebook") {
+                    facebookIdLabel = userSocialMedia.email;
+                } else if (userSocialMedia.type == "Twitter") {
+                    twitterIdLabel = userSocialMedia.email;
+                }
+            }
+            /*for tokenObj in loggedInUser.tokens {
+                var tokenDict = tokenObj as! NSDictionary;
+                do {
+                    var tokenVlaue = tokenDict.value(forKey: "token") as! String;
+                    let con = try JSONSerialization.jsonObject(with: tokenVlaue.data(using: .utf8)!, options: []) as! [String:Any];
+                    //print(con);
+                    if let fbAccessToken = con["facebook_access_token"] as? String {
+                        if let fbEmail = con["email"] as? String {
+                            facebookIdLabel = fbEmail;
+                        }
+                    }
+                    if let twAccessToken = con["twitter_access_token"] as? String {
+                        if let twEmail = con["email"] as? String {
+                            twitterIdLabel = twEmail;
+                        }
+                    }
+                } catch {
+                    print(error)
+                }
+            }*/
+            
+        }
+        
+        cell.twitterIDLabel.text = twitterIdLabel;
+        cell.facebookIDLabel.text = facebookIdLabel;
+        
         editProfileTableViewCellProtocolDelegate = cell;
         
         return cell;

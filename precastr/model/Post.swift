@@ -8,7 +8,6 @@
 
 import Foundation
 class Post {
-    
     var postId: Int = 0;
     var postDescription: String = "";
     var postImages: [String] = [String]();

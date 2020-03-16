@@ -14,7 +14,7 @@ class SplashViewController: UIViewController {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor(red: 12/255, green: 111/255, blue: 233/255, alpha: 1)
         // Do any additional setup after loading the view.
-        perform(#selector(navigateUser), with: nil, afterDelay: 3)
+        perform(#selector(navigateUser), with: nil, afterDelay: 2)
     }
 
     override func didReceiveMemoryWarning() {
@@ -43,12 +43,11 @@ class SplashViewController: UIViewController {
             
             if(phone_number == "" || phone_number == nil){
                 self.performSegue(withIdentifier: "splashUpdatePhoneSegue", sender: self)
-            }
-            else if (userDefaultRole == nil || userDefaultRole == 0) {
+            } else if (userDefaultRole == nil || userDefaultRole == 0) {
                 performSegue(withIdentifier: "userTypeSegue", sender: self)
                 
-            } else if(userDefaultRole == 1 && (user_cast_setting_id == nil || user_cast_setting_id == 0)){
-                 UIApplication.shared.keyWindow?.rootViewController = HomeViewController.MainViewController();
+            } else if(userDefaultRole == 1 && (user_cast_setting_id == nil || user_cast_setting_id == 0)) {
+                 UIApplication.shared.keyWindow?.rootViewController = HomeV2ViewController.MainViewController();
                // performSegue(withIdentifier: "castTypeSegue", sender: self)
                 
             } else {
@@ -57,7 +56,7 @@ class SplashViewController: UIViewController {
                 //window = UIWindow(frame: UIScreen.main.bounds)
                 //window?.rootViewController = HomeViewController.MainViewController()
 
-                UIApplication.shared.keyWindow?.rootViewController = HomeViewController.MainViewController();
+                UIApplication.shared.keyWindow?.rootViewController = HomeV2ViewController.MainViewController();
             }
         }else{
             UIApplication.shared.keyWindow?.rootViewController = LoginScreenViewController.MainViewController()

@@ -33,36 +33,6 @@ class PostGalleryTableViewCell: UITableViewCell, ImageSlideshowDelegate {
         if (post.postImages.count > 0) {
             self.imageSlideShow.isHidden = false;
             beginImageFunc(imagesArray: post.postImages);
-            
-            /*imageGalleryScrollView.isHidden = false;
-            
-            imageGalleryScrollView.isPagingEnabled = true
-            for view in imageGalleryScrollView.subviews {
-                view.removeFromSuperview();
-            }
-            imageGalleryScrollView.contentSize.width = imageGalleryScrollView.frame.width * CGFloat(post.postImages.count);
-
-            var countIdx = 0
-            for image in post.postImages {
-                
-                let slideView:SlideUIView = Bundle.main.loadNibNamed("Slide", owner: self, options: nil)?.first as! SlideUIView
-                
-                let xposition = self.imageGalleryScrollView.frame.width * CGFloat(countIdx);
-                slideView.frame = CGRect.init(x: xposition, y: 0, width: imageGalleryScrollView.frame.width, height: imageGalleryScrollView.frame.height);
-                
-                slideView.imageView.sd_setImage(with: URL(string: image), placeholderImage: UIImage.init(named: "post-image-placeholder"));
-
-                let tapGesture = ImageTapRecognizer.init(target: self, action: #selector(doubleTapped(sender:)));
-                tapGesture.imageView = post.postImages;
-                tapGesture.imagePosition = countIdx;
-                tapGesture.numberOfTapsRequired = 2
-                slideView.isUserInteractionEnabled = true
-                slideView.addGestureRecognizer(tapGesture);
-                
-                imageGalleryScrollView.addSubview(slideView);
-                countIdx = countIdx + 1;
-            }*/
-            
         } else {
             
             self.imageSlideShow.isHidden = true;

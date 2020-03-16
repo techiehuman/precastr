@@ -122,19 +122,37 @@ extension Date {
     func ddspEEEEcmyyyyspHHclmmclaa(dateStr: String) -> String {
         
         let apiDateFormatter = DateFormatter();
-        apiDateFormatter.dateFormat = "yyyy-MM-dd hh:mm:ss";
+        apiDateFormatter.dateFormat = "dd-MM-yyyy HH:mm:ss";
         let fDate = apiDateFormatter.date(from: dateStr)
         
         let dateFormatter = DateFormatter();
         dateFormatter.dateFormat = "dd MMMM, yyyy";
         
         let hourDateFormatter = DateFormatter();
-        hourDateFormatter.dateFormat = "h:mm a";
+        hourDateFormatter.dateFormat = "hh:mm a";
 
         if (fDate == nil) {
             return "\(dateFormatter.string(from: Date())) \(hourDateFormatter.string(from: Date()).uppercased())";
         }
         return "\(dateFormatter.string(from: fDate!)) \(hourDateFormatter.string(from: fDate!).uppercased())";
+    }
+    
+    func ddspEEEEcmyyyyV2(dateStrDt: Date) -> String {
+        
+        let dateFormatter = DateFormatter();
+        dateFormatter.dateFormat = "dd MMMM, yyyy";
+        return dateFormatter.string(from: dateStrDt);
+    }
+    
+    func ddspEEEEcmyyyyspHHclmmclaaV2(dateStrDt: Date) -> String {
+        
+        let dateFormatter = DateFormatter();
+        dateFormatter.dateFormat = "dd MMMM, yyyy";
+        
+        let hourDateFormatter = DateFormatter();
+        hourDateFormatter.dateFormat = "hh:mm a";
+
+        return "\(dateFormatter.string(from: dateStrDt)) \(hourDateFormatter.string(from: dateStrDt).uppercased())";
     }
     
     func timeIntervalMilliSeconds() -> Int {
@@ -279,11 +297,11 @@ extension UIViewController {
     
     func showAlphabetsView(frame: CGRect, userContact: User, rowId: Int) -> UIView {
         
-        let uiLettersView = UIView();
+        let uiLettersView = AlphabetInitialsView.instanceFromNib();
         uiLettersView.frame = frame;
         uiLettersView.roundView();
         uiLettersView.backgroundColor = UIColor(red: 221/255, green: 223/255, blue: 226/255, alpha: 1);
-        uiLettersView.tag = rowId;
+        //uiLettersView.tag = Int(userContact.userId);
         
         let textViewLabel = UITextView();
         textViewLabel.frame = CGRect.init(x: 0, y: (uiLettersView.frame.height/2 - 20), width: uiLettersView.frame.width, height: 32);
@@ -351,8 +369,16 @@ extension UIView {
         return sizeThatFits
     }
 } */
-
 extension UILabel {
+    
+    func addCharacterSpacing(kernValue: Double = 1.15) {
+      if let labelText = text, labelText.count > 0 {
+        let attributedString = NSMutableAttributedString(string: labelText)
+        attributedString.addAttribute(NSAttributedStringKey.kern, value: kernValue, range: NSRange(location: 0, length: attributedString.length - 1))
+        attributedText = attributedString
+      }
+    }
+    
     func calculateMaxLines() -> Int {
         let maxSize = CGSize(width: frame.size.width, height: CGFloat(Float.infinity))
         let charSize = font.lineHeight

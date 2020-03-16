@@ -8,9 +8,6 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
-        <array key="VisbyCF-Light.otf">
-            <string>VisbyCF-Light</string>
-        </array>
         <array key="VisbyCF-Medium.otf">
             <string>VisbyCF-Medium</string>
         </array>
@@ -29,7 +26,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9J3-tt-J6t">
-                        <rect key="frame" x="15" y="20" width="343" height="175"/>
+                        <rect key="frame" x="15" y="20" width="343" height="160"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="Type your post here and attach any files using the icon below" translatesAutoresizingMaskIntoConstraints="NO" id="3sx-VK-U2i">
@@ -45,18 +42,11 @@
                                     <outlet property="pasteDelegate" destination="KGk-i7-Jjw" id="GJW-js-71a"/>
                                 </connections>
                             </textView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="0 Characters" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="beK-LK-CcY">
-                                <rect key="frame" x="201" y="160" width="134" height="15"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                <fontDescription key="fontDescription" name="VisbyCF-Light" family="Visby CF" pointSize="12"/>
-                                <color key="textColor" red="0.5725490196078431" green="0.57647058823529407" blue="0.58431372549019611" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Messages greater than 150 characters will be truncated by Twitter. There's no character limit in Facebook." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gjx-8C-B1h">
-                        <rect key="frame" x="16" y="200" width="346" height="60"/>
+                        <rect key="frame" x="16" y="192" width="346" height="60"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                         <fontDescription key="fontDescription" name="VisbyCF-Regular" family="Visby CF" pointSize="14"/>
                         <color key="textColor" red="0.83529411764705885" green="0.0078431372549019607" blue="0.039215686274509803" alpha="1" colorSpace="calibratedRGB"/>
@@ -121,7 +111,6 @@
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="attachmentBtn" destination="qeh-EM-aKZ" id="Ltq-tZ-l0J"/>
-                <outlet property="charaterCountLabel" destination="beK-LK-CcY" id="heE-g7-3tz"/>
                 <outlet property="filesUploadedtext" destination="8s1-1h-jeB" id="WMJ-wK-uUd"/>
                 <outlet property="imageCollectionView" destination="hoz-FQ-Fod" id="p2N-Sq-hJe"/>
                 <outlet property="inputViewArea" destination="9J3-tt-J6t" id="pTg-Vg-iMZ"/>

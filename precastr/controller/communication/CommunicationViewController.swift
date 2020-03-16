@@ -53,7 +53,13 @@ class CommunicationViewController: SharePostViewController,UITextViewDelegate, U
     var postArray : [String:Any] = [String:Any]()
     var postToPublish: Post!;
     var easyToolTip: EasyTipView!
-    var placeholderText = "Communicate with your Moderator.\nTo edit post click on the \"Edit Post\" button at top.";
+    
+    var placeholderText: NSMutableAttributedString!;
+    var placeholderTextStr: String!;
+
+    var casterPlaceholderText1 = "Communicate with your Moderator.";
+    var moderatorPlaceholderText1 = "Communicate with your Caster.";
+    var placeholderText2 = "\nTo edit post click on the \"Edit Post\" button at top.";
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView();
     
     class func MainViewController() -> UITabBarController{
@@ -87,6 +93,30 @@ class CommunicationViewController: SharePostViewController,UITextViewDelegate, U
         activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.gray;
         view.addSubview(activityIndicator);
         
+        let boldAttribute = [
+           NSAttributedString.Key.font: UIFont(name: "VisbyCF-Bold", size: 16.0)!
+        ]
+        let regularAttribute = [
+           NSAttributedString.Key.font: UIFont(name: "VisbyCF-Regular", size: 16.0
+            )!
+        ]
+        
+        placeholderText = NSMutableAttributedString();
+        if (self.loggedInUser.isCastr == 1) {
+            //placeholderText = "\(casterPlaceholderText1)\(placeholderText2)";
+            let boldText = NSAttributedString(string: "\(casterPlaceholderText1)", attributes: boldAttribute)
+            placeholderText.append(boldText)
+            placeholderTextStr = "\(casterPlaceholderText1)\(placeholderText2)";
+        } else {
+            //placeholderText = "\(moderatorPlaceholderText1)\(placeholderText2)";
+            let boldText = NSAttributedString(string: "\(moderatorPlaceholderText1)", attributes: boldAttribute)
+            placeholderText.append(boldText);
+            placeholderTextStr = "\(moderatorPlaceholderText1)\(placeholderText2)";
+
+        }
+        let regularText = NSAttributedString(string: "\(placeholderText2)", attributes: regularAttribute)
+        placeholderText.append(regularText)
+        
         self.attachmentBtn.roundEdgesLeftBtn();
         self.submitBtn.roundEdgesRightBtn();
         self.attachmentBtn.backgroundColor = PrecasterColors.darkBlueButtonColor;
@@ -94,8 +124,7 @@ class CommunicationViewController: SharePostViewController,UITextViewDelegate, U
         self.textArea.layer.cornerRadius = 4;
         self.textArea.layer.borderWidth = 1;
         self.textArea.layer.borderColor = UIColor(red: 112/255, green: 112/255, blue: 112/255, alpha: 1).cgColor;
-        self.textArea.text = placeholderText;
-        
+        self.textArea.attributedText = placeholderText;
         self.textArea.textColor = UIColor(red: 118/255, green: 118/255, blue: 119/255, alpha: 1);
 
         //self.changeStatusBtn.layer.borderColor = UIColor(red: 112/255, green: 112/255, blue: 112/255, alpha: 1).cgColor;
@@ -125,7 +154,7 @@ class CommunicationViewController: SharePostViewController,UITextViewDelegate, U
         
         PostService().markNotificationAsRead(notificationId: pushNotificationId, complete: {(response) in
             pushNotificationId = 0;
-            HomeV2ViewController.showBadgeCount();
+            self.showBadgeCount();
             
         });
         if (self.tabBarController != nil) {
@@ -149,7 +178,10 @@ class CommunicationViewController: SharePostViewController,UITextViewDelegate, U
         }
         if (status == "Published") {
             self.textAreaBtnBottomView.isHidden = true;
+            self.communicationTableView.frame = CGRect.init(x: 0, y: self.communicationTableView.frame.origin.y, width: self.view.frame.width, height: (self.view.frame.height - (self.communicationTableView.frame.origin.y + (self.tabBarController?.tabBar.frame.height)!)));
         }
+        
+        pushForScreenAt = "Home";
     }
 
     override func didReceiveMemoryWarning() {
@@ -210,7 +242,7 @@ class CommunicationViewController: SharePostViewController,UITextViewDelegate, U
                     // In this case we want to modify the badge number of the third tab:
                     var index = 0;
                     if (self.loggedInUser.isCastr == 1) {
-                        index =  3;
+                        index =  4;
                     } else {
                         index = 2;
                     }
@@ -222,7 +254,6 @@ class CommunicationViewController: SharePostViewController,UITextViewDelegate, U
                     } else {
                         tabItem.badgeValue =  nil;
                     }
-                    
                 }
             }
         });
@@ -355,9 +386,9 @@ class CommunicationViewController: SharePostViewController,UITextViewDelegate, U
             
             let jsonURL = "\(ApiUrl)posts/add_post_communication/format/json"
             var postData : [String : Any] = [String : Any]()
-            if(textArea.text != placeholderText){
+            if(textArea.text != placeholderTextStr) {
                 postData["post_communication_description"] = self.textArea.text
-            }else{
+            } else {
                 postData["post_communication_description"] = "";
         }
             postData["post_id"] = self.post.postId;
@@ -372,7 +403,7 @@ class CommunicationViewController: SharePostViewController,UITextViewDelegate, U
                     self.activityIndicator.stopAnimating();
                     //Load latest Communications
                     self.getPostCommunications(postId: self.post.postId);
-                    self.textArea.text = self.placeholderText;
+                    self.textArea.attributedText = self.placeholderText;
                     self.textArea.textColor = UIColor(red: 118/255, green: 118/255, blue: 119/255, alpha: 1)
                     self.textArea.resignFirstResponder();
                 });
@@ -383,7 +414,7 @@ class CommunicationViewController: SharePostViewController,UITextViewDelegate, U
                     self.activityIndicator.stopAnimating();
                     //Load latest Communications
                     self.getPostCommunications(postId: self.post.postId);
-                    self.textArea.text = self.placeholderText;
+                    self.textArea.attributedText = self.placeholderText;
                     self.textArea.textColor = UIColor(red: 118/255, green: 118/255, blue: 119/255, alpha: 1)
                     self.textArea.resignFirstResponder();
                     self.communicationTableView.reloadData();
@@ -559,7 +590,9 @@ class CommunicationViewController: SharePostViewController,UITextViewDelegate, U
             
             
             var keyboardHeight = self.view.frame.height - (keyboardSize.height + self.textAreaBtnBottomView.frame.height + 5 + self.communicationTableView.frame.origin.y);
-            self.communicationTableView.frame = CGRect.init(x: 0, y: self.communicationTableView.frame.origin.y, width: self.view.frame.width, height: keyboardHeight)
+            self.communicationTableView.frame = CGRect.init(x: 0, y: self.communicationTableView.frame.origin.y, width: self.view.frame.width, height: keyboardHeight);
+            
+            self.textArea.font = UIFont.init(name: "VisbyCF-Regular", size: 16.0);
         }
     }
     
@@ -684,12 +717,12 @@ class CommunicationViewController: SharePostViewController,UITextViewDelegate, U
                 print(response)
                 let data = response.value(forKey: "data") as! NSDictionary;
                 
-                if (self.post.postId == 0){
+                //if (self.post.postId == 0){
                     var postData = data.value(forKey: "postdetails") as! NSDictionary;
                     self.post = Post().loadPostFromDict(postDict: postData);
                     self.populatePostData();
                     self.communicationTableView.reloadData();
-                }
+                //}
                 
                 let postCommArr = data.value(forKey: "postcommunication") as! NSArray;
                 
@@ -714,7 +747,7 @@ class CommunicationViewController: SharePostViewController,UITextViewDelegate, U
 
     func textViewDidEndEditing(_ textView: UITextView) {
         if self.textArea.text.isEmpty {
-            self.textArea.text = self.placeholderText
+            self.textArea.attributedText = self.placeholderText
             self.textArea.textColor = UIColor(red: 118/255, green: 118/255, blue: 119/255, alpha: 1)
         }
     }
@@ -1050,22 +1083,39 @@ extension CommunicationViewController: UITableViewDelegate, UITableViewDataSourc
             
             //if (post.postCommunications.count > 0) {
                 
-                let communication = post.postCommunications[indexPath.row - 1];
+            let communication = post.postCommunications[indexPath.row - 1];
 
                     
-                    let cell: RightCommunicationTableViewCell = tableView.dequeueReusableCell(withIdentifier: "RightCommunicationTableViewCell") as! RightCommunicationTableViewCell;
+            let cell: RightCommunicationTableViewCell = tableView.dequeueReusableCell(withIdentifier: "RightCommunicationTableViewCell") as! RightCommunicationTableViewCell;
 
+            cell.communicationViewControllerDelegate = self;
             if (communication.commentedOnTimestamp != 0) {
                 let date = Date(timeIntervalSince1970: Double(communication.commentedOnTimestamp) / 1000.0);
-                let dateFormatter = DateFormatter()
-                dateFormatter.dateFormat = "dd-MM-yyyy hh:mm:ss"
-                cell.commentedDate.text = Date().ddspEEEEcmyyyyspHHclmmclaa(dateStr: dateFormatter.string(from: date));
+                cell.commentedDate.text = Date().ddspEEEEcmyyyyspHHclmmclaaV2(dateStrDt: date);
             } else {
                 cell.commentedDate.text = Date().ddspEEEEcmyyyyspHHclmmclaa(dateStr: communication.commentedOn);
             }
-                    
-                    
-                    cell.commentorPic.sd_setImage(with: URL.init(string: communication.communicatedProfilePic), placeholderImage: UIImage.init(named: "Profile-1"));
+               
+            for uiTextNameView in cell.subviews {
+                if (uiTextNameView is AlphabetInitialsView) {
+                    uiTextNameView.removeFromSuperview();
+                }
+            }
+
+            if (communication.communicatedProfilePic == "") {
+                
+                cell.commentorPic.image = UIImage.init(named: "Profile-1");
+                cell.commentorPic.isHidden = true;
+                
+                let user = User();
+                user.name = communication.communicatedName;
+                user.userId = Int32(communication.postCommunicationId);
+                cell.addSubview(self.showAlphabetsView(frame: cell.commentorPic.frame, userContact: user, rowId: indexPath.row));
+            } else {
+                
+                cell.commentorPic.isHidden = false;
+                cell.commentorPic.sd_setImage(with: URL.init(string: communication.communicatedProfilePic), placeholderImage: UIImage.init(named: "Profile-1"),  completed: nil);
+            }
                     
                     //Call this function
                     let height = self.heightForView(text: communication.postCommunicationDescription, font: UIFont.init(name: "VisbyCF-Regular", size: 16.0)!, width: self.view.frame.width - 100)
@@ -1095,40 +1145,16 @@ extension CommunicationViewController: UITableViewDelegate, UITableViewDataSourc
                     cell.descriptionView.backgroundColor = UIColor(red: 245/255, green: 245/255, blue: 245/255, alpha: 1);
 
                     
+                    cell.imagesArray = [String]();
                     if (communication.attachments.count > 0) {
-                        
-                        cell.imageScrollView.isHidden = false;
-                        cell.imagesArray = [String]();
-
+                        cell.imageSlideShow.isHidden = false;
                         for attachment in communication.attachments {
                             cell.imagesArray.append(attachment.image);
                         }
-                        cell.setupSlideScrollView();
-                        cell.imageScrollView.frame = CGRect.init(x: cell.imageScrollView.frame.origin.x, y: cell.descriptionView.frame.origin.y + 50 + height, width: cell.imageScrollView.frame.width, height: cell.imageScrollView.frame.height);
-                        
-                        if (communication.attachments.count == 1) {
-                            cell.pageControl.isHidden = true;
-                            
-                            let totalDescriptionHeight = 50 + height + cell.imageScrollView.frame.height + 10;
-                            
-                            cell.descriptionView.frame = CGRect.init(x: cell.descriptionView.frame.origin.x, y: cell.descriptionView.frame.origin.y, width: self.view.frame.width - 70, height: totalDescriptionHeight)
-                            
-                        } else {
-                            cell.pageControl.numberOfPages = cell.imagesArray.count
-                            cell.pageControl.currentPage = 0
-                            cell.contentView.bringSubview(toFront: cell.pageControl)
-                            cell.pageControl.isHidden = false;
-                            cell.pageControl.frame = CGRect.init(x: cell.imageScrollView.frame.origin.x + cell.imageScrollView.frame.width/2 - cell.pageControl.frame.width/2, y: cell.imageScrollView.frame.origin.y + cell.imageScrollView.frame.height - 10, width: cell.pageControl.frame.width, height: cell.pageControl.frame.height);
-                            
-                            let totalDescriptionHeight = 50 + height + cell.imageScrollView.frame.height + cell.pageControl.frame.height +  10;
-                            
-                            cell.descriptionView.frame = CGRect.init(x: cell.descriptionView.frame.origin.x, y: cell.descriptionView.frame.origin.y, width: self.view.frame.width - 70, height: totalDescriptionHeight)
-
-                        }
+                        cell.createGalleryScrollView();
+                        cell.imageSlideShow.frame = CGRect.init(x: cell.imageSlideShow.frame.origin.x, y: cell.descriptionView.frame.origin.y + 50 + height, width: cell.imageSlideShow.frame.width, height: cell.imageSlideShow.frame.height);
                     } else {
-                        cell.imageScrollView.isHidden = true;
-                        cell.pageControl.isHidden = true;
-                        
+                        cell.imageSlideShow.isHidden = true;
                         cell.descriptionView.frame = CGRect.init(x: cell.descriptionView.frame.origin.x, y: 10, width: self.view.frame.width - 70, height: 50 + height)
                     }
                     return cell;

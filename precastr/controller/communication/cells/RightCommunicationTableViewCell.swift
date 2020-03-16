@@ -7,9 +7,12 @@
 //
 
 import UIKit
+import ImageSlideshow
+import SDWebImage
 
-class RightCommunicationTableViewCell: UITableViewCell, UIScrollViewDelegate {
- var communicationViewControllerDelegate : CommunicationViewController!;
+class RightCommunicationTableViewCell: UITableViewCell, UIScrollViewDelegate, ImageSlideshowDelegate {
+ 
+    var communicationViewControllerDelegate : CommunicationViewController!;
     
     @IBOutlet weak var commentedDate: UILabel!
         
@@ -17,7 +20,8 @@ class RightCommunicationTableViewCell: UITableViewCell, UIScrollViewDelegate {
     
     @IBOutlet weak var descriptionView: UIView!
     @IBOutlet weak var imageScrollView: UIScrollView!
-    
+    @IBOutlet weak var imageSlideShow : ImageSlideshow!
+
     @IBOutlet weak var pageControl: UIPageControl!
     
     var imagesArray = [String]();
@@ -34,8 +38,16 @@ class RightCommunicationTableViewCell: UITableViewCell, UIScrollViewDelegate {
 
         // Configure the view for the selected state
     }
-    func setupSlideScrollView() {
-        imageScrollView.isPagingEnabled = true
+    func createGalleryScrollView() {
+        
+        if (imagesArray.count > 0) {
+            self.imageSlideShow.isHidden = false;
+            beginImageFunc(imagesArray: imagesArray);
+        } else {
+            self.imageSlideShow.isHidden = true;
+        }
+        
+        /*imageScrollView.isPagingEnabled = true
         for view in imageScrollView.subviews {
             view.removeFromSuperview();
         }
@@ -56,29 +68,44 @@ class RightCommunicationTableViewCell: UITableViewCell, UIScrollViewDelegate {
             
             imageScrollView.addSubview(setupSlideScrollView)
             self.currentCount = i as! Int
-        }
+        }*/
         
         //imageGalleryScrollView.addSubview(imageCounterView);
     }
     
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    
+    func beginImageFunc(imagesArray: [String]) {
+        self.imageSlideShow.slideshowInterval = 0
+        self.imageSlideShow.pageIndicatorPosition = .init(horizontal: .center, vertical: .under)
+        self.imageSlideShow.contentScaleMode = UIViewContentMode.scaleAspectFill
         
+        let pageControl = UIPageControl()
+        pageControl.currentPageIndicatorTintColor = UIColor.init(red: 12/255, green: 111/255, blue: 223/255, alpha: 1) //pageControl
+        pageControl.pageIndicatorTintColor = UIColor.init(red: 146/255, green: 147/255, blue: 149/255, alpha: 1)
+        self.imageSlideShow.pageIndicator = pageControl
         
-        let pageIndex = round(scrollView.contentOffset.x/contentView.frame.width)
-        pageControl.currentPage = Int(pageIndex)
-        print(pageIndex)
-        //self.currentCountImageLbl.text = "\(Int(pageIndex+1))"
-        let maximumHorizontalOffset: CGFloat = scrollView.contentSize.width - scrollView.frame.width
-        let currentHorizontalOffset: CGFloat = scrollView.contentOffset.x
+        // optional way to show activity indicator during image load (skipping the line will show no activity indicator)
+        self.imageSlideShow.activityIndicator = DefaultActivityIndicator()
+        self.imageSlideShow.delegate = self;
         
-        // vertical
-        let maximumVerticalOffset: CGFloat = scrollView.contentSize.height - scrollView.frame.height
-        let currentVerticalOffset: CGFloat = scrollView.contentOffset.y
+        // can be used with other sample sources as `afNetworkingSource`, `alamofireSource` or `sdWebImageSource` or `kingfisherSource`
         
-        let percentageHorizontalOffset: CGFloat = currentHorizontalOffset / maximumHorizontalOffset
-        let percentageVerticalOffset: CGFloat = currentVerticalOffset / maximumVerticalOffset
+        var inputSource = [InputSource]();
+        for img in imagesArray {
+            inputSource.append(SDWebImageSource(urlString: img)!);
+        }
+        
+        self.imageSlideShow.setImageInputs(inputSource)
+        
+        let recognizer = UITapGestureRecognizer(target: self, action: #selector(self.didTap))
+        self.imageSlideShow.addGestureRecognizer(recognizer)
     }
     
+    @objc func didTap() {
+        let fullScreenController = self.imageSlideShow.presentFullScreenController(from: communicationViewControllerDelegate)
+        // set the activity indicator for full screen controller (skipping the line will show no activity indicator)
+        fullScreenController.slideshow.activityIndicator = DefaultActivityIndicator(style: .white, color: nil)
+    }
     override func layoutSubviews() {
         super.layoutSubviews()
         descriptionView.backgroundColor = UIColor(red: 245/255, green: 245/255, blue: 245/255, alpha: 1);

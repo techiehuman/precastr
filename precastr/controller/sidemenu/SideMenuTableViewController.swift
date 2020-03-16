@@ -90,22 +90,22 @@ class SideMenuTableViewController: UITableViewController {
     
     @IBAction func moderatorSwitchChanged(_ sender: Any) {
         if (moderatorRoleSwitch.isOn == true) {
-            moderatorRoleSwitch.setOn(false, animated: false)
-            casterRoleSwitch.setOn(true, animated: false)
-        } else {
-            moderatorRoleSwitch.setOn(true, animated: false)
+            //moderatorRoleSwitch.setOn(false, animated: false)
             casterRoleSwitch.setOn(false, animated: false)
+        } else {
+            //moderatorRoleSwitch.setOn(true, animated: false)
+            casterRoleSwitch.setOn(true, animated: false)
         }
        changeAccountStatus();
     }
     
     @IBAction func casterSwitchChanged(_ sender: Any) {
         if (casterRoleSwitch.isOn == true) {
-            moderatorRoleSwitch.setOn(true, animated: false)
-            casterRoleSwitch.setOn(false, animated: false)
-        } else {
-            casterRoleSwitch.setOn(true, animated: false)
             moderatorRoleSwitch.setOn(false, animated: false)
+            //casterRoleSwitch.setOn(false, animated: false)
+        } else {
+            //casterRoleSwitch.setOn(true, animated: false)
+            moderatorRoleSwitch.setOn(true, animated: false)
         }
 
         changeAccountStatus();

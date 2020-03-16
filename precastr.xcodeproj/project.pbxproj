@@ -22,7 +22,10 @@
 		5E48B91D23F94E960078F07E /* PostDescriptionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5E48B91B23F94E960078F07E /* PostDescriptionTableViewCell.xib */; };
 		5E48B92023F963780078F07E /* PostGalleryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E48B91E23F963780078F07E /* PostGalleryTableViewCell.swift */; };
 		5E48B92123F963780078F07E /* PostGalleryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5E48B91F23F963780078F07E /* PostGalleryTableViewCell.xib */; };
+		5E5BAB5E24116A06006F56A5 /* AlphabetInitialsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5BAB5D24116A06006F56A5 /* AlphabetInitialsView.swift */; };
+		5E5BAB6024116A20006F56A5 /* AlphabetInitialsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5E5BAB5F24116A20006F56A5 /* AlphabetInitialsView.xib */; };
 		5E62E23023F2DCDA00A95C06 /* ArchieveViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E62E22F23F2DCDA00A95C06 /* ArchieveViewController.swift */; };
+		5E638A3B2417D2CE0064954E /* UserSocialMedia.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E638A3A2417D2CE0064954E /* UserSocialMedia.swift */; };
 		5E6BB7B222B530F500D92681 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E6BB7B122B530F500D92681 /* Post.swift */; };
 		5E6E94E723F98E7D00DBA4F3 /* AfterApprovedButtonsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E6E94E523F98E7D00DBA4F3 /* AfterApprovedButtonsTableViewCell.swift */; };
 		5E6E94E823F98E7D00DBA4F3 /* AfterApprovedButtonsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5E6E94E623F98E7D00DBA4F3 /* AfterApprovedButtonsTableViewCell.xib */; };
@@ -180,7 +183,10 @@
 		5E48B91B23F94E960078F07E /* PostDescriptionTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PostDescriptionTableViewCell.xib; sourceTree = "<group>"; };
 		5E48B91E23F963780078F07E /* PostGalleryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostGalleryTableViewCell.swift; sourceTree = "<group>"; };
 		5E48B91F23F963780078F07E /* PostGalleryTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PostGalleryTableViewCell.xib; sourceTree = "<group>"; };
+		5E5BAB5D24116A06006F56A5 /* AlphabetInitialsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlphabetInitialsView.swift; sourceTree = "<group>"; };
+		5E5BAB5F24116A20006F56A5 /* AlphabetInitialsView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AlphabetInitialsView.xib; sourceTree = "<group>"; };
 		5E62E22F23F2DCDA00A95C06 /* ArchieveViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchieveViewController.swift; sourceTree = "<group>"; };
+		5E638A3A2417D2CE0064954E /* UserSocialMedia.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSocialMedia.swift; sourceTree = "<group>"; };
 		5E6BB7B122B530F500D92681 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		5E6E94E523F98E7D00DBA4F3 /* AfterApprovedButtonsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AfterApprovedButtonsTableViewCell.swift; sourceTree = "<group>"; };
 		5E6E94E623F98E7D00DBA4F3 /* AfterApprovedButtonsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AfterApprovedButtonsTableViewCell.xib; sourceTree = "<group>"; };
@@ -496,6 +502,7 @@
 				5ED3A32922BF3EE400F65CF2 /* PostCommunication.swift */,
 				908D6F3222C243D800762145 /* PostStatus.swift */,
 				90881EFA23420CB400023450 /* UserContactItem.swift */,
+				5E638A3A2417D2CE0064954E /* UserSocialMedia.swift */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -651,6 +658,8 @@
 				FA84F18622A0329D007796A3 /* Slide.xib */,
 				5EC1B79E23DB38D600F32C40 /* PostCastMenu.xib */,
 				5EC1B7A023DB3D7100F32C40 /* PostCastMenu.swift */,
+				5E5BAB5D24116A06006F56A5 /* AlphabetInitialsView.swift */,
+				5E5BAB5F24116A20006F56A5 /* AlphabetInitialsView.xib */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -899,6 +908,7 @@
 				FADFEB0022A51A46006E3CD2 /* VisbyCF-RegularOblique.otf in Resources */,
 				FAE6173F22B3B09800A8B2F3 /* RightCommunicationTableViewCell.xib in Resources */,
 				5EEC6B5C22A66EAA005B1C34 /* LoginScreenTableViewCell.xib in Resources */,
+				5E5BAB6024116A20006F56A5 /* AlphabetInitialsView.xib in Resources */,
 				FADFEAFD22A51A46006E3CD2 /* VisbyCF-Medium.otf in Resources */,
 				5E2A0E3022DF83EE009033E7 /* PostDetailTableViewCell.xib in Resources */,
 				FA6AB58322531E8200C5491F /* Assets.xcassets in Resources */,
@@ -1132,6 +1142,7 @@
 				FA72E17922624DC500A259A1 /* CastModeratorViewController.swift in Sources */,
 				5EEC6B6422A68450005B1C34 /* SignupScreenViewController.swift in Sources */,
 				FABF02502265DFBB0067960C /* SideMenuTableViewController.swift in Sources */,
+				5E638A3B2417D2CE0064954E /* UserSocialMedia.swift in Sources */,
 				FAD5015922AE8E4600D21F57 /* NotificationViewController.swift in Sources */,
 				900F798B23FAC75F00827ECA /* HomeV2ViewController.swift in Sources */,
 				9010B4AC22CF2AB70083A468 /* TermsPageViewController.swift in Sources */,
@@ -1152,6 +1163,7 @@
 				90881EFB23420CB400023450 /* UserContactItem.swift in Sources */,
 				5EEC6B6122A6842F005B1C34 /* SignupScreenTableViewCell.swift in Sources */,
 				FAFCE3C3228E8F0000AB6DB5 /* SocialPlatform.swift in Sources */,
+				5E5BAB5E24116A06006F56A5 /* AlphabetInitialsView.swift in Sources */,
 				5ED3A32A22BF3EE400F65CF2 /* PostCommunication.swift in Sources */,
 				FAE6174122B3B32900A8B2F3 /* CommunicationViewController.swift in Sources */,
 				FA84F18B22A0E511007796A3 /* moderatorTableViewCell.swift in Sources */,
@@ -1360,6 +1372,7 @@
 				CODE_SIGN_ENTITLEMENTS = precastr/precastr.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 19;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 6VW4H7JW9D;
 				INFOPLIST_FILE = precastr/Info.plist;
@@ -1384,6 +1397,7 @@
 				CODE_SIGN_ENTITLEMENTS = precastr/precastr.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 19;
 				DEVELOPMENT_TEAM = 6VW4H7JW9D;
 				INFOPLIST_FILE = precastr/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;

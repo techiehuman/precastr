@@ -44,6 +44,7 @@ class CastContactsViewController: SharePostViewController {
         
         if (castContactListType == CastContactListType.CallList) {
             self.title = "Contact Moderator";
+            moderatorContactsTableView.separatorStyle = .none;
         } else {
             self.title = "Moderator List";
         }
@@ -81,7 +82,7 @@ extension CastContactsViewController : UITableViewDataSource, UITableViewDelegat
             let cell: CastContactTableViewCell = tableView.dequeueReusableCell(withIdentifier: "CastContactTableViewCell", for: indexPath) as! CastContactTableViewCell;
             
             for uiTextNameView in cell.subviews {
-                if (uiTextNameView.tag == castContact.userId) {
+                if (uiTextNameView is AlphabetInitialsView) {
                     uiTextNameView.removeFromSuperview();
                 }
             }

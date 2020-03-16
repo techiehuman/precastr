@@ -40,7 +40,6 @@ class HomeV2ViewController: SharePostViewController,EasyTipViewDelegate, Sharing
     var easyToolTip: EasyTipView!
     var postIdDescExpansionMap = [Int: Bool]();
 
-
     private let refreshControl = UIRefreshControl()
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView();
 
@@ -52,7 +51,8 @@ class HomeV2ViewController: SharePostViewController,EasyTipViewDelegate, Sharing
         // Do any additional setup after loading the view.
         postsTableView.register(UINib(nibName: "PostItemTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "PostItemTableViewCell");
         loggedInUser = User().loadUserDataFromUserDefaults(userDataDict : setting);
-        
+        isAppKilled = false;
+
         //Add Refresh Control to Table View
         if #available(iOS 10.0, *) {
             self.postsTableView.refreshControl = refreshControl
@@ -72,14 +72,31 @@ class HomeV2ViewController: SharePostViewController,EasyTipViewDelegate, Sharing
         }
         
         SocialPlatform().fetchSocialPlatformData();
-        HomeV2ViewController.showBadgeCount();
-        
-        if (postIdFromPush != 0) {
+        if (pushForScreenAt.contains("Communication")) {
             
             let viewController: CommunicationViewController = self.storyboard?.instantiateViewController(withIdentifier: "CommunicationViewController") as! CommunicationViewController;
             viewController.postId = postIdFromPush
             self.navigationController?.pushViewController(viewController, animated: true);
+        } else if (pushForScreenAt.contains("CasterList")) {
+            if (loggedInUser.isCastr == 1) {
+                let viewController = self.storyboard?.instantiateViewController(withIdentifier: "ModeratorViewController") as! ModeratorViewController;
+                self.navigationController?.pushViewController(viewController, animated: true);
+
+            } else {
+                let viewController = self.storyboard?.instantiateViewController(withIdentifier: "CastersViewController") as! CastersViewController;
+                self.navigationController?.pushViewController(viewController, animated: true);
+            }
         }
+        
+        activityIndicator.center = view.center;
+        activityIndicator.hidesWhenStopped = true;
+        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.gray;
+        view.addSubview(activityIndicator);
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+            self.showBadgeCount();
+        }
+
     }
     override func viewWillAppear(_ animated: Bool) {
         loggedInUser = User().loadUserDataFromUserDefaults(userDataDict : setting);
@@ -116,9 +133,9 @@ class HomeV2ViewController: SharePostViewController,EasyTipViewDelegate, Sharing
         navigationItem.rightBarButtonItem = barButton;
         navigationItem.rightBarButtonItem?.tintColor = UIColor(red: 12/255, green: 111/255, blue: 233/255, alpha: 1)
         
-        noPostsText.text = "Loading, please wait...";
-        noPostsText.frame = CGRect.init(x: noPostsText.frame.origin.x, y: noPostsText.frame.origin.y, width: noPostsText.frame.width, height: 25)
-        noPostsText.numberOfLines = 1;
+        //noPostsText.text = "Loading, please wait...";
+        //noPostsText.frame = CGRect.init(x: noPostsText.frame.origin.x, y: noPostsText.frame.origin.y, width: noPostsText.frame.width, height: 25)
+        //noPostsText.numberOfLines = 1;
         
         /*if (loggedInUser.isCastr == 1) {
             self.loadUserPosts();
@@ -126,6 +143,7 @@ class HomeV2ViewController: SharePostViewController,EasyTipViewDelegate, Sharing
             loadModeratorUserPosts();
         }*/
         //self.showBadgeCount();
+        //HomeV2ViewController.showBadgeCount();
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -142,11 +160,11 @@ class HomeV2ViewController: SharePostViewController,EasyTipViewDelegate, Sharing
         
         //  In this methid call the home screen api
         if (loggedInUser.isCastr == 1) { // caster
-            self.loadUserPosts();
+                self.loadUserPosts();
         } else if (loggedInUser.isCastr == 2) { // moderator
             loadModeratorUserPosts();
         }
-        HomeV2ViewController.showBadgeCount();
+        self.showBadgeCount();
         self.refreshControl.endRefreshing()
         
     }
@@ -331,6 +349,7 @@ class HomeV2ViewController: SharePostViewController,EasyTipViewDelegate, Sharing
     }
     
     func deleteButtonPresses(post: Post) {
+        
         var postData = [String: Any]();
         postData["post_id"] = post.postId;
         let alert = UIAlertController.init(title: "Delete this cast.", message: "", preferredStyle: .alert);
@@ -358,7 +377,7 @@ class HomeV2ViewController: SharePostViewController,EasyTipViewDelegate, Sharing
         self.present(alert, animated: true)
     }
 
-    class func showBadgeCount() {
+    func showBadgeCount() {
         let loggedInUser = User().loadUserDataFromUserDefaults(userDataDict: setting);
         let jsonURL = "posts/get_notifications_count/format/json";
         var postArray = [String: Any]();
@@ -368,19 +387,20 @@ class HomeV2ViewController: SharePostViewController,EasyTipViewDelegate, Sharing
         } else {
             postArray["role_id"] = 1;
         }
+        
         UserService().postDataMethod(jsonURL: jsonURL, postData: postArray, complete: {(response) in
             print(response)
             
             let success = Int(response.value(forKey: "status") as! String)!
             if (success == 1) {
                 let dataArray = response.value(forKey: "data") as! NSDictionary;
-                let tabBarContro = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MadTabBar") as! UITabBarController
+                //let tabBarContro = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MadTabBar") as! UITabBarController
                 
-                if let tabItems = tabBarContro.tabBar.items {
+                if let tabItems = self.tabBarController?.tabBar.items {
                     // In this case we want to modify the badge number of the third tab:
                     var index = 0;
-                    if (loggedInUser.isCastr == 1) {
-                        index =  3;
+                    if (self.loggedInUser.isCastr == 1) {
+                        index =  4;
                     } else {
                         index = 2;
                     }
@@ -392,7 +412,6 @@ class HomeV2ViewController: SharePostViewController,EasyTipViewDelegate, Sharing
                     } else {
                         tabItem.badgeValue =  nil;
                     }
-                    
                 }
             }
         });
@@ -400,6 +419,15 @@ class HomeV2ViewController: SharePostViewController,EasyTipViewDelegate, Sharing
     
     
     func loadUserPosts() {
+        
+        
+        //HomeV2ViewController.showBadgeCount();
+
+        noPostsText.isHidden = false;
+        noPostsText.text = "Loading, please wait...";
+        noPostsText.frame = CGRect.init(x: noPostsText.frame.origin.x, y: noPostsText.frame.origin.y, width: noPostsText.frame.width, height: 25)
+        noPostsText.numberOfLines = 1;
+        
         social = SocialPlatform().loadSocialDataFromUserDefaults();
 
         var postArray : [String:Any] = [String:Any]();
@@ -407,10 +435,11 @@ class HomeV2ViewController: SharePostViewController,EasyTipViewDelegate, Sharing
         
         postArray["user_id"] = String(loggedInUser.userId)
         
-        
+        self.activityIndicator.startAnimating();
         UserService().postDataMethod(jsonURL: jsonURL, postData: postArray, complete: {(response) in
             print(response)
-            
+            self.activityIndicator.stopAnimating();
+
             let status = Int(response.value(forKey: "status") as! String)!
             if(status == 0){
                 self.noPostsText.text = response.value(forKey: "message") as! String;
@@ -428,7 +457,7 @@ class HomeV2ViewController: SharePostViewController,EasyTipViewDelegate, Sharing
                     self.postsTableView.isHidden = false;
                     //self.homePosts = modeArray as! [Any]
                     self.posts = Post().loadPostsFromNSArray(postsArr: modeArray);
-                    self.posts = self.posts.sorted {$0.postId > $1.postId};
+                    //self.posts = self.posts.sorted {$0.postId > $1.postId};
                     self.postsTableView.reloadData();
                     
                     
@@ -456,6 +485,14 @@ class HomeV2ViewController: SharePostViewController,EasyTipViewDelegate, Sharing
     
     
     func loadModeratorUserPosts() {
+        
+        //HomeV2ViewController.showBadgeCount();
+
+        noPostsText.isHidden = false;
+        noPostsText.text = "Loading, please wait...";
+        noPostsText.frame = CGRect.init(x: noPostsText.frame.origin.x, y: noPostsText.frame.origin.y, width: noPostsText.frame.width, height: 25)
+        noPostsText.numberOfLines = 1;
+        
         social = SocialPlatform().loadSocialDataFromUserDefaults();
 
         var postArray : [String:Any] = [String:Any]();
@@ -566,9 +603,11 @@ extension HomeV2ViewController: UITableViewDelegate, UITableViewDataSource {
                 heightOfDesc = 100;
             }
             //heightOfDesc = 100;
+        } else if (heightOfDesc == 25) {
+            heightOfDesc = 35;
         }
         print("Height of Descriptiojn :  ",heightOfDesc, "POst Id : ", post.postId);
-        height = height + heightOfDesc + CGFloat(PostRowsHeight.Post_Description_Row_Height);
+        height = height + heightOfDesc;
     
         let websiteUrl = extractWebsiteFromText(text: post.postDescription);
         if (websiteUrl != "") {

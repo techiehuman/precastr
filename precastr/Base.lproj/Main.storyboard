@@ -11,9 +11,6 @@
         <array key="VisbyCF-DemiBold.otf">
             <string>VisbyCF-DemiBold</string>
         </array>
-        <array key="VisbyCF-Light.otf">
-            <string>VisbyCF-Light</string>
-        </array>
         <array key="VisbyCF-Medium.otf">
             <string>VisbyCF-Medium</string>
         </array>
@@ -727,29 +724,10 @@
                                 <color key="textColor" red="0.13333333333333333" green="0.13333333333333333" blue="0.13333333333333333" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="n9o-fb-5B2">
-                                <rect key="frame" x="75" y="165" width="27" height="30"/>
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" usesAttributedText="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="n9o-fb-5B2">
+                                <rect key="frame" x="75" y="165" width="152" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="textColor" red="0.13333333333333333" green="0.13333333333333333" blue="0.13333333333333333" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" name="VisbyCF-Medium" family="Visby CF" pointSize="16"/>
-                                <textInputTraits key="textInputTraits" keyboardType="numberPad" secureTextEntry="YES"/>
-                            </textField>
-                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8ox-ko-umV">
-                                <rect key="frame" x="115" y="165" width="27" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name="VisbyCF-Light" family="Visby CF" pointSize="16"/>
-                                <textInputTraits key="textInputTraits" keyboardType="numberPad" secureTextEntry="YES"/>
-                            </textField>
-                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="se5-Ya-eCo">
-                                <rect key="frame" x="155" y="165" width="27" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name="VisbyCF-Light" family="Visby CF" pointSize="16"/>
-                                <textInputTraits key="textInputTraits" keyboardType="numberPad" secureTextEntry="YES"/>
-                            </textField>
-                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="SC9-ZH-RjI">
-                                <rect key="frame" x="195" y="165" width="27" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name="VisbyCF-Light" family="Visby CF" pointSize="16"/>
+                                <attributedString key="attributedText"/>
                                 <textInputTraits key="textInputTraits" keyboardType="numberPad" secureTextEntry="YES"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fxk-vc-8E8">
@@ -771,9 +749,6 @@
                         <outlet property="casterList" destination="Xew-t1-V9x" id="sJU-Jz-YYv"/>
                         <outlet property="inviteCodeSubmitButton" destination="Fxk-vc-8E8" id="4gM-Ai-o9p"/>
                         <outlet property="verifyCode1" destination="n9o-fb-5B2" id="B7K-E4-VW2"/>
-                        <outlet property="verifyCode2" destination="8ox-ko-umV" id="6Wg-Na-b9P"/>
-                        <outlet property="verifyCode3" destination="se5-Ya-eCo" id="s7N-RH-tLb"/>
-                        <outlet property="verifyCode4" destination="SC9-ZH-RjI" id="S0V-qw-dyW"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="o2f-dO-kwo" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -784,7 +759,7 @@
         <scene sceneID="4A8-zu-SkK">
             <objects>
                 <tableViewController storyboardIdentifier="SideMenuTableViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="BfN-wQ-dnv" customClass="SideMenuTableViewController" customModule="precastr" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="KYE-eh-USu">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="KYE-eh-USu">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1328,12 +1303,19 @@
                                             <action selector="submitBtnClicked:" destination="isS-Sv-T1f" eventType="touchUpInside" id="jn5-kU-rzC"/>
                                         </connections>
                                     </button>
-                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="Type a message..." translatesAutoresizingMaskIntoConstraints="NO" id="Gff-aO-1Sx">
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" usesAttributedText="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Gff-aO-1Sx">
                                         <rect key="frame" x="15" y="5" width="344" height="85"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <color key="textColor" red="0.13333333333333333" green="0.13333333333333333" blue="0.13333333333333333" alpha="1" colorSpace="calibratedRGB"/>
-                                        <fontDescription key="fontDescription" name="VisbyCF-Regular" family="Visby CF" pointSize="16"/>
+                                        <attributedString key="attributedText">
+                                            <fragment content="Type a message...">
+                                                <attributes>
+                                                    <color key="NSColor" red="0.13333333333333333" green="0.13333333333333333" blue="0.13333333333333333" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <font key="NSFont" size="16" name="VisbyCF-Regular"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                </attributes>
+                                            </fragment>
+                                        </attributedString>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences" autocorrectionType="yes"/>
                                         <connections>
                                             <outlet property="delegate" destination="isS-Sv-T1f" id="aHy-km-Ruw"/>
@@ -1513,7 +1495,7 @@
                                 </connections>
                             </tableView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tao-M9-Jpb">
-                                <rect key="frame" x="302" y="95" width="65" height="24"/>
+                                <rect key="frame" x="294" y="65" width="65" height="24"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.39215686274509803" green="0.65098039215686276" blue="0.96862745098039216" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" name="VisbyCF-Regular" family="Visby CF" pointSize="14"/>
@@ -1542,7 +1524,9 @@
         <scene sceneID="9h7-KK-bvk">
             <objects>
                 <navigationController id="7gu-p6-Gz0" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Archive" image="archive" selectedImage="archive-black" id="fcj-sE-8B1"/>
+                    <tabBarItem key="tabBarItem" title="Archive" image="archive" selectedImage="archive-black" id="fcj-sE-8B1">
+                        <offsetWrapper key="titlePositionAdjustment" horizontal="0.0" vertical="-4"/>
+                    </tabBarItem>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Y0D-xo-7kF">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -1737,11 +1721,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="no-cast" translatesAutoresizingMaskIntoConstraints="NO" id="m2U-zb-Jxv">
+                            <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="no-cast" translatesAutoresizingMaskIntoConstraints="NO" id="m2U-zb-Jxv">
                                 <rect key="frame" x="145" y="126" width="88" height="80"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="You do not have any casts. please check on &quot;Add New&quot; in order to create a new Cast !" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zcJ-FG-BB7">
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="You do not have any casts. please check on &quot;Add New&quot; in order to create a new Cast !" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zcJ-FG-BB7">
                                 <rect key="frame" x="22" y="224" width="336" height="70"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="VisbyCF-Regular" family="Visby CF" pointSize="18"/>
@@ -1807,7 +1791,7 @@
         <image name="sent-email" width="16" height="14.5"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="9cd-nP-F1L"/>
+        <segue reference="cuK-cd-rny"/>
         <segue reference="0cb-mg-TdQ"/>
         <segue reference="pyB-LE-lgF"/>
         <segue reference="vqc-vD-fxp"/>

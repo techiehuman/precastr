@@ -25,6 +25,8 @@ class NotificationViewController: UIViewController {
         
         // Do any additional setup after loading the view.
         self.setupNavigationBar();
+        self.clearAllButton.roundEdgesBtn();
+        self.clearAllButton.frame = CGRect.init(x: self.clearAllButton.frame.origin.x, y: (self.navigationController?.navigationBar.frame.height)! + 30.0, width: self.clearAllButton.frame.width, height: self.clearAllButton.frame.height)
         // Do any additional setup after loading the view.
         notificationTableView.register(UINib.init(nibName: "NotificationTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "NotificationTableViewCell");
         self.hideKeyboadOnTapOutside();
@@ -68,7 +70,7 @@ class NotificationViewController: UIViewController {
             // In this case we want to modify the badge number of the third tab:
             var index = 0;
             if (self.loggedInUser.isCastr == 1) {
-                index =  3;
+                index =  4;
             } else {
                 index = 2;
             }
@@ -199,6 +201,20 @@ class NotificationViewController: UIViewController {
         viewController.postId = sender.postId;
         self.navigationController?.pushViewController(viewController, animated: true);
     }
+    
+    @objc func nonPostDescriptionPressed(sender:MyTapRecognizer) {
+        
+        if (loggedInUser.isCastr == 1) {
+            
+            let viewController = self.storyboard?.instantiateViewController(withIdentifier: "ModeratorViewController") as! ModeratorViewController;
+            self.navigationController?.pushViewController(viewController, animated: true);
+
+        } else {
+            let viewController = self.storyboard?.instantiateViewController(withIdentifier: "CastersViewController") as! CastersViewController;
+            self.navigationController?.pushViewController(viewController, animated: true);
+        }
+    }
+    
     class MyTapRecognizer : UITapGestureRecognizer {
         var postId: Int!;
         var notificationId: Int!;
@@ -222,10 +238,22 @@ extension NotificationViewController: UITableViewDelegate, UITableViewDataSource
         print(Int(notification.value(forKey: "post_id") as! String)!);
         let cell: NotificationTableViewCell = tableView.dequeueReusableCell(withIdentifier: "NotificationTableViewCell") as! NotificationTableViewCell;
         
-        let postDescTap = MyTapRecognizer.init(target: self, action: #selector(postDescriptionPressed(sender:)));
-        postDescTap.postId = Int(notification.value(forKey: "post_id") as! String)! ;
-        postDescTap.notificationId = Int(notification.value(forKey: "notification_id") as! String)!;
-        cell.notificationTextView.addGestureRecognizer(postDescTap)
+        if let notificationType = notification.value(forKey: "type") as? String {
+            if (notificationType != "Post") {
+                
+                let postDescTap = MyTapRecognizer.init(target: self, action: #selector(nonPostDescriptionPressed(sender:)));
+                postDescTap.postId = Int(notification.value(forKey: "post_id") as! String)! ;
+                postDescTap.notificationId = Int(notification.value(forKey: "notification_id") as! String)!;
+                cell.notificationTextView.addGestureRecognizer(postDescTap)
+                
+            } else {
+                let postDescTap = MyTapRecognizer.init(target: self, action: #selector(postDescriptionPressed(sender:)));
+                postDescTap.postId = Int(notification.value(forKey: "post_id") as! String)! ;
+                postDescTap.notificationId = Int(notification.value(forKey: "notification_id") as! String)!;
+                cell.notificationTextView.addGestureRecognizer(postDescTap)
+            }
+        }
+        
         //This is your label
         for view in cell.notificationTextView.subviews {
             view.removeFromSuperview();
@@ -255,7 +283,18 @@ extension NotificationViewController: UITableViewDelegate, UITableViewDataSource
         
         //cell.profileTextView.text = notification.value(forKey: "notification_message") as? String;
         //print(notification.value(forKey: "created_on") as! String)
-        cell.dateTextView.text = Date().ddspEEEEcmyyyyspHHclmmclaa(dateStr: notification.value(forKey: "created_on") as! String)
+        if (notification.value(forKey: "created_on_timestamp") as! String == "") {
+            cell.dateTextView.text = Date().ddspEEEEcmyyyyspHHclmmclaa(dateStr: notification.value(forKey: "created_on") as! String)
+
+            
+        } else {
+            
+            let createdOnTimestamp = Int((notification.value(forKey: "created_on_timestamp") as? String ?? "0"));
+            let date = Date(timeIntervalSince1970: TimeInterval.init(createdOnTimestamp!/1000));
+
+            cell.dateTextView.text = Date().ddspEEEEcmyyyyspHHclmmclaaV2(dateStrDt: date);
+
+        }
         cell.dateTextView.frame = CGRect.init(x: cell.dateTextView.frame.origin.x, y: 12 + height, width: cell.dateTextView.intrinsicContentSize.width, height: 20);
 
         cell.profileImageView.sd_setImage(with: URL(string: notification.value(forKey: "profile_pic") as! String), placeholderImage: UIImage.init(named: "Moderate Casts"));

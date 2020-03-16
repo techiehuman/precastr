@@ -14,11 +14,8 @@ class CastersViewController: UIViewController,UITextFieldDelegate {
     @IBOutlet weak var inviteCodeSubmitButton : UIButton!
     
     @IBOutlet weak var verifyCode1: UITextField!
-    
-    @IBOutlet weak var verifyCode2: UITextField!
-    
-    @IBOutlet weak var verifyCode3: UITextField!
-    @IBOutlet weak var verifyCode4: UITextField!
+    var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView();
+
     var moderatorBool : Bool!
     var loggedInUser : User!
     var moderatorDto : [ModeratorsDto] = [ModeratorsDto]()
@@ -29,18 +26,14 @@ class CastersViewController: UIViewController,UITextFieldDelegate {
         super.viewDidLoad()
         verifyCode1.layer.borderColor = UIColor(red: 112/255, green: 112/255, blue: 112/255, alpha: 1).cgColor
         verifyCode1.layer.borderWidth = 0.5
-        verifyCode2.layer.borderColor = UIColor(red: 112/255, green: 112/255, blue: 112/255, alpha: 1).cgColor
-        verifyCode2.layer.borderWidth = 0.5
-        verifyCode3.layer.borderColor = UIColor(red: 112/255, green: 112/255, blue: 112/255, alpha: 1).cgColor
-        verifyCode3.layer.borderWidth = 0.5
-        verifyCode4.layer.borderColor = UIColor(red: 112/255, green: 112/255, blue: 112/255, alpha: 1).cgColor
-        verifyCode4.layer.borderWidth = 0.5
         verifyCode1.addTarget(self, action: #selector(self.textFieldDidChange(textField:)), for: UIControlEvents.editingChanged);
-        verifyCode2.addTarget(self, action: #selector(self.textFieldDidChange(textField:)), for: UIControlEvents.editingChanged);
-        verifyCode3.addTarget(self, action: #selector(self.textFieldDidChange(textField:)), for: UIControlEvents.editingChanged);
-        verifyCode4.addTarget(self, action: #selector(self.textFieldDidChange(textField:)), for: UIControlEvents.editingChanged);
-        
-       // verifyCode1.becomeFirstResponder();
+        verifyCode1.defaultTextAttributes.updateValue(20.0,
+                                                      forKey: NSAttributedString.Key.kern.rawValue)
+        let leftView = UIView(frame: CGRect(x: 10, y: 0.0, width: 25, height: 30))
+        leftView.backgroundColor = .clear
+        verifyCode1.leftView = leftView
+        verifyCode1.leftViewMode = .always
+
         loggedInUser = User().loadUserDataFromUserDefaults(userDataDict : setting);
         casterList.register(UINib(nibName: "moderatorTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "moderatorTableViewCell")
         
@@ -50,49 +43,39 @@ class CastersViewController: UIViewController,UITextFieldDelegate {
         self.loadCasterData();
         // Do any additional setup after loading the view.
         self.hideKeyboadOnTapOutside();
+        
+        activityIndicator.center = view.center;
+        activityIndicator.hidesWhenStopped = true;
+        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.gray;
+        view.addSubview(activityIndicator);
     }
+    
     @objc func textFieldDidChange(textField: UITextField) {
         
         let text = textField.text;
-        
-        if (text!.count == 1) {
-            
-            switch textField {
-            case verifyCode1:
-                verifyCode2.text = "";
-                verifyCode2.becomeFirstResponder();
-                
-            case verifyCode2:
-                verifyCode3.text = "";
-                verifyCode3.becomeFirstResponder();
-                
-            case verifyCode3:
-                verifyCode4.text = "";
-                verifyCode4.becomeFirstResponder();
-                
-            case verifyCode4:
-                verifyCode4.resignFirstResponder();
-                
-            default:
-                break;
-            }
-            
+        if (text!.count == 4) {
+            verifyCode1.resignFirstResponder();
         }
     }
     @IBAction func inviteCodeBtnClicked(_ sender: Any) {
         
         var postData = [String: Any]();
         postData["user_id"] = self.loggedInUser.userId
-        let otp = "\(self.verifyCode1.text!)\(self.verifyCode2.text!)\(self.verifyCode3.text!)\(self.verifyCode4.text!)";
+        let otp = "\(self.verifyCode1.text!)";
         if (otp.count < 4) {
             let alert = UIAlertController.init(title: "Error", message: "Please enter the code", preferredStyle: .alert);
             alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil));
             self.present(alert, animated: true)
         } else {
+            
+            self.activityIndicator.startAnimating();
+            
             postData["otp"] = String(otp)
+            postData["timestamp"] = Int64(Date().timeIntervalSince1970 * 1000.0)
             let jsonURL = "user/verify_user_otp/format/json";
             UserService().postDataMethod(jsonURL: jsonURL,postData:postData,complete:{(response) in
                 print(response)
+                self.activityIndicator.stopAnimating();
                 if (Int(response.value(forKey: "status") as! String)! == 0) {
                     let message = response.value(forKey: "message") as! String;
                     
@@ -102,6 +85,9 @@ class CastersViewController: UIViewController,UITextFieldDelegate {
                     
                 }else{
                    // UIApplication.shared.keyWindow?.rootViewController = HomeViewController.MainViewController();
+                    self.verifyCode1.text = "";
+                    let message = response.value(forKey: "message") as! String;
+                    self.showAlert(title: "Alert", message: message);
                     self.loadCasterData();
                 }
             });
@@ -180,8 +166,23 @@ extension CastersViewController: UITableViewDelegate, UITableViewDataSource {
         } else {
             cell.profileLabel.text = String(moderatorObject.username);
         }
-        cell.profileImageView.sd_setImage(with: URL(string: moderatorObject.profilePic), placeholderImage: UIImage(named: "Moderate Casts"));
         
+        cell.phoneNumberLabel.text = moderatorObject.phoneNumber;
+        cell.emailLabel.text = moderatorObject.username;
+        
+        for uiTextNameView in cell.subviews {
+            if (uiTextNameView is AlphabetInitialsView) {
+                uiTextNameView.removeFromSuperview();
+            }
+        }
+        if (moderatorObject.profilePic == nil || moderatorObject.profilePic == "") {
+            cell.profileImageView.image = UIImage.init(named: "Moderate Casts");
+            cell.profileImageView.isHidden = true;
+            cell.addSubview(self.showAlphabetsView(frame: cell.profileImageView.frame, userContact: moderatorObject, rowId: indexPath.row));
+        } else {
+            cell.profileImageView.isHidden = false;
+            cell.profileImageView.sd_setImage(with: URL.init(string: moderatorObject.profilePic), placeholderImage: UIImage.init(named: "Moderate Casts"),  completed: nil);
+        }
         cell.profileImageView.roundImageView();
         cell.profileImageView.clipsToBounds = true
         
@@ -191,7 +192,7 @@ extension CastersViewController: UITableViewDelegate, UITableViewDataSource {
             cell.removeActionBtn.tag = Int(moderatorObject.userId);
             cell.removeActionBtn.addTarget(self, action: #selector(removeActionPressed), for: .touchUpInside)
             
-        }else{
+        } else {
           //  cell.acceptActionBtn.isHidden = false
             cell.removeActionBtn.isHidden = true
             cell.acceptActionBtn.tag = Int(moderatorObject.userId)
@@ -218,8 +219,11 @@ extension CastersViewController: UITableViewDelegate, UITableViewDataSource {
         postData["user_id"] = self.loggedInUser.userId
         postData["moderator_id"] = sender.tag
         let jsonURL = "user/remove_moderator/format/json";
+        
+        self.activityIndicator.startAnimating();
         UserService().postDataMethod(jsonURL: jsonURL,postData:postData,complete:{(response) in
             print(response)
+            self.activityIndicator.stopAnimating();
             self.loadCasterData();
         });
         print(sender.tag)
@@ -230,8 +234,11 @@ extension CastersViewController: UITableViewDelegate, UITableViewDataSource {
         postData["moderator_id"] = sender.tag
         postData["is_approved"] = "1"
         let jsonURL = "user/approve_moderator/format/json";
+        
+        self.activityIndicator.startAnimating();
         UserService().postDataMethod(jsonURL: jsonURL,postData:postData,complete:{(response) in
             print(response)
+            self.activityIndicator.stopAnimating();
             self.loadCasterData();
         });
         print(sender.tag)
@@ -267,6 +274,7 @@ extension CastersViewController: UITableViewDelegate, UITableViewDataSource {
                     user.name = modeDict.value(forKey: "name") as! String
                     user.username = modeDict.value(forKey: "username") as! String
                     user.profilePic = modeDict.value(forKey: "profile_pic") as! String
+                    user.phoneNumber = modeDict.value(forKey: "phone_number") as! String
                     user.userId = Int32(((modeDict.value(forKey: "caster_id") as? NSString)?.doubleValue)!)
                    // let statusModerator = Int(((modeDict.value(forKey: "is_approved")as? NSString)?.doubleValue)!)
                     let statusCaster = Int(((modeDict.value(forKey: "is_approved")as? NSString)?.doubleValue)!)

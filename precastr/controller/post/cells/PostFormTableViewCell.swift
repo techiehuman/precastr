@@ -23,7 +23,6 @@ class PostFormTableViewCell: UITableViewCell, UITextViewDelegate, PostFormCellPr
 
     @IBOutlet weak var filesUploadedtext: UILabel!
     
-    @IBOutlet weak var charaterCountLabel: UILabel!
     @IBOutlet weak var attachmentBtn : UIButton!
     @IBOutlet weak var submitBtn : UIButton!
     @IBOutlet weak var imageCollectionView: UICollectionView!
@@ -95,15 +94,19 @@ class PostFormTableViewCell: UITableViewCell, UITextViewDelegate, PostFormCellPr
                 
                 self.createPostViewControllerDelegate.activityIndicator.startAnimating();
                 
+                if (self.postTextField.text == self.createPostViewControllerDelegate.createPostPlaceholder) {
+                    self.postTextField.text = "";
+                }
                 let jsonURL = "posts/post_update/format/json"
                 var postData : [String : Any] = [String : Any]()
                 postData["post_description"] = self.postTextField.text
                 postData["user_id"] = self.createPostViewControllerDelegate.loggedInUser.userId
                 postData["post_id"] = self.createPostViewControllerDelegate.post.postId
                 postData["timestamp"] = Int64(Date().timeIntervalSince1970 * 1000.0);
+                postData["post_status_id"] = 1;
 
                 if (loggedInUser.isCastr == 2) {
-                    postData["post_status_id"] = self.selectedPostStatusId
+                    //postData["post_status_id"] = self.selectedPostStatusId
                 }
                 
                 var imagesStr = "";
@@ -174,7 +177,9 @@ class PostFormTableViewCell: UITableViewCell, UITextViewDelegate, PostFormCellPr
             }
             else {
                 self.createPostViewControllerDelegate.activityIndicator.startAnimating();
-                
+                if (self.postTextField.text == self.createPostViewControllerDelegate.createPostPlaceholder) {
+                    self.postTextField.text = "";
+                }
                 let jsonURL = "posts/create_new_caster_posts/format/json"
                 var postData : [String : Any] = [String : Any]()
                 postData["post_description"] = self.postTextField.text
@@ -261,9 +266,7 @@ class PostFormTableViewCell: UITableViewCell, UITextViewDelegate, PostFormCellPr
         
         descriptionMsg = currentText.replacingCharacters(in: stringRange, with: text)
         
-        //This label is for showing the number of characters allowed
-        self.charaterCountLabel.text = "\(descriptionMsg.count) Characters";
-        
+        //This label is for showing the number of characters allowed        
         if (createPostViewControllerDelegate.twitterStatus && createPostViewControllerDelegate.facebookStatus) {
             return descriptionMsg.count < 280
         } else if (createPostViewControllerDelegate.twitterStatus == true) {

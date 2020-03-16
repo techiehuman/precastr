@@ -44,6 +44,7 @@ class CreatePostViewController: UIViewController, UIImagePickerControllerDelegat
     var postArray : [String:Any] = [String:Any]()
     var postImageDtos = [PostImageDto]();
     var isSubmitAlreadyAdjustedUp = false;
+    var createPostPlaceholder = "Type your post here and attach any files using the icon below";
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -300,7 +301,6 @@ extension CreatePostViewController: UITableViewDelegate, UITableViewDataSource {
         cell.reloadCollctionView();
         if (post != nil) {
             cell.postTextField.text = post.postDescription
-            cell.charaterCountLabel.text = "\(post.postDescription.count) Characters";
             if (post.postImages.count > 0) {
                 cell.filesUploadedtext.isHidden = false;
                 cell.filesUploadedtext.text = "\(post.postImages.count) files uploaded successfully."

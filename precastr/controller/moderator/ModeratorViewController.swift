@@ -16,6 +16,7 @@ class ModeratorViewController: UIViewController, CNContactPickerDelegate, MFMess
     
     @IBOutlet weak var inviteModeratorButton: UIButton!
     
+    var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView();
     var moderatorBool : Bool!
     var loggedInUser : User!
     var moderatorDto : [ModeratorsDto] = [ModeratorsDto]()
@@ -79,6 +80,11 @@ class ModeratorViewController: UIViewController, CNContactPickerDelegate, MFMess
         // Do any additional setup after loading the view.
         self.inviteModeratorButton.layer.cornerRadius = 4;
         self.loadModeratorData();
+        
+        activityIndicator.center = view.center;
+        activityIndicator.hidesWhenStopped = true;
+        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.gray;
+        view.addSubview(activityIndicator);
     }
 
     override func didReceiveMemoryWarning() {
@@ -239,7 +245,20 @@ extension ModeratorViewController: UITableViewDelegate, UITableViewDataSource {
         } else {
             cell.profileLabel.text = String(moderatorObject.username);
         }
-        cell.profileImageView.sd_setImage(with: URL(string: moderatorObject.profilePic), placeholderImage: UIImage(named: "Moderate Casts"));
+        
+        for uiTextNameView in cell.subviews {
+            if (uiTextNameView is AlphabetInitialsView) {
+                uiTextNameView.removeFromSuperview();
+            }
+        }
+        if (moderatorObject.profilePic == nil || moderatorObject.profilePic == "") {
+            cell.profileImageView.image = UIImage.init(named: "Moderate Casts");
+            cell.profileImageView.isHidden = true;
+            cell.addSubview(self.showAlphabetsView(frame: cell.profileImageView.frame, userContact: moderatorObject, rowId: indexPath.row));
+        } else {
+            cell.profileImageView.isHidden = false;
+            cell.profileImageView.sd_setImage(with: URL.init(string: moderatorObject.profilePic), placeholderImage: UIImage.init(named: "Moderate Casts"),  completed: nil);
+        }
        
         cell.profileImageView.roundImageView();
         cell.profileImageView.clipsToBounds = true
@@ -285,9 +304,14 @@ extension ModeratorViewController: UITableViewDelegate, UITableViewDataSource {
         var postData = [String: Any]();
         postData["user_id"] = self.loggedInUser.userId
         postData["moderator_id"] = sender.tag
+        postData["timestamp"] = Int64(Date().timeIntervalSince1970 * 1000.0)
         let jsonURL = "user/remove_moderator/format/json";
+        
+        
+        self.activityIndicator.startAnimating();
         UserService().postDataMethod(jsonURL: jsonURL,postData:postData,complete:{(response) in
             print(response)
+            self.activityIndicator.stopAnimating();
             self.loadModeratorData();
         });
         print(sender.tag)
@@ -297,9 +321,14 @@ extension ModeratorViewController: UITableViewDelegate, UITableViewDataSource {
         postData["user_id"] = self.loggedInUser.userId
         postData["moderator_id"] = sender.tag
         postData["is_approved"] = "1"
+        postData["timestamp"] = Int64(Date().timeIntervalSince1970 * 1000.0)
         let jsonURL = "user/approve_moderator/format/json";
+        
+        self.activityIndicator.startAnimating();
+
         UserService().postDataMethod(jsonURL: jsonURL,postData:postData,complete:{(response) in
             print(response)
+            self.activityIndicator.stopAnimating();
             self.loadModeratorData();
         });
         print(sender.tag)

@@ -31,7 +31,8 @@ class User  {
     var casterReferalCode   : String!
     var countryCode         : String!
     var phoneNumber         : String!
-    
+    var tokens              : NSArray!;
+
     func getUserData(userDataDict: NSDictionary)->User {
         let user = User();
         user.userId = Int32(userDataDict.value(forKey: "user_id") as! String);
@@ -55,6 +56,7 @@ class User  {
         user.casterReferalCode = userDataDict.value(forKey: "caster_referral_code")as? String;
         user.countryCode = userDataDict.value(forKey: "country_code")as? String;
         user.phoneNumber = userDataDict.value(forKey: "phone_number")as? String;
+        user.tokens = userDataDict.value(forKey: "tokens")as? NSArray;
         return user;
     }
     
@@ -78,12 +80,14 @@ class User  {
             var token = "";
             token = token + "{\"twitter_access_token\":\"\(user.twitterAccessToken!)\"";
             token = token + ",\"twitter_access_secret\":\"\(user.twitterAccessSecret!)\"";
+            token = token + ",\"email\":\"\(user.username!)\"";
             token = token + ",\"twitter_id\":\"\(user.twitterId!)\"}";
             userJson["token"] = "\(token)";
         } else if (user.isFacebook == 1) {
             var token = "";
             
             token = token + "{\"facebook_access_token\":\"\(user.facebookAccessToken!)\"";
+            token = token + ",\"email\":\"\(user.username!)\"";
             token = token + ",\"facebook_id\":\"\(user.facebookId!)\"}";
             userJson["token"] = token;
         }
@@ -98,11 +102,8 @@ class User  {
         userJson["profile_pic"] = user.profilePic
         return userJson;
     }
-    
-    
-    
+
     func loadUserDataFromUserDefaults(userDataDict: UserDefaults) -> User {
-        
         let user = User();
         user.userId = userDataDict.value(forKey: "user_id") as? Int32;
         user.username = userDataDict.value(forKey: "username") as? String;
@@ -127,6 +128,8 @@ class User  {
         user.casterReferalCode = userDataDict.value(forKey: "caster_referral_code")as? String;
         user.countryCode = userDataDict.value(forKey: "country_code")as? String;
         user.phoneNumber = userDataDict.value(forKey: "phone_number")as? String;
+        user.tokens = userDataDict.value(forKey: "tokens")as? NSArray;
+
         return user;
     }
     func loadUserDefaults()->Void{
@@ -148,6 +151,7 @@ class User  {
         setting.setValue(self.casterReferalCode, forKey: "caster_referral_code");
         setting.setValue(self.countryCode, forKey: "country_code");
         setting.setValue(self.phoneNumber, forKey: "phone_number");
+        setting.setValue(self.tokens, forKey: "tokens");
         //setting.setValue(self.userDevice!, forKey: "device_registered_from")
         //setting.setValue(self.deviceToken, forKey: "device_token")
     }

@@ -87,8 +87,7 @@ class LoginScreenViewController: UIViewController {
                 
                 if(user.phoneNumber == "" || user.phoneNumber == nil){
                    self.performSegue(withIdentifier: "loginUpdatePhoneSegue", sender: self)
-                }
-              else if (userDefaultRole == 0) {
+                } else if (userDefaultRole == 0) {
                     
                     let viewController: UserTypeActionViewController = self.storyboard?.instantiateViewController(withIdentifier: "UserTypeActionViewController") as! UserTypeActionViewController;
                     self.navigationController?.pushViewController(viewController, animated: true);
