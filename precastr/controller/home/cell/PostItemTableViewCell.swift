@@ -462,8 +462,15 @@ class PostItemTableViewCell: UITableViewCell, SharingDelegate, MFMessageComposeV
                 }
                 if (self.pushViewController is HomeV2ViewController) {
                     (self.pushViewController as! HomeV2ViewController).postsTableView.isScrollEnabled = true;
+                    (self.pushViewController as! HomeV2ViewController).showToast(message: "Post Shared Successfully On Twitter")
                     (self.pushViewController as! HomeV2ViewController).loadUserPosts();
+               
+                } else if(self.pushViewController is CommunicationViewController) {
+                    
+                  (self.pushViewController as!  CommunicationViewController).showToast(message: "Post Shared Successfully On Twitter")
+                    
                 }
+                
             }
         });
     }

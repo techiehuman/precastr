@@ -161,6 +161,7 @@ class SideMenuTableViewController: UITableViewController {
         let alert = UIAlertController.init(title: "Logout!", message: "Are you sure?", preferredStyle: .alert);
         alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil));
         alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: {(response) in
+            self.logoutProcess();
             let defaults = UserDefaults.standard
             let dictionary = defaults.dictionaryRepresentation()
             dictionary.keys.forEach { key in
@@ -168,10 +169,30 @@ class SideMenuTableViewController: UITableViewController {
                     defaults.removeObject(forKey: key);
                 }
             }
+            
             UIApplication.shared.keyWindow?.rootViewController = LoginScreenViewController.MainViewController();
         }));
 
         self.present(alert, animated: true)
+    }
+    
+    func logoutProcess(){
+        var postData = [String: Any]();
+        postData["user_id"] = self.loggedInUser.userId!;
+        postData["device_registered_from"] = 2;
+        let jsonURL = "user/logout/format/json"
+       
+        UserService().postDataMethod(jsonURL: jsonURL, postData: postData, complete: {(response) in
+            print(response)
+            let statusCode = Int(response.value(forKey: "status") as! String)!
+            if(statusCode == 0) {
+                
+                //self.showAlert(title: "Alert", message: response.value(forKey: "message") as! String);
+            } else {
+                print("logout done....");
+            }
+            
+        });
     }
     
     func setUpNavigationBarItems() {
