@@ -136,6 +136,7 @@ PODS:
   - TwitterCore (3.2.0)
   - TwitterKit (3.4.2):
     - TwitterCore (>= 3.2.0)
+  - URLEmbeddedView (0.18.0)
 
 DEPENDENCIES:
   - Alamofire
@@ -155,6 +156,7 @@ DEPENDENCIES:
   - ReadabilityKit
   - SDWebImage (~> 4.0)
   - TwitterKit
+  - URLEmbeddedView
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
@@ -194,6 +196,7 @@ SPEC REPOS:
     - SDWebImage
     - TwitterCore
     - TwitterKit
+    - URLEmbeddedView
 
 SPEC CHECKSUMS:
   Alamofire: afc3e7c6db61476cb45cdd23fed06bad03bbc321
@@ -232,7 +235,8 @@ SPEC CHECKSUMS:
   SDWebImage: c10d14a8883ebd89664f02a422006f66a85c0c5d
   TwitterCore: 8cbc9ad34d91c63a0035ea05bfbfc0d7ca72a28c
   TwitterKit: 5e4f41d70b9abdb41df5467f52d7aa2c0fd26ebb
+  URLEmbeddedView: 3fe17ae535d2b8d38c3b08ab8ba0aea5efe5d1cd
 
-PODFILE CHECKSUM: 22105b60e4b78d13474ee57552e9b534928f9e97
+PODFILE CHECKSUM: d06801bcc8c58596594cc9a1ae4f4179afde9227
 
 COCOAPODS: 1.5.3

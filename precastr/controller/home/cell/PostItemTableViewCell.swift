@@ -10,7 +10,7 @@ import UIKit
 import MessageUI
 import FBSDKCoreKit
 import FBSDKLoginKit
-import FacebookShare
+import FacebookShare 
 import FBSDKCoreKit
 import ReadabilityKit
 import TwitterKit
@@ -625,7 +625,21 @@ class PostItemTableViewCell: UITableViewCell, SharingDelegate, MFMessageComposeV
                 
                 let content = ShareLinkContent();
                 content.quote = post.postDescription;
-                content.contentURL = URL.init(string: "http://precastr.com")!;
+                
+                var contentUrlStr = "http://precastr.com";
+                if (pushViewController is HomeV2ViewController) {
+                    let websiteUrl = (pushViewController as! HomeV2ViewController).extractWebsiteFromText(text: sender.post.postDescription);
+                    if (websiteUrl != nil && websiteUrl != "") {
+                        contentUrlStr = websiteUrl;
+                    }
+                } else if (pushViewController is CommunicationViewController) {
+                    let websiteUrl = (pushViewController as! CommunicationViewController).extractWebsiteFromText(text: sender.post.postDescription);
+                    if (websiteUrl != nil && websiteUrl != "") {
+                        contentUrlStr = websiteUrl;
+                    }
+                }
+                
+                content.contentURL = URL.init(string: contentUrlStr)!;
                 let shareDialog = ShareDialog()
                 shareDialog.shareContent = content;
                 
@@ -704,7 +718,7 @@ class PostItemTableViewCell: UITableViewCell, SharingDelegate, MFMessageComposeV
                     if (pushViewController is HomeV2ViewController) {
                         (pushViewController as! HomeV2ViewController).showFacebookFailAlert();
                     } else if (pushViewController is CommunicationViewController) {
-                        (pushViewController as! HomeV2ViewController).showFacebookFailAlert();
+                        (pushViewController as! CommunicationViewController).showFacebookFailAlert();
                     } else if (pushViewController is ArchieveViewController) {
                         (pushViewController as! ArchieveViewController).showFacebookFailAlert();
                     }                } else {
@@ -745,7 +759,7 @@ class PostItemTableViewCell: UITableViewCell, SharingDelegate, MFMessageComposeV
                 if (pushViewController is HomeV2ViewController) {
                     (pushViewController as! HomeV2ViewController).showFacebookFailAlert();
                 } else if (pushViewController is CommunicationViewController) {
-                    (pushViewController as! HomeV2ViewController).showFacebookFailAlert();
+                    (pushViewController as! CommunicationViewController).showFacebookFailAlert();
                 } else if (pushViewController is ArchieveViewController) {
                     (pushViewController as! ArchieveViewController).showFacebookFailAlert();
                 }
@@ -794,8 +808,8 @@ class PostItemTableViewCell: UITableViewCell, SharingDelegate, MFMessageComposeV
             (pushViewController as! HomeV2ViewController).activityIndicator.stopAnimating();
             (pushViewController as! HomeV2ViewController).showFacebookFailAlert();
         } else if (pushViewController is CommunicationViewController) {
-            (pushViewController as! HomeV2ViewController).activityIndicator.stopAnimating();
-            (pushViewController as! HomeV2ViewController).showFacebookFailAlert();
+            (pushViewController as! CommunicationViewController).activityIndicator.stopAnimating();
+            (pushViewController as! CommunicationViewController).showFacebookFailAlert();
         } else if (pushViewController is ArchieveViewController) {
             (pushViewController as! HomeV2ViewController).activityIndicator.stopAnimating();
             (pushViewController as! ArchieveViewController).showFacebookFailAlert();
