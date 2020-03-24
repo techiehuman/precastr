@@ -123,7 +123,7 @@ class UserTypeActionViewController: UIViewController {
                 let user = User().getUserData(userDataDict: userDict);
                 user.loadUserDefaults();
                 if(self.userRoleVar == 1){
-                UIApplication.shared.keyWindow?.rootViewController = HomeViewController.MainViewController();
+                UIApplication.shared.keyWindow?.rootViewController = HomeV2ViewController.MainViewController();
                 }
             }
         });

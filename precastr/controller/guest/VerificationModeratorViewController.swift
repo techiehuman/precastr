@@ -101,7 +101,7 @@ class VerificationModeratorViewController: UIViewController,UITextFieldDelegate 
                     self.present(alert, animated: true)
                     
                  }else{
-                UIApplication.shared.keyWindow?.rootViewController = HomeViewController.MainViewController();
+                    UIApplication.shared.keyWindow?.rootViewController = HomeV2ViewController.MainViewController();
                 }
             });
         }

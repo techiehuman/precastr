@@ -85,7 +85,7 @@ class CastModeratorViewController: UIViewController, CNContactPickerDelegate, MF
             alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil));
             self.present(alert, animated: true)
             //self.navigationController?.popToRootViewController(animated: false);
-            let homePageViewController: HomeViewController = self.storyboard?.instantiateViewController(withIdentifier: "HomeViewController") as! HomeViewController;
+            let homePageViewController: HomeV2ViewController = self.storyboard?.instantiateViewController(withIdentifier: "HomeV2ViewController") as! HomeV2ViewController;
              //self.window?.rootViewController = homePageViewController
             self.navigationController?.pushViewController(homePageViewController, animated: true);
         }

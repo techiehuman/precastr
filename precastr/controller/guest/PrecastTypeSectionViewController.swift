@@ -49,7 +49,7 @@ class PrecastTypeSectionViewController: UIViewController {
                 let user = User().getUserData(userDataDict: userDict);
                 user.loadUserDefaults();
                 
-                UIApplication.shared.keyWindow?.rootViewController = HomeViewController.MainViewController();
+                UIApplication.shared.keyWindow?.rootViewController = HomeV2ViewController.MainViewController();
             }
             });
         }

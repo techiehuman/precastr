@@ -66,7 +66,7 @@ class TermsPageViewController: UIViewController {
         //dismiss(animated: true, completion: nil)
     }
     @objc func homeButtonPressed() {
-        UIApplication.shared.keyWindow?.rootViewController = HomeViewController.MainViewController();
+        UIApplication.shared.keyWindow?.rootViewController = HomeV2ViewController.MainViewController();
     }
     /*
     // MARK: - Navigation

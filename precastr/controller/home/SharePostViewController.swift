@@ -88,3 +88,10 @@ class PostRowsHeight {
     static var Post_Moderator_Status_Row_Height: Int = 70;
 
 }
+
+class PostToSocialMediaGestureRecognizer: UITapGestureRecognizer {
+    var rowId: Int!;
+    var post: Post!;
+    var postPrePublishView: UIView!;
+    var sharePostButton: UIButton!;
+}

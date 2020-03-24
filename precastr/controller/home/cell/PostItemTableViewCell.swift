@@ -825,6 +825,11 @@ class PostItemTableViewCell: UITableViewCell, SharingDelegate, MFMessageComposeV
     
     func sharerDidCancel(_ sharer: Sharing) {
         print("Cancel");
+        if (self.pushViewController is HomeV2ViewController) {
+            (self.pushViewController as! HomeV2ViewController).activityIndicator.stopAnimating();
+        } else if (self.pushViewController is CommunicationViewController) {
+            (self.pushViewController as! CommunicationViewController).activityIndicator.stopAnimating();
+        }
         self.hidePostMenu();
     }
     

@@ -103,7 +103,6 @@
 		FA84F18C22A0E511007796A3 /* moderatorTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA84F18A22A0E511007796A3 /* moderatorTableViewCell.xib */; };
 		FA84F19422A1355A007796A3 /* HeaderViewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA84F19222A1355A007796A3 /* HeaderViewTableViewCell.swift */; };
 		FA84F19522A1355A007796A3 /* HeaderViewTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA84F19322A1355A007796A3 /* HeaderViewTableViewCell.xib */; };
-		FABF02482264EF650067960C /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABF02472264EF640067960C /* HomeViewController.swift */; };
 		FABF02502265DFBB0067960C /* SideMenuTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABF024F2265DFBB0067960C /* SideMenuTableViewController.swift */; };
 		FABF025B226DBE650067960C /* ModeratorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABF025A226DBE650067960C /* ModeratorViewController.swift */; };
 		FAD5014C22A97B0400D21F57 /* ModeratorCastsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD5014A22A97B0300D21F57 /* ModeratorCastsTableViewCell.swift */; };
@@ -140,8 +139,6 @@
 		FAF601CA2286A3C700B54F9B /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF601C92286A3C700B54F9B /* SplashViewController.swift */; };
 		FAF601CC228AAE6800B54F9B /* VerificationModeratorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF601CB228AAE6800B54F9B /* VerificationModeratorViewController.swift */; };
 		FAFCE3C3228E8F0000AB6DB5 /* SocialPlatform.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFCE3C2228E8F0000AB6DB5 /* SocialPlatform.swift */; };
-		FAFCE3CA22999F1000AB6DB5 /* HomeTextPostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFCE3C822999F1000AB6DB5 /* HomeTextPostTableViewCell.swift */; };
-		FAFCE3CB22999F1000AB6DB5 /* HomeTextPostTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAFCE3C922999F1000AB6DB5 /* HomeTextPostTableViewCell.xib */; };
 		FEE73D1CBA1D94C8162E3DC6 /* Pods_precastrUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 561E50304594AB7F3B9F4993 /* Pods_precastrUITests.framework */; };
 /* End PBXBuildFile section */
 
@@ -276,7 +273,6 @@
 		FA84F18A22A0E511007796A3 /* moderatorTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = moderatorTableViewCell.xib; sourceTree = "<group>"; };
 		FA84F19222A1355A007796A3 /* HeaderViewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderViewTableViewCell.swift; sourceTree = "<group>"; };
 		FA84F19322A1355A007796A3 /* HeaderViewTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HeaderViewTableViewCell.xib; sourceTree = "<group>"; };
-		FABF02472264EF640067960C /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		FABF024F2265DFBB0067960C /* SideMenuTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuTableViewController.swift; sourceTree = "<group>"; };
 		FABF025A226DBE650067960C /* ModeratorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModeratorViewController.swift; sourceTree = "<group>"; };
 		FAD5014A22A97B0300D21F57 /* ModeratorCastsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModeratorCastsTableViewCell.swift; sourceTree = "<group>"; };
@@ -313,8 +309,6 @@
 		FAF601C92286A3C700B54F9B /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		FAF601CB228AAE6800B54F9B /* VerificationModeratorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationModeratorViewController.swift; sourceTree = "<group>"; };
 		FAFCE3C2228E8F0000AB6DB5 /* SocialPlatform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialPlatform.swift; sourceTree = "<group>"; };
-		FAFCE3C822999F1000AB6DB5 /* HomeTextPostTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTextPostTableViewCell.swift; sourceTree = "<group>"; };
-		FAFCE3C922999F1000AB6DB5 /* HomeTextPostTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeTextPostTableViewCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -523,8 +517,6 @@
 			children = (
 				5E48B91123F851D30078F07E /* postItemCells */,
 				FA84F17F22A02FD9007796A3 /* views */,
-				FAFCE3C822999F1000AB6DB5 /* HomeTextPostTableViewCell.swift */,
-				FAFCE3C922999F1000AB6DB5 /* HomeTextPostTableViewCell.xib */,
 				FAD5014A22A97B0300D21F57 /* ModeratorCastsTableViewCell.swift */,
 				FAD5014B22A97B0300D21F57 /* ModeratorCastsTableViewCell.xib */,
 				FAD5015422AE895C00D21F57 /* NotificationTableViewCell.swift */,
@@ -687,7 +679,6 @@
 		FABF02462264EE600067960C /* home */ = {
 			isa = PBXGroup;
 			children = (
-				FABF02472264EF640067960C /* HomeViewController.swift */,
 				FA52DDCE227722AE0093FDF8 /* cell */,
 				FAD5015822AE8E4600D21F57 /* NotificationViewController.swift */,
 				5E203CB92349C5EA00EFFC2D /* ModeratorPhoneNumberViewController.swift */,
@@ -931,7 +922,6 @@
 				FAD5015122AA6B1700D21F57 /* EditProfileTableViewCell.xib in Resources */,
 				FADFEAF822A51A46006E3CD2 /* VisbyCF-ExtraBoldOblique.otf in Resources */,
 				FA84F18C22A0E511007796A3 /* moderatorTableViewCell.xib in Resources */,
-				FAFCE3CB22999F1000AB6DB5 /* HomeTextPostTableViewCell.xib in Resources */,
 				5EC1B79F23DB38D600F32C40 /* PostCastMenu.xib in Resources */,
 				FAE6173B22B3B07E00A8B2F3 /* LeftCommunicationTableViewCell.xib in Resources */,
 				FADFEAF322A51A46006E3CD2 /* VisbyCF-Bold.otf in Resources */,
@@ -1147,7 +1137,6 @@
 				FA84F18B22A0E511007796A3 /* moderatorTableViewCell.swift in Sources */,
 				FA6AB57C22531E7300C5491F /* AppDelegate.swift in Sources */,
 				FA84F18522A03289007796A3 /* SlideUIView.swift in Sources */,
-				FAFCE3CA22999F1000AB6DB5 /* HomeTextPostTableViewCell.swift in Sources */,
 				90881EF92341FC2100023450 /* ContactsViewController.swift in Sources */,
 				FA1C1CDD228400A800583E1B /* Reusable.swift in Sources */,
 				5E45B2CF240D54D800F5EB31 /* ModeratorHomeTopTableViewCell.swift in Sources */,
@@ -1169,7 +1158,6 @@
 				FAF601CC228AAE6800B54F9B /* VerificationModeratorViewController.swift in Sources */,
 				5E48B92023F963780078F07E /* PostGalleryTableViewCell.swift in Sources */,
 				908D6F3322C243D800762145 /* PostStatus.swift in Sources */,
-				FABF02482264EF650067960C /* HomeViewController.swift in Sources */,
 				5EF623F822A58ADB00124C55 /* CreatePostViewController.swift in Sources */,
 				FAE4DF64225F155C008875C3 /* AppUtil.swift in Sources */,
 				FABF025B226DBE650067960C /* ModeratorViewController.swift in Sources */,

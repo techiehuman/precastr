@@ -85,12 +85,12 @@ class UpdatePhoneNumberViewController: UIViewController, UpdatePhoneNumberViewCo
                         let viewController: PrecastTypeSectionViewController = self.storyboard?.instantiateViewController(withIdentifier: "PrecastTypeSectionViewController") as! PrecastTypeSectionViewController;
                         self.navigationController?.pushViewController(viewController, animated: true);
                     } else {
-                        UIApplication.shared.keyWindow?.rootViewController = HomeViewController.MainViewController()
+                        UIApplication.shared.keyWindow?.rootViewController = HomeV2ViewController.MainViewController()
                     }
                     
                 } else if (userDefaultRole == 2){//If user is moderator
                     //Then we will be sending him to home screen.
-                    UIApplication.shared.keyWindow?.rootViewController = HomeViewController.MainViewController()
+                    UIApplication.shared.keyWindow?.rootViewController = HomeV2ViewController.MainViewController()
                 }
             }
             
