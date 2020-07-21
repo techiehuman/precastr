@@ -20,6 +20,7 @@ class UserService{
         print("API Url : \(url)")
         print(postData)
         HttpService().postMethod(url: url,postData: postData, complete: { (response ) in
+            print(response);
             complete(response);
         });
     };

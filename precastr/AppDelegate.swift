@@ -22,6 +22,7 @@ var postIdFromPush = 0;
 var pushNotificationId = 0;
 var isAppKilled = true;
 var pushForScreenAt = "Home";
+var dbHelper: DBHelper!;
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUserNotificationCenterDelegate {
@@ -29,7 +30,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
     var window: UIWindow?
 
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 
         // Override point for customization after application launch.
         FirebaseApp.configure()
@@ -37,19 +38,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
         ApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions);
 
         Fabric.with([Crashlytics.self])
-         TWTRTwitter.sharedInstance().start(withConsumerKey:"anwp6W4J66hoUWrB1PX9zMHiu", consumerSecret: "tXOlOLD8gcRQhrux93NcBQOA1v2WE24PcZTb9PrgLSS8c4DUAI")
+        TWTRTwitter.sharedInstance().start(withConsumerKey:"anwp6W4J66hoUWrB1PX9zMHiu", consumerSecret: "tXOlOLD8gcRQhrux93NcBQOA1v2WE24PcZTb9PrgLSS8c4DUAI");
+        
+        dbHelper = DBHelper();
+        
         UITabBar.appearance().barTintColor = UIColor.init(red:12/255, green:111/255, blue: 233/255, alpha: 1)
         UITabBar.appearance().tintColor = UIColor.white;
         UINavigationBar.appearance().barTintColor = UIColor.init(red:12/255, green:111/255, blue: 233/255, alpha: 1)
         UINavigationBar.appearance().tintColor = UIColor.white
         
         let navbarFont = UIFont(name: "VisbyCF-Medium", size: 20)!
-        UINavigationBar.appearance().titleTextAttributes = [NSAttributedStringKey.font: navbarFont, NSAttributedStringKey.foregroundColor : UIColor.white]
+        UINavigationBar.appearance().titleTextAttributes = [NSAttributedString.Key.font: navbarFont, NSAttributedString.Key.foregroundColor : UIColor.white]
         
         
         let tabBarFont = UIFont(name: "VisbyCF-Medium", size: 10)!
-        UITabBarItem.appearance().setTitleTextAttributes([NSAttributedStringKey.font: tabBarFont], for: .normal)
-        UITabBarItem.appearance().setTitleTextAttributes([NSAttributedStringKey.font: tabBarFont], for: .selected)
+        UITabBarItem.appearance().setTitleTextAttributes([NSAttributedString.Key.font: tabBarFont], for: .normal)
+        UITabBarItem.appearance().setTitleTextAttributes([NSAttributedString.Key.font: tabBarFont], for: .selected)
         UITabBar.appearance().unselectedItemTintColor = UIColor.init(red: 34/255, green: 34/255, blue: 34/255, alpha: 1);
         
         if #available(iOS 10.0, *) {
@@ -130,7 +134,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
 
-    func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
+    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
         
         print(url.absoluteString.contains("fb"))
         
@@ -163,7 +167,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
         
         //HomeV2ViewController().showBadgeCount();
 
-        let userInfo = notification.request.content.userInfo as! NSDictionary;
+        let userInfo = notification.request.content.userInfo as NSDictionary;
         //let payloadDict = convertToDictionary(from: userInfo["gcm.notification.payload"]! as! String);
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "reloadCommunicationScreen"), object: nil)
 
@@ -194,7 +198,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
         
         print("***** INSIDE : didReceive ******");
-        let userInfo = response.notification.request.content.userInfo as! NSDictionary
+        let userInfo = response.notification.request.content.userInfo as NSDictionary
                 
         //DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {
           //  let storyBoard = UIStoryboard.init(name: "Main", bundle: nil)
@@ -223,7 +227,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
         debugPrint("Received: \(userInfo)");
         print("***** INSIDE : didReceiveRemoteNotification ******");
 
-        let userInfoTemp = userInfo as! NSDictionary
+        let userInfoTemp = userInfo as NSDictionary
                 
         //DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {
           //  let storyBoard = UIStoryboard.init(name: "Main", bundle: nil)
@@ -274,7 +278,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
                     if (loggedInUser.isCastr == 1) {
                         index =  4;
                     } else {
-                        index = 2;
+                        index = 3;
                     }
                     let tabItem = tabItems[index]
                     let badgeCount = dataArray.value(forKey: "total") as! String

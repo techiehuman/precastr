@@ -137,7 +137,7 @@ extension LoginScreenViewController: UITableViewDelegate, UITableViewDataSource 
         
         activityIndicator.center = view.center;
         activityIndicator.hidesWhenStopped = true;
-        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.whiteLarge;
+        activityIndicator.style = UIActivityIndicatorView.Style.whiteLarge;
         cell.addSubview(activityIndicator);
         
         return cell;

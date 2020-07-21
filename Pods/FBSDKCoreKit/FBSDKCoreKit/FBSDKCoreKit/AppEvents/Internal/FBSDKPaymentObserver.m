@@ -20,7 +20,7 @@
 
 #import <StoreKit/StoreKit.h>
 
-#import <FBSDKCoreKit/FBSDKCoreKit+Internal.h>
+#import "FBSDKCoreKit+Internal.h"
 
 #import "FBSDKAppEvents+Internal.h"
 #import "FBSDKDynamicFrameworkLoader.h"
@@ -326,8 +326,8 @@ static NSString *const FBSDKGateKeeperAppEventsIfAutoLogSubs = @"app_events_if_a
 #if __IPHONE_OS_VERSION_MAX_ALLOWED > __IPHONE_12_1
   // promotional offer starting from iOS 12.2
   if (@available(iOS 12.2, *)) {
-      SKProductDiscount *paymentDiscount = transaction.payment;
-    /*if (paymentDiscount) {
+    SKPaymentDiscount *paymentDiscount = transaction.payment.paymentDiscount;
+    if (paymentDiscount) {
       NSArray<SKProductDiscount *> *discounts = product.discounts;
       for (SKProductDiscount *discount in discounts) {
         if (discount.paymentMode == SKProductDiscountPaymentModeFreeTrial &&
@@ -335,7 +335,7 @@ static NSString *const FBSDKGateKeeperAppEventsIfAutoLogSubs = @"app_events_if_a
           return YES;
         }
       }
-    }*/
+    }
   }
 #endif
 #endif
@@ -363,12 +363,12 @@ static NSString *const FBSDKGateKeeperAppEventsIfAutoLogSubs = @"app_events_if_a
 #if __IPHONE_OS_VERSION_MAX_ALLOWED > __IPHONE_12_1
   // promotional offer starting from iOS 12.2
   if (@available(iOS 12.2, *)) {
-    /*NSArray<SKProductDiscount *> *discounts = product.discounts;
+    NSArray<SKProductDiscount *> *discounts = product.discounts;
     for (SKProductDiscount *discount in discounts) {
       if (discount.paymentMode == SKProductDiscountPaymentModeFreeTrial) {
         return YES;
       }
-    }*/
+    }
   }
 #endif
 #endif

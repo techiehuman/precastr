@@ -58,7 +58,7 @@ class LeftCommunicationTableViewCell: UITableViewCell, UIScrollViewDelegate {
             print("X Position : ", xposition, "width", imageScrollView.frame.width * CGFloat(i + 1));
             
             imageScrollView.addSubview(setupSlideScrollView)
-            self.currentCount = i as! Int
+            self.currentCount = i 
         }
         
         //imageGalleryScrollView.addSubview(imageCounterView);

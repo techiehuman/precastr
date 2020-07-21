@@ -25,7 +25,7 @@ class UpdatePhoneNumberViewController: UIViewController, UpdatePhoneNumberViewCo
         self.navigationController?.navigationBar.isHidden = true
         activityIndicator.center = view.center;
         activityIndicator.hidesWhenStopped = true;
-        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.whiteLarge;
+        activityIndicator.style = UIActivityIndicatorView.Style.whiteLarge;
         view.addSubview(activityIndicator);
         
         

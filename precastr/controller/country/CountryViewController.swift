@@ -89,7 +89,7 @@ extension CountryViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let countryCodeService = countries[indexPath.row] as! CountryCodeService;
+        let countryCodeService = countries[indexPath.row] ;
         
         let cell: CountryTableViewCell = tableView.dequeueReusableCell(withIdentifier: "CountryTableViewCell") as! CountryTableViewCell;
         
@@ -103,7 +103,7 @@ extension CountryViewController: UITableViewDelegate, UITableViewDataSource {
         return 40;
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let countryCodeService = countries[indexPath.row] as! CountryCodeService;
+        let countryCodeService = countries[indexPath.row] ;
         if(self.signupScreenViewControllerDelegate != nil){
              self.signupScreenViewControllerDelegate.countriesDoneButtonPressed(country: countryCodeService);
         }

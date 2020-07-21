@@ -52,14 +52,17 @@ class AfterApprovedButtonsTableViewCell: UITableViewCell, EasyTipViewDelegate {
             self.easyToolTip.show(animated: true, forView: facebookInfoBtn, withinSuperview: self.viewController.view)
             
             if (viewController is HomeV2ViewController) {
-                (viewController as! HomeV2ViewController).postsTableView.isScrollEnabled = false;
+                //(viewController as! HomeV2ViewController).postsTableView.isScrollEnabled = false;
+                 (viewController as! HomeV2ViewController).postsTableView.alwaysBounceVertical = false;
             }
-            
         } else {
             self.easyToolTip.dismiss();
             self.easyToolTip = nil;
             if (viewController is HomeV2ViewController) {
-                (viewController as! HomeV2ViewController).postsTableView.isScrollEnabled = true;
+                //(viewController as! HomeV2ViewController).postsTableView.isScrollEnabled = true;
+                if (viewController is HomeV2ViewController) {
+                    (viewController as! HomeV2ViewController).postsTableView.alwaysBounceVertical = true;
+                }
             }
         }
     }
@@ -67,6 +70,9 @@ class AfterApprovedButtonsTableViewCell: UITableViewCell, EasyTipViewDelegate {
     func easyTipViewDidDismiss(_ tipView: EasyTipView) {
         tipView.dismiss();
         
+        if (viewController is HomeV2ViewController) {
+            (viewController as! HomeV2ViewController).postsTableView.alwaysBounceVertical = true;
+        }
     }
     
 }

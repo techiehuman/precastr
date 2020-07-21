@@ -74,7 +74,7 @@ class CreatePostViewController: UIViewController, UIImagePickerControllerDelegat
         
         activityIndicator.center = view.center;
         activityIndicator.hidesWhenStopped = true;
-        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.gray;
+        activityIndicator.style = UIActivityIndicatorView.Style.gray;
         self.view.addSubview(activityIndicator);
     }
     
@@ -87,7 +87,7 @@ class CreatePostViewController: UIViewController, UIImagePickerControllerDelegat
         createPostTableView.reloadData();
         let menuButton = UIButton();
         menuButton.setImage(UIImage.init(named: "menu"), for: .normal);
-        menuButton.addTarget(self, action: #selector(menuButtonClicked), for: UIControlEvents.touchUpInside)
+        menuButton.addTarget(self, action: #selector(menuButtonClicked), for: UIControl.Event.touchUpInside)
         menuButton.frame = CGRect.init(x: 0, y:0, width: 24, height: 24);
         
         let barButton = UIBarButtonItem(customView: menuButton)
@@ -100,7 +100,7 @@ class CreatePostViewController: UIViewController, UIImagePickerControllerDelegat
         if (post != nil) {
             let backButton = UIButton();
             backButton.setImage(UIImage.init(named: "left-arrow"), for: .normal);
-            backButton.addTarget(self, action: #selector(backButtonPressed), for: UIControlEvents.touchUpInside)
+            backButton.addTarget(self, action: #selector(backButtonPressed), for: UIControl.Event.touchUpInside)
             backButton.frame = CGRect.init(x: 0, y:0, width: 20, height: 15);
             
             let barBackButton = UIBarButtonItem(customView: backButton)
@@ -127,7 +127,7 @@ class CreatePostViewController: UIViewController, UIImagePickerControllerDelegat
             let OKAction = UIAlertAction(title: "OK", style: .default) { (action:UIAlertAction!) in
                 
                 // Code in this block will trigger when OK button tapped.
-                if let settingUrl = URL(string:UIApplicationOpenSettingsURLString) {
+                if let settingUrl = URL(string:UIApplication.openSettingsURLString) {
                     UIApplication.shared.openURL(settingUrl);
                 } else {
                     print("Setting URL invalid")
@@ -215,7 +215,7 @@ class CreatePostViewController: UIViewController, UIImagePickerControllerDelegat
                     if(result != nil){
                         thumbnail = result!
                         
-                        let data = UIImageJPEGRepresentation(thumbnail, 0.7)
+                        let data = thumbnail.jpegData(compressionQuality: 0.7)
                         let newImage = UIImage(data: data!)
                         
                         self.PhotoArray.append(newImage as! UIImage);

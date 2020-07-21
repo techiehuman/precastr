@@ -8,6 +8,9 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
+        <array key="VisbyCF-Bold.otf">
+            <string>VisbyCF-Bold</string>
+        </array>
         <array key="VisbyCF-Medium.otf">
             <string>VisbyCF-Medium</string>
         </array>
@@ -25,7 +28,21 @@
                 <rect key="frame" x="0.0" y="0.0" width="425" height="70"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Moderate Casts" translatesAutoresizingMaskIntoConstraints="NO" id="Efg-XL-ZMA">
+                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zAu-JF-O7n">
+                        <rect key="frame" x="15" y="15" width="40" height="40"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="M" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q3S-3W-Cpb">
+                                <rect key="frame" x="0.0" y="9" width="40" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="VisbyCF-Bold" family="Visby CF" pointSize="14"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" red="0.86666666670000003" green="0.87450980389999999" blue="0.8862745098" alpha="1" colorSpace="calibratedRGB"/>
+                    </view>
+                    <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Moderate Casts" translatesAutoresizingMaskIntoConstraints="NO" id="Efg-XL-ZMA">
                         <rect key="frame" x="15" y="15" width="40" height="40"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                     </imageView>
@@ -58,6 +75,8 @@
                 <outlet property="postOwnerName" destination="Kbk-1k-veT" id="V3b-4P-ehG"/>
                 <outlet property="postStatusView" destination="Mzq-iV-Q03" id="dQM-6N-8od"/>
                 <outlet property="profilePic" destination="Efg-XL-ZMA" id="SEB-Bf-c9K"/>
+                <outlet property="userNoImageView" destination="zAu-JF-O7n" id="h6g-82-Daf"/>
+                <outlet property="userNoImageViewLabel" destination="Q3S-3W-Cpb" id="oJI-pV-N99"/>
                 <outlet property="viewDetailsBtn" destination="rv7-us-IOe" id="dYH-me-kde"/>
             </connections>
             <point key="canvasLocation" x="61.594202898550726" y="76.004464285714278"/>

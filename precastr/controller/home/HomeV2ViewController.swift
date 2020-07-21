@@ -14,15 +14,18 @@ import FacebookShare
 import FBSDKCoreKit
 import EasyTipView
 import MessageUI
+import SwipeCellKit
 
-class HomeV2ViewController: SharePostViewController,EasyTipViewDelegate, SharingDelegate,MFMessageComposeViewControllerDelegate {
+class HomeV2ViewController: SharePostViewController,EasyTipViewDelegate, SharingDelegate, MFMessageComposeViewControllerDelegate {
     
     class func MainViewController() -> UITabBarController{
         
         let tabBarContro = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MadTabBar") as! UITabBarController
         let loggedInUser = User().loadUserDataFromUserDefaults(userDataDict: setting);
         if (loggedInUser.isCastr == 2) {
+            
             tabBarContro.viewControllers?.remove(at: 1)
+
         }
         return tabBarContro;
         //return UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MadTabBar") as! UITabBarController
@@ -39,6 +42,7 @@ class HomeV2ViewController: SharePostViewController,EasyTipViewDelegate, Sharing
     var postId: Int!;
     var easyToolTip: EasyTipView!
     var postIdDescExpansionMap = [Int: Bool]();
+    var postLinkInfoFetched = [String: LinkInfoData]();
 
     private let refreshControl = UIRefreshControl()
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView();
@@ -47,7 +51,7 @@ class HomeV2ViewController: SharePostViewController,EasyTipViewDelegate, Sharing
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
         postsTableView.register(UINib(nibName: "PostItemTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "PostItemTableViewCell");
         loggedInUser = User().loadUserDataFromUserDefaults(userDataDict : setting);
@@ -60,8 +64,6 @@ class HomeV2ViewController: SharePostViewController,EasyTipViewDelegate, Sharing
             self.postsTableView.addSubview(refreshControl)
         }
         refreshControl.addTarget(self, action: #selector(refreshPostsData(_:)), for: .valueChanged);
-        
-        
         
         NotificationCenter.default.addObserver(self, selector: #selector(self.refreshPostsData), name: NSNotification.Name(rawValue: "reloadHomeScreen"), object: nil)
         
@@ -90,13 +92,14 @@ class HomeV2ViewController: SharePostViewController,EasyTipViewDelegate, Sharing
         
         activityIndicator.center = view.center;
         activityIndicator.hidesWhenStopped = true;
-        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.gray;
+        activityIndicator.style = UIActivityIndicatorView.Style.gray;
         view.addSubview(activityIndicator);
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
             self.showBadgeCount();
         }
 
+        getAllModeratorCategories();
     }
     override func viewWillAppear(_ animated: Bool) {
         loggedInUser = User().loadUserDataFromUserDefaults(userDataDict : setting);
@@ -108,13 +111,13 @@ class HomeV2ViewController: SharePostViewController,EasyTipViewDelegate, Sharing
         if (loggedInUser.isCastr == 2) {
             self.navigationItem.title = "Moderate Casts";
             
-            if (self.tabBarController != nil && self.tabBarController!.viewControllers?.count == 4) {
+            if (self.tabBarController != nil && self.tabBarController!.viewControllers?.count == 5) {
                 self.tabBarController!.viewControllers?.remove(at: 1)
             }
         } else {
             self.navigationItem.title = "My Casts";
             
-            if (self.tabBarController!.viewControllers?.count == 3) {
+            if (self.tabBarController!.viewControllers?.count == 4) {
                 
                 let navController = self.storyboard?.instantiateViewController(withIdentifier: "CreateNewPostNavController") as! UINavigationController;
                 self.tabBarController!.viewControllers?.insert(navController, at: 1);
@@ -125,7 +128,7 @@ class HomeV2ViewController: SharePostViewController,EasyTipViewDelegate, Sharing
         
         let menuButton = UIButton();
         menuButton.setImage(UIImage.init(named: "menu"), for: .normal);
-        menuButton.addTarget(self, action: #selector(menuButtonClicked), for: UIControlEvents.touchUpInside)
+        menuButton.addTarget(self, action: #selector(menuButtonClicked), for: UIControl.Event.touchUpInside)
         menuButton.frame = CGRect.init(x: 0, y:0, width: 24, height: 24);
         
         let barButton = UIBarButtonItem(customView: menuButton)
@@ -352,6 +355,8 @@ class HomeV2ViewController: SharePostViewController,EasyTipViewDelegate, Sharing
         
         var postData = [String: Any]();
         postData["post_id"] = post.postId;
+        postData["timestamp"] = Int64(Date().timeIntervalSince1970 * 1000.0);
+
         let alert = UIAlertController.init(title: "Delete this cast.", message: "", preferredStyle: .alert);
         alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil));
         alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: {(response) in
@@ -381,6 +386,9 @@ class HomeV2ViewController: SharePostViewController,EasyTipViewDelegate, Sharing
         let loggedInUser = User().loadUserDataFromUserDefaults(userDataDict: setting);
         let jsonURL = "posts/get_notifications_count/format/json";
         var postArray = [String: Any]();
+        if (loggedInUser.userId == nil) {
+            return;
+        }
         postArray["user_id"] = String(loggedInUser.userId)
         if (loggedInUser.isCastr == 1) {
             postArray["role_id"] = 0;
@@ -402,7 +410,7 @@ class HomeV2ViewController: SharePostViewController,EasyTipViewDelegate, Sharing
                     if (self.loggedInUser.isCastr == 1) {
                         index =  4;
                     } else {
-                        index = 2;
+                        index = 3;
                     }
                     let tabItem = tabItems[index]
                     let badgeCount = dataArray.value(forKey: "total") as! String
@@ -419,8 +427,6 @@ class HomeV2ViewController: SharePostViewController,EasyTipViewDelegate, Sharing
     
     
     func loadUserPosts() {
-        
-        
         //HomeV2ViewController.showBadgeCount();
 
         noPostsText.isHidden = false;
@@ -501,7 +507,6 @@ class HomeV2ViewController: SharePostViewController,EasyTipViewDelegate, Sharing
         
         postArray["user_id"] = String(loggedInUser.userId)
         
-        
         UserService().postDataMethod(jsonURL: jsonURL, postData: postArray, complete: {(response) in
             print(response)
             
@@ -550,10 +555,40 @@ class HomeV2ViewController: SharePostViewController,EasyTipViewDelegate, Sharing
         });
     }
 
+    func markPostAsArchive(postId: Int) {
+        
+        let endPoint = "posts/mark_archive/format/json";
+        var postArray : [String:Any] = [String:Any]();
+        postArray["user_id"] = String(loggedInUser.userId)
+        postArray["post_id"] = postId;
+
+        UserService().postDataMethod(jsonURL: endPoint, postData: postArray, complete: {(response) in
+                
+        });
+    }
+    
+    func getAllModeratorCategories() {
+        let endPoint = "home/get_all_moderator_categories/format/json";
+        UserService().postDataMethod(jsonURL: endPoint, postData: [String: Any](), complete: {response in
+            
+            let success = Int(response.value(forKey: "status") as! String)!
+            if (success == 1) {
+                  
+                dbHelper.deleteAllModeratorCategories();
+
+                let moderatorArr = response.value(forKey: "data") as! NSArray;
+                let moderatorCategories = ModeratorCategory().loadModeratorCategoryFromNSArray(modCatArr: moderatorArr);
+                for moderatorCategory in moderatorCategories {
+                    dbHelper.insertModerartorCategory(moderatorCategory: moderatorCategory);
+
+                }
+            }
+        });
+    }
 }
 
 
-extension HomeV2ViewController: UITableViewDelegate, UITableViewDataSource {
+extension HomeV2ViewController: UITableViewDelegate, UITableViewDataSource, SwipeTableViewCellDelegate {
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1;
@@ -578,6 +613,7 @@ extension HomeV2ViewController: UITableViewDelegate, UITableViewDataSource {
         cell.post = post
         cell.postRowIndex = indexPath.row;
         cell.totalPosts = posts.count;
+        cell.delegate = self
         //self.postIdDescExpansionMap[post.postId] = cell.isDescriptionFullView;
         cell.parentTableIndexPath = indexPath;
         cell.postItemsTableView.reloadData();
@@ -607,9 +643,17 @@ extension HomeV2ViewController: UITableViewDelegate, UITableViewDataSource {
             heightOfDesc = 35;
         }
         print("Height of Descriptiojn :  ",heightOfDesc, "POst Id : ", post.postId);
+        
+        let websiteUrl = extractWebsiteFromText(text: post.postDescription);
+        if (websiteUrl == post.postDescription) {
+            if (posts.count > 1) {
+                heightOfDesc = 35;
+            } else {
+                heightOfDesc = 25;
+            }
+        }
         height = height + heightOfDesc;
     
-        let websiteUrl = extractWebsiteFromText(text: post.postDescription);
         if (websiteUrl != "") {
             height = height + CGFloat(PostRowsHeight.Post_WebsiteInfo_Row_Height);
         }
@@ -618,5 +662,65 @@ extension HomeV2ViewController: UITableViewDelegate, UITableViewDataSource {
         }
         
         return CGFloat(height);
-}
+    }
+    
+    /*@available(iOS 11.0, *)
+    func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        
+        let archiveAction = UIContextualAction(style: .normal, title: "Archive", handler: {a,b,c in
+            // example of your delete function
+            self.markPostAsArchive(postId: self.posts[indexPath.row].postId);
+            self.posts.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+        });
+        archiveAction.backgroundColor = UIColor.init(red: 245/255, green: 245/255, blue: 245/255, alpha: 1);
+        // customize the action appearance
+        archiveAction.image = UIImage(named: "archieve_post_icon");
+        return UISwipeActionsConfiguration(actions: [archiveAction])
+    }*/
+    
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> [SwipeAction]? {
+        guard orientation == .left && self.loggedInUser.isCastr == 1 else { return nil }
+
+        let archiveAction = SwipeAction(style: .default, title: "Archive") { action, indexPathTmp in
+            // handle action by updating model with deletion
+            let postId = self.posts[indexPath.row].postId;
+            self.posts.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .automatic);
+            //tableView.dataSource?.tableView?(tableView, commit: .delete, forRowAt: indexPath)
+
+            self.markPostAsArchive(postId: postId);
+            if (self.posts.count == 0) {
+                self.noPostsText.text = "You do not have any casts.\n Please click \"Add New\" to create a Cast!";
+                self.noPostsText.frame = CGRect.init(x: self.noPostsText.frame.origin.x, y: self.noPostsText.frame.origin.y, width: self.noPostsText.frame.width, height: 70)
+                self.noPostsText.numberOfLines = 3;
+                
+                self.noPostsText.isHidden = false;
+                self.noPostsIcon.isHidden = false;
+                self.postsTableView.isHidden = true;
+            }
+            
+            if ( self.loggedInUser.isCastr == 1) {
+                if (self.posts.count > 0) {
+                    self.navigationItem.title = "My Casts (\(self.posts.count))";
+                } else {
+                    self.navigationItem.title = "My Casts";
+                }
+            }
+        }
+        archiveAction.textColor = UIColor.black;
+        // customize the action appearance
+        archiveAction.image = UIImage(named: "archieve_post_icon");
+        archiveAction.font = UIFont.init(name: "VisbyCF-DemiBold", size: 12.0)
+        archiveAction.backgroundColor = UIColor.init(red: 245/255, green: 245/255, blue: 245/255, alpha: 1);
+
+        return [archiveAction]
+    }
+
+    func tableView(_ tableView: UITableView, editActionsOptionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> SwipeOptions {
+        
+        var options = SwipeOptions()
+        options.expansionStyle = .none
+        return options
+    }
 }

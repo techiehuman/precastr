@@ -30,12 +30,12 @@ class UpdatePhoneNumberTableViewCell: UITableViewCell,UITextFieldDelegate {
         self.phoneNumberTextField.leftView = phoneIconContainerView
         self.phoneNumberTextField.leftViewMode = .always
         
-        self.phoneNumberTextField.attributedPlaceholder = NSAttributedString(string: "Phone Number", attributes: [NSAttributedStringKey.foregroundColor : UIColor.white ])
+        self.phoneNumberTextField.attributedPlaceholder = NSAttributedString(string: "Phone Number", attributes: [NSAttributedString.Key.foregroundColor : UIColor.white ])
         
         self.phoneNumberTextField.layer.borderColor = UIColor.white.cgColor
         self.phoneNumberTextField.layer.borderWidth = 0.5
         self.countryCodeUIView.layer.borderWidth = 0.5
-        self.countryCodeUIView.layer.borderColor = UIColor.white.cgColor as! CGColor
+        self.countryCodeUIView.layer.borderColor = UIColor.white.cgColor 
         // Do any additional setup after loading the view.
         let countryCodeTapGesture = UITapGestureRecognizer.init(target: self, action: #selector(countryPhoneCodeViewPressed));
         countryCodeUIView.addGestureRecognizer(countryCodeTapGesture);

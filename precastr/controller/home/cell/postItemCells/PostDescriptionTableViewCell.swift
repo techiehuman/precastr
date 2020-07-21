@@ -39,7 +39,7 @@ class PostDescriptionTableViewCell: UITableViewCell {
     }
     
     @objc func postDescPressed(sender: MyTapRecognizer) {
-    
+
         //Call this function
         if (pushViewController is HomeV2ViewController) {
             if ((postItemTableViewCellDelegate.pushViewController as! HomeV2ViewController).postIdDescExpansionMap[postItemTableViewCellDelegate.post.postId] != nil && (postItemTableViewCellDelegate.pushViewController as! HomeV2ViewController).postIdDescExpansionMap[postItemTableViewCellDelegate.post.postId] == true) {
@@ -73,13 +73,40 @@ class PostDescriptionTableViewCell: UITableViewCell {
            //line height size
            paragraphStyle.lineSpacing = 2
            let attributes = [
-               NSAttributedStringKey.font : UIFont(name: "VisbyCF-Regular", size: 16.0)!,
-               NSAttributedStringKey.foregroundColor : UIColor.init(red: 34/255, green: 34/255, blue: 34/255, alpha: 1),
-               NSAttributedStringKey.paragraphStyle: paragraphStyle]
+               NSAttributedString.Key.font : UIFont(name: "VisbyCF-Regular", size: 16.0)!,
+               NSAttributedString.Key.foregroundColor : UIColor.init(red: 34/255, green: 34/255, blue: 34/255, alpha: 1),
+               NSAttributedString.Key.paragraphStyle: paragraphStyle]
            
         let attrString = NSMutableAttributedString(string: sender.post.postDescription)
            attrString.addAttributes(attributes, range: NSMakeRange(0, attrString.length));
             postDescription.attributedText = attrString;
+        
+        var websiteUrl = "";
+        if (postItemTableViewCellDelegate.pushViewController is HomeV2ViewController) {
+           websiteUrl = (postItemTableViewCellDelegate.pushViewController as!  HomeV2ViewController).extractWebsiteFromText(text: sender.post.postDescription)
+            } else if (postItemTableViewCellDelegate.pushViewController is CommunicationViewController) {
+            websiteUrl = (postItemTableViewCellDelegate.pushViewController as!  CommunicationViewController).extractWebsiteFromText(text: sender.post.postDescription)
+            } else if (postItemTableViewCellDelegate.pushViewController is ArchieveViewController) {
+            websiteUrl = (postItemTableViewCellDelegate.pushViewController as! ArchieveViewController).extractWebsiteFromText(text: sender.post.postDescription)
+            }
+        
+        if (websiteUrl != "") {
+            let range: NSRange = attrString.mutableString.range(of: websiteUrl, options: .caseInsensitive)
+
+            attrString.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.systemBlue, range: range);
+            //attrString.addAttribute(.link, value: websiteUrl, range: range);
+
+            postDescription.attributedText = attrString;
+            
+            let websiteString = sender.post.postDescription as NSString;
+            let websiteRange = websiteString.range(of: websiteUrl);
+            let tapLocation = sender.location(in: postDescription)
+            if sender.didTapAttributedTextInLabel(label: postDescription, inRange: range) {
+                   print("Tapped terms")
+                UIApplication.shared.open(URL.init(string: websiteUrl)!)
+
+               }
+        }
         //self.postItemTableViewCellDelegate.postItemsTableView.reloadData();
         //self.postItemTableViewCellDelegate.postItemsTableView.beginUpdates()
         //self.postItemTableViewCellDelegate.postItemsTableView.endUpdates()
@@ -117,9 +144,9 @@ class PostDescriptionTableViewCell: UITableViewCell {
            //line height size
            paragraphStyle.lineSpacing = 2
            let attributes = [
-               NSAttributedStringKey.font : UIFont(name: "VisbyCF-Regular", size: 16.0)!,
-               NSAttributedStringKey.foregroundColor : UIColor.init(red: 34/255, green: 34/255, blue: 34/255, alpha: 1),
-               NSAttributedStringKey.paragraphStyle: paragraphStyle]
+               NSAttributedString.Key.font : UIFont(name: "VisbyCF-Regular", size: 16.0)!,
+               NSAttributedString.Key.foregroundColor : UIColor.init(red: 34/255, green: 34/255, blue: 34/255, alpha: 1),
+               NSAttributedString.Key.paragraphStyle: paragraphStyle]
            
         let attrString = NSMutableAttributedString(string: post.postDescription)
            attrString.addAttributes(attributes, range: NSMakeRange(0, attrString.length));
@@ -145,6 +172,23 @@ class PostDescriptionTableViewCell: UITableViewCell {
 
         }
         
+        
+        var websiteUrl = "";
+        if (postItemTableViewCellDelegate.pushViewController is HomeV2ViewController) {
+           websiteUrl = (postItemTableViewCellDelegate.pushViewController as!  HomeV2ViewController).extractWebsiteFromText(text: post.postDescription)
+            } else if (postItemTableViewCellDelegate.pushViewController is CommunicationViewController) {
+            websiteUrl = (postItemTableViewCellDelegate.pushViewController as!  CommunicationViewController).extractWebsiteFromText(text: post.postDescription)
+            } else if (postItemTableViewCellDelegate.pushViewController is ArchieveViewController) {
+            websiteUrl = (postItemTableViewCellDelegate.pushViewController as! ArchieveViewController).extractWebsiteFromText(text: post.postDescription)
+            }
+        
+        postDescription.isHidden = false;
+        if (post.postDescription == websiteUrl) {
+            postDescription.isHidden = true;
+        } else if (websiteUrl != "") {
+            postDescription.isHidden = false;
+            postDescription.highlightTextAsLink(searchedText: websiteUrl);
+        }
         print(post.postDescription);
     }
     

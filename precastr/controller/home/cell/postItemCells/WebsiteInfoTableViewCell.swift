@@ -16,7 +16,7 @@ class WebsiteInfoTableViewCell: UITableViewCell {
     @IBOutlet weak var websiteDescription: UILabel!;
     @IBOutlet weak var websiteImg: UIImageView!;
     var pushViewController: UIViewController!;
-
+    var postItemTableViewCellDelegate: PostItemTableViewCell!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -42,8 +42,8 @@ class WebsiteInfoTableViewCell: UITableViewCell {
         if (finalUrl != "") {
             let articleUrl = URL(string: finalUrl)!
             
-            let embeddedView = URLEmbeddedView()
-            embeddedView.load(urlString: finalUrl) { data in
+            //let embeddedView = URLEmbeddedView()
+            //embeddedView.load(urlString: finalUrl) { data in
                 
                 OGDataProvider.shared.fetchOGData(withURLString: finalUrl) { [weak self] ogData, error in
                     
@@ -51,23 +51,55 @@ class WebsiteInfoTableViewCell: UITableViewCell {
                             return
                         }
                     
+                    if (ogData == nil) {
+                        return;
+                    }
                     if (ogData.pageTitle != nil) {
-                        self!.websiteTitle.text = ogData.pageTitle;
+                        
+                        let linkInfoData = LinkInfoData();
+                        linkInfoData.title = ogData.pageTitle;
+                        DispatchQueue.main.async { // Correct
+                            self!.websiteTitle.text = ogData.pageTitle;
+                        }
                         
                         if (ogData.pageDescription != nil) {
-                            self!.websiteDescription.text = ogData.pageDescription;
+                             DispatchQueue.main.async { // Correct
+                                self!.websiteDescription.text = ogData.pageDescription;
+                            }
+                            linkInfoData.description = ogData.pageDescription;
                         } else {
                             self!.websiteDescription.text = "";
                         }
-                        
                         if (ogData.imageUrl != nil) {
-                            self!.websiteImg.sd_setImage(with: ogData.imageUrl as! URL, placeholderImage: UIImage.init(named: "post-image-placeholder"));
+                            DispatchQueue.main.async { // Correct
+                                self!.websiteImg.sd_setImage(with: ogData.imageUrl as! URL, placeholderImage: UIImage.init(named: "post-image-placeholder"));
+                            }
+                            
+                            linkInfoData.image = ogData.imageUrl;
+
                         } else {
-                            self!.websiteImg.image = UIImage.init(named: "post-image-placeholder");
+                            DispatchQueue.main.async { // Correct
+                                self!.websiteImg.image = UIImage.init(named: "post-image-placeholder");
+                            }
                         }
+                                                
+                        if (self!.pushViewController is HomeV2ViewController) {
+                            
+                            print((self!.pushViewController as! HomeV2ViewController).postLinkInfoFetched);
+                                
+                            (self!.pushViewController as! HomeV2ViewController).postLinkInfoFetched[finalUrl] = linkInfoData;
+                            
+                        }
+                        
+
                     } else {
-                        self!.websiteTitle.text = "";
+                        //self!.websiteTitle.text = "";
                         Readability.parse(url: articleUrl, completion: { data in
+                            if (data == nil) {
+                                return;
+                            }
+                            let linkInfoData = LinkInfoData();
+                            
                             let title = data?.title
                             let description = data?.description
                             let keywords = data?.keywords
@@ -76,52 +108,48 @@ class WebsiteInfoTableViewCell: UITableViewCell {
                             let datePublished = data?.datePublished;
                             
                             if (title != nil) {
-                                self!.websiteTitle.text = title;
+                                DispatchQueue.main.async { // Correct
+                                    self!.websiteTitle.text = title;
+                                }
+                                linkInfoData.title = title;
                             } else {
                                 self!.websiteTitle.text = "";
                             }
-                            
+                            //linkInfoData.title = self!.websiteTitle.text!;
+
                             if (description != nil) {
-                                self!.websiteDescription.text = description;
+                                DispatchQueue.main.async { // Correct
+                                    self!.websiteDescription.text = description;
+                                }
+                                linkInfoData.description = description;
+
                             } else {
                                 self!.websiteDescription.text = "";
                             }
+
                             if (imageUrl != nil) {
-                                self!.websiteImg.sd_setImage(with: URL.init(string: imageUrl!), placeholderImage: UIImage.init(named: "post-image-placeholder"));
+                                
+                                DispatchQueue.main.async { // Correct
+                                    self!.websiteImg.sd_setImage(with: URL.init(string: imageUrl!), placeholderImage: UIImage.init(named: "post-image-placeholder"));
+                                }
+                                linkInfoData.image = URL.init(string: imageUrl!);
                             } else {
-                                self!.websiteImg.image = UIImage.init(named: "post-image-placeholder");
+                                
+                                DispatchQueue.main.async { // Correct
+                                    self!.websiteImg.image = UIImage.init(named: "post-image-placeholder");
+                                }
                             }
+                            
+
+                            if (self!.pushViewController is HomeV2ViewController) {
+                                (self!.pushViewController as! HomeV2ViewController).postLinkInfoFetched[articleUrl.absoluteString] = linkInfoData;
+                            }
+                            
                         });
                     }
                 }
-            };
+            //};
 
-            
-            /*Readability.parse(url: articleUrl, completion: { data in
-                let title = data?.title
-                let description = data?.description
-                let keywords = data?.keywords
-                let imageUrl = data?.topImage
-                let videoUrl = data?.topVideo
-                let datePublished = data?.datePublished;
-                
-                if (title != nil) {
-                    self.websiteTitle.text = title;
-                } else {
-                    self.websiteTitle.text = "";
-                }
-                
-                if (description != nil) {
-                    self.websiteDescription.text = description;
-                } else {
-                    self.websiteDescription.text = "";
-                }
-                if (imageUrl != nil) {
-                    self.websiteImg.sd_setImage(with: URL.init(string: imageUrl!), placeholderImage: UIImage.init(named: "post-image-placeholder"));
-                } else {
-                    self.websiteImg.image = UIImage.init(named: "post-image-placeholder");
-                }
-            });*/
         }
     }
     

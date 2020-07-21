@@ -70,8 +70,8 @@ class SignupScreenViewController: UIViewController, UIImagePickerControllerDeleg
     }
     
     func takePicture() {
-        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.camera) {
-            self.picController.sourceType = UIImagePickerControllerSourceType.camera
+        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerController.SourceType.camera) {
+            self.picController.sourceType = UIImagePickerController.SourceType.camera
             self.picController.allowsEditing = true
             self.picController.delegate = self
             self.picController.mediaTypes = [kUTTypeImage as String]
@@ -82,17 +82,20 @@ class SignupScreenViewController: UIViewController, UIImagePickerControllerDeleg
     func selectPicture() {
         //self.checkPermission();
         
-        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.photoLibrary) {
+        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerController.SourceType.photoLibrary) {
             self.picController.delegate = self
-            self.picController.sourceType = UIImagePickerControllerSourceType.photoLibrary;
+            self.picController.sourceType = UIImagePickerController.SourceType.photoLibrary;
             self.picController.allowsEditing = true
             self.picController.mediaTypes = [kUTTypeImage as String]
             self.present(picController, animated: true, completion: nil)
         }
     }
     
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        if let image = info[UIImagePickerControllerEditedImage] as? UIImage {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+// Local variable inserted by Swift 4.2 migrator.
+let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
+
+        if let image = info[convertFromUIImagePickerControllerInfoKey(UIImagePickerController.InfoKey.editedImage)] as? UIImage {
             
             self.uploadImageStatus = true
 
@@ -233,7 +236,7 @@ extension SignupScreenViewController: UITableViewDataSource, UITableViewDelegate
         
         activityIndicator.center = view.center;
         activityIndicator.hidesWhenStopped = true;
-        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.whiteLarge;
+        activityIndicator.style = UIActivityIndicatorView.Style.whiteLarge;
         cell.addSubview(activityIndicator);
         
         signupCellProtocolDelegate = cell;
@@ -243,4 +246,14 @@ extension SignupScreenViewController: UITableViewDataSource, UITableViewDelegate
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return (self.view.frame.height + 120);
     }
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromUIImagePickerControllerInfoKeyDictionary(_ input: [UIImagePickerController.InfoKey: Any]) -> [String: Any] {
+	return Dictionary(uniqueKeysWithValues: input.map {key, value in (key.rawValue, value)})
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromUIImagePickerControllerInfoKey(_ input: UIImagePickerController.InfoKey) -> String {
+	return input.rawValue
 }

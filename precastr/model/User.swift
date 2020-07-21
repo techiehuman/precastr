@@ -32,6 +32,9 @@ class User  {
     var countryCode         : String!
     var phoneNumber         : String!
     var tokens              : NSArray!;
+    var status              : Int8!;
+    var moderatorStatus     : Int8!;
+    var categoryId              : Int!;
 
     func getUserData(userDataDict: NSDictionary)->User {
         let user = User();
@@ -57,6 +60,19 @@ class User  {
         user.countryCode = userDataDict.value(forKey: "country_code")as? String;
         user.phoneNumber = userDataDict.value(forKey: "phone_number")as? String;
         user.tokens = userDataDict.value(forKey: "tokens")as? NSArray;
+        
+        if let status = userDataDict.value(forKey: "status") as? String {
+            user.status = Int8(status);
+        }
+        
+        if let moderatorStatus = userDataDict.value(forKey: "moderator_status") as? String {
+            user.moderatorStatus = Int8(moderatorStatus);
+        }
+        
+        if let categoryId = userDataDict.value(forKey: "category_id") as? String {
+            user.categoryId = Int(categoryId);
+        }
+
         return user;
     }
     
@@ -185,7 +201,9 @@ class User  {
         if (userData["name"] != nil) {
             setting.setValue(userData["name"], forKey: "name")
         }
-        
+        if (userData["username"] != nil) {
+            setting.setValue(userData["username"], forKey: "username")
+        }
         if (userData["profile_pic"] != nil) {
             setting.setValue(userData["profile_pic"], forKey: "profile_pic")
         }
@@ -194,6 +212,9 @@ class User  {
         }
         if (userData["phone_number"] != nil) {
             setting.setValue(userData["phone_number"], forKey: "phone_number")
+        }
+        if (userData["facebook_id"] != nil) {
+            setting.setValue(userData["facebook_id"], forKey: "facebook_id")
         }
     }
     

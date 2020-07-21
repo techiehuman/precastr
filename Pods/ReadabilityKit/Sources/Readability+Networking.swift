@@ -56,7 +56,7 @@ public extension Readability {
 					return
 				}
 
-				//if Readability.checkForImage(htmlData) {
+				if Readability.checkForImage(htmlData) {
 					let parsedData = ReadabilityData(title: url.absoluteString,
 						description: .none,
 						topImage: url.absoluteString,
@@ -72,8 +72,8 @@ public extension Readability {
 						completion(parsedData)
 					}
 
-					//return
-				//}
+					return
+				}
 
 				if isMainThread {
 					DispatchQueue.main.async(execute: {

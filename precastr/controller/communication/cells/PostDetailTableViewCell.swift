@@ -78,7 +78,7 @@ class PostDetailTableViewCell: UITableViewCell, UIScrollViewDelegate {
         
         var slide = [SlideUIView]();
         
-        for image in imagesArray{
+        for image in imagesArray {
             
             let slideView:SlideUIView = Bundle.main.loadNibNamed("Slide", owner: self, options: nil)?.first as! SlideUIView
             slideView.frame = CGRect.init(x: 0, y: 0, width: contentView.frame.width, height: 418);
@@ -110,7 +110,7 @@ class PostDetailTableViewCell: UITableViewCell, UIScrollViewDelegate {
             print("------- X Position : ", xposition, "width", imageGalleryScrollView.frame.width * CGFloat(i + 1));
             
             imageGalleryScrollView.addSubview(setupSlideScrollView)
-            self.currentCount = i as! Int
+            self.currentCount = i 
         }
         
         //imageGalleryScrollView.addSubview(imageCounterView);

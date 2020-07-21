@@ -36,7 +36,7 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
         
         activityIndicator.center = self.view.center;
         activityIndicator.hidesWhenStopped = true;
-        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.gray;
+        activityIndicator.style = UIActivityIndicatorView.Style.gray;
         self.view.addSubview(activityIndicator);
         
 
@@ -45,7 +45,7 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
     override func viewWillAppear(_ animated: Bool) {
         let menuButton = UIButton();
         menuButton.setImage(UIImage.init(named: "menu"), for: .normal);
-        menuButton.addTarget(self, action: #selector(menuButtonClicked), for: UIControlEvents.touchUpInside)
+        menuButton.addTarget(self, action: #selector(menuButtonClicked), for: UIControl.Event.touchUpInside)
         menuButton.frame = CGRect.init(x: 0, y:0, width: 24, height: 24);
         
         let barButton = UIBarButtonItem(customView: menuButton)
@@ -59,18 +59,19 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
         if (loggedInUser.isCastr == 2) {
             self.navigationItem.title = "My Account";
             
-            if (self.tabBarController!.viewControllers?.count == 4) {
+            if (self.tabBarController!.viewControllers?.count == 5) {
                 self.tabBarController!.viewControllers?.remove(at: 1)
             }
         } else {
             self.navigationItem.title = "My Account";
             
-            if (self.tabBarController!.viewControllers?.count == 3) {
+            if (self.tabBarController!.viewControllers?.count == 4) {
                 
-                var navController = self.storyboard?.instantiateViewController(withIdentifier: "CreateNewPostNavController") as! UINavigationController;
+                let navController = self.storyboard?.instantiateViewController(withIdentifier: "CreateNewPostNavController") as! UINavigationController;
                 self.tabBarController!.viewControllers?.insert(navController, at: 1);
             }
         }
+        fetchUserProfile();
         EditProfileTableView.reloadData();
     }
     override func didReceiveMemoryWarning() {
@@ -116,10 +117,13 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
                     let data = response.value(forKey: "data") as! NSDictionary;
                     
                     var dateToUpdate = [String: String]();
+                    dateToUpdate["username"] = data.value(forKey: "username") as! String;
                     dateToUpdate["name"] = data.value(forKey: "name") as! String;
                     dateToUpdate["profile_pic"] = data.value(forKey: "profile_pic") as! String;
                     dateToUpdate["country_code"] = data.value(forKey: "country_code") as! String;
                      dateToUpdate["phone_number"] = data.value(forKey: "phone_number") as! String;
+                    dateToUpdate["facebook_id"] = data.value(forKey: "facebook_id") as! String;
+
                     User().updateUserData(userData: dateToUpdate);
                 }
             });
@@ -141,10 +145,13 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
                     
                     var dateToUpdate = [String: String]();
                     dateToUpdate["name"] = data.value(forKey: "name") as! String;
+                   dateToUpdate["username"] = data.value(forKey: "username") as! String;
                     dateToUpdate["phone_number"] = data.value(forKey: "phone_number") as! String;
                     dateToUpdate["country_code"] = data.value(forKey: "country_code") as! String;
                     
                     User().updateUserData(userData: dateToUpdate);
+                    self.loggedInUser = User().loadUserDataFromUserDefaults(userDataDict: setting);
+                    
                 }
                 
             });
@@ -167,6 +174,24 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
                 self.showAlert(title: "Error", message: message);
             } else {
                 self.showToast(message: message)
+            }
+        });
+    }
+    
+    func updateSocialMedia(postData: [String: Any]) {
+        self.activityIndicator.startAnimating();
+        let jsonURL = "/user/update_user_token/format/json";
+        UserService().postDataMethod(jsonURL: jsonURL, postData: postData, complete: {(response) in
+            
+            self.activityIndicator.stopAnimating();
+            
+            let success = Int(response.value(forKey: "status") as! String)!
+            let message = response.value(forKey: "message") as! String;
+
+            if (success == 0) {
+                self.showAlert(title: "Error", message: message);
+            } else {
+                //self.showToast(message: message)
             }
         });
     }
@@ -199,8 +224,8 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
     
     func takePicture() {
         
-        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.camera) {
-            self.picController.sourceType = UIImagePickerControllerSourceType.camera
+        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerController.SourceType.camera) {
+            self.picController.sourceType = UIImagePickerController.SourceType.camera
             self.picController.allowsEditing = true
             self.picController.delegate = self
             self.picController.mediaTypes = [kUTTypeImage as String]
@@ -223,12 +248,12 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
         }
     }
     
-    func selectPicture() {
+    func    selectPicture() {
         //self.checkPermission();
         
-        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.photoLibrary) {
+        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerController.SourceType.photoLibrary) {
             self.picController.delegate = self
-            self.picController.sourceType = UIImagePickerControllerSourceType.photoLibrary;
+            self.picController.sourceType = UIImagePickerController.SourceType.photoLibrary;
             self.picController.allowsEditing = true
             self.picController.mediaTypes = [kUTTypeImage as String]
             self.present(picController, animated: true, completion: nil)
@@ -250,8 +275,11 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
                }
     }
     
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        if let image = info[UIImagePickerControllerEditedImage] as? UIImage {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+// Local variable inserted by Swift 4.2 migrator.
+let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
+
+        if let image = info[convertFromUIImagePickerControllerInfoKey(UIImagePickerController.InfoKey.editedImage)] as? UIImage {
             
             self.uploadImageStatus = true
             
@@ -278,6 +306,24 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
         let viewController = storyboard?.instantiateViewController(withIdentifier: "CountryViewController") as! CountryViewController;
         viewController.editProfileViewControllerDelegate = self;
         self.navigationController?.pushViewController(viewController, animated: true);
+    }
+    
+    func fetchUserProfile() {
+        
+        let apiUrl = "user/get_user_details/format/json";
+        var postData = [String: Any]();
+        postData["user_id"] = loggedInUser.userId;
+        
+        UserService().postDataMethod(jsonURL: apiUrl, postData: postData, complete: {response in
+               
+            let status = Int(response.value(forKey: "status") as! String);
+            if (status == 1) {
+                let userDict = response.value(forKey: "data") as! NSDictionary;
+                self.loggedInUser = User().getUserData(userDataDict: userDict);
+                self.loggedInUser.loadUserDefaults();
+                self.EditProfileTableView.reloadData();
+            }
+        });
     }
 }
 extension EditProfileViewController: UITableViewDelegate, UITableViewDataSource {
@@ -365,4 +411,14 @@ extension EditProfileViewController: UITableViewDelegate, UITableViewDataSource 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return (self.view.frame.height + 120);
     }
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromUIImagePickerControllerInfoKeyDictionary(_ input: [UIImagePickerController.InfoKey: Any]) -> [String: Any] {
+	return Dictionary(uniqueKeysWithValues: input.map {key, value in (key.rawValue, value)})
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromUIImagePickerControllerInfoKey(_ input: UIImagePickerController.InfoKey) -> String {
+	return input.rawValue
 }

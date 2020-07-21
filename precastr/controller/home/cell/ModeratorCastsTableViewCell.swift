@@ -94,7 +94,7 @@ class ModeratorCastsTableViewCell: UITableViewCell, UIScrollViewDelegate {
             imageGalleryScrollView.contentSize.width = imageGalleryScrollView.frame.width * CGFloat(i + 1);
             
             imageGalleryScrollView.addSubview(setupSlideScrollView)
-            self.currentCount = i as! Int
+            self.currentCount = i 
         }
         
         //imageGalleryScrollView.addSubview(imageCounterView);

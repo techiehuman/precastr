@@ -26,6 +26,7 @@ class CommunicationViewController: SharePostViewController,UITextViewDelegate, U
     var posts = [Post]();
     var post = Post();
     var postId : Int!;
+    var postCommunicationid: Int!;
     @IBOutlet weak var communicationTableView: UITableView!
     //@IBOutlet weak var postTextField: UITextView!
     
@@ -34,8 +35,8 @@ class CommunicationViewController: SharePostViewController,UITextViewDelegate, U
     @IBOutlet weak var textArea: UITextView!
     @IBOutlet weak var attachmentBtn: UIButton!
     @IBOutlet weak var submitBtn : UIButton!
-    
-    
+    @IBOutlet weak var postCommentLabel : UILabel!
+
     var loggedInUser : User!
     var uploadImage : [UIImage] = [UIImage]()
     var imageDelegate : ImageLibProtocolC!
@@ -53,22 +54,35 @@ class CommunicationViewController: SharePostViewController,UITextViewDelegate, U
     var postArray : [String:Any] = [String:Any]()
     var postToPublish: Post!;
     var easyToolTip: EasyTipView!
-    
+    var keyboardHeight: CGFloat = 0.0;
     var placeholderText: NSMutableAttributedString!;
     var placeholderTextStr: String!;
+    var sourceViewController: UIViewController!;
 
     var casterPlaceholderText1 = "Communicate with your Moderator.";
     var moderatorPlaceholderText1 = "Communicate with your Caster.";
     var placeholderText2 = "\nTo edit post click on the \"Edit Post\" button at top.";
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView();
     
-    class func MainViewController() -> UITabBarController{
+    class func MainViewController() -> UITabBarController {
         
         let tabBarContro = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MadTabBar") as! UITabBarController
         let loggedInUser = User().loadUserDataFromUserDefaults(userDataDict: setting);
-        if (loggedInUser.isCastr == 2) {
-            tabBarContro.viewControllers?.remove(at: 1)
-        }
+            //If Logged in user is a moderator, then we will
+            if (loggedInUser.isCastr == 2) {
+                
+                if (tabBarContro != nil && tabBarContro.viewControllers?.count == 5) {
+                    tabBarContro.viewControllers?.remove(at: 1)
+                }
+            } else {
+                
+                if (tabBarContro.viewControllers?.count == 4) {
+                    
+                    let navController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "CreateNewPostNavController") as! UINavigationController;
+                    tabBarContro.viewControllers?.insert(navController, at: 1);
+                }
+            }
+        
         return tabBarContro;
         //return UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MadTabBar") as! UITabBarController
         
@@ -90,7 +104,7 @@ class CommunicationViewController: SharePostViewController,UITextViewDelegate, U
         
         activityIndicator.center = view.center;
         activityIndicator.hidesWhenStopped = true;
-        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.gray;
+        activityIndicator.style = UIActivityIndicatorView.Style.gray;
         view.addSubview(activityIndicator);
         
         let boldAttribute = [
@@ -136,13 +150,13 @@ class CommunicationViewController: SharePostViewController,UITextViewDelegate, U
             self.getPostCommunications(postId: self.postId);
         }
         
-        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
 
         self.setUpNavigationBarItems();
         
         //self.hideKeyboadOnTapOutside();
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(UIViewController.dismissKeyboard))
         tap.cancelsTouchesInView = false
         communicationTableView.addGestureRecognizer(tap);
 
@@ -176,7 +190,7 @@ class CommunicationViewController: SharePostViewController,UITextViewDelegate, U
                 break;
             }
         }
-        if (status == "Published") {
+        if (status == "Published" || (sourceViewController != nil && sourceViewController is ArchieveViewController)) {
             self.textAreaBtnBottomView.isHidden = true;
             self.communicationTableView.frame = CGRect.init(x: 0, y: self.communicationTableView.frame.origin.y, width: self.view.frame.width, height: (self.view.frame.height - (self.communicationTableView.frame.origin.y + (self.tabBarController?.tabBar.frame.height)!)));
         }
@@ -199,13 +213,13 @@ class CommunicationViewController: SharePostViewController,UITextViewDelegate, U
         if (loggedInUser.isCastr == 2) {
             self.navigationItem.title = "Cast Detail";
             
-            if (self.tabBarController != nil && self.tabBarController!.viewControllers?.count == 4) {
+            if (self.tabBarController != nil && self.tabBarController!.viewControllers?.count == 5) {
                 self.tabBarController!.viewControllers?.remove(at: 1)
             }
         } else {
             self.navigationItem.title = "Cast Detail";
             
-            if (self.tabBarController != nil && self.tabBarController!.viewControllers?.count == 3) {
+            if (self.tabBarController != nil && self.tabBarController!.viewControllers?.count == 4) {
                 
                 let navController = self.storyboard?.instantiateViewController(withIdentifier: "CreateNewPostNavController") as! UINavigationController;
                 self.tabBarController!.viewControllers?.insert(navController, at: 1);
@@ -244,7 +258,7 @@ class CommunicationViewController: SharePostViewController,UITextViewDelegate, U
                     if (self.loggedInUser.isCastr == 1) {
                         index =  4;
                     } else {
-                        index = 2;
+                        index = 3;
                     }
                     let tabItem = tabItems[index]
                     let badgeCount = dataArray.value(forKey: "total") as! String
@@ -273,7 +287,7 @@ class CommunicationViewController: SharePostViewController,UITextViewDelegate, U
         
         let backButton = UIButton();
         backButton.setImage(UIImage.init(named: "left-arrow"), for: .normal);
-        backButton.addTarget(self, action: #selector(backButtonPressed), for: UIControlEvents.touchUpInside)
+        backButton.addTarget(self, action: #selector(backButtonPressed), for: UIControl.Event.touchUpInside)
         backButton.frame = CGRect.init(x: 0, y:0, width: 20, height: 15);
         
         let barButton = UIBarButtonItem(customView: backButton)
@@ -282,7 +296,7 @@ class CommunicationViewController: SharePostViewController,UITextViewDelegate, U
         
         let homeButton = UIButton();
         homeButton.setImage(UIImage.init(named: "menu"), for: .normal);
-        homeButton.addTarget(self, action: #selector(menuButtonClicked), for: UIControlEvents.touchUpInside)
+        homeButton.addTarget(self, action: #selector(menuButtonClicked), for: UIControl.Event.touchUpInside)
         homeButton.frame = CGRect.init(x: 0, y:0, width: 24, height: 24);
         
         let homeBarButton = UIBarButtonItem(customView: homeButton)
@@ -305,6 +319,8 @@ class CommunicationViewController: SharePostViewController,UITextViewDelegate, U
         var postData = [String: Any]();
         let post = sender.post;
         postData["post_id"] = post?.postId;
+        postData["timestamp"] = Int64(Date().timeIntervalSince1970 * 1000.0);
+
         let alert = UIAlertController.init(title: "Delete this cast.", message: "", preferredStyle: .alert);
         alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil));
         alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: {(response) in
@@ -340,6 +356,8 @@ class CommunicationViewController: SharePostViewController,UITextViewDelegate, U
         
         var postData = [String: Any]();
         postData["post_id"] = post.postId;
+        postData["timestamp"] = Int64(Date().timeIntervalSince1970 * 1000.0);
+
         let alert = UIAlertController.init(title: "Delete this cast.", message: "", preferredStyle: .alert);
         alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil));
         alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: {(response) in
@@ -435,7 +453,7 @@ class CommunicationViewController: SharePostViewController,UITextViewDelegate, U
             let OKAction = UIAlertAction(title: "OK", style: .default) { (action:UIAlertAction!) in
                 
                 // Code in this block will trigger when OK button tapped.
-                if let settingUrl = URL(string:UIApplicationOpenSettingsURLString) {
+                if let settingUrl = URL(string:UIApplication.openSettingsURLString) {
                     UIApplication.shared.openURL(settingUrl);
                 } else {
                     print("Setting URL invalid")
@@ -536,7 +554,7 @@ class CommunicationViewController: SharePostViewController,UITextViewDelegate, U
                 
                     if(result != nil){
                         thumbnail = result!
-                        let data = UIImageJPEGRepresentation(thumbnail, 0.7)
+                        let data = thumbnail.jpegData(compressionQuality: 0.7)
                         let newImage = UIImage(data: data!)
                         self.PhotoArray.append(newImage! as UIImage)
 
@@ -583,7 +601,9 @@ class CommunicationViewController: SharePostViewController,UITextViewDelegate, U
     
     
     @objc func keyboardWillShow(notification: NSNotification) {
-        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            
+            self.keyboardHeight = keyboardSize.height;
             
             let bottomAreaViewPosition = self.view.frame.height - (self.textAreaBtnBottomView.frame.height + 5 + keyboardSize.height);
             self.textAreaBtnBottomView.frame.origin.y = bottomAreaViewPosition;
@@ -597,10 +617,12 @@ class CommunicationViewController: SharePostViewController,UITextViewDelegate, U
     }
     
     @objc func keyboardWillHide(notification: NSNotification) {
-        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
             
+            self.keyboardHeight = 0.0;
+
             if (self.tabBarController != nil) {
-                let positionOfBottomView = self.view.frame.height - (self.textAreaBtnBottomView.frame.height + ((self.tabBarController?.tabBar.frame.height)!) + 5);
+                let positionOfBottomView = self.view.frame.height - (self.textAreaBtnBottomView.frame.height + ((self.tabBarController?.tabBar.frame.height)!) + 10);
                 
                 self.textAreaBtnBottomView.frame.origin.y = positionOfBottomView;
                 
@@ -609,7 +631,7 @@ class CommunicationViewController: SharePostViewController,UITextViewDelegate, U
             }
         }
         
-        if(self.textArea.text == castTextAreaPlaceholder){
+        if (self.textArea.text == castTextAreaPlaceholder) {
             self.textArea.textColor = UIColor(red: 118/255, green: 118/255, blue: 119/255, alpha: 1);
         }
     }
@@ -695,9 +717,6 @@ class CommunicationViewController: SharePostViewController,UITextViewDelegate, U
             });
             
         }
-        
-        
-   
     }
     
     func getPostCommunications(postId:Int) {
@@ -733,6 +752,19 @@ class CommunicationViewController: SharePostViewController,UITextViewDelegate, U
                 
                 DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(200), execute: {
                     self.communicationTableView.reloadData();
+                        
+                    if (self.postCommunicationid != nil) {
+                        var indexOfCommunication = 1;
+                        for postComm in self.post.postCommunications {
+                            if (self.postCommunicationid == postComm.postCommunicationId) {
+                                break;
+                            }
+                            indexOfCommunication = indexOfCommunication + 1;
+                        }
+                        self.communicationTableView.selectRow(at: IndexPath.init(row: indexOfCommunication, section: 0), animated: true, scrollPosition: .top);
+                        //self.communicationTableView.scrollToRow(at: , at: .top, animated: true);
+                    }
+                    
                 })
             }
         });
@@ -749,6 +781,89 @@ class CommunicationViewController: SharePostViewController,UITextViewDelegate, U
         if self.textArea.text.isEmpty {
             self.textArea.attributedText = self.placeholderText
             self.textArea.textColor = UIColor(red: 118/255, green: 118/255, blue: 119/255, alpha: 1)
+        }
+    }
+    
+    func textViewDidChange(_ textView: UITextView) {
+        
+        print("Content Size : ", textView.contentSize.height);
+
+        if textView.contentSize.height > textView.frame.size.height {
+
+            if (textView.frame.size.height > 130) {
+                return;
+            }
+            let fixedWidth = textView.frame.size.width
+            textView.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.greatestFiniteMagnitude))
+
+            var newFrame = textView.frame
+            let newSize = textView.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.greatestFiniteMagnitude))
+
+            newFrame.size = CGSize(width: max(newSize.width, fixedWidth), height: newSize.height)
+            
+            textView.frame = newFrame;
+            
+            if (textView.contentSize.height < textView.frame.size.height) {
+                textView.frame = CGRect.init(x: textView.frame.origin.x, y: textView.frame.origin.y, width: textView.frame.width, height: textView.frame.height - 20);
+            }
+            
+            if (self.tabBarController != nil) {
+                
+               self.textArea.frame.origin.y = 10;
+                
+               let positionOfBottomView = self.view.frame.height - (128 + 10 + (newSize.height - 85) + self.keyboardHeight);
+               
+               self.textAreaBtnBottomView.frame.origin.y = positionOfBottomView;
+                
+                self.textAreaBtnBottomView.frame = CGRect.init(x: self.textAreaBtnBottomView.frame.origin.x, y: self.textAreaBtnBottomView.frame.origin.y, width: self.textAreaBtnBottomView.frame.width, height: self.textAreaBtnBottomView.frame.height + (newSize.height - 85));
+                
+                self.attachmentBtn.frame = CGRect.init(x: self.attachmentBtn.frame.origin.x, y: self.textArea.frame.height + 20, width: self.attachmentBtn.frame.width, height: self.attachmentBtn.frame.height);
+                
+                self.submitBtn.frame = CGRect.init(x: self.submitBtn.frame.origin.x, y: self.textArea.frame.height + 20, width: self.submitBtn.frame.width, height: self.submitBtn.frame.height);
+                
+                self.postCommentLabel.frame = CGRect.init(x: self.postCommentLabel.frame.origin.x, y: self.textArea.frame.height + 20, width: self.postCommentLabel.frame.width, height: self.postCommentLabel.frame.height);
+                
+               self.communicationTableView.frame = CGRect.init(x: 0, y: self.communicationTableView.frame.origin.y, width: self.view.frame.width, height: self.textAreaBtnBottomView.frame.origin.y - self.communicationTableView.frame.origin.y)
+           }
+        } else if (textView.contentSize.height < textView.frame.size.height && textView.contentSize.height > 74 && textView.contentSize.height <= 112) {
+            
+            self.textArea.frame = CGRect.init(x: self.textArea.frame.origin.x, y: self.textArea.frame.origin.y, width: self.textArea.frame.width, height: textView.contentSize.height);
+             
+            let positionOfBottomView = self.view.frame.height - (128 + 10 + (textView.contentSize.height - 85) + self.keyboardHeight);
+            
+            self.textAreaBtnBottomView.frame.origin.y = positionOfBottomView;
+             
+             self.textAreaBtnBottomView.frame = CGRect.init(x: self.textAreaBtnBottomView.frame.origin.x, y: self.textAreaBtnBottomView.frame.origin.y, width: self.textAreaBtnBottomView.frame.width, height: self.textAreaBtnBottomView.frame.height + (textView.contentSize.height - 85));
+             
+             self.attachmentBtn.frame = CGRect.init(x: self.attachmentBtn.frame.origin.x, y: self.textArea.frame.height + 20, width: self.attachmentBtn.frame.width, height: self.attachmentBtn.frame.height);
+             
+             self.submitBtn.frame = CGRect.init(x: self.submitBtn.frame.origin.x, y: self.textArea.frame.height + 20, width: self.submitBtn.frame.width, height: self.submitBtn.frame.height);
+             
+             self.postCommentLabel.frame = CGRect.init(x: self.postCommentLabel.frame.origin.x, y: self.textArea.frame.height + 20, width: self.postCommentLabel.frame.width, height: self.postCommentLabel.frame.height);
+             
+            self.communicationTableView.frame = CGRect.init(x: 0, y: self.communicationTableView.frame.origin.y, width: self.view.frame.width, height: self.textAreaBtnBottomView.frame.origin.y - self.communicationTableView.frame.origin.y)
+            
+        } else if (textView.contentSize.height <= 74)  {
+            if (self.tabBarController != nil) {
+                
+                self.textArea.frame = CGRect.init(x: self.textArea.frame.origin.x, y: self.textArea.frame.origin.y, width: self.textArea.frame.width, height: 85);
+                
+                self.textArea.frame.origin.y = 10;
+                let positionOfBottomView = self.view.frame.height - 128 - 10
+                    - self.keyboardHeight;
+                
+                self.textAreaBtnBottomView.frame.origin.y = positionOfBottomView;
+                 
+                 self.textAreaBtnBottomView.frame = CGRect.init(x: self.textAreaBtnBottomView.frame.origin.x, y: positionOfBottomView, width: self.textAreaBtnBottomView.frame.width, height: 128);
+                 
+                 self.attachmentBtn.frame = CGRect.init(x: self.attachmentBtn.frame.origin.x, y: self.textArea.frame.height + 20, width: self.attachmentBtn.frame.width, height: self.attachmentBtn.frame.height);
+                 
+                 self.submitBtn.frame = CGRect.init(x: self.submitBtn.frame.origin.x, y: self.textArea.frame.height + 20, width: self.submitBtn.frame.width, height: self.submitBtn.frame.height);
+                 
+                 self.postCommentLabel.frame = CGRect.init(x: self.postCommentLabel.frame.origin.x, y: self.textArea.frame.height + 20, width: self.postCommentLabel.frame.width, height: self.postCommentLabel.frame.height);
+                 
+                self.communicationTableView.frame = CGRect.init(x: 0, y: self.communicationTableView.frame.origin.y, width: self.view.frame.width, height: self.textAreaBtnBottomView.frame.origin.y - self.communicationTableView.frame.origin.y)
+            }
         }
     }
 
@@ -979,9 +1094,9 @@ class CommunicationViewController: SharePostViewController,UITextViewDelegate, U
         var toolBar = UIToolbar()
         toolBar.barStyle = UIBarStyle.default
         toolBar.isTranslucent = true
-        var cancelButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: self, action: nil)
-        var doneButton = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.done, target: self, action: "doneButtonAction")
-        var spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
+        var cancelButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: self, action: nil)
+        var doneButton = UIBarButtonItem(title: "Done", style: UIBarButtonItem.Style.done, target: self, action: "doneButtonAction")
+        var spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
         toolBar.setItems([cancelButton, spaceButton, doneButton], animated: false)
         toolBar.isUserInteractionEnabled = true
         toolBar.sizeToFit()
@@ -990,7 +1105,6 @@ class CommunicationViewController: SharePostViewController,UITextViewDelegate, U
         self.textArea.inputAccessoryView = toolBar
     }
     
-
     @objc func doneButtonAction() {
         self.textArea.resignFirstResponder()
     }
@@ -1102,17 +1216,22 @@ extension CommunicationViewController: UITableViewDelegate, UITableViewDataSourc
                 }
             }
 
+            for alphabeView in cell.subviews {
+                if (alphabeView is AlphabetInitialsView) {
+                    alphabeView.removeFromSuperview();
+                }
+            }
             if (communication.communicatedProfilePic == "") {
-                
-                cell.commentorPic.image = UIImage.init(named: "Profile-1");
+                                
                 cell.commentorPic.isHidden = true;
-                
+                cell.commentorAlphabetView.isHidden = false;
                 let user = User();
                 user.name = communication.communicatedName;
                 user.userId = Int32(communication.postCommunicationId);
-                cell.addSubview(self.showAlphabetsView(frame: cell.commentorPic.frame, userContact: user, rowId: indexPath.row));
-            } else {
+                cell.commentorAlphabetLabel.text = getNameInitials(name: user.name);
                 
+            } else {
+                cell.commentorAlphabetView.isHidden = true;
                 cell.commentorPic.isHidden = false;
                 cell.commentorPic.sd_setImage(with: URL.init(string: communication.communicatedProfilePic), placeholderImage: UIImage.init(named: "Profile-1"),  completed: nil);
             }
@@ -1133,9 +1252,9 @@ extension CommunicationViewController: UITableViewDelegate, UITableViewDataSourc
                     paragraphStyle.lineSpacing = 2
                     
                     let attributes = [
-                        NSAttributedStringKey.font : UIFont(name: "VisbyCF-Regular", size: 16.0)!,
-                        NSAttributedStringKey.foregroundColor : UIColor.init(red: 34/255, green: 34/255, blue: 34/255, alpha: 1),
-                        NSAttributedStringKey.paragraphStyle: paragraphStyle]
+                        NSAttributedString.Key.font : UIFont(name: "VisbyCF-Regular", size: 16.0)!,
+                        NSAttributedString.Key.foregroundColor : UIColor.init(red: 34/255, green: 34/255, blue: 34/255, alpha: 1),
+                        NSAttributedString.Key.paragraphStyle: paragraphStyle]
                     
                     let attrString = NSMutableAttributedString(string: lblToShow)
                     attrString.addAttributes(attributes, range: NSMakeRange(0, attrString.length));
@@ -1156,6 +1275,17 @@ extension CommunicationViewController: UITableViewDelegate, UITableViewDataSourc
                     } else {
                         cell.imageSlideShow.isHidden = true;
                         cell.descriptionView.frame = CGRect.init(x: cell.descriptionView.frame.origin.x, y: 10, width: self.view.frame.width - 70, height: 50 + height)
+                    }
+            
+                    if (postCommunicationid == communication.postCommunicationId) {
+                        postCommunicationid = 0;
+                        UIView.animate(withDuration: 2, animations: {
+                            cell.backgroundColor = UIColor.lightGray;
+                        }, completion: {(Bool) -> Void in
+                            UIView.animate(withDuration: 2, animations: {
+                                cell.backgroundColor = UIColor.clear;
+                            });
+                        });
                     }
                     return cell;
              /*   } */
@@ -1178,7 +1308,9 @@ extension CommunicationViewController: UITableViewDelegate, UITableViewDataSourc
             height = height + getHeightOfPostDescripiton(contentView: self.view, postDescription: post.postDescription) + CGFloat(PostRowsHeight.Post_Description_Row_Height);
             
             let websiteUrl = extractWebsiteFromText(text: post.postDescription);
-            if (websiteUrl != "") {
+            if (websiteUrl == post.postDescription) {
+                height = height + 25;
+            } else if (websiteUrl != "") {
                 height = height + CGFloat(PostRowsHeight.Post_WebsiteInfo_Row_Height);
             }
             if (post.postImages.count != 0) {

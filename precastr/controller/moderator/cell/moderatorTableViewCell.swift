@@ -17,19 +17,24 @@ class moderatorTableViewCell: UITableViewCell {
     
     @IBOutlet weak var acceptActionBtn: UIButton!
     
-    
-    
     @IBOutlet weak var removeActionBtn: UIButton!
     
     @IBOutlet weak var phoneNumberLabel: UILabel!
     
     @IBOutlet weak var emailLabel: UILabel!
     
+    @IBOutlet weak var moderatorCategory: UIButton!
+
+    @IBOutlet weak var moderatorProfileContainerView: UIView!
+
+    @IBOutlet weak var enableDisableModSwitch: UISwitch!
+
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
         acceptActionBtn.layer.cornerRadius = 4;
-        removeActionBtn.layer.cornerRadius = 4;
+        moderatorCategory.layer.cornerRadius = 4;
+        removeActionBtn.roundBtn();
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

@@ -26,10 +26,10 @@ class VerificationModeratorViewController: UIViewController,UITextFieldDelegate 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        verifyCode1.addTarget(self, action: #selector(self.textFieldDidChange(textField:)), for: UIControlEvents.editingChanged);
-        verifyCode2.addTarget(self, action: #selector(self.textFieldDidChange(textField:)), for: UIControlEvents.editingChanged);
-        verifyCode3.addTarget(self, action: #selector(self.textFieldDidChange(textField:)), for: UIControlEvents.editingChanged);
-        verifyCode4.addTarget(self, action: #selector(self.textFieldDidChange(textField:)), for: UIControlEvents.editingChanged);
+        verifyCode1.addTarget(self, action: #selector(self.textFieldDidChange(textField:)), for: UIControl.Event.editingChanged);
+        verifyCode2.addTarget(self, action: #selector(self.textFieldDidChange(textField:)), for: UIControl.Event.editingChanged);
+        verifyCode3.addTarget(self, action: #selector(self.textFieldDidChange(textField:)), for: UIControl.Event.editingChanged);
+        verifyCode4.addTarget(self, action: #selector(self.textFieldDidChange(textField:)), for: UIControl.Event.editingChanged);
         
         verifyCode1.becomeFirstResponder();
         

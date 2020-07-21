@@ -29,8 +29,8 @@ class LoginScreenTableViewCell: UITableViewCell, UITextFieldDelegate {
         // Initialization code
         
         // Do any additional setup after loading the view.
-        self.emailTextField.attributedPlaceholder = NSAttributedString(string: "Email Address", attributes: [NSAttributedStringKey.foregroundColor : UIColor.white ])
-        self.passwordTextField.attributedPlaceholder = NSAttributedString(string: "Password", attributes: [NSAttributedStringKey.foregroundColor : UIColor.white ])
+        self.emailTextField.attributedPlaceholder = NSAttributedString(string: "Email Address", attributes: [NSAttributedString.Key.foregroundColor : UIColor.white ])
+        self.passwordTextField.attributedPlaceholder = NSAttributedString(string: "Password", attributes: [NSAttributedString.Key.foregroundColor : UIColor.white ])
         self.emailTextField.layer.borderColor = UIColor.white.cgColor
         self.emailTextField.layer.borderWidth = 0.5
         
@@ -127,18 +127,19 @@ class LoginScreenTableViewCell: UITableViewCell, UITextFieldDelegate {
         }
         /* CODE FOR LOGOUT */
         fbloginManger.logIn(permissions: ["email"], from:loginViewControllerDelegate) {(result, error) -> Void in
-            if(error == nil){
-                let fbLoginResult: LoginManagerLoginResult  = result!
-                
-                if( result?.isCancelled)!{
-                    return }
-                
-                
-                if(fbLoginResult .grantedPermissions.contains("email")){
-                    self.getFbId()
+                if(error == nil){
+                    let fbLoginResult: LoginManagerLoginResult  = result!
                     
+                    if( result?.isCancelled)!{
+                        return }
+                    
+                    
+                    if(fbLoginResult .grantedPermissions.contains("email")){
+                        self.getFbId()
+                        
+                    }
                 }
-            }  }
+            }
     }
     func getFbId()->Void{
         if(AccessToken.current != nil){
@@ -155,7 +156,7 @@ class LoginScreenTableViewCell: UITableViewCell, UITextFieldDelegate {
                 if(error == nil){
                     let user = User();
                     print(AccessToken.current!.tokenString)
-                    user.facebookAccessToken = String(AccessToken.current!.tokenString as! String);
+                    user.facebookAccessToken = String(AccessToken.current!.tokenString );
                     user.facebookId = String(Info["id"] as! String)
                     user.username = String(Info["email"]as! String)
                     user.name = String(Info["name"] as! String)

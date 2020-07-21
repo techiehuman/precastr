@@ -23,7 +23,8 @@ class Post {
     var postUserId : Int = 0;
     var approvedByUserId: Int = 0;
     var createdOnTimestamp: Int = 0;
-    
+    var smsCount: Int = 0;
+
     func loadPostFromDict(postDict: NSDictionary) -> Post {
         
         let post = Post();
@@ -74,6 +75,9 @@ class Post {
         }
         post.approvedByUserId = Int(postDict.value(forKey: "approved_by_user_id") as! String)!;
 
+        if let smsCount = postDict.value(forKey: "sms_count") as? String {
+            post.smsCount = Int(smsCount)!;
+        }
         return post;
     }
     

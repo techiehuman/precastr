@@ -20,7 +20,7 @@ class ForgetPasswordTableViewCell: UITableViewCell, UITextFieldDelegate {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        self.emailTextField.attributedPlaceholder = NSAttributedString(string: "Email Address", attributes: [NSAttributedStringKey.foregroundColor : UIColor.white ])
+        self.emailTextField.attributedPlaceholder = NSAttributedString(string: "Email Address", attributes: [NSAttributedString.Key.foregroundColor : UIColor.white ])
         emailTextField.layer.borderColor = UIColor.white.cgColor;
         emailTextField.layer.borderWidth = 0.5;
         let emailIconContainerView: UIView = UIView(frame:

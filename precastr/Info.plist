@@ -102,6 +102,8 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
+	<key>NSBluetoothAlwaysUsageDescription</key>
+	<string>App uses Bluetooth to find, connect and communicate with nearby devices. Please grant access.</string>
 	<key>NSBluetoothPeripheralUsageDescription</key>
 	<string>Bluetooth is used to communicate with BLE devices</string>
 	<key>NSCameraUsageDescription</key>

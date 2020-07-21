@@ -17,7 +17,9 @@ class RightCommunicationTableViewCell: UITableViewCell, UIScrollViewDelegate, Im
     @IBOutlet weak var commentedDate: UILabel!
         
     @IBOutlet weak var commentorPic: UIImageView!
-    
+    @IBOutlet weak var commentorAlphabetView: UIView!
+    @IBOutlet weak var commentorAlphabetLabel: UILabel!
+
     @IBOutlet weak var descriptionView: UIView!
     @IBOutlet weak var imageScrollView: UIScrollView!
     @IBOutlet weak var imageSlideShow : ImageSlideshow!
@@ -31,6 +33,7 @@ class RightCommunicationTableViewCell: UITableViewCell, UIScrollViewDelegate, Im
         super.awakeFromNib()
         // Initialization code
         self.commentorPic.roundImageView();
+        self.commentorAlphabetView.roundView();
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

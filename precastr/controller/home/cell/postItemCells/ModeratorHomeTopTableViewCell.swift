@@ -14,6 +14,8 @@ class ModeratorHomeTopTableViewCell: UITableViewCell {
     @IBOutlet weak var viewDetailsBtn: UIButton!;
     @IBOutlet weak var postOwnerName: UILabel!;
     @IBOutlet weak var postStatusView: UIView!;
+    @IBOutlet weak var userNoImageView: UIView!;
+    @IBOutlet weak var userNoImageViewLabel: UILabel!;
 
     var pushViewController: UIViewController!;
     
@@ -22,6 +24,7 @@ class ModeratorHomeTopTableViewCell: UITableViewCell {
         // Initialization code
         viewDetailsBtn.roundEdgesBtn();
         profilePic.roundView();
+        userNoImageView.roundView();
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -35,8 +38,15 @@ class ModeratorHomeTopTableViewCell: UITableViewCell {
         
         cell.postOwnerName.text = post.name;
         if (post.profilePic == "") {
-            cell.profilePic.image = UIImage.init(named: "Moderate Casts");
+            cell.profilePic.isHidden = true;
+            cell.userNoImageView.isHidden = false;
+            let user = User();
+            user.name = post.name;
+            cell.userNoImageViewLabel.text = getNameInitials(name: user.name);
+
         } else {
+            cell.profilePic.isHidden = false;
+            cell.userNoImageView.isHidden = true;
             cell.profilePic.sd_setImage(with: URL.init(string: post.profilePic), placeholderImage: UIImage(named: "Moderate Casts"));
         }
         

@@ -36,7 +36,7 @@ class CastContactsViewController: SharePostViewController {
         
         let backButton = UIButton();
         backButton.setImage(UIImage.init(named: "left-arrow"), for: .normal);
-        backButton.addTarget(self, action: #selector(backButtonPressed), for: UIControlEvents.touchUpInside)
+        backButton.addTarget(self, action: #selector(backButtonPressed), for: UIControl.Event.touchUpInside)
         backButton.frame = CGRect.init(x: 0, y:0, width: 20, height: 15);
         
         let barButton = UIBarButtonItem(customView: backButton)

@@ -71,7 +71,7 @@ extension UIImage{
         var imgData:Data?
         var compressingValue:CGFloat = 1.0
         while (needCompress && compressingValue > 0.0) {
-            if let data:Data = UIImageJPEGRepresentation(self, compressingValue) {
+            if let data:Data = self.jpegData(compressionQuality: compressingValue) {
                 if data.count < sizeInBytes {
                     needCompress = false
                     imgData = data
@@ -87,6 +87,22 @@ extension UIImage{
             }
         }
         return nil
+    }
+    
+    func flipHorizontally() -> UIImage? {
+        UIGraphicsBeginImageContextWithOptions(self.size, true, self.scale)
+        let context = UIGraphicsGetCurrentContext()!
+
+        context.translateBy(x: self.size.width/2, y: self.size.height/2)
+        context.scaleBy(x: -1.0, y: 1.0)
+        context.translateBy(x: -self.size.width/2, y: -self.size.height/2)
+
+        self.draw(in: CGRect(x: 0, y: 0, width: self.size.width, height: self.size.height))
+
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+
+        return newImage
     }
 }
 extension UIImage {
@@ -208,7 +224,7 @@ extension UIViewController {
     
     func hideKeyboadOnTapOutside() {
         //Looks for single or multiple taps.
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(UIViewController.dismissKeyboard))
         tap.cancelsTouchesInView = false
         view.addGestureRecognizer(tap);
     }
@@ -221,8 +237,8 @@ extension UIViewController {
         //line height size
         paragraphStyle.lineSpacing = 2
         let attributes = [
-            NSAttributedStringKey.font : UIFont(name: "VisbyCF-Regular", size: 16.0)!,
-            NSAttributedStringKey.paragraphStyle: paragraphStyle]
+            NSAttributedString.Key.font : UIFont(name: "VisbyCF-Regular", size: 16.0)!,
+            NSAttributedString.Key.paragraphStyle: paragraphStyle]
         
         let attrString = NSMutableAttributedString(string: text)
         attrString.addAttributes(attributes, range: NSMakeRange(0, attrString.length));
@@ -304,7 +320,7 @@ extension UIViewController {
         //uiLettersView.tag = Int(userContact.userId);
         
         let textViewLabel = UITextView();
-        textViewLabel.frame = CGRect.init(x: 0, y: (uiLettersView.frame.height/2 - 20), width: uiLettersView.frame.width, height: 32);
+        textViewLabel.frame = CGRect.init(x: 0, y: 0, width: uiLettersView.frame.width, height: 30);
         textViewLabel.textAlignment = .center;
         textViewLabel.text = getNameInitials(name: userContact.name);
         textViewLabel.backgroundColor = .clear
@@ -374,7 +390,7 @@ extension UILabel {
     func addCharacterSpacing(kernValue: Double = 1.15) {
       if let labelText = text, labelText.count > 0 {
         let attributedString = NSMutableAttributedString(string: labelText)
-        attributedString.addAttribute(NSAttributedStringKey.kern, value: kernValue, range: NSRange(location: 0, length: attributedString.length - 1))
+        attributedString.addAttribute(NSAttributedString.Key.kern, value: kernValue, range: NSRange(location: 0, length: attributedString.length - 1))
         attributedText = attributedString
       }
     }
@@ -383,7 +399,7 @@ extension UILabel {
         let maxSize = CGSize(width: frame.size.width, height: CGFloat(Float.infinity))
         let charSize = font.lineHeight
         let text = (self.text ?? "") as NSString
-        let textSize = text.boundingRect(with: maxSize, options: .usesLineFragmentOrigin, attributes: [NSAttributedStringKey.font: font], context: nil)
+        let textSize = text.boundingRect(with: maxSize, options: .usesLineFragmentOrigin, attributes: [NSAttributedString.Key.font: font], context: nil)
         let linesRoundedUp = Int(ceil(textSize.height/charSize))
         return linesRoundedUp
     }
@@ -457,6 +473,21 @@ extension UILabel {
             return self.text!.count
         }
     }
+    
+    
+    func highlightTextAsLink(searchedText: String?, color: UIColor = .systemBlue) {
+        guard let txtLabel = self.text, let searchedText = searchedText else {
+            return
+        }
+
+        let attributeTxt = NSMutableAttributedString(string: txtLabel)
+        let range: NSRange = attributeTxt.mutableString.range(of: searchedText, options: .caseInsensitive)
+
+        attributeTxt.addAttribute(NSAttributedString.Key.foregroundColor, value: color, range: range)
+
+        self.attributedText = attributeTxt
+    }
+
 }
 extension UITabBar {
     

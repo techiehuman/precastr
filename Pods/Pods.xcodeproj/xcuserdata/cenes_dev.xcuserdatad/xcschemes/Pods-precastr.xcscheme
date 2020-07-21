@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "6082B9C6456626CA87FCDF1AA63A9BB9"
+               BlueprintIdentifier = "7A1E88D12480995C5DC99543B156D63E"
                BuildableName = "Pods_precastr.framework"
                BlueprintName = "Pods-precastr"
                ReferencedContainer = "container:Pods.xcodeproj">

@@ -8,6 +8,9 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
+        <array key="VisbyCF-Bold.otf">
+            <string>VisbyCF-Bold</string>
+        </array>
         <array key="VisbyCF-Regular.otf">
             <string>VisbyCF-Regular</string>
         </array>
@@ -22,6 +25,20 @@
                 <rect key="frame" x="0.0" y="0.0" width="463" height="407"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
+                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UNS-oY-0zp">
+                        <rect key="frame" x="15" y="20" width="40" height="40"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="M" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PUL-dQ-5h6">
+                                <rect key="frame" x="0.0" y="7" width="40" height="26"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="VisbyCF-Bold" family="Visby CF" pointSize="16"/>
+                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" red="0.8666666666666667" green="0.87450980392156863" blue="0.88627450980392153" alpha="1" colorSpace="calibratedRGB"/>
+                    </view>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Profile-1" translatesAutoresizingMaskIntoConstraints="NO" id="nLZ-FH-DSj">
                         <rect key="frame" x="15" y="20" width="40" height="40"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -55,6 +72,8 @@
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="commentedDate" destination="jc8-KP-PE9" id="yTi-hJ-DFG"/>
+                <outlet property="commentorAlphabetLabel" destination="PUL-dQ-5h6" id="cTV-WH-biF"/>
+                <outlet property="commentorAlphabetView" destination="UNS-oY-0zp" id="i2Y-l6-f38"/>
                 <outlet property="commentorPic" destination="nLZ-FH-DSj" id="1q4-C3-BaO"/>
                 <outlet property="descriptionView" destination="kuB-pI-Vxw" id="X1J-gc-sL5"/>
                 <outlet property="imageScrollView" destination="zI1-Op-Wip" id="5mW-aa-UWh"/>

@@ -15,8 +15,11 @@ import FBSDKCoreKit
 import ReadabilityKit
 import TwitterKit
 import TwitterCore
+import ReadabilityKit
+import URLEmbeddedView
+import SwipeCellKit
 
-class PostItemTableViewCell: UITableViewCell, SharingDelegate, MFMessageComposeViewControllerDelegate, PostItemTableViewDelegate {
+class PostItemTableViewCell: SwipeTableViewCell, SharingDelegate, MFMessageComposeViewControllerDelegate, PostItemTableViewDelegate {
 
     @IBOutlet weak var postItemsTableView: UITableView!
     var pushViewController: UIViewController!;
@@ -55,7 +58,24 @@ class PostItemTableViewCell: UITableViewCell, SharingDelegate, MFMessageComposeV
     
     @objc func postDescriptionPressed(sender: MyTapRecognizer){
     
+        /*let urlWhats = "https://wa.me/919876299850?text=\(sender.post.postDescription)"
+        // 2
+        if let urlString = urlWhats.addingPercentEncoding(withAllowedCharacters: NSCharacterSet.urlQueryAllowed) {
+          // 3
+          if let whatsappURL = NSURL(string: urlString) {
+            // 4
+            if UIApplication.shared.canOpenURL(whatsappURL as URL) {
+              // 5
+              UIApplication.shared.open(whatsappURL as URL, options: [:], completionHandler: nil)
+            } else {
+              // 6
+              print("Cannot Open Whatsapp")
+            }
+          }
+        }*/
+
         let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "CommunicationViewController") as! CommunicationViewController;
+        viewController.sourceViewController = pushViewController;
         viewController.post = sender.post;
          pushViewController.navigationController?.pushViewController(viewController, animated: true);
     }
@@ -71,7 +91,9 @@ class PostItemTableViewCell: UITableViewCell, SharingDelegate, MFMessageComposeV
             (pushViewController as! HomeV2ViewController).deleteButtonPresses(post: sender.post);
         } else if (pushViewController is CommunicationViewController) {
             (pushViewController as! CommunicationViewController).deleteButtonPresses(post: sender.post);
-        }
+        }  else if (pushViewController is ArchieveViewController) {
+               (pushViewController as! ArchieveViewController).deleteButtonPresses(post: sender.post);
+           }
     }
     
     @objc func shareIconPressed(sender: MyTapRecognizer){
@@ -150,7 +172,10 @@ class PostItemTableViewCell: UITableViewCell, SharingDelegate, MFMessageComposeV
         //This code will run when user is Moderator
         //And the status of post has to be updated.
         if (pushViewController is CommunicationViewController) {
-            if ((pushViewController as! CommunicationViewController).loggedInUser.isCastr == 2 && status != "Published") {
+            if (
+            ((pushViewController as! CommunicationViewController).loggedInUser.isCastr == 2 && status != "Published" && ((pushViewController as! CommunicationViewController).sourceViewController == nil ||
+                ((pushViewController as! CommunicationViewController).sourceViewController != nil && !((pushViewController as! CommunicationViewController).sourceViewController is ArchieveViewController))
+                ))) {
                 // create an NSMutableAttributedString that we'll append everything to
                 let fullString = NSMutableAttributedString(string: " \((status)) ")
 
@@ -165,7 +190,7 @@ class PostItemTableViewCell: UITableViewCell, SharingDelegate, MFMessageComposeV
                 
                 let suffix = NSMutableAttributedString(string: " |");
                 let range = (" |" as NSString).range(of: "|")
-                suffix.addAttribute(NSAttributedStringKey.foregroundColor,value: UIColor.white , range: range)
+                suffix.addAttribute(NSAttributedString.Key.foregroundColor,value: UIColor.white , range: range)
                 fullString.append(suffix);
                 cell.postStatusLbl.attributedText = fullString;
                 cell.postStatusLbl.layer.cornerRadius = 4;
@@ -193,12 +218,12 @@ class PostItemTableViewCell: UITableViewCell, SharingDelegate, MFMessageComposeV
         
         
         if (pushViewController is CommunicationViewController) {
-            if (status == "Published") {
+            if (status == "Published" || ((pushViewController as! CommunicationViewController).sourceViewController != nil && (pushViewController as! CommunicationViewController).sourceViewController is ArchieveViewController)) {
                 cell.viewDetailsBtn.isHidden = true;
             } else {
                 cell.viewDetailsBtn.setTitle("Edit Post", for: .normal);
                 cell.viewDetailsBtn.setImage(UIImage.init(named: "edit_pencil"), for: .normal);
-                cell.viewDetailsBtn.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 10);
+                cell.viewDetailsBtn.imageEdgeInsets = UIEdgeInsets.init(top: 0, left: 0, bottom: 0, right: 10);
                 cell.viewDetailsBtn.backgroundColor = PrecasterColors.themeColor;
                 
                 let editButtonTapRecognizer = MyTapRecognizer.init(target: self, action: #selector(editPostButtonPressed(sender:)));
@@ -256,18 +281,30 @@ class PostItemTableViewCell: UITableViewCell, SharingDelegate, MFMessageComposeV
                 cell.postModeratorsBtn.addGestureRecognizer(postModeratorTapRecognizer);
                 
                 postModeratorsButtonVisible = true;
+                
+                if ((pushViewController as! CommunicationViewController).sourceViewController != nil && (pushViewController as! CommunicationViewController).sourceViewController is ArchieveViewController) {
+                    cell.sharePostBtn.isHidden = true;
+                }
+            } else if (pushViewController is ArchieveViewController) {
+                cell.deleteBtn.isHidden = false;
+                cell.postModeratorsBtn.isHidden = true;
+                postModeratorsButtonVisible = false;
+                cell.sharePostBtn.isHidden = true;
             }
     
             var gapBetweenButtons: CGFloat = 23;
             if (pushViewController is CommunicationViewController || post.status == "Approved") {
                 gapBetweenButtons = 10;
             }
+            if (pushViewController is ArchieveViewController && post.status == "Approved") {
+                gapBetweenButtons = 23;
+            }
             let buttonsHeightWidth: CGFloat = 30;
             
             var deleteButtonVisible = true;
             if (status == "Published") {
-                deleteButtonVisible = false;
-                cell.deleteBtn.isHidden = true;
+                //deleteButtonVisible = false;
+                cell.deleteBtn.isHidden = false;
             } else {
                 cell.deleteBtn.isHidden = false;
             }
@@ -284,7 +321,11 @@ class PostItemTableViewCell: UITableViewCell, SharingDelegate, MFMessageComposeV
             if (facebookPublished == true) {
                 cell.facebookInfoBtn.isHidden = true;
             } else {
-                cell.facebookInfoBtn.isHidden = false;
+                if (pushViewController is ArchieveViewController) {
+                    cell.facebookInfoBtn.isHidden = true;
+                } else {
+                    cell.facebookInfoBtn.isHidden = false;
+                }
             }
             if (deleteButtonVisible == true) {
                 //If post is published we will hide delete button
@@ -337,7 +378,7 @@ class PostItemTableViewCell: UITableViewCell, SharingDelegate, MFMessageComposeV
         if (isShareMenuOpened == true) {
             isShareMenuOpened = false;
             if (self.pushViewController is HomeV2ViewController) {
-                (self.pushViewController as! HomeV2ViewController).postsTableView.isScrollEnabled = true;
+                (self.pushViewController as! HomeV2ViewController).postsTableView.alwaysBounceVertical = true;
             }
             for view in self.pushViewController.view.subviews {
                 if (view is PostCastMenu) {
@@ -405,9 +446,10 @@ class PostItemTableViewCell: UITableViewCell, SharingDelegate, MFMessageComposeV
             }
             
             if (smsPublished == true) {
-                postCastMenu.messageChecked.isHidden = false;
+                postCastMenu.smsCountLabel.isHidden = false;
+                postCastMenu.smsCountLabel.text = "(\(post.smsCount))";
             } else {
-                postCastMenu.messageChecked.isHidden = true;
+                postCastMenu.smsCountLabel.isHidden = true;
             }
             
             if (facebookPublished == false) {
@@ -427,11 +469,11 @@ class PostItemTableViewCell: UITableViewCell, SharingDelegate, MFMessageComposeV
         
         self.pushViewController.view.addSubview(postCastMenu);
         isShareMenuOpened = true;
-        if (self.pushViewController is HomeV2ViewController) {
-            (self.pushViewController as! HomeV2ViewController).postsTableView.isScrollEnabled = false;
+       if (self.pushViewController is HomeV2ViewController) {
+            (self.pushViewController as! HomeV2ViewController).postsTableView.alwaysBounceVertical = false;
         }
         
-        let descHeight = pushViewController.getHeightOfPostDescripiton(contentView: contentView, postDescription: post.postDescription);
+         let descHeight = pushViewController.getHeightOfPostDescripiton(contentView: contentView, postDescription: post.postDescription);
         if (descHeight < 150 && pushViewController is HomeV2ViewController && postRowIndex == (totalPosts - 1) && totalPosts > 1) {
             postCastMenu.frame = CGRect.init(x: buttonAbsoluteFrame.origin.x - 60, y: buttonAbsoluteFrame.origin.y - 150, width: 80, height: 150)
         }
@@ -501,7 +543,7 @@ class PostItemTableViewCell: UITableViewCell, SharingDelegate, MFMessageComposeV
             }
         } else if (sender.post.postDescription != "" && sender.post.postImages.count > 0) {
             
-            var refreshAlert = UIAlertController(title: "Confirm!", message: "The images in the post will be removed, do you stll want to send the SMS.", preferredStyle: UIAlertControllerStyle.alert)
+            var refreshAlert = UIAlertController(title: "Confirm!", message: "The images in the post will be removed, do you stll want to send the SMS.", preferredStyle: UIAlertController.Style.alert)
 
             refreshAlert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action: UIAlertAction!) in
               
@@ -809,27 +851,36 @@ class PostItemTableViewCell: UITableViewCell, SharingDelegate, MFMessageComposeV
     
     func sharer(_ sharer: Sharing, didFailWithError error: Error) {
         print("Fail")
-        self.hidePostMenu();
         
-        if (pushViewController is HomeV2ViewController) {
-            (pushViewController as! HomeV2ViewController).activityIndicator.stopAnimating();
-            (pushViewController as! HomeV2ViewController).showFacebookFailAlert();
-        } else if (pushViewController is CommunicationViewController) {
-            (pushViewController as! CommunicationViewController).activityIndicator.stopAnimating();
-            (pushViewController as! CommunicationViewController).showFacebookFailAlert();
-        } else if (pushViewController is ArchieveViewController) {
-            (pushViewController as! HomeV2ViewController).activityIndicator.stopAnimating();
-            (pushViewController as! ArchieveViewController).showFacebookFailAlert();
+        DispatchQueue.main.async {
+
+            if (self.pushViewController is HomeV2ViewController) {
+                (self.pushViewController as! HomeV2ViewController).activityIndicator.stopAnimating();
+                (self.pushViewController as! HomeV2ViewController).showFacebookFailAlert();
+            } else if (self.pushViewController is CommunicationViewController) {
+                (self.pushViewController as! CommunicationViewController).activityIndicator.stopAnimating();
+                (self.pushViewController as! CommunicationViewController).showFacebookFailAlert();
+            } else if (self.pushViewController is ArchieveViewController) {
+                (self.pushViewController as! HomeV2ViewController).activityIndicator.stopAnimating();
+                (self.pushViewController as! ArchieveViewController).showFacebookFailAlert();
+            }
         }
+        
+        
+        self.hidePostMenu();
     }
     
     func sharerDidCancel(_ sharer: Sharing) {
         print("Cancel");
-        if (self.pushViewController is HomeV2ViewController) {
-            (self.pushViewController as! HomeV2ViewController).activityIndicator.stopAnimating();
-        } else if (self.pushViewController is CommunicationViewController) {
-            (self.pushViewController as! CommunicationViewController).activityIndicator.stopAnimating();
+        
+        DispatchQueue.main.async {
+            if (self.pushViewController is HomeV2ViewController) {
+                (self.pushViewController as! HomeV2ViewController).activityIndicator.stopAnimating();
+            } else if (self.pushViewController is CommunicationViewController) {
+                (self.pushViewController as! CommunicationViewController).activityIndicator.stopAnimating();
+            }
         }
+        
         self.hidePostMenu();
     }
     
@@ -974,6 +1025,109 @@ class PostItemTableViewCell: UITableViewCell, SharingDelegate, MFMessageComposeV
         
         return false;
     }
+    
+    func fetchWebsiteLinkFromUrl(desc: String) {
+        var finalUrl = "";
+        if (pushViewController is HomeV2ViewController)  {
+            finalUrl = (pushViewController as! HomeV2ViewController).extractWebsiteFromText(text: desc);
+        } else if (pushViewController is CommunicationViewController)  {
+            finalUrl = (pushViewController as! CommunicationViewController).extractWebsiteFromText(text: desc);
+        } else if (pushViewController is ArchieveViewController)  {
+            finalUrl = (pushViewController as! ArchieveViewController).extractWebsiteFromText(text: desc);
+        } else if (pushViewController is CastContactsViewController)  {
+            finalUrl = (pushViewController as! CastContactsViewController).extractWebsiteFromText(text: desc);
+        }
+        if (finalUrl != "") {
+            let articleUrl = URL(string: finalUrl)!
+            
+            //let embeddedView = URLEmbeddedView()
+            //embeddedView.load(urlString: finalUrl) { data in
+                
+                OGDataProvider.shared.fetchOGData(withURLString: finalUrl) { [weak self] ogData, error in
+                    
+                        if let _ = error {
+                            return
+                        }
+                    
+                    if (ogData == nil) {
+                        return;
+                    }
+                    if (ogData.pageTitle != nil) {
+                        
+                        let linkInfoData = LinkInfoData();
+                        linkInfoData.title = ogData.pageTitle;
+                        //self!.websiteTitle.text = ogData.pageTitle;
+                        
+                        if (ogData.pageDescription != nil) {
+                            //self!.websiteDescription.text = ogData.pageDescription;
+                            linkInfoData.description = ogData.pageDescription;
+                        } else {
+                            //self!.websiteDescription.text = "";
+                        }
+                        if (ogData.imageUrl != nil) {
+                            //self!.websiteImg.sd_setImage(with: ogData.imageUrl as! URL, placeholderImage: UIImage.init(named: "post-image-placeholder"));
+                            linkInfoData.image = ogData.imageUrl;
+
+                        } else {
+                            //self!.websiteImg.image = UIImage.init(named: "post-image-placeholder");
+                        }
+                                                
+                        if (self!.pushViewController is HomeV2ViewController) {
+                            (self!.pushViewController as! HomeV2ViewController).postLinkInfoFetched[finalUrl] = linkInfoData;
+                        }
+                        
+
+                    } else {
+                        //self!.websiteTitle.text = "";
+                        Readability.parse(url: articleUrl, completion: { data in
+                            if (data == nil) {
+                                return;
+                            }
+                            let linkInfoData = LinkInfoData();
+                            
+                            let title = data?.title
+                            let description = data?.description
+                            let keywords = data?.keywords
+                            let imageUrl = data?.topImage
+                            let videoUrl = data?.topVideo
+                            let datePublished = data?.datePublished;
+                            
+                            if (title != nil) {
+                                //self!.websiteTitle.text = title;
+                                linkInfoData.title = title;
+                            } else {
+                                //self!.websiteTitle.text = "";
+                            }
+                            //linkInfoData.title = self!.websiteTitle.text!;
+
+                            if (description != nil) {
+                                //self!.websiteDescription.text = description;
+                                linkInfoData.description = description;
+
+                            } else {
+                                //self!.websiteDescription.text = "";
+                            }
+
+                            if (imageUrl != nil) {
+                                //self!.websiteImg.sd_setImage(with: URL.init(string: imageUrl!), placeholderImage: UIImage.init(named: "post-image-placeholder"));
+                                linkInfoData.image = URL.init(string: imageUrl!);
+                            } else {
+                                //self!.websiteImg.image = UIImage.init(named: "post-image-placeholder");
+                            }
+                            
+
+                            if (self!.pushViewController is HomeV2ViewController) {
+                                (self!.pushViewController as! HomeV2ViewController).postLinkInfoFetched[articleUrl.absoluteString] = linkInfoData;
+                            }
+                            
+
+                        });
+                    }
+                }
+            //};
+
+        }
+    }
 }
 
 extension PostItemTableViewCell: UITableViewDataSource, UITableViewDelegate {
@@ -1012,7 +1166,7 @@ extension PostItemTableViewCell: UITableViewDataSource, UITableViewDelegate {
             
                 //We will hide action row if its an Archieve Tab/ Cast Contacts Page or
                 //If the user is moderator, then we wil hide this row at HomeScreen and Cast Detail Screen
-            if (pushViewController is ArchieveViewController || pushViewController is CastContactsViewController) {
+                if (pushViewController is CastContactsViewController) {
                     return UITableViewCell();
                 } else {
                     if (pushViewController is HomeV2ViewController) {
@@ -1059,7 +1213,28 @@ extension PostItemTableViewCell: UITableViewDataSource, UITableViewDelegate {
                  } else {
                      let cell: WebsiteInfoTableViewCell = tableView.dequeueReusableCell(withIdentifier: "WebsiteInfoTableViewCell", for: indexPath) as! WebsiteInfoTableViewCell;
                      cell.pushViewController = pushViewController;
-                     cell.fetchWebsiteLinkFromUrl(desc: post.postDescription);
+                     cell.postItemTableViewCellDelegate = self;
+                    if (pushViewController is HomeV2ViewController) {
+                        if ((pushViewController as! HomeV2ViewController).postLinkInfoFetched[websiteUrl] != nil) {
+                            let linkInfoData = (pushViewController as! HomeV2ViewController).postLinkInfoFetched[websiteUrl]!;
+                            cell.websiteTitle.text = linkInfoData.title;
+                            cell.websiteDescription.text = linkInfoData.description;
+                            if (linkInfoData.image != nil) {
+                                cell.websiteImg.sd_setImage(with: linkInfoData.image!, placeholderImage: UIImage.init(named: "post-image-placeholder"));
+                            }
+                        } else {
+                            cell.websiteTitle.text = "";
+                            cell.websiteDescription.text = "";
+                            cell.websiteImg.image =  UIImage.init(named: "post-image-placeholder");
+                            cell.fetchWebsiteLinkFromUrl(desc: post.postDescription);
+                        }
+                    } else {
+                        cell.websiteTitle.text = "";
+                        cell.websiteDescription.text = "";
+                        cell.websiteImg.image =  UIImage.init(named: "post-image-placeholder");
+                        cell.fetchWebsiteLinkFromUrl(desc: post.postDescription);
+                    }
+                    
                        return cell;
                  }
                 
@@ -1086,9 +1261,12 @@ extension PostItemTableViewCell: UITableViewDataSource, UITableViewDelegate {
                     return CGFloat(PostRowsHeight.Post_Moderator_Status_Row_Height);
                 }
             }
+            if (pushViewController is ArchieveViewController) {
+                return CGFloat(PostRowsHeight.Post_Status_Row_Height);
+            }
             return CGFloat(PostRowsHeight.Post_Status_Row_Height);
         } else if (PostRows.Post_Action_Row == indexPath.row) {
-            if (pushViewController is ArchieveViewController || pushViewController is CastContactsViewController) {
+            if (pushViewController is CastContactsViewController) {
                 return 0;
             }
             //If its Cast Detail Controller and post status is published,
@@ -1104,14 +1282,36 @@ extension PostItemTableViewCell: UITableViewDataSource, UITableViewDelegate {
                 if (isPostArchieved() == true) {
                     return 0
                 }
+            } else if (pushViewController is ArchieveViewController) {
+                if ((pushViewController as! ArchieveViewController).loggedInUser.isCastr == 2) {
+                    return 0;
+                }
             }
             
             
             return CGFloat(PostRowsHeight.Post_Action_Row_Height);
         } else if (PostRows.Post_Description_Row == indexPath.row) {
             print(post.postDescription);
-            var height =  pushViewController.getHeightOfPostDescripiton(contentView: self.contentView, postDescription: post.postDescription);
+            
+            var websiteUrl = "";
             if (pushViewController is HomeV2ViewController) {
+                websiteUrl = (pushViewController as!  HomeV2ViewController).extractWebsiteFromText(text: post.postDescription)
+            } else if (pushViewController is CommunicationViewController) {
+                websiteUrl = (pushViewController as!  CommunicationViewController).extractWebsiteFromText(text: post.postDescription)
+            } else if (pushViewController is ArchieveViewController) {
+                websiteUrl = (pushViewController as! ArchieveViewController).extractWebsiteFromText(text: post.postDescription)
+            }
+            
+            var height =  pushViewController.getHeightOfPostDescripiton(contentView: self.contentView, postDescription: post.postDescription);
+            
+            if (pushViewController is HomeV2ViewController) {
+                if (websiteUrl == post.postDescription) {
+                    if ((pushViewController as! HomeV2ViewController).posts.count > 1) {
+                        return 35;
+                    } else {
+                        return 25;
+                    }
+                }
                 if (height == 25) {
                     return 35;
                 }
@@ -1120,8 +1320,23 @@ extension PostItemTableViewCell: UITableViewDataSource, UITableViewDelegate {
                         return 100;
                     }
                 }
+            } else if (pushViewController is ArchieveViewController) {
+                if (websiteUrl == post.postDescription) {
+                    return 10;
+                }
+                if (height == 25) {
+                    return 35;
+                }
+                if ((pushViewController as! ArchieveViewController).postIdDescExpansionMap[post.postId] == nil || (pushViewController as! ArchieveViewController).postIdDescExpansionMap[post.postId] == false) {
+                    if (height > 100) {
+                        return 100;
+                    }
+                }
+            } else if (pushViewController is CommunicationViewController) {
+                if (websiteUrl == post.postDescription) {
+                    return 10;
+                }
             }
-            
             return height;
         }  else if (PostRows.Post_WebsiteInfo_Row == indexPath.row) {
 

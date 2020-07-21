@@ -7,17 +7,32 @@
 //
 
 import UIKit
-
+import WebKit
 
 class TermsPageViewController: UIViewController {
 
     enum WebViewRequest {case FQA, TermsAndConds}
 
     var webViewRequest: WebViewRequest!;
+
+    @IBOutlet weak var termsWebView: UIView!
+
+    // instance of WKWebView
+    let wkWebView: WKWebView = {
+        let v = WKWebView()
+        v.translatesAutoresizingMaskIntoConstraints = false
+        return v
+    }();
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.navigationBar.isHidden = false
+
+        // add the WKWebView to the "holder" UIView
+        termsWebView.addSubview(wkWebView)
+        // pin to all 4 edges
+        wkWebView.frame = termsWebView.bounds;
+
 
         var webViewUr: String = "";
         
@@ -32,13 +47,13 @@ class TermsPageViewController: UIViewController {
         // Do any additional setup after loading the view.
         let url = NSURL (string: webViewUr);
         let request = NSURLRequest(url: url! as URL);
-        termsWebView.loadRequest(request as URLRequest);
+        wkWebView.load(request as URLRequest);
         
     }
      override func viewWillAppear(_ animated: Bool) {
         let backButton = UIButton();
         backButton.setImage(UIImage.init(named: "left-arrow"), for: .normal);
-        backButton.addTarget(self, action: #selector(backButtonPressed), for: UIControlEvents.touchUpInside)
+        backButton.addTarget(self, action: #selector(backButtonPressed), for: UIControl.Event.touchUpInside)
         backButton.frame = CGRect.init(x: 0, y:0, width: 20, height: 15);
         
         let barBackButton = UIBarButtonItem(customView: backButton)
@@ -50,7 +65,7 @@ class TermsPageViewController: UIViewController {
         if let user_id = setting.value(forKey: "user_id") {
             let homeButton = UIButton();
             homeButton.setImage(UIImage.init(named: "top-home"), for: .normal);
-            homeButton.addTarget(self, action: #selector(homeButtonPressed), for: UIControlEvents.touchUpInside)
+            homeButton.addTarget(self, action: #selector(homeButtonPressed), for: UIControl.Event.touchUpInside)
             homeButton.frame = CGRect.init(x: 0, y:0, width: 20, height: 20);
             
             let homeBarButton = UIBarButtonItem(customView: homeButton)
@@ -59,7 +74,6 @@ class TermsPageViewController: UIViewController {
             navigationItem.rightBarButtonItem?.tintColor = UIColor(red: 12/255, green: 111/255, blue: 233/255, alpha: 1)
         }
     }
-    @IBOutlet weak var termsWebView: UIWebView!
     
     @objc func backButtonPressed() {
         self.navigationController?.popViewController(animated: true);

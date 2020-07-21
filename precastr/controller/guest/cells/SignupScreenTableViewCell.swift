@@ -42,12 +42,12 @@ class SignupScreenTableViewCell: UITableViewCell, UITextFieldDelegate, SignupCel
         self.agreecheckBoxBtn.layer.borderWidth = 1
         self.agreecheckBoxBtn.layer.borderColor = UIColor.white.cgColor
         self.cameraUIView.layer.cornerRadius = self.cameraUIView.frame.height/2
-        self.nameTextField.attributedPlaceholder = NSAttributedString(string: "Name", attributes: [NSAttributedStringKey.foregroundColor : UIColor.white ])
+        self.nameTextField.attributedPlaceholder = NSAttributedString(string: "Name", attributes: [NSAttributedString.Key.foregroundColor : UIColor.white ])
         
         self.nameTextField.layer.borderColor = UIColor.white.cgColor
         self.nameTextField.layer.borderWidth = 0.5
         
-        self.phoneTextField.attributedPlaceholder = NSAttributedString(string: "Phone Number", attributes: [NSAttributedStringKey.foregroundColor : UIColor.white ])
+        self.phoneTextField.attributedPlaceholder = NSAttributedString(string: "Phone Number", attributes: [NSAttributedString.Key.foregroundColor : UIColor.white ])
         
         self.phoneTextField.layer.borderColor = UIColor.white.cgColor
         self.phoneTextField.layer.borderWidth = 0.5
@@ -71,10 +71,10 @@ class SignupScreenTableViewCell: UITableViewCell, UITextFieldDelegate, SignupCel
         self.phoneTextField.leftViewMode = .always
         
         self.countryPhoneCodeView.layer.borderWidth = 0.5
-        self.countryPhoneCodeView.layer.borderColor = UIColor.white.cgColor as! CGColor
+        self.countryPhoneCodeView.layer.borderColor = UIColor.white.cgColor 
         // self.nameTextField.leftView = UIView(frame: CGRect(x: 0, y: 0, width:35, height: self.nameTextField.frame.height))
         
-        self.emailTextField.attributedPlaceholder = NSAttributedString(string: "Email Address", attributes: [NSAttributedStringKey.foregroundColor : UIColor.white ])
+        self.emailTextField.attributedPlaceholder = NSAttributedString(string: "Email Address", attributes: [NSAttributedString.Key.foregroundColor : UIColor.white ])
         self.emailTextField.layer.borderColor = UIColor.white.cgColor
         self.emailTextField.layer.borderWidth = 0.5
         let emailIconContainerView: UIView = UIView(frame:
@@ -87,7 +87,7 @@ class SignupScreenTableViewCell: UITableViewCell, UITextFieldDelegate, SignupCel
         self.emailTextField.leftViewMode = .always
         // self.emailTextField.leftView = UIView(frame: CGRect(x: 0, y: 0, width:15, height: self.emailTextField.frame.height))
         
-        self.passwordTextField.attributedPlaceholder = NSAttributedString(string: "Password", attributes: [NSAttributedStringKey.foregroundColor : UIColor.white ])
+        self.passwordTextField.attributedPlaceholder = NSAttributedString(string: "Password", attributes: [NSAttributedString.Key.foregroundColor : UIColor.white ])
         self.passwordTextField.layer.borderColor = UIColor.white.cgColor
         self.passwordTextField.layer.borderWidth = 0.5
         self.passwordTextField.leftView = UIView(frame: CGRect(x: 0, y: 0, width:35, height: self.passwordTextField.frame.height))
@@ -250,7 +250,7 @@ class SignupScreenTableViewCell: UITableViewCell, UITextFieldDelegate, SignupCel
                 if(error == nil){
                     let user = User();
                     print(AccessToken.current!.tokenString)
-                    user.facebookAccessToken = String(AccessToken.current!.tokenString as! String);
+                    user.facebookAccessToken = String(AccessToken.current!.tokenString );
                     user.facebookId = String(Info["id"] as! String)
                     user.username = String(Info["email"]as! String)
                     user.name = String(Info["name"] as! String)

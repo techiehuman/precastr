@@ -32,7 +32,7 @@ class NotificationViewController: UIViewController {
         self.hideKeyboadOnTapOutside();
         self.loggedInUser = User().loadUserDataFromUserDefaults(userDataDict: setting);
         
-        activityIndicator.activityIndicatorViewStyle = .gray;
+        activityIndicator.style = .gray;
         activityIndicator.center = view.center;
         self.view.addSubview(activityIndicator);
         
@@ -72,7 +72,7 @@ class NotificationViewController: UIViewController {
             if (self.loggedInUser.isCastr == 1) {
                 index =  4;
             } else {
-                index = 2;
+                index = 3;
             }
             let tabItem = tabItems[index]
             tabItem.badgeValue = nil
@@ -101,17 +101,17 @@ class NotificationViewController: UIViewController {
         if (loggedInUser.isCastr == 2) {
             self.navigationItem.title = "Notifications";
             
-            if (self.tabBarController!.viewControllers?.count == 4) {
+            /*if (self.tabBarController!.viewControllers?.count == 4) {
                 self.tabBarController!.viewControllers?.remove(at: 1)
-            }
+            }*/
         } else {
             self.navigationItem.title = "Notifications";
             
-            if (self.tabBarController!.viewControllers?.count == 3) {
+            /*if (self.tabBarController!.viewControllers?.count == 3) {
                 
                 var navController = self.storyboard?.instantiateViewController(withIdentifier: "CreateNewPostNavController") as! UINavigationController;
                 self.tabBarController!.viewControllers?.insert(navController, at: 1);
-            }
+            }*/
         }
     }
 
@@ -149,7 +149,7 @@ class NotificationViewController: UIViewController {
     func setupNavigationBar(){
         let menuButton = UIButton();
         menuButton.setImage(UIImage.init(named: "menu"), for: .normal);
-        menuButton.addTarget(self, action: #selector(menuButtonClicked), for: UIControlEvents.touchUpInside)
+        menuButton.addTarget(self, action: #selector(menuButtonClicked), for: UIControl.Event.touchUpInside)
         menuButton.frame = CGRect.init(x: 0, y:0, width: 24, height: 24);
         
         let barButton = UIBarButtonItem(customView: menuButton)
@@ -193,13 +193,28 @@ class NotificationViewController: UIViewController {
     @IBAction func clearButtonPressed(_ sender: Any) {
         clearAllNotification();
     }
-    @objc func postDescriptionPressed(sender:MyTapRecognizer){
+    
+    @objc func postDescriptionPressed(sender:MyTapRecognizer) {
         
         self.markNotificationAsRead(notificationId: sender.notificationId);
         
-        let viewController = self.storyboard?.instantiateViewController(withIdentifier: "CommunicationViewController") as! CommunicationViewController;
-        viewController.postId = sender.postId;
-        self.navigationController?.pushViewController(viewController, animated: true);
+        let jsonURL = "posts/get_post_communication/format/json"
+        var postData = [String: Any]();
+        postData["post_id"] = sender.postId;
+        activityIndicator.startAnimating();
+        UserService().postDataMethod(jsonURL: jsonURL, postData: postData, complete: {(response) in
+            print(response)
+            self.activityIndicator.stopAnimating();
+            let success = Int(response.value(forKey: "status") as! String)!
+            if (success == 0) {
+                self.showAlert(title: "Alert", message: AlertMessages.POST_NOT_AVAILABLE);
+            } else {
+                let viewController = self.storyboard?.instantiateViewController(withIdentifier: "CommunicationViewController") as! CommunicationViewController;
+                viewController.postId = sender.postId;
+                viewController.postCommunicationid = sender.postCommunicationId;
+                self.navigationController?.pushViewController(viewController, animated: true);
+            }
+        });
     }
     
     @objc func nonPostDescriptionPressed(sender:MyTapRecognizer) {
@@ -218,6 +233,8 @@ class NotificationViewController: UIViewController {
     class MyTapRecognizer : UITapGestureRecognizer {
         var postId: Int!;
         var notificationId: Int!;
+        var postCommunicationId: Int!;
+
     }
     
 }
@@ -239,17 +256,19 @@ extension NotificationViewController: UITableViewDelegate, UITableViewDataSource
         let cell: NotificationTableViewCell = tableView.dequeueReusableCell(withIdentifier: "NotificationTableViewCell") as! NotificationTableViewCell;
         
         if let notificationType = notification.value(forKey: "type") as? String {
-            if (notificationType != "Post") {
+            if (notificationType != "Post" && notificationType != "post communication") {
                 
                 let postDescTap = MyTapRecognizer.init(target: self, action: #selector(nonPostDescriptionPressed(sender:)));
                 postDescTap.postId = Int(notification.value(forKey: "post_id") as! String)! ;
                 postDescTap.notificationId = Int(notification.value(forKey: "notification_id") as! String)!;
-                cell.notificationTextView.addGestureRecognizer(postDescTap)
                 
             } else {
                 let postDescTap = MyTapRecognizer.init(target: self, action: #selector(postDescriptionPressed(sender:)));
                 postDescTap.postId = Int(notification.value(forKey: "post_id") as! String)! ;
                 postDescTap.notificationId = Int(notification.value(forKey: "notification_id") as! String)!;
+                if let postCommunicationId = notification.value(forKey: "post_communication_id") as? String {
+                    postDescTap.postCommunicationId = Int(postCommunicationId);
+                }
                 cell.notificationTextView.addGestureRecognizer(postDescTap)
             }
         }
@@ -270,9 +289,9 @@ extension NotificationViewController: UITableViewDelegate, UITableViewDataSource
         paragraphStyle.lineSpacing = 2
         
         let attributes = [
-            NSAttributedStringKey.font : UIFont(name: "VisbyCF-Regular", size: 16.0)!,
-            NSAttributedStringKey.foregroundColor : UIColor.init(red: 34/255, green: 34/255, blue: 34/255, alpha: 1),
-            NSAttributedStringKey.paragraphStyle: paragraphStyle]
+            NSAttributedString.Key.font : UIFont(name: "VisbyCF-Regular", size: 16.0)!,
+            NSAttributedString.Key.foregroundColor : UIColor.init(red: 34/255, green: 34/255, blue: 34/255, alpha: 1),
+            NSAttributedString.Key.paragraphStyle: paragraphStyle]
         
         let attrString = NSMutableAttributedString(string: lblToShow)
         attrString.addAttributes(attributes, range: NSMakeRange(0, attrString.length));

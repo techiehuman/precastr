@@ -141,7 +141,7 @@ class ContactsViewController: UIViewController, UITextFieldDelegate {
    
         cancelButton.setTitle("Cancel", for: .normal)
         cancelButton.setTitleColor(UIColor.white, for: .normal)
-        cancelButton.addTarget(self, action: #selector(cancelButtonPressed), for: UIControlEvents.touchUpInside)
+        cancelButton.addTarget(self, action: #selector(cancelButtonPressed), for: UIControl.Event.touchUpInside)
         cancelButton.frame = CGRect.init(x: 0, y:0, width: 16.73, height: 10.89);
         
         let barButton = UIBarButtonItem(customView: cancelButton)
@@ -151,7 +151,7 @@ class ContactsViewController: UIViewController, UITextFieldDelegate {
         let doneButton = UIButton();
         doneButton.setTitle("Done", for: .normal)
         doneButton.setTitleColor(UIColor.white, for: .normal)
-        doneButton.addTarget(self, action: #selector(doneButtonPressed), for: UIControlEvents.touchUpInside)
+        doneButton.addTarget(self, action: #selector(doneButtonPressed), for: UIControl.Event.touchUpInside)
         doneButton.frame = CGRect.init(x: 0, y:0, width: 20, height: 20);
         
         let homeBarButton = UIBarButtonItem(customView: doneButton)

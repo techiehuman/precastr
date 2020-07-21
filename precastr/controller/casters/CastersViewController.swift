@@ -26,9 +26,14 @@ class CastersViewController: UIViewController,UITextFieldDelegate {
         super.viewDidLoad()
         verifyCode1.layer.borderColor = UIColor(red: 112/255, green: 112/255, blue: 112/255, alpha: 1).cgColor
         verifyCode1.layer.borderWidth = 0.5
-        verifyCode1.addTarget(self, action: #selector(self.textFieldDidChange(textField:)), for: UIControlEvents.editingChanged);
+        verifyCode1.addTarget(self, action: #selector(self.textFieldDidChange(textField:)), for: UIControl.Event.editingChanged);
+        
         verifyCode1.defaultTextAttributes.updateValue(20.0,
-                                                      forKey: NSAttributedString.Key.kern.rawValue)
+                                            forKey: NSAttributedString.Key.kern);
+
+    //convertFromNSAttributedStringKeyDictionary(verifyCode1.defaultTextAttributes).updateValue(20.0,
+          //                                                                                    forKey: NSAttributedString.Key.kern.rawValue);
+        
         let leftView = UIView(frame: CGRect(x: 10, y: 0.0, width: 25, height: 30))
         leftView.backgroundColor = .clear
         verifyCode1.leftView = leftView
@@ -46,7 +51,7 @@ class CastersViewController: UIViewController,UITextFieldDelegate {
         
         activityIndicator.center = view.center;
         activityIndicator.hidesWhenStopped = true;
-        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.gray;
+        activityIndicator.style = UIActivityIndicatorView.Style.gray;
         view.addSubview(activityIndicator);
     }
     
@@ -64,7 +69,7 @@ class CastersViewController: UIViewController,UITextFieldDelegate {
         let otp = "\(self.verifyCode1.text!)";
         if (otp.count < 4) {
             let alert = UIAlertController.init(title: "Error", message: "Please enter the code", preferredStyle: .alert);
-            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil));
+                    alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil));
             self.present(alert, animated: true)
         } else {
             
@@ -100,7 +105,7 @@ class CastersViewController: UIViewController,UITextFieldDelegate {
         
         let menuButton = UIButton();
         menuButton.setImage(UIImage.init(named: "left-arrow"), for: .normal);
-        menuButton.addTarget(self, action: #selector(backButtonPressed), for: UIControlEvents.touchUpInside)
+        menuButton.addTarget(self, action: #selector(backButtonPressed), for: UIControl.Event.touchUpInside)
         menuButton.frame = CGRect.init(x: 0, y:0, width: 20, height: 15);
         
         let barButton = UIBarButtonItem(customView: menuButton)
@@ -109,7 +114,7 @@ class CastersViewController: UIViewController,UITextFieldDelegate {
         
         let homeButton = UIButton();
         homeButton.setImage(UIImage.init(named: "top-home"), for: .normal);
-        homeButton.addTarget(self, action: #selector(homeButtonPressed), for: UIControlEvents.touchUpInside)
+        homeButton.addTarget(self, action: #selector(homeButtonPressed), for: UIControl.Event.touchUpInside)
         homeButton.frame = CGRect.init(x: 0, y:0, width: 24, height: 24);
         
         let homeBarButton = UIBarButtonItem(customView: homeButton)
@@ -159,6 +164,8 @@ extension CastersViewController: UITableViewDelegate, UITableViewDataSource {
         let moderatorObject = self.moderatorDto[indexPath.section].sectionObjects[indexPath.row];
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "moderatorTableViewCell", for: indexPath) as! moderatorTableViewCell;
+        
+        cell.moderatorCategory.isHidden = true;
         print("******")
         print(String(moderatorObject.name))
         if(moderatorObject.name != nil) {
@@ -186,19 +193,43 @@ extension CastersViewController: UITableViewDelegate, UITableViewDataSource {
         cell.profileImageView.roundImageView();
         cell.profileImageView.clipsToBounds = true
         
-        if(moderatorObject.miscStatus == 1){
+        if(moderatorObject.miscStatus == 1) {
+            
             cell.acceptActionBtn.isHidden = true
-          //  cell.removeActionBtn.isHidden = false
+            cell.removeActionBtn.isHidden = false
             cell.removeActionBtn.tag = Int(moderatorObject.userId);
             cell.removeActionBtn.addTarget(self, action: #selector(removeActionPressed), for: .touchUpInside)
+            cell.enableDisableModSwitch.isHidden = false;
             
+            if (moderatorObject.moderatorStatus == 1) {
+                cell.enableDisableModSwitch.isOn = true;
+                cell.enableDisableModSwitch.isEnabled = true;
+            } else {
+                cell.enableDisableModSwitch.isOn = false;
+                cell.enableDisableModSwitch.isEnabled = false;
+            }
+
         } else {
-          //  cell.acceptActionBtn.isHidden = false
+            
+            cell.enableDisableModSwitch.isHidden = true;
+            cell.acceptActionBtn.isHidden = true
             cell.removeActionBtn.isHidden = true
             cell.acceptActionBtn.tag = Int(moderatorObject.userId)
             cell.acceptActionBtn.addTarget(self, action: #selector(acceptActionPressed), for: .touchUpInside)
         }
         
+        //if (loggedInUser.isCastr == 2) {
+            //cell.acceptActionBtn.isHidden = true;
+          //  cell.removeActionBtn.isHidden = true
+        //} else {
+            //if(moderatorObject.miscStatus != 1) {
+              //  cell.acceptActionBtn.isHidden = false;
+                //cell.removeActionBtn.isHidden = true;
+           // }
+        //}
+        cell.enableDisableModSwitch.tag = Int(moderatorObject.userId);
+        cell.enableDisableModSwitch.addTarget(self, action: #selector(casterSwitchPressed), for: .valueChanged);
+
         return cell;
     }
     
@@ -213,26 +244,40 @@ extension CastersViewController: UITableViewDelegate, UITableViewDataSource {
         return 45;
     }
     
-    
     @objc func removeActionPressed(sender: UIButton) {
-        var postData = [String: Any]();
-        postData["user_id"] = self.loggedInUser.userId
-        postData["moderator_id"] = sender.tag
-        let jsonURL = "user/remove_moderator/format/json";
         
-        self.activityIndicator.startAnimating();
-        UserService().postDataMethod(jsonURL: jsonURL,postData:postData,complete:{(response) in
-            print(response)
-            self.activityIndicator.stopAnimating();
-            self.loadCasterData();
-        });
-        print(sender.tag)
+        let alert = UIAlertController.init(title: "Delete this caster.", message: "", preferredStyle: .alert);
+        alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil));
+        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: {(response) in
+        
+               var postData = [String: Any]();
+               postData["user_id"] = self.loggedInUser.userId
+               postData["caster_id"] = sender.tag
+               postData["timestamp"] = Int64(Date().timeIntervalSince1970 * 1000.0)
+
+               let jsonURL = "user/remove_caster/format/json";
+               
+               self.activityIndicator.startAnimating();
+               UserService().postDataMethod(jsonURL: jsonURL,postData:postData,complete:{(response) in
+                   print(response)
+                   self.activityIndicator.stopAnimating();
+                   self.loadCasterData();
+               });
+               print(sender.tag)
+            
+        }));
+        self.present(alert, animated: true);
+        
+        
     }
+    
     @objc func acceptActionPressed(sender: UIButton) {
         var postData = [String: Any]();
         postData["user_id"] = self.loggedInUser.userId
-        postData["moderator_id"] = sender.tag
+        postData["caster_id"] = sender.tag
         postData["is_approved"] = "1"
+        postData["timestamp"] = Int64(Date().timeIntervalSince1970 * 1000.0)
+
         let jsonURL = "user/approve_moderator/format/json";
         
         self.activityIndicator.startAnimating();
@@ -243,7 +288,35 @@ extension CastersViewController: UITableViewDelegate, UITableViewDataSource {
         });
         print(sender.tag)
     }
-    func loadCasterData(){
+    
+    @objc func casterSwitchPressed(sender: UISwitch) {
+        
+        var status: Int8 = 0;
+        if (sender.isOn) {
+            status = 1;
+        } else {
+            sender.isEnabled = false;
+        }
+        updateCasterStatus(casterId: sender.tag, status: status);
+    }
+
+    func updateCasterStatus(casterId: Int, status: Int8) {
+        
+        self.activityIndicator.startAnimating();
+        
+        let jsonUrl = "user/update_caster_status/format/json";
+        var postData = [String: Any]();
+        postData["user_id"] = loggedInUser.userId;
+        postData["caster_id"] = casterId;
+        postData["status"] = status;
+        postData["timestamp"] = Int64(Date().timeIntervalSince1970 * 1000.0)
+
+        UserService().postDataMethod(jsonURL: jsonUrl, postData: postData, complete: {response in
+            self.activityIndicator.stopAnimating();
+        });
+    }
+
+    func loadCasterData() {
         
         self.moderatorDto = [ModeratorsDto]()
         self.userListApproved = [User]()
@@ -278,7 +351,11 @@ extension CastersViewController: UITableViewDelegate, UITableViewDataSource {
                     user.userId = Int32(((modeDict.value(forKey: "caster_id") as? NSString)?.doubleValue)!)
                    // let statusModerator = Int(((modeDict.value(forKey: "is_approved")as? NSString)?.doubleValue)!)
                     let statusCaster = Int(((modeDict.value(forKey: "is_approved")as? NSString)?.doubleValue)!)
-                    user.miscStatus = statusCaster as! Int
+                    user.miscStatus = statusCaster
+                    
+                    if let moderatorStatus = modeDict.value(forKey: "moderator_status") as? NSString {
+                        user.moderatorStatus =  Int8(moderatorStatus.doubleValue);
+                    }
                     if(statusCaster == 0){
                         
                         self.userListPending.append(user)
@@ -309,4 +386,9 @@ extension CastersViewController: UITableViewDelegate, UITableViewDataSource {
             }
         });
     }
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromNSAttributedStringKeyDictionary(_ input: [NSAttributedString.Key: Any]) -> [String: Any] {
+	return Dictionary(uniqueKeysWithValues: input.map {key, value in (key.rawValue, value)})
 }

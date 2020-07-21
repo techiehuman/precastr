@@ -10,7 +10,7 @@ import UIKit
 import ContactsUI
 import MessageUI
 
-class ModeratorViewController: UIViewController, CNContactPickerDelegate, MFMessageComposeViewControllerDelegate, ModeratorViewControllerDelegate {
+class ModeratorViewController: UIViewController, CNContactPickerDelegate, MFMessageComposeViewControllerDelegate, ModeratorViewControllerDelegate, UITextViewDelegate {
 
     @IBOutlet weak var moderatorList: UITableView!
     
@@ -23,7 +23,13 @@ class ModeratorViewController: UIViewController, CNContactPickerDelegate, MFMess
     var userListApproved : [User] = [User]()
     var userListPending : [User] = [User]()
     var contactsSelected = [String]();
-    
+    var moderatorCategoriesMap = [Int: ModeratorCategory]();
+    var moderatorCategories = [ModeratorCategory]();
+    var assignModeratorCategoryView: AssignModeratorCategoryView!;
+    var selectedModeratorCat: ModeratorCategory!;
+    var selectedPendingModeratorId: Int!;
+    var selectedModerator: User!;
+
     @IBAction func inviteModeratorBtnClicked(_ sender: Any) {
         
         /*let cnPicker = CNContactPickerViewController()
@@ -77,14 +83,22 @@ class ModeratorViewController: UIViewController, CNContactPickerDelegate, MFMess
         moderatorList.register(UINib(nibName: "moderatorTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "moderatorTableViewCell")
         
         moderatorList.register(UINib(nibName: "HeaderViewTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "HeaderViewTableViewCell")
+        
+        
+        moderatorCategories = dbHelper.fetchAllModeratorCatrgories();
+        for moderatorCat in moderatorCategories {
+            moderatorCategoriesMap[moderatorCat.moderatorCategoryId] = moderatorCat;
+        }
+
         // Do any additional setup after loading the view.
         self.inviteModeratorButton.layer.cornerRadius = 4;
         self.loadModeratorData();
         
         activityIndicator.center = view.center;
         activityIndicator.hidesWhenStopped = true;
-        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.gray;
+        activityIndicator.style = UIActivityIndicatorView.Style.gray;
         view.addSubview(activityIndicator);
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -94,7 +108,6 @@ class ModeratorViewController: UIViewController, CNContactPickerDelegate, MFMess
     
     override func viewWillAppear(_ animated: Bool) {
         self.title = "Moderators";
-        
         setUpNavigationBarItems();
         
     }
@@ -111,7 +124,7 @@ class ModeratorViewController: UIViewController, CNContactPickerDelegate, MFMess
         
         let menuButton = UIButton();
         menuButton.setImage(UIImage.init(named: "left-arrow"), for: .normal);
-        menuButton.addTarget(self, action: #selector(backButtonPressed), for: UIControlEvents.touchUpInside)
+        menuButton.addTarget(self, action: #selector(backButtonPressed), for: UIControl.Event.touchUpInside)
         menuButton.frame = CGRect.init(x: 0, y:0, width: 20, height: 15);
         
         let barButton = UIBarButtonItem(customView: menuButton)
@@ -120,7 +133,7 @@ class ModeratorViewController: UIViewController, CNContactPickerDelegate, MFMess
         
         let homeButton = UIButton();
         homeButton.setImage(UIImage.init(named: "top-home"), for: .normal);
-        homeButton.addTarget(self, action: #selector(homeButtonPressed), for: UIControlEvents.touchUpInside)
+        homeButton.addTarget(self, action: #selector(homeButtonPressed), for: UIControl.Event.touchUpInside)
         homeButton.frame = CGRect.init(x: 0, y:0, width: 24, height: 24);
         
         let homeBarButton = UIBarButtonItem(customView: homeButton)
@@ -162,7 +175,7 @@ class ModeratorViewController: UIViewController, CNContactPickerDelegate, MFMess
         
     }
 
-    func loadModeratorData(){
+    func loadModeratorData() {
         
         self.moderatorDto = [ModeratorsDto]()
         self.userListApproved = [User]()
@@ -194,9 +207,14 @@ class ModeratorViewController: UIViewController, CNContactPickerDelegate, MFMess
                     user.username = modeDict.value(forKey: "username") as! String
                     user.profilePic = modeDict.value(forKey: "profile_pic") as! String
                     user.phoneNumber = modeDict.value(forKey: "phone_number") as! String
+                    user.categoryId = Int(modeDict.value(forKey: "category_id") as! String);
+                    user.status = Int8(modeDict.value(forKey: "status") as! String);
+                    
+                    user.moderatorStatus = Int8(modeDict.value(forKey: "moderator_status") as! String);
+
                     user.userId = Int32(((modeDict.value(forKey: "moderator_id") as? NSString)?.doubleValue)!)
                     let statusModerator = Int(((modeDict.value(forKey: "is_approved")as? NSString)?.doubleValue)!)
-                    user.miscStatus = statusModerator as! Int
+                    user.miscStatus = statusModerator 
                     if(statusModerator == 0){
                         
                         self.userListPending.append(user)
@@ -218,6 +236,44 @@ class ModeratorViewController: UIViewController, CNContactPickerDelegate, MFMess
             }
         });
     }
+    
+    func updateModeratorStatus(moderatorId: Int, status: Int8) {
+        
+        self.activityIndicator.startAnimating();
+        
+        let jsonUrl = "user/update_moderator_status/format/json";
+        var postData = [String: Any]();
+        postData["user_id"] = loggedInUser.userId;
+        postData["moderator_id"] = moderatorId;
+        postData["status"] = status;
+
+        UserService().postDataMethod(jsonURL: jsonUrl, postData: postData, complete: {response in
+            self.activityIndicator.stopAnimating();
+        });
+    }
+    
+    func openCategoryDropDown() {
+        assignModeratorCategoryView = AssignModeratorCategoryView.instanceDropDownAlertFromNib() as! AssignModeratorCategoryView;
+        
+        let closePopUpGesture = UITapGestureRecognizer.init(target: self, action: #selector(closePopupBtnPressed))
+        assignModeratorCategoryView.closePopupBtn.addGestureRecognizer(closePopUpGesture);
+        
+        let saveBtnTapGesture = UITapGestureRecognizer.init(target: self, action: #selector(saveModeratorCatBtnPressed));
+        assignModeratorCategoryView.btnSave.addGestureRecognizer(saveBtnTapGesture);
+        
+        let dropdownTapGesture = UITapGestureRecognizer.init(target: self, action: #selector(dropdownBarPressed));
+    assignModeratorCategoryView.dropDownCategoryLabelView.addGestureRecognizer(dropdownTapGesture);
+
+        let window = UIApplication.shared.keyWindow!
+        assignModeratorCategoryView.frame = window.bounds;
+        window.addSubview(assignModeratorCategoryView);
+    }
+}
+
+class ModeratorSwitchGesture: UISwitch {
+    var medratorSwitch: UISwitch!;
+    var status: Int8!;
+    var moedratorId: Int32!;
 }
 
 extension ModeratorViewController: UITableViewDelegate, UITableViewDataSource {
@@ -240,10 +296,31 @@ extension ModeratorViewController: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "moderatorTableViewCell", for: indexPath) as! moderatorTableViewCell;
         print("******")
         print(String(moderatorObject.name))
+        
+        //Setting name of user
         if(moderatorObject.name != nil) {
-            cell.profileLabel.text = String(moderatorObject.name);
+            let nameArr = moderatorObject.name.split(separator: " ");
+            cell.profileLabel.text = String(nameArr[0]);
         } else {
             cell.profileLabel.text = String(moderatorObject.username);
+        }
+        
+        //lets show category of moderator
+        if (moderatorObject.categoryId == 0 || moderatorObject.miscStatus == 0) {
+            cell.moderatorCategory.isHidden = true
+        } else {
+            cell.moderatorCategory.isHidden = false
+           
+            let nameWidth = cell.profileLabel.intrinsicContentSize.width;
+            cell.moderatorCategory.setTitle(moderatorCategoriesMap[moderatorObject.categoryId]!.title, for: .normal);
+            
+            cell.moderatorCategory.frame = CGRect.init(x: cell.moderatorCategory.frame.origin.x, y: cell.moderatorCategory.frame.origin.y, width: cell.moderatorCategory.intrinsicContentSize.width, height: cell.moderatorCategory.frame.height);
+            
+            if (moderatorTitleColors[moderatorCategoriesMap[moderatorObject.categoryId]!.title] != nil) {
+                
+                cell.moderatorCategory.backgroundColor =  moderatorTitleColors[moderatorCategoriesMap[moderatorObject.categoryId]!.title]
+            }
+            
         }
         
         for uiTextNameView in cell.subviews {
@@ -263,28 +340,51 @@ extension ModeratorViewController: UITableViewDelegate, UITableViewDataSource {
         cell.profileImageView.roundImageView();
         cell.profileImageView.clipsToBounds = true
         if(moderatorObject.username != nil) {
-        cell.emailLabel.text = String(moderatorObject.username)
-        }else{
+            cell.emailLabel.text = String(moderatorObject.username)
+        } else {
              cell.emailLabel.text = ""
         }
-        if(moderatorObject.phoneNumber != nil) {
-        cell.phoneNumberLabel.text = String(moderatorObject.phoneNumber)
-        }else{
+        
+        if (moderatorObject.phoneNumber != nil) {
+            cell.phoneNumberLabel.text = String(moderatorObject.phoneNumber)
+        } else{
             cell.phoneNumberLabel.text = "";
         }
-        if(moderatorObject.miscStatus == 1){
+        
+        //User is Accepted
+        if(moderatorObject.miscStatus == 1) {
             cell.acceptActionBtn.isHidden = true
             cell.removeActionBtn.isHidden = false
+            cell.enableDisableModSwitch.isHidden = false
+            
+            cell.enableDisableModSwitch.tag = Int(moderatorObject.userId);
+            cell.enableDisableModSwitch.addTarget(self, action: #selector(moderatorSwitchPressed), for: .valueChanged);
+            
+            if (moderatorObject.status == 0) {
+                cell.enableDisableModSwitch.setOn(false, animated: false);
+            } else {
+                cell.enableDisableModSwitch.setOn(true, animated: false);
+            }
+            
             cell.removeActionBtn.tag = Int(moderatorObject.userId);
             cell.removeActionBtn.addTarget(self, action: #selector(removeActionPressed), for: .touchUpInside)
             
-        }else{
+            let nameTapGestureRecognizer = UserNameTapGesture.init(target: self, action: #selector(moderatorNamePressed(sender:)));
+            nameTapGestureRecognizer.user = moderatorObject;
+            cell.moderatorProfileContainerView.addGestureRecognizer(nameTapGestureRecognizer)
+        } else {
             cell.acceptActionBtn.isHidden = false
             cell.removeActionBtn.isHidden = true
+            cell.enableDisableModSwitch.isHidden = true
             cell.acceptActionBtn.tag = Int(moderatorObject.userId)
             cell.acceptActionBtn.addTarget(self, action: #selector(acceptActionPressed), for: .touchUpInside)
         }
         
+        if (moderatorObject.moderatorStatus == 1) {
+            cell.enableDisableModSwitch.isOn = true;
+        } else {
+            cell.enableDisableModSwitch.isOn = false;
+        }
         return cell;
     }
     
@@ -292,47 +392,188 @@ extension ModeratorViewController: UITableViewDelegate, UITableViewDataSource {
         let headerCell = tableView.dequeueReusableCell(withIdentifier: "HeaderViewTableViewCell") as!  HeaderViewTableViewCell;
         headerCell.headerTitleLabel.text = self.moderatorDto[section].sectionKey;
         return headerCell;
-        
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 45;
     }
 
-    
-    @objc func removeActionPressed(sender: UIButton) {
+    func updateModeratorCategory() {
         var postData = [String: Any]();
         postData["user_id"] = self.loggedInUser.userId
-        postData["moderator_id"] = sender.tag
+        postData["moderator_id"] = selectedModerator.userId;
+        postData["category_id"] = selectedModeratorCat.moderatorCategoryId
         postData["timestamp"] = Int64(Date().timeIntervalSince1970 * 1000.0)
-        let jsonURL = "user/remove_moderator/format/json";
-        
-        
-        self.activityIndicator.startAnimating();
-        UserService().postDataMethod(jsonURL: jsonURL,postData:postData,complete:{(response) in
-            print(response)
-            self.activityIndicator.stopAnimating();
-            self.loadModeratorData();
-        });
-        print(sender.tag)
-    }
-    @objc func acceptActionPressed(sender: UIButton) {
-        var postData = [String: Any]();
-        postData["user_id"] = self.loggedInUser.userId
-        postData["moderator_id"] = sender.tag
-        postData["is_approved"] = "1"
-        postData["timestamp"] = Int64(Date().timeIntervalSince1970 * 1000.0)
-        let jsonURL = "user/approve_moderator/format/json";
+        let jsonURL = "user/update_moderator_category/format/json";
         
         self.activityIndicator.startAnimating();
 
         UserService().postDataMethod(jsonURL: jsonURL,postData:postData,complete:{(response) in
             print(response)
             self.activityIndicator.stopAnimating();
+            let window = UIApplication.shared.keyWindow!
+            for uiview in window.subviews {
+                if (uiview is AssignModeratorCategoryView) {
+                    uiview.removeFromSuperview();
+                    break;
+                }
+            }
+            self.selectedModeratorCat = nil;
             self.loadModeratorData();
         });
-        print(sender.tag)
     }
+    @objc func removeActionPressed(sender: UIButton) {
+        
+        let alert = UIAlertController.init(title: "Delete this moderator.", message: "", preferredStyle: .alert);
+        alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil));
+        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: {(response) in
+        
+               var postData = [String: Any]();
+               postData["user_id"] = self.loggedInUser.userId
+               postData["moderator_id"] = sender.tag
+               postData["timestamp"] = Int64(Date().timeIntervalSince1970 * 1000.0)
+               let jsonURL = "user/remove_moderator/format/json";
+               
+               
+               self.activityIndicator.startAnimating();
+               UserService().postDataMethod(jsonURL: jsonURL,postData:postData,complete:{(response) in
+                   print(response)
+                   self.activityIndicator.stopAnimating();
+                   self.loadModeratorData();
+               });
+               print(sender.tag)
+            
+        }));
+        self.present(alert, animated: true)
+    }
+    
+    @objc func acceptActionPressed(sender: UIButton) {
+        
+        selectedPendingModeratorId = sender.tag;
+        openCategoryDropDown();
+        /*var postData = [String: Any]();
+            postData["user_id"] = self.loggedInUser.userId
+            postData["moderator_id"] = sender.tag
+            postData["is_approved"] = "1"
+            postData["timestamp"] = Int64(Date().timeIntervalSince1970 * 1000.0)
+            let jsonURL = "user/approve_moderator/format/json";
+            
+            self.activityIndicator.startAnimating();
+
+            UserService().postDataMethod(jsonURL: jsonURL,postData:postData,complete:{(response) in
+                print(response)
+                self.activityIndicator.stopAnimating();
+                self.loadModeratorData();
+            });
+            print(sender.tag)*/
+    }
+    
+    @objc func closePopupBtnPressed() {
+        let window = UIApplication.shared.keyWindow!
+        for uiview in window.subviews {
+            if (uiview is AssignModeratorCategoryView) {
+                uiview.removeFromSuperview();
+                break;
+            }
+        }
+        selectedModeratorCat = nil;
+    }
+    
+    @objc func moderatorSwitchPressed(sender: UISwitch) {
+        
+        var status: Int8 = 0;
+        if (sender.isOn) {
+            status = 1;
+        }
+        updateModeratorStatus(moderatorId: sender.tag, status: status);
+    }
+    
+    @objc func saveModeratorCatBtnPressed() {
+        
+        if (selectedModeratorCat != nil) {
+            
+            if (selectedModerator != nil) {
+                
+                updateModeratorCategory();
+                
+            } else {
+                var approvePostData = [String: Any]();
+                approvePostData["user_id"] = self.loggedInUser.userId
+                approvePostData["moderator_id"] = selectedPendingModeratorId
+                approvePostData["is_approved"] = "1"
+                approvePostData["timestamp"] = Int64(Date().timeIntervalSince1970 * 1000.0)
+                approvePostData["category_id"] = selectedModeratorCat.moderatorCategoryId;
+                let jsonURL = "user/approve_moderator/format/json";
+                
+                self.activityIndicator.startAnimating();
+
+                let window = UIApplication.shared.keyWindow!
+                for uiview in window.subviews {
+                    if (uiview is AssignModeratorCategoryView) {
+                        uiview.removeFromSuperview();
+                        break;
+                    }
+                }
+                selectedModeratorCat = nil;
+                UserService().postDataMethod(jsonURL: jsonURL,postData:approvePostData,complete:{(response) in
+                    print(response)
+                    self.activityIndicator.stopAnimating();
+                    self.loadModeratorData();
+                });
+            }
+        } else {
+            showAlert(title: "Alert", message: "Please choose category from the dropdown")
+        }
+    }
+    
+    @objc func dropdownBarPressed() {
+        
+        var height = 0;
+        for subView in assignModeratorCategoryView.categoryScrollView.subviews {
+            subView.removeFromSuperview();
+        }
+        if (assignModeratorCategoryView.categoryScrollView.isHidden == false) {
+            assignModeratorCategoryView.categoryScrollView.isHidden = true;
+        } else {
+            for moderatorCat in moderatorCategories {
+                let assignModeratorCategoryItemView = AssignModeratorCategoryView.instanceDropDownItemAlertFromNib() as! AssignModeratorCategoryView;
+                assignModeratorCategoryItemView.frame = CGRect.init(x: 0, y: height, width: 245, height: 35);
+                assignModeratorCategoryItemView.dropDownCategoryLabel.text = moderatorCat.title!;
+               
+                let dropDownTapGesture = DropDownTapGesture.init(target: self, action: #selector(dropDownItemPressed(sender:)))
+                dropDownTapGesture.moderatorCategory = moderatorCat; assignModeratorCategoryItemView.addGestureRecognizer(dropDownTapGesture);
+                assignModeratorCategoryView.categoryScrollView.addSubview(assignModeratorCategoryItemView);
+                
+                height = height +  35;
+            }
+            //assignModeratorCategoryView.categoryScrollView.frame = CGRect.init(x: assignModeratorCategoryView.categoryScrollView.frame.origin.x, y: self.view.frame.height/2 + 20
+                //, width: assignModeratorCategoryView.categoryScrollView.frame.width, height: assignModeratorCategoryView.categoryScrollView.frame.height);
+            assignModeratorCategoryView.categoryScrollView.contentSize.height = CGFloat(height);
+            assignModeratorCategoryView.categoryScrollView.isHidden = false;
+        }
+    }
+    
+    @objc func dropDownItemPressed(sender: DropDownTapGesture) {
+        selectedModeratorCat = sender.moderatorCategory;
+        assignModeratorCategoryView.dropDownCategoryLabel.text = selectedModeratorCat?.title;
+        assignModeratorCategoryView.categoryScrollView.isHidden = true;
+    }
+    
+    @objc func moderatorNamePressed(sender: UserNameTapGesture) {
+        selectedModerator = sender.user;
+        selectedPendingModeratorId = Int(selectedModerator.userId);
+        openCategoryDropDown();
+        
+    }
+    
+}
+
+class DropDownTapGesture : UITapGestureRecognizer {
+    var moderatorCategory: ModeratorCategory!;
+}
+
+class UserNameTapGesture : UITapGestureRecognizer {
+    var user: User!;
 }
 
 

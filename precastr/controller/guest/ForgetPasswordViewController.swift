@@ -23,7 +23,7 @@ class ForgetPasswordViewController: UIViewController {
         
         activityIndicator.center = self.view.center;
         activityIndicator.hidesWhenStopped = true;
-        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.gray;
+        activityIndicator.style = UIActivityIndicatorView.Style.gray;
         self.view.addSubview(activityIndicator);
         
         self.hideKeyboadOnTapOutside();

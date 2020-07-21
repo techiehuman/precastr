@@ -19,7 +19,8 @@ class PostCastMenu: UIView {
     @IBOutlet weak var twitterChecked: UIImageView!;
     @IBOutlet weak var messageChecked: UIImageView!;
 
-    
+    @IBOutlet weak var smsCountLabel: UILabel!;
+
     // Only override draw() if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.
     override func draw(_ rect: CGRect) {

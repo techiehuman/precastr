@@ -10,11 +10,23 @@ import UIKit
 
 class SplashViewController: UIViewController {
 
+    @IBOutlet weak var splashStar: UIImageView!;
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor(red: 12/255, green: 111/255, blue: 233/255, alpha: 1)
         // Do any additional setup after loading the view.
-        perform(#selector(navigateUser), with: nil, afterDelay: 2)
+        //splashStar.transform = CGAffineTransform(scaleX: -1, y: 1)
+         
+        let rotation : CABasicAnimation = CABasicAnimation(keyPath: "transform.rotation.y")
+        rotation.toValue = NSNumber(value: Double.pi * 1.5)
+        rotation.duration = 2
+        rotation.isCumulative = true
+        rotation.repeatCount = Float.greatestFiniteMagnitude
+        self.splashStar.layer.add(rotation, forKey: "rotationAnimation")
+
+
+        perform(#selector(navigateUser), with: nil, afterDelay: 4)
     }
 
     override func didReceiveMemoryWarning() {

@@ -57,9 +57,6 @@ open class Readability {
 		("//head/meta[@property='og:image']", "content"),
 		("//head/meta[@name='twitter:image']", "content"),
 		("//link[@rel='image_src']", "href"),
-        ("//link[@rel='apple-touch-icon']", "href"),
-        ("//link[@rel='icon']", "href"),
-        ("//link[@rel='shortcut icon']", "href"),
 		("//head/meta[@name='thumbnail']", "content"),
 		("//img[contains(@src,':small')]", "src")
 	]
@@ -598,7 +595,6 @@ open class Readability {
 
 	fileprivate func extractValueUsing(_ document: Ji, queries: [(String, String?)]) -> String? {
 		for query in queries {
-            //print("*****   ",query)
 			if let value = extractValueUsing(document, path: query.0, attribute: query.1) {
 				return value
 			}
@@ -656,7 +652,6 @@ open class Readability {
 	func topImage() -> String?
 	{
 		if let document = document {
-            //print("Image Document: ",document)
 			if let imageUrl = extractValueUsing(document, queries: imageQueries) {
 				return imageUrl
 			}
